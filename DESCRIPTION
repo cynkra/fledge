@@ -1,0 +1,13 @@
+Package: fledge
+Title: What the Package Does (one line, title case)
+Version: 0.0-0
+Authors@R: person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org")
+Description: What the package does (one paragraph).
+Depends: R (>= 3.4.3)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Date: 2018-03-06
+BugReports: https://github.com/krlmlr/fledge/issues
+URL: https://github.com/krlmlr/fledge, http://krlmlr.github.io/fledge
+Roxygen: list(markdown = TRUE)
