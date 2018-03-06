@@ -1,9 +1,9 @@
 Package: fledge
-Title: What the Package Does (one line, title case)
+Title: Wings for Your R Packages
 Version: 0.0-0
 Authors@R: person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org")
-Description: What the package does (one paragraph).
-Depends: R (>= 3.4.3)
+Description:
+    Streamlines the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
