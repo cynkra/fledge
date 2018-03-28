@@ -11,7 +11,7 @@ get_top_level_commits_impl <- function(since) {
 
 get_first_parent <- function(commit, since) {
   commits <- list(commit)
-  if (commit$sha == since$sha) {
+  if (!is.null(since) && commit$sha == since$sha) {
     stop("Empty list of changes.", call. = FALSE)
   }
 
@@ -21,7 +21,9 @@ get_first_parent <- function(commit, since) {
 
     # Compatibility with git-flow, where tags were set on the production branch
     # which was then merged to master
-    if (some(all_parents, ~.$sha == since$sha)) return(commits)
+    if (!is.null(since)) {
+      if (some(all_parents, ~.$sha == since$sha)) return(commits)
+    }
 
     first_parent <- all_parents[[1]]
     commits <- c(commits, list(first_parent))
