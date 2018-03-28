@@ -7,7 +7,7 @@ tag_version_impl <- function() {
 
   tag <- paste0("v", version)
   if (tag %in% names(git2r::tags())) {
-    stopifnot(!grepl("^fledge: Bump version to ", git2r::last_commit()$message))
+    stopifnot(grepl("^fledge: Bump version to ", git2r::last_commit()$message))
 
     message("Deleting tag ", tag)
     git2r::tag_delete(".", tag)
