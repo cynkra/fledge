@@ -10,7 +10,7 @@ Currently, this "works for me", use at your own risk.
 Workflow for development
 ------------------------
 
-1.  In commit messages to `master`, mark everything that should go to `NEWS.md` with a bullet point (`-` or `*`).
+1.  In commit messages to `master`, mark everything that should go to `NEWS.md` with a bullet point (`-` or `*`). This works for single commits, merge commits, or pull requests.
 2.  When you want to assign a version number to the current state of your R package, call
 
     ``` r
