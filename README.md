@@ -24,6 +24,8 @@ Workflow for development
     fledge::tag_version()
     ```
 
+    (You don't need to call `tag_version()` if you haven't edited `NEWS.md`.)
+
 This has the following effects:
 
 -   `NEWS.md` is composed from bits in your most recent commit messages, no need to resolve merge conflicts in `NEWS.md` anymore

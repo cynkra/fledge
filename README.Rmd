@@ -30,6 +30,8 @@ Currently, this "works for me", use at your own risk.
     ```r
     fledge::tag_version()
     ```
+    
+    (You don't need to call `tag_version()` if you haven't edited `NEWS.md`.)
 
 This has the following effects:
 
