@@ -16,21 +16,15 @@ knitr::opts_chunk$set(
 
 The goal of fledge is to streamline the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?
 
-- `bump_version()`
-    - `update_news()`: collects `NEWS` entries from 
-    - `devtools::document()`
-    - `update_version()`
-    - `tag_release()`
-    - ...
+- `bump_dev_version()`
+    - `update_news()`: collects `NEWS` entries from top-level commits
+    - `update_version()`: bump version in `DESCRIPTION`, add header to `NEWS.md`
+    - `tag_version()`: commit `DESCRIPTION` and `NEWS.md`, create tag with message
+
+You can edit `NEWS.md` and call `tag_version()` again, both the commit and the tag will be updated.
 
 
 ## Installation
-
-You can install the released version of fledge from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("fledge")
-```
 
 Install from GitHub via
 
