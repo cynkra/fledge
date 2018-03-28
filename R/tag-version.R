@@ -39,11 +39,6 @@ get_current_news <- function() {
     current_news <- news[seq.int(top_level_headers[[1]] + 1, top_level_headers[[2]] - 1)]
   }
 
-  stopifnot(current_news[[1]] == "")
-  current_news <- current_news[-1]
-
-  stopifnot(current_news[[length(current_news)]] == "")
-  stopifnot(current_news[[length(current_news) - 1]] == "")
-  current_news <- current_news[seq_len(length(current_news) - 2)]
-  paste(current_news, collapse = "\n")
+  current_news <- paste(current_news, collapse = "\n")
+  gsub("^\n*(.*[^\n])\n*$", "\\1", current_news)
 }
