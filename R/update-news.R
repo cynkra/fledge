@@ -11,7 +11,13 @@ collect_news <- function(range) {
   messages_before_triple_dash <- map_chr(strsplit(messages, "\n---", fixed = TRUE), 1)
   message_lines <- strsplit(messages_before_triple_dash, "\n", fixed = TRUE)
   message_bullets <- map(message_lines, keep, ~grepl("^[*-]", .))
-  paste0(paste(unlist(message_bullets), collapse = "\n"), "\n\n")
+
+  message_items <- unlist(message_bullets)
+  if (length(message_items) == 0) {
+    message_items <- "- Internal changes only."
+  }
+
+  paste0(paste(message_items, collapse = "\n"), "\n\n")
 }
 
 add_to_news <- function(news) {
