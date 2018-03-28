@@ -11,6 +11,10 @@ get_top_level_commits_impl <- function(since) {
 
 get_first_parent <- function(commit, since) {
   commits <- list(commit)
+  if (commit$sha == since$sha) {
+    stop("Empty list of changes.", call. = FALSE)
+  }
+
   repeat {
     all_parents <- git2r::parents(commit)
     if (length(all_parents) == 0) return(commits)
