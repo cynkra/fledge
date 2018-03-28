@@ -2,6 +2,7 @@
 
 export(get_last_tag)
 export(get_top_level_commits)
+export(tag_version)
 export(update_news)
 export(update_version)
 import(purrr)

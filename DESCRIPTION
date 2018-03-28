@@ -9,6 +9,7 @@ License: GPL-3
 URL: https://github.com/krlmlr/fledge, http://krlmlr.github.io/fledge
 BugReports: https://github.com/krlmlr/fledge/issues
 Imports: 
+    desc,
     git2r,
     purrr
 Encoding: UTF-8
