@@ -1,3 +1,9 @@
+# fledge 0.0.0.9001 (2018-03-29)
+
+- If the `DESCRIPTION` has a `"Date"` field, it is populated with the current date in `update_version()`.
+- An empty list of changes doesn't raise an error anymore. This will allow bumping to a dev version immediately after CRAN release.
+
+
 # fledge 0.0.0.9000 (2018-03-29)
 
 Initial release.
