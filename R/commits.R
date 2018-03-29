@@ -12,7 +12,7 @@ get_top_level_commits_impl <- function(since) {
 get_first_parent <- function(commit, since) {
   commits <- list(commit)
   if (!is.null(since) && commit$sha == since$sha) {
-    stop("Empty list of changes.", call. = FALSE)
+    return(commits)
   }
 
   repeat {
