@@ -17,14 +17,11 @@ Workflow for development
     fledge::bump_version()
     ```
 
-3.  Edit `NEWS.md` as appropriate.
-4.  If you have updated `NEWS.md`, call
+3.  (Optional.) Edit `NEWS.md` as appropriate. When done, call
 
     ``` r
     fledge::tag_version()
     ```
-
-    (You don't need to call `tag_version()` if you haven't edited `NEWS.md`.)
 
 This has the following effects:
 
@@ -56,9 +53,10 @@ Workflow for releasing to CRAN
 
     ``` r
     fledge::tag_version(force = TRUE)
+    fledge::bump_version()
     ```
 
-    *(not yet implemented)*.
+    to re-tag the released version *(not yet implemented)* and to switch to a development version immediately.
 
 NEWS generation
 ---------------
