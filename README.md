@@ -3,12 +3,14 @@
 fledge
 ======
 
-The goal of fledge is to streamline the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?
+The goal of *fledge* is to streamline the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?
 
 Currently, this "works for me", use at your own risk.
 
 Workflow for development
 ------------------------
+
+The *fledge* package assumes an R package that is version-controlled with Git in a dedicated repository. It will take care of updating `NEWS.md` and `DESCRIPTION` when you want to assign a new version to your package.
 
 1.  In commit messages to `master`, mark everything that should go to `NEWS.md` with a bullet point (`-` or `*`). This works for single commits, merge commits, or pull requests.
 2.  When you want to assign a version number to the current state of your R package, call
@@ -57,6 +59,26 @@ Workflow for releasing to CRAN
     ```
 
     to re-tag the released version *(not yet implemented)* and to switch to a development version immediately.
+
+First-time users
+----------------
+
+Setting up *fledge* isn't much different from the regular development workflow:
+
+1.  Bump the package version with
+
+    ``` r
+    fledge::bump_version()
+    ```
+
+    The `NEWS.md` file may grow large, especially if you haven't used tags in your repository before.
+2.  Edit `NEWS.md`, call
+
+    ``` r
+    fledge::tag_version()
+    ```
+
+3.  From here on, switch to the [development workflow](#workflow-for-development). Don't forget to use bullet points in your commit or merge messages to indicate NEWS-worthy changes!
 
 NEWS generation
 ---------------
