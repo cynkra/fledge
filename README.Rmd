@@ -36,9 +36,10 @@ This has the following effects:
 
 - `NEWS.md` is composed from bits in your most recent commit messages, no need to resolve merge conflicts in `NEWS.md` anymore
 - A new version number is assigned automatically (this is modeled after `usethis::use_version()`)
-- A tag matching the version number is assigned automatically, with the most recent news included in the tag's message
-    - When you push the tag, contributors `@`-mentioned in the NEWS will be notified
-    - The tag will be listed on GitHub in the "Releases", it's very easy to convert it to a proper release by copying the message that's already part of the tag
+- A tag matching the version number is assigned automatically, with the most recent NEWS included in the tag's message. When you push the tag:
+    - contributors `@`-mentioned in the NEWS will be notified
+    - links will be added to issues or pull requests referenced from NEWS entries
+    - the tag will be listed on GitHub in the "Releases", it's very easy to convert it to a proper release by copying the message that's already part of the tag
 
 
 ## Workflow for releasing to CRAN
