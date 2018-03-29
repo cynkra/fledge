@@ -39,7 +39,7 @@ get_last_tag_impl <- function() {
   all_tags <- git2r::tags(repo)
   if (length(all_tags) == 0) return(NULL)
 
-  tags_sha <- map(all_tags, "target")
+  tags_sha <- compact(map(all_tags, "target"))
   tags_commits <- map(tags_sha, git2r::lookup, repo = repo)
   tags_ab <- map(tags_commits, git2r::ahead_behind, repo_head)
   tags_only_b <- discard(tags_ab, ~.[[1]] > 0)
