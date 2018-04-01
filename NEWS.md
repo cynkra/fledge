@@ -1,3 +1,12 @@
+# fledge 0.0.0.9002 (2018-04-01)
+
+- Bumping the version without changing the code results a the `NEWS.md` entry that reads "Same as previous version".
+- Renamed `tag_version()` to `finalize_version()`, which calls the new `commit_version()` and `tag_version(force)` functions.
+- New `commit_version()` that only creates a commit, amending as necessary.
+- New `tag_version()` only creates a tag, overwrites an existing tag only with `force = TRUE`.
+- When enumerating tags, all tags without message are ignored.
+
+
 # fledge 0.0.0.9001 (2018-03-29)
 
 - If the `DESCRIPTION` has a `"Date"` field, it is populated with the current date in `update_version()`.
