@@ -20,7 +20,7 @@ Currently, this "works for me", use at your own risk.
 
 ## Demo
 
-![asciinema demo](readme/demo.gif)
+[![asciinema demo](readme/demo.gif)](https://asciinema.org/a/173876)
 
 ## Workflow for development
 
