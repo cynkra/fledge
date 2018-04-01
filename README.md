@@ -22,7 +22,7 @@ The *fledge* package assumes an R package that is version-controlled with Git in
 3.  (Optional.) Edit `NEWS.md` as appropriate. When done, call
 
     ``` r
-    fledge::tag_version()
+    fledge::finalize_version()
     ```
 
 This has the following effects:
@@ -48,7 +48,7 @@ Workflow for releasing to CRAN
 3.  Call
 
     ``` r
-    fledge::tag_version()
+    fledge::finalize_version()
     ```
 
 4.  Make last-minute adjustments before releasing to CRAN.
@@ -59,7 +59,7 @@ Workflow for releasing to CRAN
     fledge::bump_version()
     ```
 
-    to re-tag the released version *(not yet implemented)* and to switch to a development version immediately.
+    to re-tag the released version and to switch to a development version immediately.
 
 First-time users
 ----------------
@@ -76,7 +76,7 @@ Setting up *fledge* isn't much different from the regular development workflow:
 2.  Edit `NEWS.md`, call
 
     ``` r
-    fledge::tag_version()
+    fledge::finalize_version()
     ```
 
 3.  From here on, switch to the [development workflow](#workflow-for-development). Don't forget to use bullet points in your commit or merge messages to indicate NEWS-worthy changes!
@@ -107,6 +107,8 @@ will be added as:
 
 to `NEWS.md`.
 
+When retrieving the current NEWS for defining the tag message, the entries between the first two first-level headers (starting with `#`) are returned. You can use second- and third-level headers and add as many empty lines as you want.
+
 Documentation
 -------------
 
@@ -114,9 +116,9 @@ The main entry point is `bump_version()`, which does the following:
 
 1.  `update_news()`: collects `NEWS` entries from top-level commits
 2.  `update_version()`: bump version in `DESCRIPTION`, add header to `NEWS.md`
-3.  `tag_version()`: commit `DESCRIPTION` and `NEWS.md`, create tag with message
+3.  `finalize_version()`: commit `DESCRIPTION` and `NEWS.md`, create tag with message
 
-If you haven't committed since updating `NEWS.md` and `DESCRIPTION`, you can also edit `NEWS.md` and call `tag_version()` again. Both the commit and the tag will be updated.
+If you haven't committed since updating `NEWS.md` and `DESCRIPTION`, you can also edit `NEWS.md` and call `finalize_version()` again. Both the commit and the tag will be updated.
 
 Installation
 ------------

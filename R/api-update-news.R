@@ -6,4 +6,5 @@
 #' @export
 update_news <- function(range = get_top_level_commits(since = get_last_tag())) {
   update_news_impl(range)
+  invisible(NULL)
 }

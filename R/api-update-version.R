@@ -6,4 +6,5 @@
 #' @export
 update_version <- function(which = "dev") {
   update_version_impl(which)
+  invisible(NULL)
 }

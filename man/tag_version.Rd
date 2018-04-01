@@ -4,7 +4,11 @@
 \alias{tag_version}
 \title{Create a new version tag}
 \usage{
-tag_version()
+tag_version(force = FALSE)
+}
+\arguments{
+\item{force}{Re-tag even if the last commit wasn't created by
+\code{\link[=bump_version]{bump_version()}}.  Useful when defining a CRAN release.}
 }
 \description{
 Parses \code{NEWS.md} and creates/updates the tag for the most recent version.
