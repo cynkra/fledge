@@ -7,6 +7,11 @@ The goal of *fledge* is to streamline the process of versioning R packages and u
 
 Currently, this "works for me", use at your own risk.
 
+Demo
+----
+
+![asciinema demo](readme/demo.gif)
+
 Workflow for development
 ------------------------
 

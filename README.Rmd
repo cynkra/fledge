@@ -18,6 +18,10 @@ The goal of *fledge* is to streamline the process of versioning R packages and u
 
 Currently, this "works for me", use at your own risk.
 
+## Demo
+
+![asciinema demo](readme/demo.gif)
+
 ## Workflow for development
 
 The *fledge* package assumes an R package that is version-controlled with Git in a dedicated repository. It will take care of updating `NEWS.md` and `DESCRIPTION` when you want to assign a new version to your package.
