@@ -4,7 +4,7 @@ commit_version_impl <- function() {
   desc <- desc::desc(file = "DESCRIPTION")
   version <- desc$get_version()
 
-  if (grepl("^fledge: Bump version to ", git2r::last_commit()$message)) {
+  if (git2r::last_commit()$message == get_commit_message(version)) {
     message("Resetting to previous commit")
     git2r::reset(git2r::revparse_single(revision = "HEAD^"))
     amending <- TRUE
@@ -15,8 +15,12 @@ commit_version_impl <- function() {
   git2r::add(".", c("DESCRIPTION", "NEWS.md"))
   if (length(git2r::status(unstaged = FALSE, untracked = FALSE)$staged) > 0) {
     message("Committing changes")
-    git2r::commit(".", paste0("fledge: Bump version to ", version))
+    git2r::commit(".", get_commit_message(version))
   }
 
   amending
+}
+
+get_commit_message <- function(version) {
+  paste0("fledge: Bump version to ", version)
 }
