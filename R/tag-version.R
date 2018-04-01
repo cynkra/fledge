@@ -18,6 +18,11 @@ tag_version_impl <- function(force) {
   message("Creating tag ", tag)
   msg_header <- paste0(desc$get("Package"), " ", version)
   git2r::tag(".", tag, message = paste0(msg_header, "\n\n", current_news))
+
+  message("Tag message:")
+  message(msg_header)
+  message()
+  walk(current_news, message)
 }
 
 get_current_news <- function() {
