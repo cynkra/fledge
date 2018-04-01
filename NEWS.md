@@ -1,3 +1,9 @@
+# fledge 0.0.0.9003 (2018-04-01)
+
+- When writing the tag, print most recent NEWS.
+- Commits from bumping to an earlier version are no longer overwritten.
+
+
 # fledge 0.0.0.9002 (2018-04-01)
 
 - Bumping the version without changing the code results a the `NEWS.md` entry that reads "Same as previous version".
