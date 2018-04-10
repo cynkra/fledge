@@ -12,6 +12,8 @@ Imports:
     desc,
     git2r,
     purrr
+Remotes:
+    ropensci/git2r
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
