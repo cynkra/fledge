@@ -66,6 +66,11 @@ Workflow for releasing to CRAN
 
     to re-tag the released version and to switch to a development version immediately.
 
+Caveat
+------
+
+If you rebase after creating a tag, you need to call `finalize_version()` to make sure the tag is moved to the mainline branch. If you pushed after rebasing, the tag may have been pushed as well. In this case, invoke `git push origin :vx.y.z.9www` (where `x.y.z.9www` is the new version) to delete the newly created remote tag.
+
 First-time users
 ----------------
 
