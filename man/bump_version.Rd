@@ -17,6 +17,10 @@ Calls the following functions:
 \enumerate{
 \item \code{\link[=update_news]{update_news()}}
 \item \code{\link[=update_version]{update_version()}}, using the \code{which} argument
-\item \code{\link[=finalize_version]{finalize_version()}}
+\item Depending on the \code{which} argument:
+\itemize{
+\item If \code{"dev"}, \code{\link[=finalize_version]{finalize_version()}}
+\item Otherwise, \code{\link[=commit_version]{commit_version()}}.
+}
 }
 }
