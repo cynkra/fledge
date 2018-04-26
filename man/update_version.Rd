@@ -7,7 +7,8 @@
 update_version(which = "dev")
 }
 \arguments{
-\item{which}{which}
+\item{which}{Component of the version number to update. Supported
+values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
 }
 \description{
 Bumps a version component and adds to \code{NEWS.md} and \code{DESCRIPTION}.

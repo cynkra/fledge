@@ -8,7 +8,8 @@
 bump_version(which = "dev")
 }
 \arguments{
-\item{which}{which}
+\item{which}{Component of the version number to update. Supported
+values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
 }
 \description{
 Calls the following functions:
