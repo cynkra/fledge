@@ -66,11 +66,7 @@ This has the following effects:
     fledge::bump_version()
     ```
     
-    to re-tag the released version and to switch to a development version immediately.
-
-## Caveat
-
-If you rebase after creating a tag, you need to call `finalize_version()` to make sure the tag is moved to the mainline branch.  If you pushed after rebasing, the tag may have been pushed as well.  In this case, invoke `git push origin :vx.y.z.9www` (where `x.y.z.9www` is the new version) to delete the newly created remote tag.
+    to tag the released version and to switch to a development version immediately.
 
 ## First-time users
 
@@ -126,9 +122,17 @@ The main entry point is `bump_version()`, which does the following:
 
 1. `update_news()`: collects `NEWS` entries from top-level commits
 2. `update_version()`: bump version in `DESCRIPTION`, add header to `NEWS.md`
-3. `finalize_version()`: commit `DESCRIPTION` and `NEWS.md`, create tag with message
+3. Depending on the release type:
+    - `"dev"` releases: `finalize_version()`: commit `DESCRIPTION` and `NEWS.md`, create tag with message
+    - other releases: `commit_version()`: only commit `DESCRIPTION` and `NEWS.md`
 
-If you haven't committed since updating `NEWS.md` and `DESCRIPTION`, you can also edit `NEWS.md` and call `finalize_version()` again. Both the commit and the tag will be updated.
+You can always edit `NEWS.md` and call `finalize_version()` again. Both the commit and the tag will be updated.
+
+## Caveats
+
+If you rebase after creating a tag, you need to call `finalize_version()` to make sure the tag is moved to the mainline branch.
+
+If you pushed after calling `finalize_version()` (directly or indirectly), the tag may have been pushed as well.   In this case, invoke `git push origin :vx.y.z.9www` (where `x.y.z.9www` is the new version) to delete the newly created remote tag.  Because of this, only `"dev"` releases are tagged automatically, other releases always must be tagged manually with `tag_version()`.
 
 
 ## Installation
