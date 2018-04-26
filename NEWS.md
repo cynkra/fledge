@@ -1,3 +1,9 @@
+# fledge 0.0.0.9004 (2018-04-26)
+
+- Only `"dev"` releases are tagged automatically. For other releases (which usually go to CRAN), it is recommended to postpone tagging until the version is accepted on CRAN (#4).
+- Add documentation for `which` argument.
+
+
 # fledge 0.0.0.9003 (2018-04-01)
 
 - When writing the tag, print most recent NEWS.
