@@ -1,16 +1,21 @@
-# fledge 0.0.0.9004 (2018-04-26)
+# fledge 0.0.0.9005
+
+- Don't write date in NEWS header: It can be found out with "blame" and conflicts with the rendering in pkgdown.
+
+
+# fledge 0.0.0.9004
 
 - Only `"dev"` releases are tagged automatically. For other releases (which usually go to CRAN), it is recommended to postpone tagging until the version is accepted on CRAN (#4).
 - Add documentation for `which` argument.
 
 
-# fledge 0.0.0.9003 (2018-04-01)
+# fledge 0.0.0.9003
 
 - When writing the tag, print most recent NEWS.
 - Commits from bumping to an earlier version are no longer overwritten.
 
 
-# fledge 0.0.0.9002 (2018-04-01)
+# fledge 0.0.0.9002
 
 - Bumping the version without changing the code results a the `NEWS.md` entry that reads "Same as previous version".
 - Renamed `tag_version()` to `finalize_version()`, which calls the new `commit_version()` and `tag_version(force)` functions.
@@ -19,13 +24,13 @@
 - When enumerating tags, all tags without message are ignored.
 
 
-# fledge 0.0.0.9001 (2018-03-29)
+# fledge 0.0.0.9001
 
 - If the `DESCRIPTION` has a `"Date"` field, it is populated with the current date in `update_version()`.
 - An empty list of changes doesn't raise an error anymore. This will allow bumping to a dev version immediately after CRAN release.
 
 
-# fledge 0.0.0.9000 (2018-03-29)
+# fledge 0.0.0.9000
 
 Initial release.
 
