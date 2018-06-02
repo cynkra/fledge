@@ -13,7 +13,7 @@ commit_version_impl <- function() {
   }
 
   git2r::add(".", c("DESCRIPTION", "NEWS.md"))
-  if (length(git2r::status(unstaged = FALSE, untracked = FALSE)$staged) > 0) {
+  if (length(git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged) > 0) {
     message("Committing changes")
     git2r::commit(".", get_commit_message(version))
   }
