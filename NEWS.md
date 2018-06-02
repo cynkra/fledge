@@ -1,3 +1,8 @@
+# fledge 0.0.0.9006
+
+- Fix compatibility with dev version of _git2r_.
+
+
 # fledge 0.0.0.9005
 
 - Don't write date in NEWS header: It can be found out with "blame" and conflicts with the rendering in pkgdown.
