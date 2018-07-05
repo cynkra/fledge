@@ -1,0 +1,6 @@
+template:
+  params:
+    bootswatch: flatly # https://bootswatch.com/flatly/
+
+development:
+  mode: auto
