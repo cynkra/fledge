@@ -57,7 +57,7 @@ This has the following effects:
 1. Edit `NEWS.md`, convert the changelog to a higher-level description of features and bug fixes.
 1. Call
     ```r
-    fledge::finalize_version()
+    fledge::commit_version()
     ```
 1. Make last-minute adjustments before releasing to CRAN.
 1. When accepted, call

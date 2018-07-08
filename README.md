@@ -53,7 +53,7 @@ Workflow for releasing to CRAN
 3.  Call
 
     ``` r
-    fledge::finalize_version()
+    fledge::commit_version()
     ```
 
 4.  Make last-minute adjustments before releasing to CRAN.
