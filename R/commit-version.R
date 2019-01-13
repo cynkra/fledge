@@ -22,5 +22,5 @@ commit_version_impl <- function() {
 }
 
 get_commit_message <- function(version) {
-  paste0("fledge: Bump version to ", version)
+  paste0("Bump version to ", version)
 }
