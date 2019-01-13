@@ -28,6 +28,7 @@ add_to_news <- function(news) {
   news_path <- "NEWS.md"
   old_news <- safe_read_lines(news_path)
   writeLines(c(news, old_news), news_path)
+  usethis::edit_file(news_path)
 }
 
 safe_read_lines <- function(path) {
