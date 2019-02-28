@@ -1,7 +1,7 @@
 Package: fledge
 Title: Wings for Your R Packages
-Version: 0.0.0.9006
-Date: 2018-06-02
+Version: 0.0.0.9007
+Date: 2019-02-28
 Authors@R: person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org")
 Description:
     Streamlines the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?

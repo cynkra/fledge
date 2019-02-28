@@ -1,3 +1,8 @@
+# fledge 0.0.0.9007
+
+- NEWS file is opened in editor in interactive mode.
+
+
 # fledge 0.0.0.9006
 
 - Fix compatibility with dev version of _git2r_.
