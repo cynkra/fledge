@@ -1,3 +1,8 @@
+# fledge 0.0.0.9009
+
+- Advise to push tags (#13).
+
+
 # fledge 0.0.0.9008
 
 - More informative bullets (#2).
