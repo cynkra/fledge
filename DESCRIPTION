@@ -9,12 +9,10 @@ License: GPL-3
 URL: https://github.com/krlmlr/fledge, http://krlmlr.github.io/fledge
 BugReports: https://github.com/krlmlr/fledge/issues
 Imports: 
-    desc,
-    git2r (>= 0.21.0.9002),
-    purrr,
-    usethis
-Remotes:
-    ropensci/git2r
+    desc (>= 1.2.0),
+    git2r (>= 0.25.2),
+    purrr (>= 0.3.2),
+    usethis (>= 1.5.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

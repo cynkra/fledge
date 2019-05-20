@@ -6,6 +6,8 @@ get_top_level_commits_impl <- function(since) {
 
   commit <- git2r::commits(repo, time = FALSE, n = 1)[[1]]
 
+  since <- git2r::lookup_commit(since)
+
   get_first_parent(commit, since)
 }
 
@@ -39,12 +41,10 @@ get_last_tag_impl <- function() {
   all_tags <- git2r::tags(repo)
   if (length(all_tags) == 0) return(NULL)
 
-  tags_sha <- compact(map(all_tags, "target"))
-  tags_commits <- map(tags_sha, git2r::lookup, repo = repo)
-  tags_ab <- map(tags_commits, git2r::ahead_behind, repo_head)
+  tags_ab <- map(all_tags, git2r::ahead_behind, repo_head)
   tags_only_b <- discard(tags_ab, ~.[[1]] > 0)
   tags_b <- map_int(tags_only_b, 2)
 
   min_tag <- names(tags_b)[which.min(tags_b)]
-  tags_commits[[min_tag]]
+  all_tags[[min_tag]]
 }
