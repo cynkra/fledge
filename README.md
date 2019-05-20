@@ -33,9 +33,9 @@ your package.
     `NEWS.md` with a bullet point (`-` or `*`). This works for single
     commits, merge commits, or pull requests.
 2.  When you want to assign a version number to the current state of
-    your R package, call `r fledge::bump_version()`
-3.  (Optional.) Edit `NEWS.md` as appropriate. When done, call `r
-    fledge::finalize_version()`
+    your R package, call `fledge::bump_version()`
+3.  (Optional.) Edit `NEWS.md` as appropriate. When done, call
+    `fledge::finalize_version()`
 
 This has the following effects:
 
@@ -55,19 +55,22 @@ This has the following effects:
 
 ## Workflow for releasing to CRAN
 
-1.  Call `r fledge::bump_version("patch")`
-    
-    (or `"minor"` or `"major"` as appropriate).
+1.  Call `fledge::bump_version("patch")` (or `"minor"` or `"major"` as
+    appropriate).
 
 2.  Edit `NEWS.md`, convert the changelog to a higher-level description
     of features and bug fixes.
 
-3.  Call `r fledge::commit_version()`
+3.  Call `fledge::commit_version()`
 
 4.  Make last-minute adjustments before releasing to CRAN.
 
-5.  When accepted, call `r fledge::tag_version(force = TRUE)
-    fledge::bump_version()`
+5.  When accepted, call:
+    
+    ``` r
+    fledge::tag_version(force = TRUE)
+    fledge::bump_version()
+    ```
     
     to tag the released version and to switch to a development version
     immediately.
@@ -123,6 +126,9 @@ When retrieving the current NEWS for defining the tag message, the
 entries between the first two first-level headers (starting with `#`)
 are returned. You can use second- and third-level headers and add as
 many empty lines as you want.
+
+To undo the last version update, call `unbump_version()`. This comes
+with a number of safety checks and might not work in all circumstances.
 
 ## Documentation
 
