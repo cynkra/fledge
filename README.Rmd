@@ -14,9 +14,11 @@ knitr::opts_chunk$set(
 ```
 # fledge
 
-The goal of *fledge* is to streamline the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?
+<!-- badges: start -->
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+<!-- badges: end -->
 
-Currently, this "works for me", use at your own risk.
+The goal of *fledge* is to streamline the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?
 
 ## Demo
 

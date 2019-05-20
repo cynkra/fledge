@@ -3,10 +3,14 @@
 
 # fledge
 
+<!-- badges: start -->
+
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+<!-- badges: end -->
+
 The goal of *fledge* is to streamline the process of versioning R
 packages and updating NEWS. Numbers are cheap, why not use them?
-
-Currently, this “works for me”, use at your own risk.
 
 ## Demo
 
