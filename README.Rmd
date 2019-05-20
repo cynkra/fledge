@@ -1,5 +1,7 @@
 ---
-output: github_document
+output:
+  github_document:
+    html_preview: false
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -147,6 +149,8 @@ The main entry point is `bump_version()`, which does the following:
     - other releases: `commit_version()`: only commit `DESCRIPTION` and `NEWS.md`
 
 You can always edit `NEWS.md` and call `finalize_version()` again. Both the commit and the tag will be updated.
+
+To undo the last version update, call `unbump_version()`. This comes with a number of safety checks and might not work in all circumstances.
 
 ## Caveats
 

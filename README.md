@@ -169,6 +169,9 @@ The main entry point is `bump_version()`, which does the following:
 You can always edit `NEWS.md` and call `finalize_version()` again. Both
 the commit and the tag will be updated.
 
+To undo the last version update, call `unbump_version()`. This comes
+with a number of safety checks and might not work in all circumstances.
+
 ## Caveats
 
 If you rebase after creating a tag, you need to call
