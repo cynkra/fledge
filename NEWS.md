@@ -1,3 +1,11 @@
+# fledge 0.0.0.9008
+
+- More informative bullets (#2).
+- New `unbump_version()` (#7).
+- Remove compat code for git2r < 0.25.
+- Protect against corner case of empty NEWS file.
+
+
 # fledge 0.0.0.9007
 
 - NEWS file is opened in editor in interactive mode.
