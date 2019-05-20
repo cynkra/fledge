@@ -6,4 +6,5 @@
 #' @export
 finalize_version <- function() {
   finalize_version_impl()
+  ui_todo("If you edit {ui_path('NEWS.md')}, save the file and call {ui_code('fledge::finalize_version()')}")
 }

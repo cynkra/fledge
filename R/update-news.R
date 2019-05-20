@@ -3,10 +3,14 @@ NULL
 
 update_news_impl <- function(range) {
   news <- collect_news(range)
+
+  ui_info("Adding new entries to {ui_path('NEWS.md')}")
   add_to_news(news)
 }
 
 collect_news <- function(range) {
+  ui_info("Scraping {ui_value(length(range))} commit messages")
+
   messages <- map_chr(range, "message")
   messages_before_triple_dash <- map_chr(strsplit(messages, "\n---", fixed = TRUE), 1)
   message_lines <- strsplit(messages_before_triple_dash, "\n", fixed = TRUE)
@@ -21,14 +25,20 @@ collect_news <- function(range) {
     }
   }
 
+  ui_done("Found {ui_value(length(message_items))} NEWS-worthy entries.")
   paste0(paste(message_items, collapse = "\n"), "\n\n")
 }
 
+news_path <- "NEWS.md"
+
 add_to_news <- function(news) {
-  news_path <- "NEWS.md"
   old_news <- safe_read_lines(news_path)
   writeLines(c(news, old_news), news_path)
-  usethis::edit_file(news_path)
+  invisible(news_path)
+}
+
+edit_news <- function() {
+  edit_file(news_path)
 }
 
 safe_read_lines <- function(path) {

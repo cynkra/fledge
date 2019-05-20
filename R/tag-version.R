@@ -11,18 +11,15 @@ tag_version_impl <- function(force) {
       stop("Tag ", tag, " exists, use `force = TRUE` to overwrite.", call. = FALSE)
     }
 
-    message("Deleting tag ", tag)
+    ui_info("Deleting tag {ui_value(tag)}")
     git2r::tag_delete(".", tag)
   }
 
-  message("Creating tag ", tag)
+  ui_info("Creating tag {ui_value(tag)} with tag message derived from {ui_path('NEWS.md')}")
   msg_header <- paste0(desc$get("Package"), " ", version)
   git2r::tag(".", tag, message = paste0(msg_header, "\n\n", current_news))
 
-  message("Tag message:")
-  message(msg_header)
-  message()
-  walk(current_news, message)
+  invisible()
 }
 
 get_current_news <- function() {
