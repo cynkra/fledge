@@ -10,9 +10,11 @@ URL: https://github.com/krlmlr/fledge, http://krlmlr.github.io/fledge
 BugReports: https://github.com/krlmlr/fledge/issues
 Imports: 
     desc (>= 1.2.0),
-    git2r (>= 0.25.2),
+    git2r (>= 0.25.2.9000),
     purrr (>= 0.3.2),
     usethis (>= 1.5.0)
+Remotes: 
+    ropensci/git2r
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
