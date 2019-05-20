@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All top-level commits — get_top_level_commits • fledge</title>
+<title>Undoes bumping the package version — unbump_version • fledge</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="All top-level commits — get_top_level_commits" />
+<meta property="og:title" content="Undoes bumping the package version — unbump_version" />
 
-<meta property="og:description" content="Return all top-level commits since a particular version
-as commit objects." />
+<meta property="og:description" content="This undoes the effect of a bump_version() call, with a safety check." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,42 +102,25 @@ as commit objects." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>All top-level commits</h1>
-    <small class="dont-index">Source: <a href='https://github.com/krlmlr/fledge/blob/master/R/api-get-top-level-commits.R'><code>R/api-get-top-level-commits.R</code></a></small>
-    <div class="hidden name"><code>get_top_level_commits.Rd</code></div>
+    <h1>Undoes bumping the package version</h1>
+    <small class="dont-index">Source: <a href='https://github.com/krlmlr/fledge/blob/master/R/api-unbump-version.R'><code>R/api-unbump-version.R</code></a>, <a href='https://github.com/krlmlr/fledge/blob/master/R/unbump-version.R'><code>R/unbump-version.R</code></a></small>
+    <div class="hidden name"><code>unbump_version.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Return all top-level commits since a particular version
-as commit objects.</p>
+    <p>This undoes the effect of a <code><a href='bump_version.html'>bump_version()</a></code> call, with a safety check.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_top_level_commits</span>(<span class='no'>since</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>since</th>
-      <td><p>A commit or tag object, e.g. <code><a href='get_last_tag.html'>get_last_tag()</a></code>.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list of commit objects similarly to <code><a href='https://www.rdocumentation.org/packages/git2r/topics/commits'>git2r::commits()</a></code>.</p>
-    
+    <pre class="usage"><span class='fu'>unbump_version</span>()</pre>
+        
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>
