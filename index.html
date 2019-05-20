@@ -89,10 +89,14 @@
 <a href="#workflow-for-development" class="anchor"></a>Workflow for development</h2>
 <p>The <em>fledge</em> package assumes an R package that is version-controlled with Git in a dedicated repository. It will take care of updating <code>NEWS.md</code> and <code>DESCRIPTION</code> when you want to assign a new version to your package.</p>
 <ol style="list-style-type: decimal">
-<li>In commit messages to <code>master</code>, mark everything that should go to <code>NEWS.md</code> with a bullet point (<code>-</code> or <code>*</code>). This works for single commits, merge commits, or pull requests.</li>
-<li>When you want to assign a version number to the current state of your R package, call <code><a href="reference/bump_version.html">fledge::bump_version()</a></code>
+<li><p>In commit messages to <code>master</code>, mark everything that should go to <code>NEWS.md</code> with a bullet point (<code>-</code> or <code>*</code>). This works for single commits, merge commits, or pull requests.</p></li>
+<li>
+<p>When you want to assign a version number to the current state of your R package, call</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>()</a></code></pre></div>
 </li>
-<li>(Optional.) Edit <code>NEWS.md</code> as appropriate. When done, call <code><a href="reference/finalize_version.html">fledge::finalize_version()</a></code>
+<li>
+<p>(Optional.) Edit <code>NEWS.md</code> as appropriate. When done, call</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/finalize_version">finalize_version</a></span>()</a></code></pre></div>
 </li>
 </ol>
 <p>This has the following effects:</p>
@@ -113,15 +117,21 @@
 <h2 class="hasAnchor">
 <a href="#workflow-for-releasing-to-cran" class="anchor"></a>Workflow for releasing to CRAN</h2>
 <ol style="list-style-type: decimal">
-<li>Call <code><a href="reference/bump_version.html">fledge::bump_version("patch")</a></code> (or <code>"minor"</code> or <code>"major"</code> as appropriate).</li>
-<li>Edit <code>NEWS.md</code>, convert the changelog to a higher-level description of features and bug fixes.</li>
-<li>Call <code><a href="reference/commit_version.html">fledge::commit_version()</a></code>
-</li>
-<li>Make last-minute adjustments before releasing to CRAN.</li>
 <li>
-<p>When accepted, call:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/tag_version">tag_version</a></span>(<span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>()</a></code></pre></div>
+<p>Call</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>(<span class="st">"patch"</span>)</a></code></pre></div>
+<p>(or <code>"minor"</code> or <code>"major"</code> as appropriate).</p>
+</li>
+<li><p>Edit <code>NEWS.md</code>, convert the changelog to a higher-level description of features and bug fixes.</p></li>
+<li>
+<p>Call</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/commit_version">commit_version</a></span>()</a></code></pre></div>
+</li>
+<li><p>Make last-minute adjustments before releasing to CRAN.</p></li>
+<li>
+<p>When accepted, call</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/tag_version">tag_version</a></span>(<span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>()</a></code></pre></div>
 <p>to tag the released version and to switch to a development version immediately.</p>
 </li>
 </ol>
@@ -132,9 +142,13 @@
 <p>Setting up <em>fledge</em> isn’t much different from the regular development workflow:</p>
 <ol style="list-style-type: decimal">
 <li>
-<p>Bump the package version with <code>r  fledge::bump_version()</code></p>
-The <code>NEWS.md</code> file may grow large, especially if you haven’t used tags in your repository before.</li>
-<li>Edit <code>NEWS.md</code>, call <code>r  fledge::finalize_version()</code>
+<p>Bump the package version with</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>()</a></code></pre></div>
+<p>The <code>NEWS.md</code> file may grow large, especially if you haven’t used tags in your repository before.</p>
+</li>
+<li>
+<p>Edit <code>NEWS.md</code>, call</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/finalize_version">finalize_version</a></span>()</a></code></pre></div>
 </li>
 <li><p>From here on, switch to the <a href="#workflow-for-development">development workflow</a>. Don’t forget to use bullet points in your commit or merge messages to indicate NEWS-worthy changes!</p></li>
 </ol>
@@ -193,7 +207,7 @@ The fancy feature consists of the follwing components:
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install from GitHub via</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"krlmlr/fledge"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"krlmlr/fledge"</span>)</a></code></pre></div>
 </div>
 </div>
   </div>
