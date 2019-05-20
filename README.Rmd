@@ -32,8 +32,18 @@ The goal of *fledge* is to streamline the process of versioning R packages and u
 The *fledge* package assumes an R package that is version-controlled with Git in a dedicated repository. It will take care of updating `NEWS.md` and `DESCRIPTION` when you want to assign a new version to your package.
 
 1. In commit messages to `master`, mark everything that should go to `NEWS.md` with a bullet point (`-` or `*`). This works for single commits, merge commits, or pull requests.
-1. When you want to assign a version number to the current state of your R package, call `fledge::bump_version()`
-1. (Optional.) Edit `NEWS.md` as appropriate. When done, call `fledge::finalize_version()`
+
+1. When you want to assign a version number to the current state of your R package, call
+
+    ```r
+    fledge::bump_version()
+    ```
+
+1. (Optional.) Edit `NEWS.md` as appropriate. When done, call
+
+    ```r
+    fledge::finalize_version()
+    ```
 
 This has the following effects:
 
@@ -47,11 +57,25 @@ This has the following effects:
 
 ## Workflow for releasing to CRAN
 
-1. Call `fledge::bump_version("patch")` (or `"minor"` or `"major"` as appropriate).
+1. Call
+
+    ```r
+    fledge::bump_version("patch")
+    ```
+    
+    (or `"minor"` or `"major"` as appropriate).
+
 1. Edit `NEWS.md`, convert the changelog to a higher-level description of features and bug fixes.
-1. Call `fledge::commit_version()`
+
+1. Call
+
+    ```r
+    fledge::commit_version()
+    ```
+
 1. Make last-minute adjustments before releasing to CRAN.
-1. When accepted, call:
+
+1. When accepted, call
 
     ```r
     fledge::tag_version(force = TRUE)
@@ -65,15 +89,19 @@ This has the following effects:
 Setting up *fledge* isn't much different from the regular development workflow:
 
 1. Bump the package version with
+
     ```r
     fledge::bump_version()
     ```
     
     The `NEWS.md` file may grow large, especially if you haven't used tags in your repository before.
+
 1. Edit `NEWS.md`, call
+
     ```r
     fledge::finalize_version()
     ```
+
 1. From here on, switch to the [development workflow](#workflow-for-development). Don't forget to use bullet points in your commit or merge messages to indicate NEWS-worthy changes!
 
 ## NEWS generation
