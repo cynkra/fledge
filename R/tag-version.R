@@ -29,6 +29,8 @@ get_current_news <- function() {
   news_path <- "NEWS.md"
   news <- readLines(news_path)
   top_level_headers <- grep("^# [a-zA-Z][a-zA-Z0-9.]+[a-zA-Z0-9] [0-9.-]+", news)
+  if (length(top_level_headers) == 0) return(character())
+
   stopifnot(top_level_headers[[1]] == 1)
 
   if (length(top_level_headers) == 1) {
