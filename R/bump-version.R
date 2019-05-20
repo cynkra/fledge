@@ -12,6 +12,7 @@ bump_version_impl <- function(which) {
     finalize_version_impl()
     edit_news()
     ui_todo("If you have updated {ui_path('NEWS.md')}, save the file and call {ui_code('fledge::finalize_version()')}")
+    ui_todo("When done, push your changes to the remote repository. Make sure to push the tags too, use {ui_code('git push --tags')} from the command line.")
   } else {
   #'     - Otherwise, [commit_version()].
     commit_version()
