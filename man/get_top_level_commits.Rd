@@ -2,13 +2,17 @@
 % Please edit documentation in R/api-get-top-level-commits.R
 \name{get_top_level_commits}
 \alias{get_top_level_commits}
-\title{TBD}
+\title{All top-level commits}
 \usage{
 get_top_level_commits(since)
 }
 \arguments{
-\item{since}{since}
+\item{since}{A commit or tag object, e.g. \code{\link[=get_last_tag]{get_last_tag()}}.}
+}
+\value{
+A list of commit objects similarly to \code{\link[git2r:commits]{git2r::commits()}}.
 }
 \description{
-TBD
+Return all top-level commits since a particular version
+as commit objects.
 }

@@ -2,10 +2,13 @@
 % Please edit documentation in R/api-get-last-tag.R
 \name{get_last_tag}
 \alias{get_last_tag}
-\title{TBD}
+\title{The most recent tag}
 \usage{
 get_last_tag()
 }
+\value{
+An element from this repo's \code{\link[git2r:tags]{git2r::tags()}}.
+}
 \description{
-TBD
+Returns the most recent Git tag.
 }
