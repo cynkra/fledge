@@ -18,7 +18,7 @@ bump_version_impl <- function(which) {
     commit_version()
     ui_info("Preparing package for release (CRAN or otherwise)")
     edit_news()
-    ui_todo("Every time you edit {ui_path{'NEWS.md'}, save it and call {ui_code('fledge::commit_version()')}")
+    ui_todo("Every time you edit {ui_path('NEWS.md')}, save it and call {ui_code('fledge::commit_version()')}")
     ui_todo("After CRAN release, call {ui_code('fledge::tag_version(force = TRUE)')} and {ui_code('fledge::bump_version()')} to re-enter development mode")
   }
 }
