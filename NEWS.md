@@ -1,3 +1,8 @@
+# fledge 0.0.0.9010
+
+- Fix error when starting new project.
+
+
 # fledge 0.0.0.9009
 
 - Advise to push tags (#13).
