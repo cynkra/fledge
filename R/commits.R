@@ -6,7 +6,9 @@ get_top_level_commits_impl <- function(since) {
 
   commit <- git2r::commits(repo, time = FALSE, n = 1)[[1]]
 
-  since <- git2r::lookup_commit(since)
+  if (!is.null(since)) {
+    since <- git2r::lookup_commit(since)
+  }
 
   get_first_parent(commit, since)
 }
