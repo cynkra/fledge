@@ -1,5 +1,5 @@
 commit_version_impl <- function() {
-  stopifnot(length(git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged) == 0)
+  check_only_staged(c("DESCRIPTION", "NEWS.md"))
 
   if (is_last_commit_bump()) {
     ui_info("Resetting to previous commit")
@@ -27,4 +27,12 @@ get_commit_message <- function(version) {
   version <- desc$get_version()
 
   paste0("Bump version to ", version)
+}
+
+check_only_staged <- function(allowed_modifications) {
+  staged <- git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged
+  stopifnot(all(names(staged) == "modified"))
+
+  modified <- staged$modified
+  stopifnot(all(modified %in% allowed_modifications))
 }
