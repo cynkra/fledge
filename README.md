@@ -15,7 +15,7 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
 status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge)
 <!-- badges: end -->
 
-*fledge* has been designed to streamline the process of versioning R
+{fledge} has been designed to streamline the process of versioning R
 packages on *Git*, with the functionality to automatically update
 `NEWS.md` and `DESCRIPTION` with relevant information from recent commit
 messages. For details on usage and implementation, refer the [Get
@@ -37,10 +37,10 @@ devtools::install_github("krlmlr/fledge")
 
 ## Usage
 
-Run *fledge* commands from your package directory for versioning as
+Run {fledge} commands from your package directory for versioning as
 below.
 
-  - To configure your package for the first-time with *fledge*, use
+  - To configure your package for the first-time with {fledge}, use
     
     ``` r
     fledge::bump_version()

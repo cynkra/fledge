@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge)
 <!-- badges: end -->
 
-_fledge_ has been designed to streamline the process of versioning R packages on _Git_, with the functionality to automatically update `NEWS.md` and `DESCRIPTION` with relevant information from recent commit messages.
+{fledge} has been designed to streamline the process of versioning R packages on _Git_, with the functionality to automatically update `NEWS.md` and `DESCRIPTION` with relevant information from recent commit messages.
 For details on usage and implementation, refer the [Get Started](https://krlmlr.github.io/fledge/articles/fledge.html) article.
 
 ## Demo
@@ -42,9 +42,9 @@ devtools::install_github("krlmlr/fledge")
 
 ## Usage
 
-Run _fledge_ commands from your package directory for versioning as below.
+Run {fledge} commands from your package directory for versioning as below.
 
-* To configure your package for the first-time with _fledge_, use
+* To configure your package for the first-time with {fledge}, use
 
     ```r
     fledge::bump_version()
