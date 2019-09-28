@@ -32,16 +32,17 @@ collect_news <- function(range) {
 news_path <- "NEWS.md"
 
 add_to_news <- function(news) {
-  old_news <- safe_read_lines(news_path)
-  writeLines(c(news, old_news), news_path)
+  enc::transform_lines_enc(news_path, make_prepend(news))
   invisible(news_path)
+}
+
+make_prepend <- function(news) {
+  force(news)
+  function(x) {
+    c(news, x)
+  }
 }
 
 edit_news <- function() {
   edit_file(news_path)
-}
-
-safe_read_lines <- function(path) {
-  if (!file.exists(path)) return(character())
-  readLines(path)
 }
