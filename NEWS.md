@@ -1,3 +1,8 @@
+# fledge 0.0.2
+
+- New "Get started" article (#15).
+
+
 # fledge 0.0.1.9001
 
 - Test for manual tagging (#6).
