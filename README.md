@@ -26,7 +26,7 @@ Started](https://krlmlr.github.io/fledge/articles/fledge.html) article.
 [![asciinema
 demo](https://github.com/krlmlr/fledge/raw/master/readme/demo.gif)](https://asciinema.org/a/173876)
 
-Click on the image for showing in a separate tab.
+Click on the image to show in a separate tab.
 
 ## Installation
 
