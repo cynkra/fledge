@@ -1,3 +1,5 @@
+url: https://krlmlr.github.io/fledge
+
 template:
   params:
     bootswatch: flatly # https://bootswatch.com/flatly/
