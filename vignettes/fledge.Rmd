@@ -1,4 +1,22 @@
-# fledge
+---
+title: "Get started with fledge"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{fledge}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fledge)
+```
 
 The goal of {fledge} is to streamline the process of versioning R packages and updating the `NEWS.md` file.
 It applies to R packages that are being version controlled on GitHub.
