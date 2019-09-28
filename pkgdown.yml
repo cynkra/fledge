@@ -1,5 +1,9 @@
 pandoc: '2.2'
 pkgdown: 1.4.1
 pkgdown_sha: ~
-articles: []
+articles:
+  fledge: fledge.html
+urls:
+  reference: https://krlmlr.github.io/fledge/reference
+  article: https://krlmlr.github.io/fledge/articles
 

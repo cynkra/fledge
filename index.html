@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fledge</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -43,6 +43,9 @@
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="articles/fledge.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -75,137 +78,53 @@
 <a href="#fledge" class="anchor"></a>fledge</h1></div>
 <!-- badges: start -->
 
-<p>The goal of <em>fledge</em> is to streamline the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?</p>
+<p>{fledge} has been designed to streamline the process of versioning R packages on <em>Git</em>, with the functionality to automatically update <code>NEWS.md</code> and <code>DESCRIPTION</code> with relevant information from recent commit messages. For details on usage and implementation, refer the <a href="https://krlmlr.github.io/fledge/articles/fledge.html">Get Started</a> article.</p>
 <div id="demo" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demo" class="anchor"></a>Demo</h2>
-<p><a href="https://asciinema.org/a/173876"><img src="readme/demo.gif" alt="asciinema demo"></a></p>
-</div>
-<div id="workflow-for-development" class="section level2">
-<h2 class="hasAnchor">
-<a href="#workflow-for-development" class="anchor"></a>Workflow for development</h2>
-<p>The <em>fledge</em> package assumes an R package that is version-controlled with Git in a dedicated repository. It will take care of updating <code>NEWS.md</code> and <code>DESCRIPTION</code> when you want to assign a new version to your package.</p>
-<ol>
-<li><p>In commit messages to <code>master</code>, mark everything that should go to <code>NEWS.md</code> with a bullet point (<code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>). This works for single commits, merge commits, or pull requests.</p></li>
-<li>
-<p>When you want to assign a version number to the current state of your R package, call</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
-</li>
-<li>
-<p>(Optional.) Edit <code>NEWS.md</code> as appropriate. When done, call</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
-</li>
-</ol>
-<p>This has the following effects:</p>
-<ul>
-<li>
-<code>NEWS.md</code> is composed from bits in your most recent commit messages, no need to resolve merge conflicts in <code>NEWS.md</code> anymore</li>
-<li>A new version number is assigned automatically (this is modeled after <code><a href="https://usethis.r-lib.org/reference/use_version.html">usethis::use_version()</a></code>)</li>
-<li>A tag matching the version number is assigned automatically, with the most recent NEWS included in the tag’s message. When you push the tag:
-<ul>
-<li>contributors <code>@</code>-mentioned in the NEWS will be notified</li>
-<li>links will be added to issues or pull requests referenced from NEWS entries</li>
-<li>the tag will be listed on GitHub in the “Releases”, it’s very easy to convert it to a proper release by copying the message that’s already part of the tag</li>
-</ul>
-</li>
-</ul>
-</div>
-<div id="workflow-for-releasing-to-cran" class="section level2">
-<h2 class="hasAnchor">
-<a href="#workflow-for-releasing-to-cran" class="anchor"></a>Workflow for releasing to CRAN</h2>
-<ol>
-<li>
-<p>Call</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a></code></pre></div>
-<p>(or <code>"minor"</code> or <code>"major"</code> as appropriate).</p>
-</li>
-<li><p>Edit <code>NEWS.md</code>, convert the changelog to a higher-level description of features and bug fixes.</p></li>
-<li>
-<p>Call</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/commit_version.html">commit_version</a></span>()</a></code></pre></div>
-</li>
-<li><p>Make last-minute adjustments before releasing to CRAN.</p></li>
-<li>
-<p>When accepted, call</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/tag_version.html">tag_version</a></span>(<span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
-<p>to tag the released version and to switch to a development version immediately.</p>
-</li>
-</ol>
-</div>
-<div id="first-time-users" class="section level2">
-<h2 class="hasAnchor">
-<a href="#first-time-users" class="anchor"></a>First-time users</h2>
-<p>Setting up <em>fledge</em> isn’t much different from the regular development workflow:</p>
-<ol>
-<li>
-<p>Bump the package version with</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
-<p>The <code>NEWS.md</code> file may grow large, especially if you haven’t used tags in your repository before.</p>
-</li>
-<li>
-<p>Edit <code>NEWS.md</code>, call</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
-</li>
-<li><p>From here on, switch to the <a href="#workflow-for-development">development workflow</a>. Don’t forget to use bullet points in your commit or merge messages to indicate NEWS-worthy changes!</p></li>
-</ol>
-</div>
-<div id="news-generation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#news-generation" class="anchor"></a>NEWS generation</h2>
-<p>New entries are added to <code>NEWS.md</code> from commit messages to commits in <code>master</code>. Only top-level commits are considered (roughly equivalent to <code>git log --first-parent</code>.) In those commits, the messages are parsed. Only lines that start with a star <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or a dash <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> are included, and a line that starts with three dashes makes sure that everything past that line isn’t included. Example: The following commit message:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">Merge f<span class="op">-</span>fancy<span class="op">-</span>feature to master, closes <span class="co">#5678</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Added fancy <span class="kw">feature</span> (<span class="co">#5678).</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Fixed bug as a side <span class="kw">effect</span> (<span class="co">#9012).</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="op">---</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">The fancy feature consists of the follwing components<span class="op">:</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="op">-</span><span class="st"> </span>foo</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="op">-</span><span class="st"> </span>bar</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="op">-</span><span class="st"> </span>baz</a></code></pre></div>
-<p>will be added as:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Added fancy <span class="kw">feature</span> (<span class="co">#5678).</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="op">-</span><span class="st"> </span>Fixed bug as a side <span class="kw">effect</span> (<span class="co">#9012).</span></a></code></pre></div>
-<p>to <code>NEWS.md</code>.</p>
-<p>When retrieving the current NEWS for defining the tag message, the entries between the first two first-level headers (starting with <code>#</code>) are returned. You can use second- and third-level headers and add as many empty lines as you want.</p>
-</div>
-<div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>The main entry point is <code><a href="reference/bump_version.html">bump_version()</a></code>, which does the following:</p>
-<ol>
-<li>
-<code><a href="reference/update_news.html">update_news()</a></code>: collects <code>NEWS</code> entries from top-level commits</li>
-<li>
-<code><a href="reference/update_version.html">update_version()</a></code>: bump version in <code>DESCRIPTION</code>, add header to <code>NEWS.md</code>
-</li>
-<li>Depending on the release type:
-<ul>
-<li>
-<code>"dev"</code> releases: <code><a href="reference/finalize_version.html">finalize_version()</a></code>: commit <code>DESCRIPTION</code> and <code>NEWS.md</code>, create tag with message</li>
-<li>other releases: <code><a href="reference/commit_version.html">commit_version()</a></code>: only commit <code>DESCRIPTION</code> and <code>NEWS.md</code>
-</li>
-</ul>
-</li>
-</ol>
-<p>You can always edit <code>NEWS.md</code> and call <code><a href="reference/finalize_version.html">finalize_version()</a></code> again. Both the commit and the tag will be updated.</p>
-<p>To undo the last version update, call <code><a href="reference/unbump_version.html">unbump_version()</a></code>. This comes with a number of safety checks and might not work in all circumstances.</p>
-</div>
-<div id="caveats" class="section level2">
-<h2 class="hasAnchor">
-<a href="#caveats" class="anchor"></a>Caveats</h2>
-<p>If you rebase after creating a tag, you need to call <code><a href="reference/finalize_version.html">finalize_version()</a></code> to make sure the tag is moved to the mainline branch.</p>
-<p>If you pushed after calling <code><a href="reference/finalize_version.html">finalize_version()</a></code> (directly or indirectly), the tag may have been pushed as well. In this case, invoke <code>git push origin :vx.y.z.9www</code> (where <code>x.y.z.9www</code> is the new version) to delete the newly created remote tag. Because of this, only <code>"dev"</code> releases are tagged automatically, other releases always must be tagged manually with <code><a href="reference/tag_version.html">tag_version()</a></code>.</p>
+<p><a href="https://asciinema.org/a/173876"><img src="https://github.com/krlmlr/fledge/raw/master/readme/demo.gif" alt="asciinema demo"></a></p>
+<p>Click on the image for showing in a separate tab.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install from GitHub via</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"krlmlr/fledge"</span>)</a></code></pre></div>
+<p>Install from GitHub using</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"krlmlr/fledge"</span>)</a></code></pre></div>
+</div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>Run {fledge} commands from your package directory for versioning as below.</p>
+<ul>
+<li>
+<p>To configure your package for the first-time with {fledge}, use</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
+<p>From now on, use bullet points (<code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
+</li>
+<li>
+<p>To assign a new <code>"dev"</code> version number to the R package and update <code>NEWS.md</code>, use</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
+</li>
+<li>
+<p>To assign a new version number to the R package before release to CRAN, use</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/commit_version.html">commit_version</a></span>()</a></code></pre></div>
+<p>Substitute <code>"patch"</code> by <code>"minor"</code> or <code>"major"</code> if applicable.</p>
+</li>
+<li>
+<p>To tag a version when the package has been accepted to CRAN, use</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/tag_version.html">tag_version</a></span>()</a></code></pre></div>
+<p>Call</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
+<p>to immediately switch to a development version.</p>
+</li>
+<li>
+<p>To undo the last version bump, use</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/unbump_version.html">unbump_version</a></span>()</a></code></pre></div>
+</li>
+</ul>
 </div>
 </div>
   </div>
