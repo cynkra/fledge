@@ -182,12 +182,12 @@
 <li><p>In commit messages to master, mark everything that should go to <code>NEWS.md</code> with a bullet point (<code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>). This is applicable to single commits, merge commits, or pull requests. Do not edit <code>NEWS.md</code> manually.</p></li>
 <li>
 <p>When you want to assign a version number to the current state of your R package, call</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a></code></pre></div>
 <p>The default argument for bump_version is “dev”. So the dev part of the version number will be updated. It is good practice to assign a new version number before switching focus to another project.</p>
 </li>
 <li>
 <p>Edit <code>NEWS.md</code> if required. Then call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> as below.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
 <p>This achieves the following:</p>
 <pre><code> * `NEWS.md` is now composed, based on the most recent commit messages.
    To understand how `NEWS.md` is updated by fledge, see the section on `NEWS.md` implementation.
@@ -203,12 +203,12 @@
 <ol style="list-style-type: decimal">
 <li>
 <p>Call bump_version() with the appropriate argument (<code>"patch"</code>, <code>"major"</code>, <code>"minor"</code>). e.g.,</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a></code></pre></div>
 </li>
 <li><p>Edit <code>NEWS.md</code>, convert the “change log” to “release notes” – a higher-level description of features and bug fixes.</p></li>
 <li>
 <p>Call <code><a href="../reference/commit_version.html">commit_version()</a></code> as below</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/commit_version.html">commit_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/commit_version.html">commit_version</a></span>()</a></code></pre></div>
 </li>
 <li><p>Make any necessary adjustments before releasing to CRAN.</p></li>
 <li>

@@ -83,7 +83,7 @@
 <h2 class="hasAnchor">
 <a href="#demo" class="anchor"></a>Demo</h2>
 <p><a href="https://asciinema.org/a/173876"><img src="https://github.com/krlmlr/fledge/raw/master/readme/demo.gif" alt="asciinema demo"></a></p>
-<p>Click on the image for showing in a separate tab.</p>
+<p>Click on the image to show in a separate tab.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -98,31 +98,31 @@
 <ul>
 <li>
 <p>To configure your package for the first-time with {fledge}, use</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
 <p>From now on, use bullet points (<code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
 </li>
 <li>
 <p>To assign a new <code>"dev"</code> version number to the R package and update <code>NEWS.md</code>, use</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
 </li>
 <li>
 <p>To assign a new version number to the R package before release to CRAN, use</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/commit_version.html">commit_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/commit_version.html">commit_version</a></span>()</a></code></pre></div>
 <p>Substitute <code>"patch"</code> by <code>"minor"</code> or <code>"major"</code> if applicable.</p>
 </li>
 <li>
 <p>To tag a version when the package has been accepted to CRAN, use</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/tag_version.html">tag_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/tag_version.html">tag_version</a></span>()</a></code></pre></div>
 <p>Call</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a></code></pre></div>
 <p>to immediately switch to a development version.</p>
 </li>
 <li>
 <p>To undo the last version bump, use</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/unbump_version.html">unbump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/unbump_version.html">unbump_version</a></span>()</a></code></pre></div>
 </li>
 </ul>
 </div>
