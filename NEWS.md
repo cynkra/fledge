@@ -1,73 +1,23 @@
-# fledge 0.0.0.9010
+# fledge 0.0.1
 
-- Fix error when starting new project.
-
-
-# fledge 0.0.0.9009
-
-- Advise to push tags (#13).
-
-
-# fledge 0.0.0.9008
-
-- More informative bullets (#2).
-- New `unbump_version()` (#7).
-- Remove compat code for git2r < 0.25.
-- Protect against corner case of empty NEWS file.
-
-
-# fledge 0.0.0.9007
-
-- NEWS file is opened in editor in interactive mode.
-
-
-# fledge 0.0.0.9006
-
-- Fix compatibility with dev version of _git2r_.
-
-
-# fledge 0.0.0.9005
-
-- Don't write date in NEWS header: It can be found out with "blame" and conflicts with the rendering in pkgdown.
-
-
-# fledge 0.0.0.9004
-
-- Only `"dev"` releases are tagged automatically. For other releases (which usually go to CRAN), it is recommended to postpone tagging until the version is accepted on CRAN (#4).
-- Add documentation for `which` argument.
-
-
-# fledge 0.0.0.9003
-
-- When writing the tag, print most recent NEWS.
-- Commits from bumping to an earlier version are no longer overwritten.
-
-
-# fledge 0.0.0.9002
-
-- Bumping the version without changing the code results a the `NEWS.md` entry that reads "Same as previous version".
-- Renamed `tag_version()` to `finalize_version()`, which calls the new `commit_version()` and `tag_version(force)` functions.
-- New `commit_version()` that only creates a commit, amending as necessary.
-- New `tag_version()` only creates a tag, overwrites an existing tag only with `force = TRUE`.
-- When enumerating tags, all tags without message are ignored.
-
-
-# fledge 0.0.0.9001
-
-- If the `DESCRIPTION` has a `"Date"` field, it is populated with the current date in `update_version()`.
-- An empty list of changes doesn't raise an error anymore. This will allow bumping to a dev version immediately after CRAN release.
-
-
-# fledge 0.0.0.9000
-
-Initial release.
+Change log management utility, initial release.
 
 The main entry point is `bump_version()`, which does the following:
 
 1.  `update_news()`: collects `NEWS` entries from top-level commits
 2.  `update_version()`: bump version in `DESCRIPTION`, add header to `NEWS.md`
-3.  `tag_version()`: commit `DESCRIPTION` and `NEWS.md`, create tag with message
+3.  Depending on the kind of update:
+    - If "dev", `finalize_version()`: commit `DESCRIPTION` and `NEWS.md`, create tag with message
+    - Otherwise, `commit_version()`; the user needs to call `tag_version()` manually
 
-If you haven't committed since updating `NEWS.md` and `DESCRIPTION`, you can also edit `NEWS.md` and call `tag_version()` again. Both the commit and the tag will be updated.
+If you haven't committed since updating `NEWS.md` and `DESCRIPTION`, you can also edit `NEWS.md` and call `tag_version()` again.
+Both the commit and the tag will be updated.
 
-Also includes helper functions `get_last_tag` and `get_top_level_commits`.
+Bumping can be undone with `unbump_version()`.
+
+If the `DESCRIPTION` has a `"Date"` field, it is populated with the current date in `update_version()`.
+
+An empty list of changes adds a "Same as previous version" bullet.
+This allows bumping to a dev version immediately after CRAN release.
+
+Also includes helper functions `get_last_tag()` and `get_top_level_commits()`.
