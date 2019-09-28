@@ -1,3 +1,8 @@
+# fledge 0.0.1.9000
+
+- Use {enc} for safe writing of files, preserving line endings (#14).
+
+
 # fledge 0.0.1
 
 Change log management utility, initial release.
