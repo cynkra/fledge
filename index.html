@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wings for Your R Packages • fledge</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Wings for Your R Packages">
 <meta property="og:description" content="
     Streamlines the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?">
@@ -19,7 +20,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -31,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -39,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -53,7 +54,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/krlmlr/fledge">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -66,13 +67,9 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+      </header><div class="row">
+  <div class="contents col-md-9">
 <div id="fledge" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#fledge" class="anchor"></a>fledge</h1></div>
@@ -88,15 +85,15 @@
 <h2 class="hasAnchor">
 <a href="#workflow-for-development" class="anchor"></a>Workflow for development</h2>
 <p>The <em>fledge</em> package assumes an R package that is version-controlled with Git in a dedicated repository. It will take care of updating <code>NEWS.md</code> and <code>DESCRIPTION</code> when you want to assign a new version to your package.</p>
-<ol style="list-style-type: decimal">
-<li><p>In commit messages to <code>master</code>, mark everything that should go to <code>NEWS.md</code> with a bullet point (<code>-</code> or <code>*</code>). This works for single commits, merge commits, or pull requests.</p></li>
+<ol>
+<li><p>In commit messages to <code>master</code>, mark everything that should go to <code>NEWS.md</code> with a bullet point (<code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>). This works for single commits, merge commits, or pull requests.</p></li>
 <li>
 <p>When you want to assign a version number to the current state of your R package, call</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
 </li>
 <li>
 <p>(Optional.) Edit <code>NEWS.md</code> as appropriate. When done, call</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/finalize_version">finalize_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
 </li>
 </ol>
 <p>This has the following effects:</p>
@@ -116,22 +113,22 @@
 <div id="workflow-for-releasing-to-cran" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workflow-for-releasing-to-cran" class="anchor"></a>Workflow for releasing to CRAN</h2>
-<ol style="list-style-type: decimal">
+<ol>
 <li>
 <p>Call</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>(<span class="st">"patch"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a></code></pre></div>
 <p>(or <code>"minor"</code> or <code>"major"</code> as appropriate).</p>
 </li>
 <li><p>Edit <code>NEWS.md</code>, convert the changelog to a higher-level description of features and bug fixes.</p></li>
 <li>
 <p>Call</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/commit_version">commit_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/commit_version.html">commit_version</a></span>()</a></code></pre></div>
 </li>
 <li><p>Make last-minute adjustments before releasing to CRAN.</p></li>
 <li>
 <p>When accepted, call</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/tag_version">tag_version</a></span>(<span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/tag_version.html">tag_version</a></span>(<span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
 <p>to tag the released version and to switch to a development version immediately.</p>
 </li>
 </ol>
@@ -140,15 +137,15 @@
 <h2 class="hasAnchor">
 <a href="#first-time-users" class="anchor"></a>First-time users</h2>
 <p>Setting up <em>fledge</em> isn’t much different from the regular development workflow:</p>
-<ol style="list-style-type: decimal">
+<ol>
 <li>
 <p>Bump the package version with</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/bump_version">bump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/bump_version.html">bump_version</a></span>()</a></code></pre></div>
 <p>The <code>NEWS.md</code> file may grow large, especially if you haven’t used tags in your repository before.</p>
 </li>
 <li>
 <p>Edit <code>NEWS.md</code>, call</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fledge/topics/finalize_version">finalize_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fledge/man/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
 </li>
 <li><p>From here on, switch to the <a href="#workflow-for-development">development workflow</a>. Don’t forget to use bullet points in your commit or merge messages to indicate NEWS-worthy changes!</p></li>
 </ol>
@@ -156,23 +153,23 @@
 <div id="news-generation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#news-generation" class="anchor"></a>NEWS generation</h2>
-<p>New entries are added to <code>NEWS.md</code> from commit messages to commits in <code>master</code>. Only top-level commits are considered (roughly equivalent to <code>git log --first-parent</code>.) In those commits, the messages are parsed. Only lines that start with a star <code>*</code> or a dash <code>-</code> are included, and a line that starts with three dashes makes sure that everything past that line isn’t included. Example: The following commit message:</p>
-<pre><code>Merge f-fancy-feature to master, closes #5678
-
-- Added fancy feature (#5678).
-
-- Fixed bug as a side effect (#9012).
-
----
-
-The fancy feature consists of the follwing components:
-
-- foo
-- bar
-- baz</code></pre>
+<p>New entries are added to <code>NEWS.md</code> from commit messages to commits in <code>master</code>. Only top-level commits are considered (roughly equivalent to <code>git log --first-parent</code>.) In those commits, the messages are parsed. Only lines that start with a star <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or a dash <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> are included, and a line that starts with three dashes makes sure that everything past that line isn’t included. Example: The following commit message:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">Merge f<span class="op">-</span>fancy<span class="op">-</span>feature to master, closes <span class="co">#5678</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Added fancy <span class="kw">feature</span> (<span class="co">#5678).</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>Fixed bug as a side <span class="kw">effect</span> (<span class="co">#9012).</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="op">---</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">The fancy feature consists of the follwing components<span class="op">:</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="op">-</span><span class="st"> </span>foo</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="op">-</span><span class="st"> </span>bar</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="op">-</span><span class="st"> </span>baz</a></code></pre></div>
 <p>will be added as:</p>
-<pre><code>- Added fancy feature (#5678).
-- Fixed bug as a side effect (#9012).</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>Added fancy <span class="kw">feature</span> (<span class="co">#5678).</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="op">-</span><span class="st"> </span>Fixed bug as a side <span class="kw">effect</span> (<span class="co">#9012).</span></a></code></pre></div>
 <p>to <code>NEWS.md</code>.</p>
 <p>When retrieving the current NEWS for defining the tag message, the entries between the first two first-level headers (starting with <code>#</code>) are returned. You can use second- and third-level headers and add as many empty lines as you want.</p>
 </div>
@@ -180,7 +177,7 @@ The fancy feature consists of the follwing components:
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
 <p>The main entry point is <code><a href="reference/bump_version.html">bump_version()</a></code>, which does the following:</p>
-<ol style="list-style-type: decimal">
+<ol>
 <li>
 <code><a href="reference/update_news.html">update_news()</a></code>: collects <code>NEWS</code> entries from top-level commits</li>
 <li>
@@ -208,7 +205,7 @@ The fancy feature consists of the follwing components:
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install from GitHub via</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"krlmlr/fledge"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"krlmlr/fledge"</span>)</a></code></pre></div>
 </div>
 </div>
   </div>
@@ -236,7 +233,7 @@ The fancy feature consists of the follwing components:
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/krlmlr/fledge"><img src="https://travis-ci.org/krlmlr/fledge.svg?branch=master" alt="Travis build status"></a></li>
@@ -246,7 +243,6 @@ The fancy feature consists of the follwing components:
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -255,12 +251,14 @@ The fancy feature consists of the follwing components:
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
