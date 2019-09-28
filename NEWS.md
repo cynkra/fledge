@@ -1,3 +1,8 @@
+# fledge 0.0.1.9001
+
+- Test for manual tagging (#6).
+
+
 # fledge 0.0.1.9000
 
 - Use {enc} for safe writing of files, preserving line endings (#14).
