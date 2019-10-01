@@ -1,0 +1,183 @@
+---
+title: "demo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Create new package
+
+```{r }
+pkg <- usethis::create_package(tempfile("pkg"))
+pkg
+```
+
+Set up development work
+
+```{r }
+usethis::proj_set(pkg)
+usethis::proj_get()
+usethis::use_git()
+repo <- git2r::repository(pkg)
+git2r::config(repo = repo, user.name = "Test", user.email = "test@user.org")
+```
+
+FIXME: This shouldn't be necessary
+
+```{r }
+usethis::use_news_md()
+git2r::add(repo = repo, path = ".")
+git2r::commit(repo = repo, message = "Initial NEWS.md .")
+```
+
+Hacking in the package
+
+```{r }
+usethis::use_r("test")
+```
+
+Committing with a meaningful message
+
+```{r }
+git2r::add(repo = repo, path = ".")
+git2r::commit(repo = repo, message = "- Mew file test.R .")
+```
+
+Bumping the package version
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+fledge::bump_version()
+```
+
+Review NEWS.md
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+news <- readLines("NEWS.md")
+cat(news, sep = "\n")
+```
+
+A mistake? No problem:
+
+```{r }
+news <- gsub("Mew", "New", news)
+cat(news, sep = "\n")
+```
+
+Edit NEWS.md and finalize
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+writeLines(news, "NEWS.md")
+fledge::finalize_version()
+```
+
+Hacking more
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+writeLines("# frobnicate", "R/test.R")
+```
+
+Committing with a meaningful message
+
+```{r }
+git2r::add(repo = repo, path = ".")
+git2r::commit(repo = repo, message = "- Add support for frobnication.")
+```
+
+Hacking more
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+writeLines("# super-frob", "R/test.R")
+```
+
+Committing with a meaningful message
+
+```{r }
+git2r::add(repo = repo, path = ".")
+git2r::commit(repo = repo, message = "- Super-frobnication enabled.")
+```
+
+Bumping the package version
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+fledge::bump_version()
+```
+
+Some time has passed...
+
+Preparing for first release
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+fledge::bump_version("patch")
+```
+
+Consolidating NEWS.md
+
+Current contents
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+news <- readLines("NEWS.md")
+cat(news, sep = "\n")
+```
+
+Consolidate messages
+
+```{r }
+length(news) <- 5
+news[3:5] <- c(
+  "Initial release.",
+  "",
+  "Basic functionality: Super-frobnication."
+)
+```
+
+Review
+
+```{r }
+cat(news, sep = "\n")
+```
+
+Update NEWS.md
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+writeLines(news, "NEWS.md")
+```
+
+Release to CRAN...
+
+Package accepted!
+
+Finalize version
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+fledge::tag_version()
+```
+
+Consider calling `usethis::use_github_release()`
+
+Immediately bump version to next devel version
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+fledge::bump_version()
+```
+
+Review NEWS.md
+
+```{r }
+setwd(pkg) # FIXME: This shouldn't be necessary
+news <- readLines("NEWS.md")
+cat(news, sep = "\n")
+```
+
