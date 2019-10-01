@@ -7,6 +7,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup}
+options(crayon.enabled = TRUE)
+fansi::set_knit_hooks(knitr::knit_hooks)
+```
+
+
 Create new package
 
 ```{r }
