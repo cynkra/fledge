@@ -3,6 +3,7 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   fledge: fledge.html
+  demo: wip/demo.html
 urls:
   reference: https://krlmlr.github.io/fledge/reference
   article: https://krlmlr.github.io/fledge/articles
