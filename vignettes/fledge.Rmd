@@ -33,7 +33,7 @@ devtools::install_github("krlmlr/fledge")
 
 ## Why use fledge?
 
-Without {fledge} you probably follow these steps at different stages of your workflow.
+Without {fledge}, you probably follow these steps at different stages of your workflow.
 
 1. Check the previous version used, before assigning a new version number.
 2. Manually update `NEWS.md` with each substantial change, and/or check the previous commit messages to decide what should go in the `NEWS.md` file.
