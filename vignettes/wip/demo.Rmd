@@ -1,5 +1,5 @@
 ---
-title: "demo"
+title: "Using Fledge"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{demo}
@@ -7,26 +7,48 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+In this guide, we will illustrate how to use `fledge` functionality with a dummy R package.
+
 ```{r setup}
 options(crayon.enabled = TRUE)
 fansi::set_knit_hooks(knitr::knit_hooks)
 ```
 
+## Setting up the development environment
 
-Create new package
+Let us say you have a great new idea that you wish to implement and eventually release to CRAN. 
+
+You would start by creating a new package. We use the `tempfile()` and `create_package()` functions for this. 
+
+The output shows the details of the package created. 
 
 ```{r }
 pkg <- usethis::create_package(tempfile("pkg"))
+```
+
+You can check the location of the new package as follows
+
+```{r }
 pkg
 ```
 
-Set up development work
+Next activity on the list would be to set up this package for development and create a git repository for the same. Following would be the sequence of steps you would most likely follow.
 
+1. Set the package as the active R package.
 ```{r }
 usethis::proj_set(pkg)
 usethis::proj_get()
+```
+2. Initialize a git repository
+```{r }
 usethis::use_git()
+```
+3. Open a repository with the newly created package path.
+```{r }
 repo <- git2r::repository(pkg)
+```
+4. Configure the repository with the user name and email used for accessing git.
+```{r }
 git2r::config(repo = repo, user.name = "Test", user.email = "test@user.org")
 ```
 
@@ -38,27 +60,29 @@ git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "Initial NEWS.md .")
 ```
 
-Hacking in the package
+## Development starts
+
+Finally you are ready to start coding. You create a new R file. Lets call it "test" for now.
 
 ```{r }
 usethis::use_r("test")
 ```
 
-Committing with a meaningful message
+Let us assume you have finished adding some super complex and useful code to this file. It is now the time for the first check-in. Lets commit this file to git.
 
 ```{r }
 git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "- Mew file test.R .")
 ```
 
-Bumping the package version
+And this is where `fledge` comes into the picture. You can use it at this stage to assign a new dev version number to the package and also update `NEWS.md`. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in `NEWS.md`.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::bump_version()
 ```
 
-Review NEWS.md
+Let us see what `NEWS.md` looks like after that bump.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -66,14 +90,14 @@ news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ```
 
-A mistake? No problem:
+Oops looks like there was a typo in one of the comments. You certainly want to fix that before you proceed.
 
 ```{r }
 news <- gsub("Mew", "New", news)
 cat(news, sep = "\n")
 ```
 
-Edit NEWS.md and finalize
+After replacing the "Mew" with "New", you write it back to `NEWS.md` and use the `finalize_version()` function. This ensures that the version is set to the correct version inspite of the `NEWS.md` update. It should be called every time `NEWS.md` is manually updated.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -81,53 +105,52 @@ writeLines(news, "NEWS.md")
 fledge::finalize_version()
 ```
 
-Hacking more
+Let us say, you now thought of a great new feature or a possible issue and need to modify the code that you wrote earlier.
+So you go ahead and modify the code in the R file.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines("# frobnicate", "R/test.R")
 ```
 
-Committing with a meaningful message
+This time you commit it to git with the message _"- Add support for frobnication"_. (Frobnication being that great new feature we talked about earlier)
 
 ```{r }
 git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "- Add support for frobnication.")
 ```
 
-Hacking more
+Oops missed something again. Time for another code change.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines("# super-frob", "R/test.R")
 ```
 
-Committing with a meaningful message
+And then another commit. This time its because you have _"- Super-frobnication enabled."_ and so that becomes your commit message.
 
 ```{r }
 git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "- Super-frobnication enabled.")
 ```
 
-Bumping the package version
+Ok! You have now added fool-proof frobnication support to our package. Time to bump the version.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::bump_version()
 ```
 
-Some time has passed...
+## Prepare for release
 
-Preparing for first release
+So now the code has been reviewed, the package has been tested and you wish to release it officially. You need a non-dev version number this time. So we use `fledge` -> `bump_version()` with the argument "patch" 
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::bump_version("patch")
 ```
 
-Consolidating NEWS.md
-
-Current contents
+Let's see what `NEWS.md` looks like at this stage.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -135,7 +158,7 @@ news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ```
 
-Consolidate messages
+You decide that you do not want all those development commit messages to appear in `NEWS.md`. So you decide to change it to something more readable from the release perspective. No problem! You can replace the messages with something more readable as follows 
 
 ```{r }
 length(news) <- 5
@@ -146,40 +169,41 @@ news[3:5] <- c(
 )
 ```
 
-Review
 
 ```{r }
 cat(news, sep = "\n")
 ```
 
-Update NEWS.md
+You will now need to update `NEWS.md` with this new text.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines(news, "NEWS.md")
 ```
 
-Release to CRAN...
+The package is now ready to be released to CRAN....
 
-Package accepted!
+## Post release
 
-Finalize version
+Some time has passed and Congratulations! The package has been accepted.
+
+It is now the time to tag the released version using the `tag_version()` function.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::tag_version()
 ```
 
-Consider calling `usethis::use_github_release()`
+You may call `usethis::use_github_release()` at this stage.
 
-Immediately bump version to next devel version
+Let us now make the package ready for future development. Call `bump_version()` immediately after tagging the released version. This would create the version number for the next round of development.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::bump_version()
 ```
 
-Review NEWS.md
+And if you are wondering what `NEWS.md` would look like after all this, here you go...
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
