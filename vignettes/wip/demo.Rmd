@@ -7,18 +7,22 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-In this guide, we will illustrate how to use `fledge` functionality with a dummy R package.
+## Introduction
+
+This guide will demonstrate how to use `fledge` functionality with a mock R package. We are going to call our package "`SuperFrob`". We will develop it from scratch and also maintain a change-log as the development progresses. Finally, we will demonstrate how this change log can eventually be converted to release notes when the package is submitted to CRAN.
 
 ```{r setup}
 options(crayon.enabled = TRUE)
 fansi::set_knit_hooks(knitr::knit_hooks)
 ```
 
-## Setting up the development environment
+## Set-up the development environment
 
-Let us say you have a great new idea that you wish to implement and eventually release to CRAN. 
+Before we start development for "`SuperFrob`", we set up the basic development environment required for any typical R package.
 
-You would start by creating a new package. We use the `tempfile()` and `create_package()` functions for this. 
+### Create a Package
+
+We will start by creating a new package. We use the `tempfile()` and `create_package()` functions for this. 
 
 The output shows the details of the package created. 
 
@@ -26,20 +30,22 @@ The output shows the details of the package created.
 pkg <- usethis::create_package(tempfile("pkg"))
 ```
 
-You can check the location of the new package as follows
+You can check the location of the new package as follows:
 
 ```{r }
 pkg
 ```
 
-Next activity on the list would be to set up this package for development and create a git repository for the same. Following would be the sequence of steps you would most likely follow.
+### Create and Configure a repository
+
+Next we set up this package for development and create a git repository for the package. Following is be the sequence of steps that we follow.
 
 1. Set the package as the active R package.
 ```{r }
 usethis::proj_set(pkg)
 usethis::proj_get()
 ```
-2. Initialize a git repository
+2. Initialize a git repository.
 ```{r }
 usethis::use_git()
 ```
@@ -60,28 +66,32 @@ git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "Initial NEWS.md .")
 ```
 
-## Development starts
+## The development phase
 
-Finally you are ready to start coding. You create a new R file. Lets call it "test" for now.
+### Create a R file
+Now we start coding in the functionality for the package. We start by creating the new R file called `test`.
 
 ```{r }
 usethis::use_r("test")
 ```
 
-Let us assume you have finished adding some super complex and useful code to this file. It is now the time for the first check-in. Lets commit this file to git.
+### Write code and check in
+We write some super complex and useful code to this file. After coding, it is now the time for the first check-in. We will commit this file to git with a relevant message.
 
 ```{r }
 git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "- Mew file test.R .")
 ```
 
-And this is where `fledge` comes into the picture. You can use it at this stage to assign a new dev version number to the package and also update `NEWS.md`. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in `NEWS.md`.
+### Use Fledge in Development
+A commit also signifies that it's the time to use `Fledge`. We use it at this stage to assign a new dev version number to the package and also update `NEWS.md`. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in `NEWS.md`.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::bump_version()
 ```
 
+### Review NEWS.md
 Let us see what `NEWS.md` looks like after that bump.
 
 ```{r }
@@ -90,14 +100,17 @@ news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ```
 
-Oops looks like there was a typo in one of the comments. You certainly want to fix that before you proceed.
+### Correct errors in NEWS.md
+While reviewing we notice that there was a typo in one of the comments. We will not show how such issues may be addressed.
+The "Mew" can be replaced with "New" using the `gsub` function and rewriting the contents back to NEWS.md.
 
 ```{r }
 news <- gsub("Mew", "New", news)
 cat(news, sep = "\n")
 ```
 
-After replacing the "Mew" with "New", you write it back to `NEWS.md` and use the `finalize_version()` function. This ensures that the version is set to the correct version inspite of the `NEWS.md` update. It should be called every time `NEWS.md` is manually updated.
+### Finalize Version
+After correcting any errors in `NEWS.md`, we use the `finalize_version()` function. This ensures that the version is set to the correct version in spite of the `NEWS.md` update. It should be called every time `NEWS.md` is manually updated.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -105,36 +118,40 @@ writeLines(news, "NEWS.md")
 fledge::finalize_version()
 ```
 
-Let us say, you now thought of a great new feature or a possible issue and need to modify the code that you wrote earlier.
-So you go ahead and modify the code in the R file.
+## Review and Test Phase
 
+Code changes after check-in are mostly inevitable. There could be a change in requirements, possible issues, or need to improvise. With `SuperFrob` we want to add a great new feature called "frobnicate" to the package.
+
+### Change code and commit - I
+We modify the code we wrote earlier as follows:
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines("# frobnicate", "R/test.R")
 ```
 
-This time you commit it to git with the message _"- Add support for frobnication"_. (Frobnication being that great new feature we talked about earlier)
+This time we commit it to git with the message _"- Add support for frobnication"_. 
 
 ```{r }
 git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "- Add support for frobnication.")
 ```
 
-Oops missed something again. Time for another code change.
+### Change code and commit - II
+SuperFrob with frobnication is tested and there is a need to address an issue. This requires another code change as follows:
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines("# super-frob", "R/test.R")
 ```
 
-And then another commit. This time its because you have _"- Super-frobnication enabled."_ and so that becomes your commit message.
+The change is followed by a commit. We commit this change with the comment: _"- Super-frobnication enabled."_ 
 
 ```{r }
 git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "- Super-frobnication enabled.")
 ```
 
-Ok! You have now added fool-proof frobnication support to our package. Time to bump the version.
+Now that we have added frobnication support to our package, it is the time to bump the version.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -143,14 +160,18 @@ fledge::bump_version()
 
 ## Prepare for release
 
-So now the code has been reviewed, the package has been tested and you wish to release it officially. You need a non-dev version number this time. So we use `fledge` -> `bump_version()` with the argument "patch" 
+After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN. This is where `fledge`  simplifies the release process by making use of the all the commit messages that we provided earlier.
+
+### Feldge for release 
+We wish to release this package as a patch and so we use `fledge` -> `bump_version()` with the argument "patch".
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::bump_version("patch")
 ```
 
-Let's see what `NEWS.md` looks like at this stage.
+### Review NEWS.md
+We review the `NEWS.md` that got generated by `Fledge`
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -158,7 +179,8 @@ news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ```
 
-You decide that you do not want all those development commit messages to appear in `NEWS.md`. So you decide to change it to something more readable from the release perspective. No problem! You can replace the messages with something more readable as follows 
+###  Generate Release notes
+Fledge helps to convert changelog entries to release notes. Some of the intermediate commit messages may not be relevant in the release notes for this release. These can be edited if required by editing `NEWS.md` manually as demonstrated earlier. 
 
 ```{r }
 length(news) <- 5
@@ -169,24 +191,24 @@ news[3:5] <- c(
 )
 ```
 
-
 ```{r }
 cat(news, sep = "\n")
 ```
 
-You will now need to update `NEWS.md` with this new text.
+We edit the required sections of NEWS.md and rewrite it.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines(news, "NEWS.md")
 ```
 
-The package is now ready to be released to CRAN....
+The package is now ready to be released to CRAN.
 
 ## Post release
 
-Some time has passed and Congratulations! The package has been accepted.
+Some time passed and our package for SuperFrob was accepted. At this stage, `Fledge` can help to tag the released version and create a new version for development.
 
+### Fledge - Tag Version.
 It is now the time to tag the released version using the `tag_version()` function.
 
 ```{r }
@@ -196,15 +218,18 @@ fledge::tag_version()
 
 You may call `usethis::use_github_release()` at this stage.
 
-Let us now make the package ready for future development. Call `bump_version()` immediately after tagging the released version. This would create the version number for the next round of development.
+### Fledge - Bump Development Version.
+
+We will now make the package ready for future development. This requires that `bump_version()` be called immediately after tagging the released version. This would create the version number for the next round of development.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 fledge::bump_version()
 ```
 
-And if you are wondering what `NEWS.md` would look like after all this, here you go...
+### Review NEWS.md
 
+We review what NEWS.md looks like at this stage and the cycle repeats.
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 news <- readLines("NEWS.md")
