@@ -107,15 +107,15 @@
 ##     hook.t(x, options, options[[paste0("attr.", class)]], options[[paste0("class.", 
 ##         class)]])
 ## }
-## &lt;bytecode: 0x3742948&gt;
-## &lt;environment: 0x1cb6930&gt;</code></pre>
+## &lt;bytecode: 0x1fcf3f8&gt;
+## &lt;environment: 0x3a1b898&gt;</code></pre>
 <p>Create new package</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">pkg &lt;-<span class="st"> </span>usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/create_package.html">create_package</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>(<span class="st">"pkg"</span>))</a></code></pre></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/RtmpRuCidF/pkg5515726fa69c/'</span><span>
-## </span><span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpRuCidF/pkg5515726fa69c'</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/Rtmp1igUCR/pkg5fd349205f0d/'</span><span>
+## </span><span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/Rtmp1igUCR/pkg5fd349205f0d'</span><span>
 ## </span><span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'R/'</span><span>
 ## </span><span style="color: #00BB00;">✔</span><span> Writing </span><span style="color: #0000BB;">'DESCRIPTION'</span><span>
-## </span><span style="color: #0000BB;">Package</span><span>: pkg5515726fa69c
+## </span><span style="color: #0000BB;">Package</span><span>: pkg5fd349205f0d
 ## </span><span style="color: #0000BB;">Title</span><span>: What the Package Does (One Line, Title Case)
 ## </span><span style="color: #0000BB;">Version</span><span>: 0.0.0.9000
 ## </span><span style="color: #0000BB;">Authors@R</span><span> (parsed):
@@ -128,14 +128,14 @@
 ## </span><span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'&lt;no active project&gt;'</span><span>
 </span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">pkg</a></code></pre></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #0000BB;font-weight: bold;">/tmp/RtmpRuCidF/pkg5515726fa69c</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #0000BB;font-weight: bold;">/tmp/Rtmp1igUCR/pkg5fd349205f0d</span><span>
 </span></code></pre>
 <p>Set up development work</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/proj_utils.html">proj_set</a></span>(pkg)</a></code></pre></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpRuCidF/pkg5515726fa69c'</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/Rtmp1igUCR/pkg5fd349205f0d'</span><span>
 </span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/proj_utils.html">proj_get</a></span>()</a></code></pre></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #0000BB;font-weight: bold;">/tmp/RtmpRuCidF/pkg5515726fa69c</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #0000BB;font-weight: bold;">/tmp/Rtmp1igUCR/pkg5fd349205f0d</span><span>
 </span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/use_git.html">use_git</a></span>()</a></code></pre></div>
 <pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Initialising Git repo
@@ -149,7 +149,7 @@
 </span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="dt">repo =</span> repo, <span class="dt">path =</span> <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">repo =</span> repo, <span class="dt">message =</span> <span class="st">"Initial NEWS.md ."</span>)</a></code></pre></div>
-<pre><code>## [2f0755c] 2019-11-27: Initial NEWS.md .</code></pre>
+<pre><code>## [61701b2] 2019-11-27: Initial NEWS.md .</code></pre>
 <p>Hacking in the package</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/use_r.html">use_r</a></span>(<span class="st">"test"</span>)</a></code></pre></div>
 <pre class="fansi fansi-output"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'R/test.R'</span><span>
@@ -157,7 +157,7 @@
 <p>Committing with a meaningful message</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="dt">repo =</span> repo, <span class="dt">path =</span> <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">repo =</span> repo, <span class="dt">message =</span> <span class="st">"- Mew file test.R ."</span>)</a></code></pre></div>
-<pre><code>## [db79b17] 2019-11-27: - Mew file test.R .</code></pre>
+<pre><code>## [b27045f] 2019-11-27: - Mew file test.R .</code></pre>
 <p>Bumping the package version</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(pkg) <span class="co"># </span><span class="al">FIXME</span><span class="co">: This shouldn't be necessary</span></a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a></code></pre></div>
@@ -178,23 +178,23 @@
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(pkg) <span class="co"># </span><span class="al">FIXME</span><span class="co">: This shouldn't be necessary</span></a>
 <a class="sourceLine" id="cb18-2" data-line-number="2">news &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(<span class="st">"NEWS.md"</span>)</a>
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(news, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</a></code></pre></div>
-<pre><code>## # pkg5515726fa69c 0.0.0.9001
+<pre><code>## # pkg5fd349205f0d 0.0.0.9001
 ## 
 ## - Mew file test.R .
 ## 
 ## 
-## # pkg5515726fa69c 0.0.0.9000
+## # pkg5fd349205f0d 0.0.0.9000
 ## 
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
 <p>A mistake? No problem:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">news &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">"Mew"</span>, <span class="st">"New"</span>, news)</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(news, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</a></code></pre></div>
-<pre><code>## # pkg5515726fa69c 0.0.0.9001
+<pre><code>## # pkg5fd349205f0d 0.0.0.9001
 ## 
 ## - New file test.R .
 ## 
 ## 
-## # pkg5515726fa69c 0.0.0.9000
+## # pkg5fd349205f0d 0.0.0.9000
 ## 
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
 <p>Edit NEWS.md and finalize</p>
@@ -213,14 +213,14 @@
 <p>Committing with a meaningful message</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="dt">repo =</span> repo, <span class="dt">path =</span> <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb24-2" data-line-number="2">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">repo =</span> repo, <span class="dt">message =</span> <span class="st">"- Add support for frobnication."</span>)</a></code></pre></div>
-<pre><code>## [da65c33] 2019-11-27: - Add support for frobnication.</code></pre>
+<pre><code>## [fee0dae] 2019-11-27: - Add support for frobnication.</code></pre>
 <p>Hacking more</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(pkg) <span class="co"># </span><span class="al">FIXME</span><span class="co">: This shouldn't be necessary</span></a>
 <a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span>(<span class="st">"# super-frob"</span>, <span class="st">"R/test.R"</span>)</a></code></pre></div>
 <p>Committing with a meaningful message</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="dt">repo =</span> repo, <span class="dt">path =</span> <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb27-2" data-line-number="2">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">repo =</span> repo, <span class="dt">message =</span> <span class="st">"- Super-frobnication enabled."</span>)</a></code></pre></div>
-<pre><code>## [e265125] 2019-11-27: - Super-frobnication enabled.</code></pre>
+<pre><code>## [3416aa1] 2019-11-27: - Super-frobnication enabled.</code></pre>
 <p>Bumping the package version</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(pkg) <span class="co"># </span><span class="al">FIXME</span><span class="co">: This shouldn't be necessary</span></a>
 <a class="sourceLine" id="cb29-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a></code></pre></div>
@@ -259,23 +259,23 @@
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(pkg) <span class="co"># </span><span class="al">FIXME</span><span class="co">: This shouldn't be necessary</span></a>
 <a class="sourceLine" id="cb33-2" data-line-number="2">news &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(<span class="st">"NEWS.md"</span>)</a>
 <a class="sourceLine" id="cb33-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(news, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</a></code></pre></div>
-<pre><code>## # pkg5515726fa69c 0.0.1
+<pre><code>## # pkg5fd349205f0d 0.0.1
 ## 
 ## - Same as previous version.
 ## 
 ## 
-## # pkg5515726fa69c 0.0.0.9002
+## # pkg5fd349205f0d 0.0.0.9002
 ## 
 ## - Super-frobnication enabled.
 ## - Add support for frobnication.
 ## 
 ## 
-## # pkg5515726fa69c 0.0.0.9001
+## # pkg5fd349205f0d 0.0.0.9001
 ## 
 ## - New file test.R .
 ## 
 ## 
-## # pkg5515726fa69c 0.0.0.9000
+## # pkg5fd349205f0d 0.0.0.9000
 ## 
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
 <p>Consolidate messages</p>
@@ -287,7 +287,7 @@
 <a class="sourceLine" id="cb35-6" data-line-number="6">)</a></code></pre></div>
 <p>Review</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(news, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</a></code></pre></div>
-<pre><code>## # pkg5515726fa69c 0.0.1
+<pre><code>## # pkg5fd349205f0d 0.0.1
 ## 
 ## Initial release.
 ## 
@@ -323,12 +323,12 @@
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(pkg) <span class="co"># </span><span class="al">FIXME</span><span class="co">: This shouldn't be necessary</span></a>
 <a class="sourceLine" id="cb42-2" data-line-number="2">news &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(<span class="st">"NEWS.md"</span>)</a>
 <a class="sourceLine" id="cb42-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(news, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</a></code></pre></div>
-<pre><code>## # pkg5515726fa69c 0.0.1.9000
+<pre><code>## # pkg5fd349205f0d 0.0.1.9000
 ## 
 ## - Same as previous version.
 ## 
 ## 
-## # pkg5515726fa69c 0.0.1
+## # pkg5fd349205f0d 0.0.1
 ## 
 ## Initial release.
 ## 
