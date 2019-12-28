@@ -1,3 +1,7 @@
+get_stage("before_script") %>%
+  add_code_step(print(git2r::libgit2_version())) %>%
+  add_code_step(print(git2r::libgit2_features()))
+
 # installs dependencies, runs R CMD check, runs covr::codecov()
 do_package_checks()
 
