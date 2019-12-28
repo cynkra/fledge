@@ -47,17 +47,23 @@ Users of other environments would change the working directory manually.
 For this demo, we manually set the active project.
 
 ```{r set-focus, include = FALSE}
+wd <- getwd()
+
 knitr::knit_hooks$set(
   pkg = function(before, options, envir) {
     if (before) {
-      setwd(pkg)
+      wd <<- setwd(pkg)
+    } else {
+      setwd(wd)
     }
   }
 )
+
+knitr::opts_chunk$set(pkg = TRUE)
 ```
 
-```{r pkg-location, pkg = TRUE}
-usethis::proj_set(pkg)
+```{r pkg-location}
+usethis::proj_set()
 ```
 
 The infrastructure files and directories that comprise a minimal R package are created:
