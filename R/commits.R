@@ -3,11 +3,11 @@ NULL
 
 get_repo <- function() {
   proj <- usethis::proj_get()
-  repo <- git2r::repository(proj)
+  git2r::repository(proj)
 }
 
 with_repo <- function(code) {
-  withr::with_dir(get_repo(), code)
+  withr::with_dir(usethis::proj_get(), code)
 }
 
 get_top_level_commits_impl <- function(since) {
