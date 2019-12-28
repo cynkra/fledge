@@ -229,6 +229,8 @@ git2r::status()
 git2r::commit(message = "- Super-frobnication enabled.")
 ```
 
+The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...: use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
+
 Now that we have added super-frobnication support to our package, it is time to bump the version again.
 
 ```{r bump-two}
