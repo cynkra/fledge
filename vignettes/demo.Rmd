@@ -18,11 +18,6 @@ Finally, we will demonstrate how this changelog can eventually be converted to r
 options(crayon.enabled = TRUE)
 fansi::set_knit_hooks(knitr::knit_hooks, "output")
 fansi::set_knit_hooks(knitr::knit_hooks, "message")
-
-# For obscure reasons, building fails in R CMD check.
-# Luckily we only need to build in pkgdown:
-eval <- (Sys.getenv("IN_PKGDOWN") != "")
-knitr::opts_chunk$set(eval = eval)
 ```
 
 ## Set up the development environment
@@ -88,7 +83,7 @@ usethis::use_git()
 
 The `usethis::use_git()` function creates an initial commit, the repository is in a clean state.
 
-```{r git-config, include = FALSE, eval = eval && !interactive()}
+```{r git-config, include = FALSE, eval = !interactive()}
 # ...but only in interactive mode.
 git2r::config(user.name = "Test", user.email = "test@user.org")
 git2r::add(path = ".")
