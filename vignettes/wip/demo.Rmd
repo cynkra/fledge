@@ -195,18 +195,36 @@ In this demo, no remote repository is set up, and the push process is not shown.
 ### Change code and commit
 
 SuperFrob with frobnication is tested, now we want to enhance with super-frob.
-This requires changes to the code, and perhaps a new test:
+This requires changes to the code, and perhaps a new test.
+We create a branch and switch to this branch to implement this.
 
-```{r super-frob}
-usethis::use_r("frob")
-writeLines("# super-frob", "R/frob.R")
-usethis::use_test("frob")
+```{r super-frob-branch}
+git2r::branch_create(git2r::last_commit(), name = "f-super-frob")
+git2r::checkout(branch = "f-super-frob")
 ```
 
-We commit this change with the comment: _"- Super-frobnication enabled."_.
+On the branch, separate commits are used for the tests and the implementation.
+These commit messages do not need to be formatted specially, because {fledge} will ignore them anyway.
 
-```{r super-frob-commit}
+```{r super-frob}
+usethis::use_test("frob")
 git2r::add(path = ".")
+git2r::status()
+git2r::commit(message = "Add super-frob tests.")
+
+usethis::use_r("frob")
+writeLines("# super-frob", "R/frob.R")
+git2r::add(path = ".")
+git2r::status()
+git2r::commit(message = "Add super-frob implementation.")
+```
+
+This branch can be pushed to the remote as usual.
+Only when merging we specify the message to be included in the changelog, again with a bullet.
+
+```{r super-frob-merge}
+git2r::checkout(branch = "master")
+git2r::merge(".", "f-super-frob", commit_on_success = FALSE)
 git2r::status()
 git2r::commit(message = "- Super-frobnication enabled.")
 ```
@@ -257,7 +275,7 @@ cat(news, sep = "\n")
 writeLines(news, "NEWS.md")
 ```
 
-Unlike with development versions, we commit manually:
+Unlike with development versions, we commit the changes to `NEWS.md` manually:
 
 ```{r patch-news-write}
 git2r::add(path = ".")
@@ -271,7 +289,7 @@ The `devtools::release()` function is a more verbose alternative.
 
 ## After release
 
-Some time passed and our SuperFrob package was accepted.
+Some time passed and our SuperFrob package was accepted on CRAN.
 At this stage, `Fledge` can help to tag the released version and create a new version for development.
 
 ### Tag version
@@ -282,7 +300,7 @@ It is now the time to tag the released version using the `fledge::tag_version()`
 fledge::tag_version()
 ```
 
-It is advised to push to GitHub or your preferred Git service, with `git push --tags` from the command line, or your favorite Git client.
+It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.
 
 ### Create GitHub release
 
