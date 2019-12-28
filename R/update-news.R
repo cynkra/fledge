@@ -11,10 +11,10 @@ update_news_impl <- function(range) {
 collect_news <- function(range) {
   ui_info("Scraping {ui_value(length(range))} commit messages")
 
-  messages <- map_chr(range, "message")
+  messages <- gsub("\r\n", "\n", map_chr(range, "message"))
   messages_before_triple_dash <- map_chr(strsplit(messages, "\n---", fixed = TRUE), 1)
   message_lines <- strsplit(messages_before_triple_dash, "\n", fixed = TRUE)
-  message_bullets <- map(message_lines, keep, ~grepl("^[*-]", .))
+  message_bullets <- map(message_lines, keep, ~ grepl("^[*-]", .))
 
   message_items <- unlist(message_bullets)
   if (length(message_items) == 0) {

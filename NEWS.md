@@ -1,3 +1,8 @@
+# fledge 0.0.2.9000
+
+- Convert `"\r\n"` to `"\n"` in Git messages, these can occur when merging a PR on GitHub.
+
+
 # fledge 0.0.2
 
 - New "Get started" article (#15).
