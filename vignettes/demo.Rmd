@@ -56,6 +56,8 @@ knitr::knit_hooks$set(
     } else {
       setwd(wd)
     }
+
+    invisible()
   }
 )
 
