@@ -1,5 +1,5 @@
 ---
-title: "demo"
+title: "Using {fledge}"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{demo}
@@ -7,183 +7,317 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup}
+## Introduction
+
+This guide will demonstrate how to use {fledge}, using a mock R package as an example.
+We are going to call our package "{SuperFrob}".
+We will develop it from scratch and also maintain a changelog as the development progresses.
+Finally, we will demonstrate how this changelog can eventually be converted to release notes when the package is submitted to CRAN.
+
+```{r setup, include = FALSE}
 options(crayon.enabled = TRUE)
-fansi::set_knit_hooks(knitr::knit_hooks)
+fansi::set_knit_hooks(knitr::knit_hooks, "output")
+fansi::set_knit_hooks(knitr::knit_hooks, "message")
 ```
 
+## Set up the development environment
 
-Create new package
+Before we start development for {SuperFrob}, we set up the basic development environment required for any typical R package.
 
-```{r }
-pkg <- usethis::create_package(tempfile("pkg"))
-pkg
+### Create a Package
+
+We will start by creating a new package.
+For this demo, the package is created in a temporary directory.
+A real project will live somewhere in your home directory.
+
+```{r tempdir}
+tempdir <- tempfile("fledge")
+dir.create(tempdir)
 ```
 
-Set up development work
+The `usethis::create_package()` function sets up a package project ready for development.
+The output shows the details of the package created.
 
-```{r }
-usethis::proj_set(pkg)
-usethis::proj_get()
-usethis::use_git()
-repo <- git2r::repository(pkg)
-git2r::config(repo = repo, user.name = "Test", user.email = "test@user.org")
+```{r create-package}
+pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
 ```
 
-FIXME: This shouldn't be necessary
+In an interactive RStudio session, a new window opens.
+Users of other environments would change the working directory manually.
+For this demo, we manually set the active project.
 
-```{r }
-usethis::use_news_md()
-git2r::add(repo = repo, path = ".")
-git2r::commit(repo = repo, message = "Initial NEWS.md .")
-```
-
-Hacking in the package
-
-```{r }
-usethis::use_r("test")
-```
-
-Committing with a meaningful message
-
-```{r }
-git2r::add(repo = repo, path = ".")
-git2r::commit(repo = repo, message = "- Mew file test.R .")
-```
-
-Bumping the package version
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-fledge::bump_version()
-```
-
-Review NEWS.md
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-news <- readLines("NEWS.md")
-cat(news, sep = "\n")
-```
-
-A mistake? No problem:
-
-```{r }
-news <- gsub("Mew", "New", news)
-cat(news, sep = "\n")
-```
-
-Edit NEWS.md and finalize
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-writeLines(news, "NEWS.md")
-fledge::finalize_version()
-```
-
-Hacking more
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-writeLines("# frobnicate", "R/test.R")
-```
-
-Committing with a meaningful message
-
-```{r }
-git2r::add(repo = repo, path = ".")
-git2r::commit(repo = repo, message = "- Add support for frobnication.")
-```
-
-Hacking more
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-writeLines("# super-frob", "R/test.R")
-```
-
-Committing with a meaningful message
-
-```{r }
-git2r::add(repo = repo, path = ".")
-git2r::commit(repo = repo, message = "- Super-frobnication enabled.")
-```
-
-Bumping the package version
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-fledge::bump_version()
-```
-
-Some time has passed...
-
-Preparing for first release
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-fledge::bump_version("patch")
-```
-
-Consolidating NEWS.md
-
-Current contents
-
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-news <- readLines("NEWS.md")
-cat(news, sep = "\n")
-```
-
-Consolidate messages
-
-```{r }
-length(news) <- 5
-news[3:5] <- c(
-  "Initial release.",
-  "",
-  "Basic functionality: Super-frobnication."
+```{r set-focus, include = FALSE}
+knitr::knit_hooks$set(
+  pkg = function(before, options, envir) {
+    if (before) {
+      setwd(pkg)
+    }
+  }
 )
 ```
 
-Review
+```{r pkg-location, pkg = TRUE}
+usethis::proj_set(pkg)
+```
 
-```{r }
+The infrastructure files and directories that comprise a minimal R package are created:
+
+```{r dir-tree}
+fs::dir_tree()
+```
+
+
+### Create and configure a Git repository
+
+Next we set up this package for development and create a Git repository for the package.
+
+```{r git}
+usethis::use_git()
+```
+
+The `usethis::use_git()` function creates an initial commit, the repository is in a clean state.
+
+```{r git-config, include = FALSE, eval = !interactive()}
+# ...but only in interactive mode.
+git2r::config(user.name = "Test", user.email = "test@user.org")
+git2r::add(path = ".")
+git2r::commit(message = "Initial commit.")
+```
+
+```{r git-show-init}
+git2r::commits()
+git2r::status()
+```
+
+### Create initial NEWS.md file
+
+An initial NEWS file can be created with `usethis::use_news_md()`.
+
+```{r init-news}
+usethis::use_news_md()
+```
+
+Let's take a look at the contents:
+
+```{r init-news-review}
+news <- readLines(usethis::proj_path("NEWS.md"))
 cat(news, sep = "\n")
 ```
 
-Update NEWS.md
+This file needs to be tracked by Git:
 
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-writeLines(news, "NEWS.md")
+```{r init-news-commit}
+git2r::add(path = ".")
+git2r::status()
+git2r::commit(message = "Initial NEWS.md .")
 ```
 
-Release to CRAN...
+## The development phase
 
-Package accepted!
+### Create an R file
 
-Finalize version
+Now we start coding in the functionality for the package.
+We start by creating the new R file called `super.R` and adding frobnication code.
 
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
-fledge::tag_version()
+```{r use-super}
+usethis::use_r("super")
+writeLines("# frobnicate", "R/super.R")
 ```
 
-Consider calling `usethis::use_github_release()`
+We commit this file to Git with a relevant message.
+Note the use of the bullet (-) before the commit message.
+This indicates that the message should be included in `NEWS.md` when it is updated.
 
-Immediately bump version to next devel version
+```{r commit-super}
+git2r::add(path = ".")
+git2r::commit(message = "- Add support for frobmication.")
+```
 
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
+### Create a test
+
+The code in `super.R` warrants a test:
+
+```{r use-super-test}
+usethis::use_test("super")
+cat("tests/testthat/test-super.R", sep = "\n")
+```
+
+In a real project we would substitute the testing code from the template by real tests.
+In this demo we commit straight away, again with a bulleted message.
+
+```{r commit-super-test}
+git2r::add(path = ".")
+git2r::status()
+git2r::commit(message = "- Add tests for frobnication.")
+```
+
+### Update NEWS.md
+
+We use `fledge::bump_version()` to assign a new dev version number to the package and also update `NEWS.md`.
+
+```{r bump}
 fledge::bump_version()
 ```
 
-Review NEWS.md
+### Review NEWS.md
 
-```{r }
-setwd(pkg) # FIXME: This shouldn't be necessary
+Let us see what `NEWS.md` looks like after that bump.
+
+```{r news-review}
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ```
 
+While reviewing we notice that there was a typo in one of the comments.
+Let's fix the typo:
+
+```{r news-tweak}
+news <- gsub("frobmication", "frobnication", news)
+cat(news, sep = "\n")
+writeLines(news, "NEWS.md")
+```
+
+This does not affect the original commit message, only `NEWS.md`.
+
+### Finalize Version
+
+After tweaking `NEWS.md`, it is important to use `fledge::finalize_version()` and not to commit manually.
+This ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
+It should be called every time `NEWS.md` is manually updated.
+
+```{r news-finalize}
+fledge::finalize_version()
+```
+
+When done, we push to the *remote* (GitHub or another Git service) with tags, using `git push --tags` from the command line or your favorite Git client.
+In this demo, no remote repository is set up, and the push process is not shown.
+
+### Change code and commit
+
+{SuperFrob} with frobnication is tested, now we want to enhance with super-frob.
+This requires changes to the code, and perhaps a new test.
+We create a branch and switch to this branch to implement this.
+
+```{r super-frob-branch}
+git2r::branch_create(git2r::last_commit(), name = "f-super-frob")
+git2r::checkout(branch = "f-super-frob")
+```
+
+On the branch, separate commits are used for the tests and the implementation.
+These commit messages do not need to be formatted specially, because {fledge} will ignore them anyway.
+
+```{r super-frob}
+usethis::use_test("frob")
+git2r::add(path = ".")
+git2r::status()
+git2r::commit(message = "Add super-frob tests.")
+
+usethis::use_r("frob")
+writeLines("# super-frob", "R/frob.R")
+git2r::add(path = ".")
+git2r::status()
+git2r::commit(message = "Add super-frob implementation.")
+```
+
+This branch can be pushed to the remote as usual.
+Only when merging we specify the message to be included in the changelog, again with a bullet.
+
+```{r super-frob-merge}
+git2r::checkout(branch = "master")
+git2r::merge(".", "f-super-frob", commit_on_success = FALSE)
+git2r::status()
+git2r::commit(message = "- Super-frobnication enabled.")
+```
+
+The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...: use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
+
+Now that we have added super-frobnication support to our package, it is time to bump the version again.
+
+```{r bump-two}
+fledge::bump_version()
+news <- readLines("NEWS.md")
+cat(news, sep = "\n")
+```
+
+## Prepare for release
+
+After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN.
+This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.
+
+### Bump version for release 
+
+We wish to release this package as a patch and so we use `fledge::bump_version()` with the "patch" argument.
+
+```{r bump-patch}
+fledge::bump_version("patch")
+```
+
+This updates the version of our package to `r desc::desc_get_version()`.
+
+### Generate release notes
+
+We review the `NEWS.md` that were generated by {fledge}:
+
+```{r patch-news-review}
+news <- readLines("NEWS.md")
+cat(news, sep = "\n")
+```
+
+Some of the intermediate commit messages are not relevant in the release notes for this release.
+We need to edit `NEWS.md` to convert the changelog to meaningful release notes.
+
+```{r patch-news-edit}
+length(news) <- 5
+news[3:5] <- c(
+  "Initial CRAN release.",
+  "",
+  "Basic functionality: Super-frobnication."
+)
+cat(news, sep = "\n")
+writeLines(news, "NEWS.md")
+```
+
+Unlike with development versions, we commit the changes to `NEWS.md` manually:
+
+```{r patch-news-write}
+git2r::add(path = ".")
+git2r::status()
+git2r::commit(message = "Update NEWS.")
+```
+
+The package is now ready to be released to CRAN.
+I prefer `devtools::use_release_issue()` to create a checklist of things to do before release, and `devtools::submit_cran()` to submit.
+The `devtools::release()` function is a more verbose alternative.
+
+## After release
+
+Some time passed and our {SuperFrob} package was accepted on CRAN.
+At this stage, {fledge} can help to tag the released version and create a new version for development.
+
+### Tag version
+
+It is now the time to tag the released version using the `fledge::tag_version()` function.
+
+```{r tag}
+fledge::tag_version()
+```
+
+It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.
+
+### Create GitHub release
+
+If your package is hosted on GitHub, `usethis::use_github_release()` creates a draft GitHub release from the contents already in `NEWS.md`.
+You need to submit the draft release from the GitHub release page.
+
+### Restart development
+
+We will now make the package ready for future development.
+The `fledge::bump_version()` takes care of it.
+
+```{r bump-dev}
+fledge::bump_version()
+news <- readLines("NEWS.md")
+cat(news, sep = "\n")
+```
+
+Push to remote.
