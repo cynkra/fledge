@@ -29,6 +29,11 @@ get_commit_message <- function(version) {
   paste0("Bump version to ", version)
 }
 
+check_clean <- function(forbidden_modifications) {
+  status <- git2r::status(".", unstaged = TRUE, untracked = TRUE)
+  stopifnot(!any(forbidden_modifications %in% unlist(status)))
+}
+
 check_only_staged <- function(allowed_modifications) {
   staged <- git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged
   stopifnot(all(names(staged) == "modified"))
