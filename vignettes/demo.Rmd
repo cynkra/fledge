@@ -81,11 +81,15 @@ Next we set up this package for development and create a Git repository for the 
 usethis::use_git()
 ```
 
-The `usethis::use_git()` function creates an initial commit, the repository is in a clean state.
-
-```{r git-config, include = FALSE, eval = !interactive()}
+```{r git-config, include = FALSE}
 # ...but only in interactive mode.
 git2r::config(user.name = "Test", user.email = "test@user.org")
+```
+
+In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
+In the demo this needs to be carried out manually.
+
+```{r git-initial-commit, eval = !interactive()}
 git2r::add(path = ".")
 git2r::commit(message = "Initial commit.")
 ```
@@ -94,6 +98,14 @@ git2r::commit(message = "Initial commit.")
 git2r::commits()
 git2r::status()
 ```
+
+For working in branches, it is recommended to turn off fast-forward merging:
+
+```{r git-no-ff}
+git2r::config(merge.ff = "false")
+```
+
+An alternative is to use squash commits.
 
 ### Create initial NEWS.md file
 
@@ -226,7 +238,10 @@ git2r::commit(message = "Add super-frob implementation.")
 ```
 
 This branch can be pushed to the remote as usual.
-Only when merging we specify the message to be included in the changelog, again with a bullet.
+Only when merging we specify the message to be included in the changelog, again with a bullet.[^merge-ff]
+
+[^merge-ff]: Note that we really need a merge commit here; the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
+Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
 ```{r super-frob-merge}
 git2r::checkout(branch = "master")
