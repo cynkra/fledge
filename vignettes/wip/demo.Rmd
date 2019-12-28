@@ -9,7 +9,10 @@ vignette: >
 
 ## Introduction
 
-This guide will demonstrate how to use `fledge` functionality with a mock R package. We are going to call our package "`SuperFrob`". We will develop it from scratch and also maintain a change-log as the development progresses. Finally, we will demonstrate how this change log can eventually be converted to release notes when the package is submitted to CRAN.
+This guide will demonstrate how to use `fledge` functionality with a mock R package.
+We are going to call our package "`SuperFrob`".
+We will develop it from scratch and also maintain a change-log as the development progresses.
+Finally, we will demonstrate how this change log can eventually be converted to release notes when the package is submitted to CRAN.
 
 ```{r setup}
 options(crayon.enabled = TRUE)
@@ -22,9 +25,11 @@ Before we start development for "`SuperFrob`", we set up the basic development e
 
 ### Create a Package
 
-We will start by creating a new package. We use the `tempfile()` and `create_package()` functions for this. 
+We will start by creating a new package.
+We use the `tempfile()` and `create_package()` functions for this.
 
-The output shows the details of the package created. 
+
+The output shows the details of the package created.
 
 ```{r }
 pkg <- usethis::create_package(tempfile("pkg"))
@@ -38,25 +43,31 @@ pkg
 
 ### Create and Configure a repository
 
-Next we set up this package for development and create a git repository for the package. Following is be the sequence of steps that we follow.
+Next we set up this package for development and create a git repository for the package.
+Following is be the sequence of steps that we follow.
 
 1. Set the package as the active R package.
-```{r }
-usethis::proj_set(pkg)
-usethis::proj_get()
-```
+
+    ```{r }
+    usethis::proj_set(pkg)
+    usethis::proj_get()
+    ```
+
 2. Initialize a git repository.
-```{r }
-usethis::use_git()
-```
+
+    ```{r }
+    usethis::use_git()
+    ```
+
 3. Open a repository with the newly created package path.
-```{r }
-repo <- git2r::repository(pkg)
-```
-4. Configure the repository with the user name and email used for accessing git.
-```{r }
-git2r::config(repo = repo, user.name = "Test", user.email = "test@user.org")
-```
+    ```{r }
+    repo <- git2r::repository(pkg)
+    ```
+
+4. Configure the repository with the user name and email used for accessing Git.
+    ```{r }
+    git2r::config(repo = repo, user.name = "Test", user.email = "test@user.org")
+    ```
 
 FIXME: This shouldn't be necessary
 
@@ -69,14 +80,19 @@ git2r::commit(repo = repo, message = "Initial NEWS.md .")
 ## The development phase
 
 ### Create a R file
-Now we start coding in the functionality for the package. We start by creating the new R file called `test`.
+
+Now we start coding in the functionality for the package.
+We start by creating the new R file called `test`.
 
 ```{r }
 usethis::use_r("test")
 ```
 
 ### Write code and check in
-We write some super complex and useful code to this file. After coding, it is now the time for the first check-in. We will commit this file to git with a relevant message.
+
+We write some super complex and useful code to this file.
+After coding, it is now the time for the first check-in.
+We will commit this file to git with a relevant message.
 
 ```{r }
 git2r::add(repo = repo, path = ".")
@@ -84,7 +100,11 @@ git2r::commit(repo = repo, message = "- Mew file test.R .")
 ```
 
 ### Use Fledge in Development
-A commit also signifies that it's the time to use `Fledge`. We use it at this stage to assign a new dev version number to the package and also update `NEWS.md`. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in `NEWS.md`.
+
+A commit also signifies that it's the time to use `Fledge`.
+We use it at this stage to assign a new dev version number to the package and also update `NEWS.md`.
+Note the use of the bullet (-) before the commit message.
+This indicates that the message should be included in `NEWS.md`.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -101,7 +121,8 @@ cat(news, sep = "\n")
 ```
 
 ### Correct errors in NEWS.md
-While reviewing we notice that there was a typo in one of the comments. We will not show how such issues may be addressed.
+While reviewing we notice that there was a typo in one of the comments.
+We will not show how such issues may be addressed.
 The "Mew" can be replaced with "New" using the `gsub` function and rewriting the contents back to NEWS.md.
 
 ```{r }
@@ -110,7 +131,9 @@ cat(news, sep = "\n")
 ```
 
 ### Finalize Version
-After correcting any errors in `NEWS.md`, we use the `finalize_version()` function. This ensures that the version is set to the correct version in spite of the `NEWS.md` update. It should be called every time `NEWS.md` is manually updated.
+After correcting any errors in `NEWS.md`, we use the `finalize_version()` function.
+This ensures that the version is set to the correct version in spite of the `NEWS.md` update.
+It should be called every time `NEWS.md` is manually updated.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
@@ -120,7 +143,9 @@ fledge::finalize_version()
 
 ## Review and Test Phase
 
-Code changes after check-in are mostly inevitable. There could be a change in requirements, possible issues, or need to improvise. With `SuperFrob` we want to add a great new feature called "frobnicate" to the package.
+Code changes after check-in are mostly inevitable.
+There could be a change in requirements, possible issues, or need to improvise.
+With `SuperFrob` we want to add a great new feature called "frobnicate" to the package.
 
 ### Change code and commit - I
 We modify the code we wrote earlier as follows:
@@ -129,7 +154,7 @@ setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines("# frobnicate", "R/test.R")
 ```
 
-This time we commit it to git with the message _"- Add support for frobnication"_. 
+This time we commit it to git with the message _"- Add support for frobnication"_.
 
 ```{r }
 git2r::add(repo = repo, path = ".")
@@ -137,14 +162,17 @@ git2r::commit(repo = repo, message = "- Add support for frobnication.")
 ```
 
 ### Change code and commit - II
-SuperFrob with frobnication is tested and there is a need to address an issue. This requires another code change as follows:
+
+SuperFrob with frobnication is tested and there is a need to address an issue.
+This requires another code change as follows:
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
 writeLines("# super-frob", "R/test.R")
 ```
 
-The change is followed by a commit. We commit this change with the comment: _"- Super-frobnication enabled."_ 
+The change is followed by a commit.
+We commit this change with the comment: _"- Super-frobnication enabled."_.
 
 ```{r }
 git2r::add(repo = repo, path = ".")
@@ -160,7 +188,8 @@ fledge::bump_version()
 
 ## Prepare for release
 
-After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN. This is where `fledge`  simplifies the release process by making use of the all the commit messages that we provided earlier.
+After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN.
+This is where `fledge`  simplifies the release process by making use of the all the commit messages that we provided earlier.
 
 ### Feldge for release 
 We wish to release this package as a patch and so we use `fledge` -> `bump_version()` with the argument "patch".
@@ -180,7 +209,11 @@ cat(news, sep = "\n")
 ```
 
 ###  Generate Release notes
-Fledge helps to convert changelog entries to release notes. Some of the intermediate commit messages may not be relevant in the release notes for this release. These can be edited if required by editing `NEWS.md` manually as demonstrated earlier. 
+
+Fledge helps to convert changelog entries to release notes.
+Some of the intermediate commit messages may not be relevant in the release notes for this release.
+These can be edited if required by editing `NEWS.md` manually as demonstrated earlier.
+
 
 ```{r }
 length(news) <- 5
@@ -206,7 +239,8 @@ The package is now ready to be released to CRAN.
 
 ## Post release
 
-Some time passed and our package for SuperFrob was accepted. At this stage, `Fledge` can help to tag the released version and create a new version for development.
+Some time passed and our package for SuperFrob was accepted.
+At this stage, `Fledge` can help to tag the released version and create a new version for development.
 
 ### Fledge - Tag Version.
 It is now the time to tag the released version using the `tag_version()` function.
@@ -220,7 +254,9 @@ You may call `usethis::use_github_release()` at this stage.
 
 ### Fledge - Bump Development Version.
 
-We will now make the package ready for future development. This requires that `bump_version()` be called immediately after tagging the released version. This would create the version number for the next round of development.
+We will now make the package ready for future development.
+This requires that `bump_version()` be called immediately after tagging the released version.
+This would create the version number for the next round of development.
 
 ```{r }
 setwd(pkg) # FIXME: This shouldn't be necessary
