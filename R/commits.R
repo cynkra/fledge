@@ -44,9 +44,9 @@ get_first_parent <- function(commit, since) {
 
 get_last_tag_impl <- function() {
   with_repo({
-    repo_head <- git2r::commits(repo, time = FALSE, n = 1)[[1]]
+    repo_head <- git2r::commits(time = FALSE, n = 1)[[1]]
 
-    all_tags <- git2r::tags(repo)
+    all_tags <- git2r::tags()
   })
 
   if (length(all_tags) == 0) return(NULL)
