@@ -1,10 +1,17 @@
 #' @import purrr
 NULL
 
-get_top_level_commits_impl <- function(since) {
-  repo <- git2r::repository()
+get_repo <- function() {
+  proj <- usethis::proj_get()
+  repo <- git2r::repository(proj)
+}
 
-  commit <- git2r::commits(repo, time = FALSE, n = 1)[[1]]
+with_repo <- function(code) {
+  withr::with_dir(get_repo(), code)
+}
+
+get_top_level_commits_impl <- function(since) {
+  commit <- git2r::commits(get_repo(), time = FALSE, n = 1)[[1]]
 
   if (!is.null(since)) {
     since <- git2r::lookup_commit(since)
@@ -36,11 +43,12 @@ get_first_parent <- function(commit, since) {
 }
 
 get_last_tag_impl <- function() {
-  repo <- git2r::repository()
+  with_repo({
+    repo_head <- git2r::commits(repo, time = FALSE, n = 1)[[1]]
 
-  repo_head <- git2r::commits(repo, time = FALSE, n = 1)[[1]]
+    all_tags <- git2r::tags(repo)
+  })
 
-  all_tags <- git2r::tags(repo)
   if (length(all_tags) == 0) return(NULL)
 
   tags_ab <- map(all_tags, git2r::ahead_behind, repo_head)
