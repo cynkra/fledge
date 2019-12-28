@@ -18,7 +18,8 @@ Imports:
     enc,
     git2r (>= 0.26.0),
     purrr (>= 0.3.2),
-    usethis (>= 1.5.0)
+    usethis (>= 1.5.0),
+    withr
 Suggests: 
     fs,
     knitr,
