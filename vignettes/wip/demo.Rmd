@@ -14,9 +14,10 @@ We are going to call our package "`SuperFrob`".
 We will develop it from scratch and also maintain a change-log as the development progresses.
 Finally, we will demonstrate how this change log can eventually be converted to release notes when the package is submitted to CRAN.
 
-```{r setup}
+```{r setup, include = FALSE}
 options(crayon.enabled = TRUE)
-fansi::set_knit_hooks(knitr::knit_hooks)
+fansi::set_knit_hooks(knitr::knit_hooks, "output")
+fansi::set_knit_hooks(knitr::knit_hooks, "message")
 ```
 
 ## Set-up the development environment
@@ -26,53 +27,78 @@ Before we start development for "`SuperFrob`", we set up the basic development e
 ### Create a Package
 
 We will start by creating a new package.
-We use the `tempfile()` and `create_package()` functions for this.
+For this demo, the package is created in a temporary directory.
+A real project will live somewhere in your home directory.
 
+```{r tempdir}
+tempdir <- tempfile("fledge")
+dir.create(tempdir)
+```
 
+The `usethis::create_package()` function sets up a package project ready for development.
 The output shows the details of the package created.
 
-```{r }
-pkg <- usethis::create_package(tempfile("pkg"))
+```{r create-package}
+pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
 ```
 
-You can check the location of the new package as follows:
+The infrastructure files and directories that comprise a minimal R package are created:
 
-```{r }
-pkg
+```{r dir-tree}
+fs::dir_tree(pkg)
 ```
 
-### Create and Configure a repository
+The newly created project will be set active for the rest of the demo.
+For RStudio users, this corresponds to opening the project, e.g. by double-clicking the `SuperFrob.Rproj` file.
 
-Next we set up this package for development and create a git repository for the package.
-Following is be the sequence of steps that we follow.
+```{r pkg-location}
+usethis::proj_set(pkg)
+```
 
-1. Set the package as the active R package.
+### Create and configure a Git repository
 
-    ```{r }
-    usethis::proj_set(pkg)
-    usethis::proj_get()
-    ```
+Next we set up this package for development and create a Git repository for the package.
 
-2. Initialize a git repository.
+```{r git}
+usethis::use_git()
+```
 
-    ```{r }
-    usethis::use_git()
-    ```
+The `usethis::use_git()` function creates an initial commit, the repository is in a clean state.
 
-3. Open a repository with the newly created package path.
-    ```{r }
-    repo <- git2r::repository(pkg)
-    ```
+```{r git-repo}
+repo <- git2r::repository(pkg)
+```
 
-4. Configure the repository with the user name and email used for accessing Git.
-    ```{r }
-    git2r::config(repo = repo, user.name = "Test", user.email = "test@user.org")
-    ```
+```{r git-config, include = FALSE, eval = !interactive()}
+# ...but only in interactive mode.
+git2r::config(repo = repo, user.name = "Test", user.email = "test@user.org")
+git2r::add(repo = repo, path = ".")
+git2r::commit(repo = repo, message = "Initial commit.")
+```
 
-FIXME: This shouldn't be necessary
+```{r git-show-init}
+git2r::commits(repo)
+git2r::status(repo)
+```
 
-```{r }
+### Create initial NEWS.md file
+
+An initial NEWS file can be created with `usethis::use_news_md()`.
+
+```{r init-news}
 usethis::use_news_md()
+```
+
+Let's take a look at the contents:
+
+```{r init-news-review}
+news <- readLines(usethis::proj_path("NEWS.md"))
+cat(news, sep = "\n")
+```
+
+This file needs to be tracked by Git:
+
+```{r init-news-commit}
 git2r::add(repo = repo, path = ".")
 git2r::commit(repo = repo, message = "Initial NEWS.md .")
 ```
@@ -90,9 +116,8 @@ usethis::use_r("test")
 
 ### Write code and check in
 
-We write some super complex and useful code to this file.
-After coding, it is now the time for the first check-in.
-We will commit this file to git with a relevant message.
+After adding some useful code to this file, it is time for the first check-in.
+We will commit this file to Git with a relevant message.
 
 ```{r }
 git2r::add(repo = repo, path = ".")
@@ -112,6 +137,7 @@ fledge::bump_version()
 ```
 
 ### Review NEWS.md
+
 Let us see what `NEWS.md` looks like after that bump.
 
 ```{r }
