@@ -2,11 +2,16 @@ Package: fledge
 Title: Wings for Your R Packages
 Version: 0.0.2
 Date: 2019-09-28
-Authors@R: person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org")
-Description:
-    Streamlines the process of versioning R packages and updating NEWS. Numbers are cheap, why not use them?
+Authors@R: 
+    person(given = "Kirill",
+           family = "M\u00fcller",
+           role = c("aut", "cre"),
+           email = "krlmlr+r@mailbox.org")
+Description: Streamlines the process of versioning R
+    packages and updating NEWS. Numbers are cheap, why not use them?
 License: GPL-3
-URL: http://krlmlr.github.io/fledge, https://github.com/krlmlr/fledge
+URL: http://krlmlr.github.io/fledge,
+    https://github.com/krlmlr/fledge
 BugReports: https://github.com/krlmlr/fledge/issues
 Imports: 
     desc (>= 1.2.0),
@@ -14,11 +19,13 @@ Imports:
     git2r (>= 0.26.0),
     purrr (>= 0.3.2),
     usethis (>= 1.5.0)
+Suggests: 
+    fs,
+    knitr,
+    rmarkdown
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
