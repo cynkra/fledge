@@ -1,5 +1,5 @@
 ---
-title: "Using {fledge}"
+title: "Using fledge"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{demo}
