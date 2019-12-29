@@ -1,11 +1,7 @@
-# fledge 0.0.2.9001
+# fledge 0.0.3
 
 - Check that `DESCRIPTION` and `NEWS.md` are clean before bumping (#10).
 - Add demo vignette (#19, @kaslee).
-
-
-# fledge 0.0.2.9000
-
 - Convert `"\r\n"` to `"\n"` in Git messages, these can occur when merging a PR on GitHub.
 
 
