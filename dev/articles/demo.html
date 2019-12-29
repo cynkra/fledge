@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.2.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9000</span>
       </span>
     </div>
 
@@ -107,14 +107,14 @@
 <p>Before we start development for {SuperFrob}, we set up the basic development environment required for any typical R package.</p>
 <div id="create-a-package" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-a-package" class="anchor"></a>Create a Package</h3>
+<a href="#create-a-package" class="anchor"></a>Create a package</h3>
 <p>We will start by creating a new package. For this demo, the package is created in a temporary directory. A real project will live somewhere in your home directory.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">tempdir &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>(<span class="st">"fledge"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(tempdir)</a></code></pre></div>
 <p>The <code><a href="https://usethis.r-lib.org/reference/create_package.html">usethis::create_package()</a></code> function sets up a package project ready for development. The output shows the details of the package created.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">pkg &lt;-<span class="st"> </span>usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/create_package.html">create_package</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(tempdir, <span class="st">"SuperFrob"</span>))</a></code></pre></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/RtmpbgdkuF/fledge370112fce39e/SuperFrob/'</span><span>
-## </span><span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpbgdkuF/fledge370112fce39e/SuperFrob'</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/Rtmp64Qock/fledge367b31a8b7eb/SuperFrob/'</span><span>
+## </span><span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/Rtmp64Qock/fledge367b31a8b7eb/SuperFrob'</span><span>
 ## </span><span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'R/'</span><span>
 ## </span><span style="color: #00BB00;">✔</span><span> Writing </span><span style="color: #0000BB;">'DESCRIPTION'</span><span>
 ## </span><span style="color: #0000BB;">Package</span><span>: SuperFrob
@@ -131,7 +131,7 @@
 </span></code></pre>
 <p>In an interactive RStudio session, a new window opens. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/proj_utils.html">proj_set</a></span>()</a></code></pre></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpbgdkuF/fledge370112fce39e/SuperFrob'</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/Rtmp64Qock/fledge367b31a8b7eb/SuperFrob'</span><span>
 </span></code></pre>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fs<span class="op">::</span><span class="kw"><a href="http://fs.r-lib.org/reference/dir_tree.html">dir_tree</a></span>()</a></code></pre></div>
@@ -152,10 +152,10 @@
 <p>In interactive mode, the <code><a href="https://usethis.r-lib.org/reference/use_git.html">usethis::use_git()</a></code> function creates an initial commit, and the repository is in a clean state. In the demo this needs to be carried out manually.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"Initial commit."</span>)</a></code></pre></div>
-<pre><code>## [4449865] 2019-12-29: Initial commit.</code></pre>
+<pre><code>## [3739b97] 2019-12-29: Initial commit.</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commits.html">commits</a></span>()</a></code></pre></div>
 <pre><code>## [[1]]
-## [4449865] 2019-12-29: Initial commit.</code></pre>
+## [3739b97] 2019-12-29: Initial commit.</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span>()</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>For working in branches, it is recommended to turn off fast-forward merging:</p>
@@ -181,7 +181,7 @@
 <pre><code>## Staged changes:
 ##  New:        NEWS.md</code></pre>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"Initial NEWS.md ."</span>)</a></code></pre></div>
-<pre><code>## [920b0a6] 2019-12-29: Initial NEWS.md .</code></pre>
+<pre><code>## [b84a470] 2019-12-29: Initial NEWS.md .</code></pre>
 </div>
 </div>
 <div id="the-development-phase" class="section level2">
@@ -198,7 +198,7 @@
 <p>We commit this file to Git with a relevant message. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in <code>NEWS.md</code> when it is updated.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="dt">path =</span> <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"- Add support for frobmication."</span>)</a></code></pre></div>
-<pre><code>## [6ac40a2] 2019-12-29: - Add support for frobmication.</code></pre>
+<pre><code>## [e0ad091] 2019-12-29: - Add support for frobmication.</code></pre>
 </div>
 <div id="create-a-test" class="section level3">
 <h3 class="hasAnchor">
@@ -222,7 +222,7 @@
 ##  New:        tests/testthat.R
 ##  New:        tests/testthat/test-super.R</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"- Add tests for frobnication."</span>)</a></code></pre></div>
-<pre><code>## [f5d6b9c] 2019-12-29: - Add tests for frobnication.</code></pre>
+<pre><code>## [5aad25d] 2019-12-29: - Add tests for frobnication.</code></pre>
 </div>
 <div id="update-news-md" class="section level3">
 <h3 class="hasAnchor">
@@ -276,7 +276,7 @@
 </div>
 <div id="finalize-version" class="section level3">
 <h3 class="hasAnchor">
-<a href="#finalize-version" class="anchor"></a>Finalize Version</h3>
+<a href="#finalize-version" class="anchor"></a>Finalize version</h3>
 <p>After tweaking <code>NEWS.md</code>, it is important to use <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code> and not to commit manually. This ensures that the tag is set to the correct version in spite of the <code>NEWS.md</code> update. It should be called every time <code>NEWS.md</code> is manually updated.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
 <pre class="fansi fansi-output"><code>## <span style="color: #BBBB00;">ℹ</span><span> Resetting to previous commit
@@ -302,7 +302,7 @@
 <pre><code>## Staged changes:
 ##  New:        tests/testthat/test-frob.R</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"Add super-frob tests."</span>)</a></code></pre></div>
-<pre><code>## [b5c455b] 2019-12-29: Add super-frob tests.</code></pre>
+<pre><code>## [f736491] 2019-12-29: Add super-frob tests.</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/use_r.html">use_r</a></span>(<span class="st">"frob"</span>)</a></code></pre></div>
 <pre class="fansi fansi-output"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'R/frob.R'</span><span>
 </span></code></pre>
@@ -312,7 +312,7 @@
 <pre><code>## Staged changes:
 ##  New:        R/frob.R</code></pre>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"Add super-frob implementation."</span>)</a></code></pre></div>
-<pre><code>## [6c6608f] 2019-12-29: Add super-frob implementation.</code></pre>
+<pre><code>## [0d02e8c] 2019-12-29: Add super-frob implementation.</code></pre>
 <p>This branch can be pushed to the remote as usual. Only when merging we specify the message to be included in the changelog, again with a bullet.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/checkout.html">checkout</a></span>(<span class="dt">branch =</span> <span class="st">"master"</span>)</a>
 <a class="sourceLine" id="cb50-2" data-line-number="2">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/reexports.html">merge</a></span>(<span class="st">"."</span>, <span class="st">"f-super-frob"</span>, <span class="dt">commit_on_success =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
@@ -322,7 +322,7 @@
 ##  New:        R/frob.R
 ##  New:        tests/testthat/test-frob.R</code></pre>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"- Super-frobnication enabled."</span>)</a></code></pre></div>
-<pre><code>## [96e5868] 2019-12-29: - Super-frobnication enabled.</code></pre>
+<pre><code>## [9c2cdd8] 2019-12-29: - Super-frobnication enabled.</code></pre>
 <p>The same strategy can be used when merging a pull/merge/… request on GitHub, GitLab, …: use bullet points in the merge commit message to indicate the items to include in <code>NEWS.md</code>.</p>
 <p>Now that we have added super-frobnication support to our package, it is time to bump the version again.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a></code></pre></div>
@@ -380,7 +380,7 @@
 ## </span><span style="color: #BB0000;">●</span><span> Every time you edit </span><span style="color: #0000BB;">'NEWS.md'</span><span>, save it and call </span><span style="color: #555555;">`fledge::commit_version()`</span><span>
 ## </span><span style="color: #BB0000;">●</span><span> After CRAN release, call </span><span style="color: #555555;">`fledge::tag_version(force = TRUE)`</span><span> and </span><span style="color: #555555;">`fledge::bump_version()`</span><span> to re-enter development mode
 </span></code></pre>
-<p>This updates the version of our package to 0.0.2.9001.</p>
+<p>This updates the version of our package to 0.0.3.9000.</p>
 </div>
 <div id="generate-release-notes" class="section level3">
 <h3 class="hasAnchor">
@@ -427,7 +427,7 @@
 <pre><code>## Staged changes:
 ##  Modified:   NEWS.md</code></pre>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">git2r<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="dt">message =</span> <span class="st">"Update NEWS."</span>)</a></code></pre></div>
-<pre><code>## [d62c56e] 2019-12-29: Update NEWS.</code></pre>
+<pre><code>## [8b374f9] 2019-12-29: Update NEWS.</code></pre>
 <p>The package is now ready to be released to CRAN. I prefer <code>devtools::use_release_issue()</code> to create a checklist of things to do before release, and <code>devtools::submit_cran()</code> to submit. The <code>devtools::release()</code> function is a more verbose alternative.</p>
 </div>
 </div>
