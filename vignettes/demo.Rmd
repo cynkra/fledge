@@ -24,7 +24,7 @@ fansi::set_knit_hooks(knitr::knit_hooks, "message")
 
 Before we start development for {SuperFrob}, we set up the basic development environment required for any typical R package.
 
-### Create a Package
+### Create a package
 
 We will start by creating a new package.
 For this demo, the package is created in a temporary directory.
@@ -199,7 +199,7 @@ writeLines(news, "NEWS.md")
 
 This does not affect the original commit message, only `NEWS.md`.
 
-### Finalize Version
+### Finalize version
 
 After tweaking `NEWS.md`, it is important to use `fledge::finalize_version()` and not to commit manually.
 This ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
