@@ -4,8 +4,8 @@
 #' created by \pkg{fledge} if necessary.
 #'
 #' @export
-commit_version <- function() {
-  amending <- commit_version_impl()
+commit_version <- function(additional_commit_message = "") {
+  amending <- commit_version_impl(additional_commit_message)
 
   #' @return Invisibly: `TRUE` if a previous commit for that version has been
   #'   amended, `FALSE` if not.

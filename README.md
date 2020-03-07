@@ -70,6 +70,14 @@ below.
     
     Substitute `"patch"` by `"minor"` or `"major"` if applicable.
 
+  - To add an additional bit to the commit message (like `[skip ci]` for use in CircleCI, etc...)
+    CRAN, use
+    
+    ``` r
+    fledge::bump_version("patch", "[skip ci]")
+    fledge::commit_version()
+    ```
+
   - To tag a version when the package has been accepted to CRAN, use
     
     ``` r

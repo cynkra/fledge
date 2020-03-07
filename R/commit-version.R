@@ -1,4 +1,4 @@
-commit_version_impl <- function() {
+commit_version_impl <- function(additional_commit_message = "") {
   check_only_staged(c("DESCRIPTION", "NEWS.md"))
 
   if (is_last_commit_bump()) {
@@ -12,7 +12,11 @@ commit_version_impl <- function() {
   git2r::add(".", c("DESCRIPTION", "NEWS.md"))
   if (length(git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged) > 0) {
     ui_info("Committing changes")
-    git2r::commit(".", get_commit_message())
+    if (additional_commit_message != "") {
+      git2r::commit(".", get_commit_message())
+    } else {
+      git2r::commit(".", sprintf("%s - %s", additional_commit_message, get_commit_message()))
+    }
   }
 
   amending
