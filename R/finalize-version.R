@@ -11,7 +11,7 @@ finalize_version_impl <- function(push) {
   if (push) {
     push_tag(tag)
   } else {
-    ui_todo("Review {ui_path('NEWS.md')}")
+    edit_news()
     ui_todo("Call {ui_code('fledge::finalize_version(push = TRUE)')}")
     send_to_console("fledge::finalize_version(push = TRUE)")
   }
