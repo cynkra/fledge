@@ -28,3 +28,69 @@ confirm_submission <- function(url) {
   rlang::inform(glue::glue("Visiting {url}"))
   utils::browseURL(url)
 }
+
+post_release <- function() {
+  check_only_modified(c(".Rbuildignore", "CRAN-RELEASE"))
+
+  sha <- check_post_release()
+
+  tag <- tag_version()
+
+  push_tag(tag)
+
+  usethis::use_github_release()
+
+  bump_version()
+}
+
+check_post_release <- function() {
+  ui_info("Checking scope of {ui_code('GITHUB_PAT')} environment variable")
+
+  # FIXME: Distinguish between public and private repo?
+  if (!("repo" %in% gh_scopes())) {
+    abort('Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.')
+  }
+
+  ui_info("Checking contents of {ui_path('CRAN-RELEASE')}")
+  if (!file.exists("CRAN-RELEASE")) {
+    abort('File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.')
+  }
+
+  release <- paste(readLines("CRAN-RELEASE"), collapse = "\n")
+  rx <- "^.*[(]commit ([0-9a-f]+)[)].*$"
+  commit <- grepl(rx, release)
+  if (!commit) {
+    abort('Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.')
+  }
+  sha <- gsub(rx, "\\1", release)
+
+  sha_rx <- paste0("^", sha)
+  repo_head <- get_repo_head()
+  repo_head_sha <- git2r::sha(repo_head)
+  if (!grepl(sha_rx, repo_head_sha)) {
+    msg <- paste0(
+      "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
+      "different from HEAD (", repo_head_sha, ")."
+    )
+
+    abort(msg)
+  }
+
+  repo_head_sha
+}
+
+gh_scopes <- function() {
+  out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
+  if (out == "") return(character())
+  strsplit(out, ", *")[[1]]
+}
+
+push_tag <- function(tag) {
+  ui_info("Pushing tag {ui_value(tag)}")
+  git2r::push(name = "origin", refspec = paste0("refs/tags/", tag))
+  ui_done("Pushed tag {ui_value(tag)}")
+}
+
+remove_release_flag <- function() {
+  abort("")
+}

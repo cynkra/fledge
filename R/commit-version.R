@@ -34,6 +34,19 @@ check_clean <- function(forbidden_modifications) {
   stopifnot(!any(forbidden_modifications %in% unlist(status)))
 }
 
+check_only_modified <- function(allowed_modifications) {
+  status <- git2r::status(".", unstaged = TRUE, untracked = TRUE)
+  stopifnot(all(unlist(status) %in% allowed_modifications))
+}
+
+check_only_staged <- function(allowed_modifications) {
+  staged <- git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged
+  stopifnot(all(names(staged) == "modified"))
+
+  modified <- staged$modified
+  stopifnot(all(modified %in% allowed_modifications))
+}
+
 check_only_staged <- function(allowed_modifications) {
   staged <- git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged
   stopifnot(all(names(staged) == "modified"))
