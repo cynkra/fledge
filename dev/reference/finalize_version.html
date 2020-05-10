@@ -45,6 +45,7 @@
 commit_version()
 tag_version(), setting force = TRUE if and only if commit_version()
 amended a commit.
+Force-pushes the created tag to the &quot;origin&quot; remote, if push = TRUE.
 
 " />
 
@@ -78,7 +79,7 @@ amended a commit.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9001</span>
       </span>
     </div>
 
@@ -143,12 +144,21 @@ amended a commit.
 <li><p><code><a href='commit_version.html'>commit_version()</a></code></p></li>
 <li><p><code><a href='tag_version.html'>tag_version()</a></code>, setting <code>force = TRUE</code> if and only if <code><a href='commit_version.html'>commit_version()</a></code>
 amended a commit.</p></li>
+<li><p>Force-pushes the created tag to the <code>"origin"</code> remote, if <code>push = TRUE</code>.</p></li>
 </ol>
 
     </div>
 
-    <pre class="usage"><span class='fu'>finalize_version</span>()</pre>
+    <pre class="usage"><span class='fu'>finalize_version</span>(<span class='kw'>push</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>push</th>
+      <td><p>If <code>TRUE</code>, push the created tag.</p></td>
+    </tr>
+    </table>
 
 
   </div>
