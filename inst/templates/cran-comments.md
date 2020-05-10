@@ -1,13 +1,21 @@
 {{{ package }}} {{{ version }}}: {{{ topic }}}
 
-## Test environments
+## Cran Repository Policy
 
-* local R installation, R {{{ rversion }}}
-* ubuntu 16.04 (on travis-ci), R {{{ rversion }}}
-* win-builder (devel)
+- [x] Reviewed CRP last edited {{{ crp_date }}}.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+- [ ] Checked locally on Ubuntu 18.04 install, R {{{ rversion }}}
+- [ ] Checked on CI system, R {{{ rversion }}}
+- [ ] Checked on win-builder (devel)
 
-* This is a new release.
+OK
+
+{{{ chexplainer }}}
+
+## CRAN failures
+
+- [ ] Checked.
+
+{{{ cransplainer }}}
