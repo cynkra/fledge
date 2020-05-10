@@ -5,7 +5,10 @@
 \alias{finalize_version_impl}
 \title{Finalize package version}
 \usage{
-finalize_version()
+finalize_version(push = FALSE)
+}
+\arguments{
+\item{push}{If \code{TRUE}, push the created tag.}
 }
 \description{
 Calls the following functions:
@@ -14,5 +17,6 @@ Calls the following functions:
 \item \code{\link[=commit_version]{commit_version()}}
 \item \code{\link[=tag_version]{tag_version()}}, setting \code{force = TRUE} if and only if \code{commit_version()}
 amended a commit.
+\item Force-pushes the created tag to the \code{"origin"} remote, if \code{push = TRUE}.
 }
 }

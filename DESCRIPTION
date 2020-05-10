@@ -29,6 +29,7 @@ Suggests:
     fs,
     knitr,
     rmarkdown,
+    rstudioapi,
     testthat
 VignetteBuilder: 
     knitr

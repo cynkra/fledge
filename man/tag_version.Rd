@@ -10,6 +10,9 @@ tag_version(force = FALSE)
 \item{force}{Re-tag even if the last commit wasn't created by
 \code{\link[=bump_version]{bump_version()}}.  Useful when defining a CRAN release.}
 }
+\value{
+The created tag, invisibly.
+}
 \description{
 Parses \code{NEWS.md} and creates/updates the tag for the most recent version.
 }
