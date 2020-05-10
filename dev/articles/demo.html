@@ -113,9 +113,9 @@
 <span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(<span class="no">tempdir</span>)</pre></body></html></div>
 <p>The <code><a href="https://usethis.r-lib.org/reference/create_package.html">usethis::create_package()</a></code> function sets up a package project ready for development. The output shows the details of the package created.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">pkg</span> <span class="kw">&lt;-</span> <span class="kw pkg">usethis</span><span class="kw ns">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/create_package.html">create_package</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="no">tempdir</span>, <span class="st">"SuperFrob"</span>))</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/RtmpAPxjtx/fledge6a1417896c4a/SuperFrob/'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/RtmpFCkSkt/fledge3a0716138727/SuperFrob/'</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpAPxjtx/fledge6a1417896c4a/SuperFrob'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpFCkSkt/fledge3a0716138727/SuperFrob'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'R/'</span><span>
 </span></code></pre>
@@ -140,7 +140,7 @@
 </span></code></pre>
 <p>In an interactive RStudio session, a new window opens. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw pkg">usethis</span><span class="kw ns">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html">proj_set</a></span>()</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpAPxjtx/fledge6a1417896c4a/SuperFrob'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpFCkSkt/fledge3a0716138727/SuperFrob'</span><span>
 </span></code></pre>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="kw pkg">fs</span><span class="kw ns">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html">dir_tree</a></span>()</pre></body></html></div>
@@ -162,10 +162,10 @@
 <p>In interactive mode, the <code><a href="https://usethis.r-lib.org/reference/use_git.html">usethis::use_git()</a></code> function creates an initial commit, and the repository is in a clean state. In the demo this needs to be carried out manually.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">"."</span>)
 <span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"Initial commit."</span>)</pre></body></html></div>
-<pre><code>## [9cfde93] 2020-05-10: Initial commit.</code></pre>
+<pre><code>## [f885951] 2020-05-10: Initial commit.</code></pre>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commits.html">commits</a></span>()</pre></body></html></div>
 <pre><code>## [[1]]
-## [9cfde93] 2020-05-10: Initial commit.</code></pre>
+## [f885951] 2020-05-10: Initial commit.</code></pre>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span>()</pre></body></html></div>
 <pre><code>## working directory clean</code></pre>
 <p>For working in branches, it is recommended to turn off fast-forward merging:</p>
@@ -191,7 +191,7 @@
 <pre><code>## Staged changes:
 ##  New:        NEWS.md</code></pre>
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"Initial NEWS.md ."</span>)</pre></body></html></div>
-<pre><code>## [c686403] 2020-05-10: Initial NEWS.md .</code></pre>
+<pre><code>## [34c60dc] 2020-05-10: Initial NEWS.md .</code></pre>
 </div>
 </div>
 <div id="the-development-phase" class="section level2">
@@ -210,7 +210,7 @@
 <p>We commit this file to Git with a relevant message. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in <code>NEWS.md</code> when it is updated.</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">"."</span>)
 <span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"- Add support for frobmication."</span>)</pre></body></html></div>
-<pre><code>## [7390b95] 2020-05-10: - Add support for frobmication.</code></pre>
+<pre><code>## [704cf11] 2020-05-10: - Add support for frobmication.</code></pre>
 </div>
 <div id="create-a-test" class="section level3">
 <h3 class="hasAnchor">
@@ -239,27 +239,27 @@
 ##  New:        tests/testthat.R
 ##  New:        tests/testthat/test-super.R</code></pre>
 <div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"- Add tests for frobnication."</span>)</pre></body></html></div>
-<pre><code>## [e77e158] 2020-05-10: - Add tests for frobnication.</code></pre>
+<pre><code>## [4b19be0] 2020-05-10: - Add tests for frobnication.</code></pre>
 </div>
 <div id="update-news-md" class="section level3">
 <h3 class="hasAnchor">
 <a href="#update-news-md" class="anchor"></a>Update NEWS.md</h3>
 <p>We use <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> to assign a new dev version number to the package and also update <code>NEWS.md</code>.</p>
 <div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span>()</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Scraping </span><span style="color: #0000BB;">4</span><span> commit messages
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Scraping </span><span style="color: #0000BB;">4</span><span> commit messages
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Found </span><span style="color: #0000BB;">2</span><span> NEWS-worthy entries.
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre><code>## Package version bumped from '0.0.0.9000' to '0.0.0.9001'</code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Package version bumped to </span><span style="color: #0000BB;">0.0.0.9001</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Committing changes
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Committing changes
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.0.9001'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.0.9001'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
@@ -305,13 +305,13 @@
 <a href="#finalize-version" class="anchor"></a>Finalize version</h3>
 <p>After tweaking <code>NEWS.md</code>, it is important to use <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code> and not to commit manually. This ensures that the tag is set to the correct version in spite of the <code>NEWS.md</code> update. It should be called every time <code>NEWS.md</code> is manually updated.</p>
 <div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/finalize_version.html">finalize_version</a></span>()</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Resetting to previous commit
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Resetting to previous commit
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Committing changes
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Committing changes
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Deleting tag </span><span style="color: #0000BB;">'v0.0.0.9001'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Deleting tag </span><span style="color: #0000BB;">'v0.0.0.9001'</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.0.9001'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.0.9001'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> If you edit </span><span style="color: #0000BB;">'NEWS.md'</span><span> again, save the file and call </span><span style="color: #555555;">`fledge::finalize_version()`</span><span>
 </span></code></pre>
@@ -334,7 +334,7 @@
 <pre><code>## Staged changes:
 ##  New:        tests/testthat/test-frob.R</code></pre>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"Add super-frob tests."</span>)</pre></body></html></div>
-<pre><code>## [d3bfa8f] 2020-05-10: Add super-frob tests.</code></pre>
+<pre><code>## [50ee7ff] 2020-05-10: Add super-frob tests.</code></pre>
 <div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="kw pkg">usethis</span><span class="kw ns">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html">use_r</a></span>(<span class="st">"frob"</span>)</pre></body></html></div>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'R/frob.R'</span><span>
 </span></code></pre>
@@ -346,7 +346,7 @@
 <pre><code>## Staged changes:
 ##  New:        R/frob.R</code></pre>
 <div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"Add super-frob implementation."</span>)</pre></body></html></div>
-<pre><code>## [d2b0f5a] 2020-05-10: Add super-frob implementation.</code></pre>
+<pre><code>## [182e548] 2020-05-10: Add super-frob implementation.</code></pre>
 <p>This branch can be pushed to the remote as usual. Only when merging we specify the message to be included in the changelog, again with a bullet.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/checkout.html">checkout</a></span>(<span class="kw">branch</span> <span class="kw">=</span> <span class="st">"master"</span>)
 <span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/reexports.html">merge</a></span>(<span class="st">"."</span>, <span class="st">"f-super-frob"</span>, <span class="kw">commit_on_success</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
@@ -356,24 +356,24 @@
 ##  New:        R/frob.R
 ##  New:        tests/testthat/test-frob.R</code></pre>
 <div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"- Super-frobnication enabled."</span>)</pre></body></html></div>
-<pre><code>## [3e2ee1e] 2020-05-10: - Super-frobnication enabled.</code></pre>
+<pre><code>## [26911fb] 2020-05-10: - Super-frobnication enabled.</code></pre>
 <p>The same strategy can be used when merging a pull/merge/… request on GitHub, GitLab, …: use bullet points in the merge commit message to indicate the items to include in <code>NEWS.md</code>.</p>
 <p>Now that we have added super-frobnication support to our package, it is time to bump the version again.</p>
 <div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span>()</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Scraping </span><span style="color: #0000BB;">1</span><span> commit messages
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Scraping </span><span style="color: #0000BB;">1</span><span> commit messages
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Found </span><span style="color: #0000BB;">1</span><span> NEWS-worthy entries.
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre><code>## Package version bumped from '0.0.0.9001' to '0.0.0.9002'</code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Package version bumped to </span><span style="color: #0000BB;">0.0.0.9002</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Committing changes
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Committing changes
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.0.9002'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.0.9002'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
@@ -410,18 +410,18 @@
 <a href="#bump-version-for-release" class="anchor"></a>Bump version for release</h3>
 <p>We wish to release this package as a patch and so we use <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> with the “patch” argument.</p>
 <div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Scraping </span><span style="color: #0000BB;">1</span><span> commit messages
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Scraping </span><span style="color: #0000BB;">1</span><span> commit messages
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Found </span><span style="color: #0000BB;">1</span><span> NEWS-worthy entries.
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre><code>## Package version bumped from '0.0.0.9002' to '0.0.1'</code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Package version bumped to </span><span style="color: #0000BB;">0.0.1</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Committing changes
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Committing changes
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Preparing package for release (CRAN or otherwise)
 </span></code></pre>
@@ -478,7 +478,7 @@
 <pre><code>## Staged changes:
 ##  Modified:   NEWS.md</code></pre>
 <div class="sourceCode" id="cb69"><html><body><pre class="r"><span class="kw pkg">git2r</span><span class="kw ns">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span>(<span class="kw">message</span> <span class="kw">=</span> <span class="st">"Update NEWS."</span>)</pre></body></html></div>
-<pre><code>## [49a2858] 2020-05-10: Update NEWS.</code></pre>
+<pre><code>## [d43b6f5] 2020-05-10: Update NEWS.</code></pre>
 <p>The package is now ready to be released to CRAN. I prefer <code>devtools::use_release_issue()</code> to create a checklist of things to do before release, and <code>devtools::submit_cran()</code> to submit. The <code>devtools::release()</code> function is a more verbose alternative.</p>
 </div>
 </div>
@@ -491,7 +491,7 @@
 <a href="#tag-version" class="anchor"></a>Tag version</h3>
 <p>It is now the time to tag the released version using the <code><a href="../reference/tag_version.html">fledge::tag_version()</a></code> function.</p>
 <div class="sourceCode" id="cb71"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tag_version.html">tag_version</a></span>()</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.1'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.1'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <p>It is advised to push to remote, with <code>git push --tags</code> from the command line, or your favorite Git client.</p>
 </div>
@@ -505,20 +505,20 @@
 <a href="#restart-development" class="anchor"></a>Restart development</h3>
 <p>We will now make the package ready for future development. The <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> takes care of it.</p>
 <div class="sourceCode" id="cb72"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span>()</pre></body></html></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Scraping </span><span style="color: #0000BB;">1</span><span> commit messages
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Scraping </span><span style="color: #0000BB;">1</span><span> commit messages
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Found </span><span style="color: #0000BB;">1</span><span> NEWS-worthy entries.
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding new entries to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre><code>## Package version bumped from '0.0.1' to '0.0.1.9000'</code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Package version bumped to </span><span style="color: #0000BB;">0.0.1.9000</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding header to </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Committing changes
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Committing changes
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #BBBB00;">ℹ</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.1.9000'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating tag </span><span style="color: #0000BB;">'v0.0.1.9000'</span><span> with tag message derived from </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
