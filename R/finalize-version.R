@@ -1,10 +1,22 @@
 #' @rdname finalize_version
 #' @usage NULL
-finalize_version_impl <- function() {
+finalize_version_impl <- function(push) {
   #' @description
   #' 1. [commit_version()]
   force <- commit_version()
   #' 1. [tag_version()], setting `force = TRUE` if and only if `commit_version()`
   #'   amended a commit.
-  tag_version(force)
+  tag <- tag_version(force)
+  #' 1. [push_tag()] with the created tag, if `push = TRUE`.
+  if (push) {
+    push_tag(tag)
+  } else {
+    ui_todo("Review {ui_path('NEWS.md')}")
+    ui_todo("Call {ui_code('fledge::finalize_version(push = TRUE)')}")
+  }
+}
+
+push_tag <- function(tag) {
+  ui_done("Force-pushing tag {ui_value(tag)}")
+  git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
 }
