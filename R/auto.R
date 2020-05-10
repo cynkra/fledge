@@ -1,26 +1,47 @@
-pre_release <- function() {
-  with_repo(pre_release_impl())
+pre_release <- function(which = "patch") {
+  check_only_modified(character())
+
+  stopifnot(which %in% c("patch", "minor", "major"))
+
+  with_repo(pre_release_impl(which))
 }
 
-pre_release_impl <- function() {
+pre_release_impl <- function(which) {
+  bump_version(which)
+  update_cran_comments()
+  ui_todo("Run {ui_code('devtools::check_win_devel()')}")
+  ui_todo("Run {ui_code('rhub::check_for_cran()')}")
+  ui_todo("Check all items in {ui_path('cran-comments.md')}")
+  ui_todo("Run {ui_code('fledge:::release()')}")
+  send_to_console("callr::r(function() { devtools::check_win_devel(); rhub::check_for_cran() })")
+}
+
+update_cran_comments <- function() {
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
-  cransplainer <- get_cransplainer()
+  cransplainer <- get_cransplainer(package)
 
+  unlink("cran-comments.md")
   use_template(
     "cran-comments.md",
+    package = "fledge",
     data = list(
       package = package,
       version = desc::desc_get_version(),
       crp_date = crp_date,
-      rversion = glue("{version$major}.{version$minor}")
+      rversion = glue("{version$major}.{version$minor}"),
+      latest_rversion = rversions::r_release()[["version"]],
+      cransplainer = cransplainer
     ),
     ignore = TRUE,
-    open = open
+    open = TRUE
   )
 
   # FIXME: CRP compare
   # https://github.com/octo-org/wikimania/compare/master@%7B07-22-16%7D...master@%7B08-04-16%7D
+
+  git2r::add(path = "cran-comments.md")
+  git2r::commit(message = "Update CRAN comments")
 }
 
 get_crp_date <- function() {
@@ -30,11 +51,18 @@ get_crp_date <- function() {
 }
 
 get_cransplainer <- function(package) {
+  checked_on <- paste0("Checked on ", Sys.Date())
+
   details <- foghorn::cran_details(package)
   details <- details[details$result != "OK", ]
-  if (nrows(details) == 0) return("")
+  if (nrow(details) == 0) {
+    return(paste0("- [x] ", checked_on, ", no errors found."))
+  }
 
-  cransplainer <- paste0("- ", details$result, ": ", details$flavors, collapse = "\n")
+  cransplainer <- paste0(
+    "- [x] ", checked_on, ", errors found: ", url, "\n",
+    paste0("- [ ] ", details$result, ": ", details$flavors, collapse = "\n")
+  )
 
   url <- foghorn::visit_cran_check(package)
   ui_done("Review {ui_path(url)}")

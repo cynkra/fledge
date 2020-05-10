@@ -1,4 +1,4 @@
-{{{ package }}} {{{ version }}}: {{{ topic }}}
+{{{ package }}} {{{ version }}}
 
 ## Cran Repository Policy
 
@@ -6,16 +6,14 @@
 
 ## R CMD check results
 
-- [ ] Checked locally on Ubuntu 18.04 install, R {{{ rversion }}}
-- [ ] Checked on CI system, R {{{ rversion }}}
-- [ ] Checked on win-builder (devel)
+- [x] Checked locally, R {{{ rversion }}}
+- [ ] Checked on CI system, R {{{ latest_rversion }}}
+- [ ] Checked on win-builder, R devel
 
 OK
 
-{{{ chexplainer }}}
+- [ ] Explain R CMD check failures or remove this line.
 
 ## CRAN failures
-
-- [ ] Checked.
 
 {{{ cransplainer }}}

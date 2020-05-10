@@ -23,6 +23,7 @@ Imports:
     httr,
     purrr (>= 0.3.2),
     rlang,
+    rversions,
     usethis (>= 1.5.0),
     withr
 Suggests: 
