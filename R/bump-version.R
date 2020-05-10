@@ -9,17 +9,14 @@ bump_version_impl <- function(which) {
   #' 3. Depending on the `which` argument:
   if (which == "dev") {
   #'     - If `"dev"`, [finalize_version()]
-    finalize_version_impl()
     edit_news()
-    ui_todo("If you have updated {ui_path('NEWS.md')}, save the file and call {ui_code('fledge::finalize_version()')}")
-    ui_todo("When done, push to the remote repository, including tags.")
-    ui_info("Use {ui_code('git push --tags')} from the command line.")
+    finalize_version_impl(push = FALSE)
   } else {
   #'     - Otherwise, [commit_version()].
     commit_version()
     ui_info("Preparing package for release (CRAN or otherwise)")
     edit_news()
-    ui_todo("Every time you edit {ui_path('NEWS.md')}, save it and call {ui_code('fledge::commit_version()')}")
+    ui_todo("Convert the change log in {ui_path('NEWS.md')} to release notes")
     ui_todo("After CRAN release, call {ui_code('fledge::tag_version(force = TRUE)')} and {ui_code('fledge::bump_version()')} to re-enter development mode")
   }
 }

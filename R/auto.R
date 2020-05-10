@@ -85,12 +85,6 @@ gh_scopes <- function() {
   strsplit(out, ", *")[[1]]
 }
 
-push_tag <- function(tag) {
-  ui_info("Pushing tag {ui_value(tag)}")
-  git2r::push(name = "origin", refspec = paste0("refs/tags/", tag))
-  ui_done("Pushed tag {ui_value(tag)}")
-}
-
 remove_release_flag <- function() {
   abort("")
 }

@@ -1,3 +1,12 @@
+# fledge 0.0.3.9001
+
+- `finalize_version()` gains `push` argument, this considerably simplifies the workflow.
+- Prefer `ui_done()` over `ui_info()` to report on action taken.
+- `tag_version()` returns name of created tag, invisibly.
+- `tag_version(force = FALSE)` re-tags an existing tag if it points to the same commit.
+- Import rlang.
+
+
 # fledge 0.0.3.9000
 
 - Same as previous version.
