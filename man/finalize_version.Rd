@@ -7,6 +7,9 @@
 \usage{
 finalize_version(push = FALSE)
 }
+\arguments{
+\item{push}{If \code{TRUE}, push the created tag.}
+}
 \description{
 Calls the following functions:
 
