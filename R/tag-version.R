@@ -8,7 +8,7 @@ tag_version_impl <- function(force) {
   tag <- paste0("v", version)
   if (tag %in% names(git2r::tags())) {
     if (!force) {
-      stop("Tag ", tag, " exists, use `force = TRUE` to overwrite.", call. = FALSE)
+      abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
     }
 
     ui_info("Deleting tag {ui_value(tag)}")

@@ -1,6 +1,3 @@
-#' @import purrr
-NULL
-
 get_repo <- function() {
   proj <- usethis::proj_get()
   git2r::repository(proj)

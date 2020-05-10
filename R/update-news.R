@@ -1,6 +1,3 @@
-#' @import purrr
-NULL
-
 update_news_impl <- function(range) {
   news <- collect_news(range)
 
