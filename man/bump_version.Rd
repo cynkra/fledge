@@ -19,7 +19,7 @@ Calls the following functions:
 \item \code{\link[=update_version]{update_version()}}, using the \code{which} argument
 \item Depending on the \code{which} argument:
 \itemize{
-\item If \code{"dev"}, \code{\link[=finalize_version]{finalize_version()}}
+\item If \code{"dev"}, \code{\link[=finalize_version]{finalize_version()}} with \code{push = FALSE}
 \item Otherwise, \code{\link[=commit_version]{commit_version()}}.
 }
 }
