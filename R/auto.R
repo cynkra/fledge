@@ -25,7 +25,7 @@ confirm_submission <- function(url) {
   parsed$query$confirm_submit <- "Upload Package to CRAN"
 
   url <- httr::build_url(parsed)
-  rlang::inform(glue::glue("Visiting {url}"))
+  ui_done("Visiting {ui_path(url)}")
   utils::browseURL(url)
 }
 
