@@ -1,4 +1,7 @@
+{{{ package }}} {{{ version }}}: {{{ topic }}}
+
 ## Test environments
+
 * local R installation, R {{{ rversion }}}
 * ubuntu 16.04 (on travis-ci), R {{{ rversion }}}
 * win-builder (devel)
