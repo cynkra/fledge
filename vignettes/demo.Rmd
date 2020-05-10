@@ -159,7 +159,7 @@ The code in `super.R` warrants a test:
 
 ```{r use-super-test}
 usethis::use_test("super")
-cat("tests/testthat/test-super.R", sep = "\n")
+cat(readLines("tests/testthat/test-super.R"), sep = "\n")
 ```
 
 In a real project we would substitute the testing code from the template by real tests.
@@ -209,7 +209,7 @@ It should be called every time `NEWS.md` is manually updated.
 fledge::finalize_version()
 ```
 
-When done, we push to the *remote* (GitHub or another Git service) with tags, using `git push --tags` from the command line or your favorite Git client.
+When done, we push to the *remote* (GitHub or another Git service) with tags using `fledge::finalize_version(push = TRUE)`, as advised.
 In this demo, no remote repository is set up, and the push process is not shown.
 
 ### Change code and commit

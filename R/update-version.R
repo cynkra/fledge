@@ -5,7 +5,9 @@ update_version_impl <- function(which) {
     desc$set("Date", Sys.Date())
   }
 
-  desc$bump_version(which)
+  # https://github.com/r-lib/desc/issues/93
+  suppressMessages(desc$bump_version(which))
+
   new_version <- desc$get_version()
 
   ui_done("Package version bumped to {ui_value(new_version)}")
