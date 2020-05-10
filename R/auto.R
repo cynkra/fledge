@@ -1,3 +1,47 @@
+pre_release <- function() {
+  with_repo(pre_release_impl())
+}
+
+pre_release_impl <- function() {
+  package <- desc::desc_get("Package")
+  crp_date <- get_crp_date()
+  cransplainer <- get_cransplainer()
+
+  use_template(
+    "cran-comments.md",
+    data = list(
+      package = package,
+      version = desc::desc_get_version(),
+      crp_date = crp_date,
+      rversion = glue("{version$major}.{version$minor}")
+    ),
+    ignore = TRUE,
+    open = open
+  )
+
+  # FIXME: CRP compare
+  # https://github.com/octo-org/wikimania/compare/master@%7B07-22-16%7D...master@%7B08-04-16%7D
+}
+
+get_crp_date <- function() {
+  cmt <- gh::gh("/repos/eddelbuettel/crp/commits")[[1]]
+  date <- cmt$commit$committer$date
+  as.Date(date)
+}
+
+get_cransplainer <- function(package) {
+  details <- foghorn::cran_details(package)
+  details <- details[details$result != "OK", ]
+  if (nrows(details) == 0) return("")
+
+  cransplainer <- paste0("- ", details$result, ": ", details$flavors, collapse = "\n")
+
+  url <- foghorn::visit_cran_check(package)
+  ui_done("Review {ui_path(url)}")
+
+  paste0(cransplainer, "\n\nCheck results at: ", url)
+}
+
 is_news_consistent <- function() {
   headers <- with_repo(get_news_headers())
 
@@ -5,7 +49,6 @@ is_news_consistent <- function() {
 
   all(lengths(unclass(versions)) <= 3)
 }
-
 
 get_news_headers <- function() {
   news_path <- "NEWS.md"

@@ -16,6 +16,7 @@ BugReports: https://github.com/krlmlr/fledge/issues
 Imports: 
     desc (>= 1.2.0),
     enc,
+    foghorn,
     gh,
     git2r (>= 0.26.0),
     glue,
