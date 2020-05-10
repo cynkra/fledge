@@ -13,10 +13,10 @@ unbump_version_impl <- function() {
 
   ui_done("Safety checks complete")
 
-  ui_info("Deleting tag {ui_value(tag$name)}")
+  ui_done("Deleting tag {ui_value(tag$name)}")
   git2r::tag_delete(tag)
 
   parent_commit <- git2r::parents(last_commit)[[1]]
-  ui_info("Resetting to parent commit {ui_value(parent_commit$sha)}")
+  ui_done("Resetting to parent commit {ui_value(parent_commit$sha)}")
   git2r::reset(parent_commit, "hard")
 }

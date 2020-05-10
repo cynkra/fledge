@@ -1,5 +1,5 @@
 tag_version_impl <- function(force) {
-  stopifnot(length(git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged) == 0)
+  check_only_staged(character())
 
   current_news <- get_current_news()
   desc <- desc::desc(file = "DESCRIPTION")
@@ -8,18 +8,22 @@ tag_version_impl <- function(force) {
   tag <- paste0("v", version)
   if (tag %in% names(git2r::tags())) {
     if (!force) {
-      stop("Tag ", tag, " exists, use `force = TRUE` to overwrite.", call. = FALSE)
+      if (git2r::sha(get_repo_head(tag)) == git2r::sha(get_repo_head())) {
+        ui_info("Tag {ui_value(tag)} exists and points to the current commit.")
+      } else {
+        abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
+      }
+    } else {
+      ui_done("Deleting tag {ui_value(tag)}")
+      git2r::tag_delete(".", tag)
     }
-
-    ui_info("Deleting tag {ui_value(tag)}")
-    git2r::tag_delete(".", tag)
   }
 
-  ui_info("Creating tag {ui_value(tag)} with tag message derived from {ui_path('NEWS.md')}")
+  ui_done("Creating tag {ui_value(tag)} with tag message derived from {ui_path('NEWS.md')}")
   msg_header <- paste0(desc$get("Package"), " ", version)
   git2r::tag(".", tag, message = paste0(msg_header, "\n\n", current_news))
 
-  invisible()
+  invisible(tag)
 }
 
 get_current_news <- function() {

@@ -5,8 +5,10 @@
 #' @param force Re-tag even if the last commit wasn't created by
 #'   [bump_version()].  Useful when defining a CRAN release.
 #'
+#' @return The created tag, invisibly.
+#'
 #' @export
 tag_version <- function(force = FALSE) {
-  tag_version_impl(force)
-  invisible(NULL)
+  tag <- tag_version_impl(force)
+  invisible(tag)
 }

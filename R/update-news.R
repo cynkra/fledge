@@ -1,15 +1,12 @@
-#' @import purrr
-NULL
-
 update_news_impl <- function(range) {
   news <- collect_news(range)
 
-  ui_info("Adding new entries to {ui_path('NEWS.md')}")
+  ui_done("Adding new entries to {ui_path('NEWS.md')}")
   add_to_news(news)
 }
 
 collect_news <- function(range) {
-  ui_info("Scraping {ui_value(length(range))} commit messages")
+  ui_done("Scraping {ui_value(length(range))} commit messages")
 
   messages <- gsub("\r\n", "\n", map_chr(range, "message"))
   messages_before_triple_dash <- map_chr(strsplit(messages, "\n---", fixed = TRUE), 1)

@@ -1,6 +1,3 @@
-#' @import purrr
-NULL
-
 get_repo <- function() {
   proj <- usethis::proj_get()
   git2r::repository(proj)
@@ -44,7 +41,7 @@ get_first_parent <- function(commit, since) {
 
 get_last_tag_impl <- function() {
   with_repo({
-    repo_head <- git2r::commits(time = FALSE, n = 1)[[1]]
+    repo_head <- get_repo_head()
 
     all_tags <- git2r::tags()
   })
@@ -57,4 +54,9 @@ get_last_tag_impl <- function() {
 
   min_tag <- names(tags_b)[which.min(tags_b)]
   all_tags[[min_tag]]
+}
+
+get_repo_head <- function(ref = NULL) {
+  # Why is this so difficult?
+  git2r::commits(time = FALSE, n = 1, ref = ref)[[1]]
 }
