@@ -84,7 +84,3 @@ gh_scopes <- function() {
   if (out == "") return(character())
   strsplit(out, ", *")[[1]]
 }
-
-remove_release_flag <- function() {
-  abort("")
-}
