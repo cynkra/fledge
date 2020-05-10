@@ -11,7 +11,7 @@ tag_version_impl <- function(force) {
       if (git2r::sha(get_repo_head(tag)) == git2r::sha(get_repo_head())) {
         ui_info("Tag {ui_value(tag)} exists and points to the current commit.")
       } else {
-        stop("Tag ", tag, " exists and points to a different commit, use `force = TRUE` to overwrite.", call. = FALSE)
+        abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
       }
     } else {
       ui_done("Deleting tag {ui_value(tag)}")
