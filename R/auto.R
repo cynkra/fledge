@@ -70,6 +70,17 @@ get_cransplainer <- function(package) {
   paste0(cransplainer, "\n\nCheck results at: ", url)
 }
 
+release <- function() {
+  check_only_modified(character())
+
+  stopifnot(is_news_consistent())
+  stopifnot(is_cran_comments_good())
+  stopifnot(is_pushed())
+
+  devtools::submit_cran()
+  auto_confirm()
+}
+
 is_news_consistent <- function() {
   headers <- with_repo(get_news_headers())
 
@@ -86,8 +97,52 @@ get_news_headers <- function() {
   gsub("^# [^0-9]+", "", news[top_level_headers])
 }
 
+is_cran_comments_good <- function() {
+  text <- readLines("cran-comments.md")
+  !any(grepl("- [ ]", text, fixed = TRUE))
+}
+
+is_pushed <- function() {
+  head <- git2r::repository_head()
+  stopifnot(git2r::is_branch(head))
+
+  upstream <- git2r::branch_get_upstream(head)
+  stopifnot(git2r::is_branch(upstream))
+
+  all(git2r::ahead_behind(head, upstream) == 0)
+}
+
+auto_confirm <- function() {
+  ui_todo("Check your inbox for a confirmation e-mail from CRAN")
+  ui_todo("Copy the URL to your clipboard")
+
+  tryCatch(
+    repeat {
+      url <- clipr::read_clip()
+      if (has_length(url, 1) && grepl("^https://xmpalantir\\.wu\\.ac\\.at/cransubmit/conf_mail\\.php[?]code=", url)) {
+        break
+      }
+      Sys.sleep(0.01)
+    },
+    interrupt = function(e) {
+      ui_todo("Restart with `fledge:::auto_confirm()` (or confirm manually), rerelease with `fledge:::release()`.")
+      return()
+    }
+  )
+
+  code <- paste0('browseURL("', get_confirm_url(url), '")')
+  ui_todo("Run {ui_code(code)}")
+  send_to_console(code)
+}
 
 confirm_submission <- function(url) {
+  url <- get_confirm_url(url)
+
+  ui_done("Visiting {ui_path(url)}")
+  utils::browseURL(url)
+}
+
+get_confirm_url <- function(url) {
   parsed <- httr::parse_url(url)
 
   parsed$query$policy_check2 <- "on"
@@ -95,9 +150,7 @@ confirm_submission <- function(url) {
   parsed$query$policy_check4 <- "on"
   parsed$query$confirm_submit <- "Upload Package to CRAN"
 
-  url <- httr::build_url(parsed)
-  ui_done("Visiting {ui_path(url)}")
-  utils::browseURL(url)
+  httr::build_url(parsed)
 }
 
 post_release <- function() {
