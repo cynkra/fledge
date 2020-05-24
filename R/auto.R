@@ -68,13 +68,13 @@ get_cransplainer <- function(package) {
     return(paste0("- [x] ", checked_on, ", no errors found."))
   }
 
+  url <- foghorn::visit_cran_check(package)
+  ui_done("Review {ui_path(url)}")
+
   cransplainer <- paste0(
     "- [x] ", checked_on, ", errors found: ", url, "\n",
     paste0("- [ ] ", details$result, ": ", details$flavors, collapse = "\n")
   )
-
-  url <- foghorn::visit_cran_check(package)
-  ui_done("Review {ui_path(url)}")
 
   paste0(cransplainer, "\n\nCheck results at: ", url)
 }
