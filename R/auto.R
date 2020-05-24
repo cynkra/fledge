@@ -1,3 +1,10 @@
+#' Automating CRAN release
+#'
+#' `pre_release()` is run when development of a package is finished
+#' and it is ready to be sent to CRAN.
+#'
+#' @name release
+#' @export
 pre_release <- function(which = "patch") {
   check_only_modified(character())
 
@@ -70,6 +77,11 @@ get_cransplainer <- function(package) {
   paste0(cransplainer, "\n\nCheck results at: ", url)
 }
 
+#' @description
+#' `release()` sends to CRAN after performing several checks,
+#' and offers help with accepting the submission.
+#'
+#' @export
 release <- function() {
   check_only_modified(character())
 
@@ -153,6 +165,11 @@ get_confirm_url <- function(url) {
   httr::build_url(parsed)
 }
 
+#' @description
+#' `post_release()` should be called after the submission has been accepted.
+#'
+#' @rdname release
+#' @export
 post_release <- function() {
   check_only_modified(c(".Rbuildignore", "CRAN-RELEASE"))
 
