@@ -58,6 +58,8 @@ get_crp_date <- function() {
 }
 
 get_cransplainer <- function(package) {
+  local_options(repos = c(CRAN = "https://cran.r-project.org"))
+
   checked_on <- paste0("Checked on ", Sys.Date())
 
   details <- foghorn::cran_details(package)
