@@ -25,7 +25,7 @@ push_tag <- function(tag) {
 
 push_master <- function() {
   ui_done('Pushing {ui_value("master")}')
-  git2r::push(name = "origin", refspec = "master")
+  git2r::push(name = "origin", refspec = "refs/heads/master")
 }
 
 send_to_console <- function(code) {
