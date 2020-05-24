@@ -1,3 +1,21 @@
+# fledge 0.0.3.9004
+
+- Same as previous version.
+
+
+# fledge 0.0.3.9003
+
+- Same as previous version.
+
+
+# fledge 0.0.3.9002
+
+- `finalize_version(push = TRUE)` also pushes to master.
+- `finalize_version()` calls `edit_news()`.
+- Tweak demo.
+- `finalize_version()` sends `finalize_version(push = TRUE)` to the RStudio console.
+
+
 # fledge 0.0.3.9001
 
 - `finalize_version()` gains `push` argument, this considerably simplifies the workflow.
