@@ -10,6 +10,7 @@ finalize_version_impl <- function(push) {
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
     push_tag(tag)
+    push_master()
   } else {
     edit_news()
     ui_todo("Call {ui_code('fledge::finalize_version(push = TRUE)')}")
@@ -20,6 +21,11 @@ finalize_version_impl <- function(push) {
 push_tag <- function(tag) {
   ui_done("Force-pushing tag {ui_value(tag)}")
   git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
+}
+
+push_master <- function() {
+  ui_done('Pushing {ui_value("master")}')
+  git2r::push(name = "origin", refspec = "master")
 }
 
 send_to_console <- function(code) {
