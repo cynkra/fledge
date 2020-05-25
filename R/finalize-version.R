@@ -1,6 +1,8 @@
 #' @rdname finalize_version
 #' @usage NULL
 finalize_version_impl <- function(push) {
+  head <- get_head_branch()
+
   #' @description
   #' 1. [commit_version()]
   force <- commit_version()
@@ -10,7 +12,7 @@ finalize_version_impl <- function(push) {
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
     push_tag(tag)
-    push_master()
+    push_head(head)
   } else {
     edit_news()
     ui_todo("Call {ui_code('fledge::finalize_version(push = TRUE)')}")
@@ -18,14 +20,20 @@ finalize_version_impl <- function(push) {
   }
 }
 
+get_head_branch <- function() {
+  head <- git2r::repository_head()
+  stopifnot(git2r::is_branch(head))
+  head
+}
+
 push_tag <- function(tag) {
   ui_done("Force-pushing tag {ui_value(tag)}")
   git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
 }
 
-push_master <- function() {
-  ui_done('Pushing {ui_value("master")}')
-  git2r::push(name = "origin", refspec = "refs/heads/master")
+push_head <- function(head) {
+  ui_done('Pushing {ui_value(head$name)}')
+  git2r::push(head)
 }
 
 send_to_console <- function(code) {
