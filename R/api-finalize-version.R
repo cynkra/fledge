@@ -6,5 +6,5 @@
 #' @param push If `TRUE`, push the created tag.
 #' @export
 finalize_version <- function(push = FALSE) {
-  finalize_version_impl(push)
+  with_repo(finalize_version_impl(push))
 }
