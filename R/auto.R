@@ -86,12 +86,16 @@ get_cransplainer <- function(package) {
 #'
 #' @export
 release <- function() {
+  with_repo(release_impl())
+}
+
+release_impl <- function() {
   check_only_modified(character())
 
   stopifnot(is_news_consistent())
   stopifnot(is_cran_comments_good())
-  stopifnot(is_pushed())
 
+  push_head(get_head_branch())
   devtools::submit_cran()
   auto_confirm()
 }
@@ -115,16 +119,6 @@ get_news_headers <- function() {
 is_cran_comments_good <- function() {
   text <- readLines("cran-comments.md")
   !any(grepl("- [ ]", text, fixed = TRUE))
-}
-
-is_pushed <- function() {
-  head <- git2r::repository_head()
-  stopifnot(git2r::is_branch(head))
-
-  upstream <- git2r::branch_get_upstream(head)
-  stopifnot(git2r::is_branch(upstream))
-
-  all(git2r::ahead_behind(head, upstream) == 0)
 }
 
 auto_confirm <- function() {
