@@ -168,11 +168,17 @@ get_confirm_url <- function(url) {
 #' @rdname release
 #' @export
 post_release <- function() {
+  with_repo(post_release_impl())
+}
+
+post_release_impl <- function() {
   check_only_modified(c(".Rbuildignore", "CRAN-RELEASE"))
 
-  sha <- check_post_release()
+  check_post_release()
 
-  tag <- tag_version()
+  push_head(get_head_branch())
+
+  tag <- tag_version(force = TRUE)
 
   push_tag(tag)
 
