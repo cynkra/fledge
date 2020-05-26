@@ -16,6 +16,8 @@ get_top_level_commits_impl <- function(since) {
     if (ab[[2]] > 0) {
       abort(paste0(since, " not reachable from current HEAD."))
     }
+  } else {
+    since_commit <- NULL
   }
 
   get_first_parent(commit, since_commit)
