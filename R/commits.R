@@ -11,10 +11,16 @@ get_top_level_commits_impl <- function(since) {
   commit <- git2r::commits(get_repo(), time = FALSE, n = 1)[[1]]
 
   if (!is.null(since)) {
-    since <- git2r::lookup_commit(since)
+    since_commit <- git2r::lookup_commit(since)
+    ab <- git2r::ahead_behind(commit, since_commit)
+    if (ab[[2]] > 0) {
+      abort(paste0(since, " not reachable from current HEAD."))
+    }
+  } else {
+    since_commit <- NULL
   }
 
-  get_first_parent(commit, since)
+  get_first_parent(commit, since_commit)
 }
 
 get_first_parent <- function(commit, since) {
@@ -25,18 +31,19 @@ get_first_parent <- function(commit, since) {
 
   repeat {
     all_parents <- git2r::parents(commit)
-    if (length(all_parents) == 0) return(commits)
+    first_parent <- get_parent_since(all_parents, since)
+    if (is_null(first_parent)) return(commits)
 
-    # Compatibility with git-flow, where tags were set on the production branch
-    # which was then merged to master
-    if (!is.null(since)) {
-      if (some(all_parents, ~.$sha == since$sha)) return(commits)
-    }
-
-    first_parent <- all_parents[[1]]
     commits <- c(commits, list(first_parent))
     commit <- first_parent
   }
+}
+
+get_parent_since <- function(all_parents, since) {
+  if (is_empty(all_parents)) return(NULL)
+  if (is_null(since)) return(all_parents[[1]])
+
+  purrr::detect(all_parents, ~ git2r::ahead_behind(.x, since)[[2]] == 0)
 }
 
 get_last_tag_impl <- function() {
