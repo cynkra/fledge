@@ -60,6 +60,18 @@ get_crp_date <- function() {
 }
 
 get_cransplainer <- function(package) {
+  if (!is_new_submission(package)) {
+    get_cransplainer_update(package)
+  } else {
+    "Initial release."
+  }
+}
+
+is_new_submission <- function(package) {
+  package %in% rownames(available.packages(repos = c(CRAN = "https://cran.r-project.org")))
+}
+
+get_cransplainer_update <- function(package) {
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
   checked_on <- paste0("Checked on ", Sys.Date())
@@ -157,7 +169,11 @@ get_confirm_url <- function(url) {
 
   parsed$query$policy_check2 <- "on"
   parsed$query$policy_check3 <- "on"
-  parsed$query$policy_check4 <- "on"
+
+  package <- desc::desc_get("Package")
+  if (!is_new_submission(package)) {
+    parsed$query$policy_check4 <- "on"
+  }
   parsed$query$confirm_submit <- "Upload Package to CRAN"
 
   httr::build_url(parsed)
