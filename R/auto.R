@@ -174,7 +174,7 @@ get_confirm_url <- function(url) {
   if (!is_new_submission(package)) {
     parsed$query$policy_check4 <- "on"
   }
-  parsed$query$confirm_submit <- "Upload Package to CRAN"
+  parsed$query$confirm_submit <- utils::URLencode("Upload Package to CRAN")
 
   httr::build_url(parsed)
 }
