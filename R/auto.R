@@ -68,7 +68,7 @@ get_cransplainer <- function(package) {
 }
 
 is_new_submission <- function(package) {
-  package %in% rownames(available.packages(repos = c(CRAN = "https://cran.r-project.org")))
+  !(package %in% rownames(available.packages(repos = c(CRAN = "https://cran.r-project.org"))))
 }
 
 get_cransplainer_update <- function(package) {
