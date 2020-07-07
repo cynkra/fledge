@@ -36,9 +36,12 @@ check_clean <- function(forbidden_modifications) {
 
 check_only_modified <- function(allowed_modifications) {
   status <- git2r::status(".", unstaged = TRUE, untracked = TRUE)
-  cli::cli_alert_danger("Found the following modified files in the git index:
-    {.file {unlist(status$unstaged)}}. Please commit the changes or
-    discard them and try again.", wrap = TRUE)
+  if (length(status$unstaged) > 0 || length(status$untracked) > 0 ||
+      length(status$staged) > 0) {
+    cli::cli_alert_danger("Found untracked/unstaged/staged files in the git index:
+    {.file {unlist(status)}}. Please commit or discard them and
+    try again.", wrap = TRUE)
+  }
   stopifnot(all(unlist(status) %in% allowed_modifications))
 }
 
