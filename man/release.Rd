@@ -21,3 +21,14 @@ and offers help with accepting the submission.
 
 \code{post_release()} should be called after the submission has been accepted.
 }
+\details{
+\code{pre_release()}:
+\itemize{
+\item Ensures that no modified files are in the git index.
+\item Bumps version to a non-development version which should be sent to CRAN.
+\item Writes/updates \code{cran-comments.md} with useful information about the current
+release process.
+\item Prompts the user to run \code{devtools::check_win_devel()}.
+\item Prompts the user to run \code{rhub::check_for_cran()}.
+}
+}

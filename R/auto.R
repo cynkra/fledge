@@ -3,6 +3,14 @@
 #' `pre_release()` is run when development of a package is finished
 #' and it is ready to be sent to CRAN.
 #'
+#' `pre_release()`:
+#' - Ensures that no modified files are in the git index.
+#' - Bumps version to a non-development version which should be sent to CRAN.
+#' - Writes/updates `cran-comments.md` with useful information about the current
+#' release process.
+#' - Prompts the user to run `devtools::check_win_devel()`.
+#' - Prompts the user to run `rhub::check_for_cran()`.
+#'
 #' @name release
 #' @export
 pre_release <- function(which = "patch") {
