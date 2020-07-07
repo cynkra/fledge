@@ -10,10 +10,8 @@
 - [ ] Checked on CI system, R {{{ latest_rversion }}}
 - [ ] Checked on win-builder, R devel
 
-OK
+- [ ] Check the boxes above after successful execution and remove this line. Then run `fledge::release().
 
-- [ ] Explain R CMD check failures or remove this line.
-
-## CRAN failures
+## Current CRAN check results
 
 {{{ cransplainer }}}
