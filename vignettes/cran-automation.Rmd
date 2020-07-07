@@ -1,0 +1,65 @@
+---
+title: "cran-automation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cran-automation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fledge)
+```
+
+## How a CRAN is triggered
+
+If a build is started from a tag (i.e. a release was made), a specific runner in the build matrix is being run which calls `fledge::unleash()`.
+This function wraps 
+
+- `fledge::pre_release()`
+- `fledge::release()`
+- `fledge::post_release()`
+
+### `pre_release()`
+
+#' TODO
+- `pre_release()` creates a branch called `r-release-<version>` with `<version>` being the version of the tag which started the build.
+- `pre_release()` suggests to start rhub and winbuilder runs.
+#' TODO
+- `pre_release()` opens a Pull Request in the repo (with the content of `cran-comments.md`?).
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' FIXME
+
+- CI-Integration: Alle Zweige mit einem bestimmten Muster, z.B. "^r-", sind Release-Zweige und werden gesondert behandelt. 
+  Diese laufen auch 1x pro Tag, um einen Release-Abschluss nach erfolgtem CRAN-Release zu ermöglichen
+  
+P: Sollten dann 
+
+- In jedem CI-Lauf wird fledge::unleash() aufgerufen. Je nach Zustand (siehe state management unter https://github.com/krlmlr/fledge/issues/27) ergeben sich möglicherweise Änderungen am Quellcode, die entsprechend durch das CI-System mit [ci skip] commit-et werden
+
+- Kommunikation User -> CI-System über Commits im Code, dadurch bleibt es CI-system-agnostisch
+
+- Kommunikation CI-System -> User über Pull Reqest: Das CI-System öffnet einen pull request für den Zweig
+
+- CRAN-Release bestätigen allenfalls manuell, oder durch (automatisiertes) Schreiben einer Datei im Repository. Vorteil der letzten Variante: Historie der Kommunikation
+
+- Die Herausforderung besteht mMn darin, das möglichst mit allen Workflows kompatibel zu halten: mit und ohne NEWS-Erzeugung, lokal und CI-gestützt, ...
