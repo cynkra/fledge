@@ -1,5 +1,5 @@
 ---
-title: "cran-automation"
+title: "Automate CRAN releases"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{cran-automation}
@@ -14,52 +14,63 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(fledge)
-```
+## Workflow
 
-## How a CRAN is triggered
+{fledge} is able to automate a CRAN release, both locally and via continuous integration (CI).
+The only difference between the local and the CI approach is that the user has to call `fledge::unleash()` (or its child functions) manually after each step.
 
-If a build is started from a tag (i.e. a release was made), a specific runner in the build matrix is being run which calls `fledge::unleash()`.
-This function wraps 
+In the following we describe the workflow via the CI approach.
+If a CI build is triggered by a tag (i.e. a release was made), a specific runner in the build matrix is being run which calls `fledge::unleash()`.
+This runner is run every 2h (?) on the branch and calls `fledge::unleash()` every time.
+
+## Execution Conditions
+
+The following list describes the conditions which need to be fulfilled for each state:
+
+- `pre_release()`: 
+  - No `CRAN-release` file exists.
+  - The package version number has a four component scheme.
+  - There is no `cran-comments.md` file.
+- `release()`:
+  - Three component package version.
+  - A `cran-comments.md` file exists.
+  - The local package version is smaller than the one on CRAN.
+- `post_release()`: 
+  - The local version is equal to the CRAN version.
+  - All boxes in `cran-comments.md` are checked.
+
+Possible improvements: 
+- Let the user forward specific CRAN mails so fledge can check the required boxes itself.
+  Currently users needs to check the boxes in `cran-comments.md` themselves.
+- Make strict NEWS checking optional
+- The branch creation should be optional (TRUE by default).
+
+`unleash()` wraps 
 
 - `fledge::pre_release()`
 - `fledge::release()`
 - `fledge::post_release()`
 
-### `pre_release()`
+## Execution Actions
 
-#' TODO
-- `pre_release()` creates a branch called `r-release-<version>` with `<version>` being the version of the tag which started the build.
-- `pre_release()` suggests to start rhub and winbuilder runs.
-#' TODO
-- `pre_release()` opens a Pull Request in the repo (with the content of `cran-comments.md`?).
+The following list describes the actions of each state function:
 
-
-
-
-
-
-
-
-
-
-
-
-
-#' FIXME
-
-- CI-Integration: Alle Zweige mit einem bestimmten Muster, z.B. "^r-", sind Release-Zweige und werden gesondert behandelt. 
-  Diese laufen auch 1x pro Tag, um einen Release-Abschluss nach erfolgtem CRAN-Release zu ermöglichen
+- `pre_release()`
+  - Creates `cran-comments.md` from template.
+  - Creates a branch named `r-release<version>`.
+  - Check recent changes to CRAN policies via `eddelbuettel/crp@master`.
+  - Calls `devtools::check_win_devel()`.
+  - Calls `rhub::check_for_cran()`.
+  - Calls `foghorn::cran_details()`.
   
-P: Sollten dann 
+- `release()`
+  - Calls `devtools::submit_cran()`.
+  - Calls `fledge:::confirm_submission()`.
+  
+- `post_release()`
+  - Calls `fledge::tag_version()`.
+  - Calls `git push --tags`.
+  - Calls `usethis::use_github_release()`.
+  - Calls `fledge::bump_version()` to switch to dev version again.
 
-- In jedem CI-Lauf wird fledge::unleash() aufgerufen. Je nach Zustand (siehe state management unter https://github.com/krlmlr/fledge/issues/27) ergeben sich möglicherweise Änderungen am Quellcode, die entsprechend durch das CI-System mit [ci skip] commit-et werden
-
-- Kommunikation User -> CI-System über Commits im Code, dadurch bleibt es CI-system-agnostisch
-
-- Kommunikation CI-System -> User über Pull Reqest: Das CI-System öffnet einen pull request für den Zweig
-
-- CRAN-Release bestätigen allenfalls manuell, oder durch (automatisiertes) Schreiben einer Datei im Repository. Vorteil der letzten Variante: Historie der Kommunikation
-
-- Die Herausforderung besteht mMn darin, das möglichst mit allen Workflows kompatibel zu halten: mit und ohne NEWS-Erzeugung, lokal und CI-gestützt, ...
+After `post_release()`, the Pull Request should be merged and the branch deleted.
