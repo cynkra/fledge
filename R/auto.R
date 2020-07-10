@@ -195,7 +195,7 @@ auto_confirm <- function() {
     },
     interrupt = function(e) {
       ui_todo("Restart with `fledge:::auto_confirm()` (or confirm manually), rerelease with `fledge:::release()`.")
-      return()
+      rlang::cnd_signal(e)
     }
   )
 
