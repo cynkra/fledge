@@ -201,8 +201,6 @@ post_release_impl <- function() {
 
   check_post_release()
 
-  push_head(get_head_branch())
-
   tag <- tag_version(force = TRUE)
 
   push_tag(tag)
