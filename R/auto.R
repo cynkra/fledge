@@ -245,7 +245,19 @@ post_release_impl <- function() {
 
   usethis::use_github_release()
 
-  bump_version()
+  # FIXME: Check if PR open, if yes merge PR instead
+  release_branch <- get_branch_name()
+  switch_branch(get_main_branch())
+  merge_branch(release_branch)
+}
+
+get_main_branch <- function() {
+  # FIXME: How to determine dynamically?
+  "master"
+}
+
+merge_branch <- function(other_branch) {
+  git2r::merge(git2r::repository(), other_branch, fail = TRUE)
 }
 
 check_post_release <- function() {
