@@ -22,15 +22,53 @@ pre_release <- function(which = "patch") {
 }
 
 pre_release_impl <- function(which) {
-  bump_version(which)
-  update_cran_comments()
-  push_head(get_head_branch())
+  stopifnot(git2r::is_branch(git2r::repository_head()))
+  remote_name <- get_remote_name()
+  main_branch <- get_branch_name()
 
+  # FIXME: Require bumping to devel version before release
+  # How to check for non-fledge repos?
+
+  bump_version(which)
+
+  release_branch <- create_release_branch()
+  switch_branch(release_branch)
+
+  update_cran_comments()
+  push_to_new(remote_name)
+
+  switch_branch(main_branch)
+  bump_version()
+  finalize_version(push = TRUE)
+
+  switch_branch(release_branch)
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
   ui_todo("Run {ui_code('fledge::release()')}")
   send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran() })")
+}
+
+get_branch_name <- function() {
+  git2r::repository_head()$name
+}
+
+get_remote_name <- function() {
+  git2r::branch_remote_name(git2r::branch_get_upstream(git2r::repository_head()))
+}
+
+create_release_branch <- function() {
+  branch_name <- paste0("cran-", desc::desc_get_version())
+
+  ui_done("Creating branch {ui_path(branch_name)}.")
+
+  git2r::branch_create(name = branch_name)
+  branch_name
+}
+
+switch_branch <- function(name) {
+  ui_done("Switching to branch {ui_path(name)}.")
+  git2r::checkout(branch = name)
 }
 
 update_cran_comments <- function() {
