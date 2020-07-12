@@ -250,6 +250,7 @@ post_release_impl <- function() {
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
   merge_branch(release_branch)
+  push_head(get_head_branch())
 }
 
 get_main_branch <- function() {
