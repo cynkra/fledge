@@ -31,9 +31,9 @@ push_tag <- function(tag) {
   git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
 }
 
-push_head <- function(head, remote_name = NULL) {
-  ui_done('Pushing {ui_value(head$name)}{if (!is.null(remote_name)) paste0(" to remote ", ui_value(remote_name)) else ""}')
-  git2r::push(head, name = remote_name)
+push_head <- function(head) {
+  ui_done('Pushing {ui_value(head$name)}')
+  git2r::push(head)
 }
 
 push_to_new <- function(remote_name) {
