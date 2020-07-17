@@ -1,14 +1,5 @@
 update_version_impl <- function(which) {
-  desc <- desc::desc(file = "DESCRIPTION")
-
-  if (desc$has_fields("Date")) {
-    desc$set("Date", Sys.Date())
-  }
-
-  # https://github.com/r-lib/desc/issues/93
-  suppressMessages(desc$bump_version(which))
-
-  new_version <- desc$get_version()
+  new_version <- update_version_helper(which = which)
 
   ui_done("Package version bumped to {ui_value(new_version)}")
 
@@ -22,6 +13,21 @@ update_version_impl <- function(which) {
   add_to_news(header)
 
   desc$write()
+}
+
+update_version_helper <- function(which) {
+  desc <- desc::desc(file = "DESCRIPTION")
+
+  if (desc$has_fields("Date")) {
+    desc$set("Date", Sys.Date())
+  }
+
+  # https://github.com/r-lib/desc/issues/93
+  suppressMessages(desc$bump_version(which))
+
+  new_version <- desc$get_version()
+
+  return(new_version)
 }
 
 date_in_news_headers <- function() {

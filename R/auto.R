@@ -14,12 +14,17 @@
 #' @inheritParams bump_version
 #' @name release
 #' @export
-pre_release <- function(which = "patch") {
-  check_only_modified(character())
+pre_release <- function(which = "patch", force = FALSE) {
 
-  stopifnot(which %in% c("patch", "minor", "major"))
+  state = check_pre_release_state(which = which, force = force)
 
-  with_repo(pre_release_impl(which))
+  if (state) {
+    check_only_modified(character())
+
+    stopifnot(which %in% c("patch", "minor", "major"))
+
+    with_repo(pre_release_impl(which))
+  }
 }
 
 pre_release_impl <- function(which) {
