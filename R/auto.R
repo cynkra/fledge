@@ -16,7 +16,7 @@
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {
 
-  state = check_pre_release_state(which = which, force = force)
+  state <- check_pre_release_state(which = which, force = force)
 
   if (state) {
     check_only_modified(character())
@@ -272,14 +272,14 @@ check_post_release <- function() {
 
   ui_info("Checking contents of {ui_path('CRAN-RELEASE')}")
   if (!file.exists("CRAN-RELEASE")) {
-    abort('File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.')
+    abort("File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.")
   }
 
   release <- paste(readLines("CRAN-RELEASE"), collapse = "\n")
   rx <- "^.*[(]commit ([0-9a-f]+)[)].*$"
   commit <- grepl(rx, release)
   if (!commit) {
-    abort('Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.')
+    abort("Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.")
   }
   sha <- gsub(rx, "\\1", release)
 
@@ -301,6 +301,8 @@ check_post_release <- function() {
 
 gh_scopes <- function() {
   out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
-  if (out == "") return(character())
+  if (out == "") {
+    return(character())
+  }
   strsplit(out, ", *")[[1]]
 }
