@@ -173,7 +173,7 @@ get_news_headers <- function() {
   news <- readLines(news_path)
   top_level_headers <- grep("^# [a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] [0-9.-]+", news)
   top_level_headers <- utils::head(top_level_headers, 2)
-  gsub("^# [^0-9]+", "", news[top_level_headers])
+  gsub("^# .* ", "", news[top_level_headers])
 }
 
 is_cran_comments_good <- function() {
