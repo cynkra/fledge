@@ -46,7 +46,7 @@ pre_release_impl <- function(which) {
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
-  ui_todo("Run {ui_code('fledge::release()')}")
+  ui_todo("Run {ui_code('fledge::release()')} after NEWS.md was cleaned from all dev version sections (i.e. .90xx entries).")
   send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran() })")
 }
 
