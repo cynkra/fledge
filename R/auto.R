@@ -162,19 +162,9 @@ release_impl <- function() {
 
 is_news_consistent <- function() {
   headers <- with_repo(get_news_headers())
-
-  versions <- package_version(headers, strict = TRUE)
+  versions <- package_version(headers$version[1:2], strict = TRUE)
 
   all(lengths(unclass(versions)) <= 3)
-}
-
-get_news_headers <- function() {
-  news_path <- "NEWS.md"
-  news <- readLines(news_path)
-  rx <- "^# [a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] ([0-9][0-9.-]*).*$"
-  top_level_headers <- grep(rx, news)
-  top_level_headers <- utils::head(top_level_headers, 2)
-  gsub(rx, "\\1", news[top_level_headers])
 }
 
 is_cran_comments_good <- function() {
