@@ -43,3 +43,10 @@ make_prepend <- function(news) {
 edit_news <- function() {
   edit_file(news_path)
 }
+
+get_news_headers <- function() {
+  news <- readLines(news_path)
+  rx <- "^# +(?<package>[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]) +(?<version>[0-9][0-9.-]*) *(?<extra>.*)$"
+  out <- rematch2::re_match(news, rx)
+  out[!is.na(out$package), grep("^[^.]", names(out), value = TRUE)]
+}
