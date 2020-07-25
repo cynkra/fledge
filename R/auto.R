@@ -16,6 +16,8 @@
 pre_release <- function(which = "patch") {
   check_only_modified(character())
 
+  check_gitignore("cran-comments.md")
+
   stopifnot(which %in% c("patch", "minor", "major"))
 
   with_repo(pre_release_impl(which))
@@ -31,7 +33,7 @@ pre_release_impl <- function(which) {
 
   bump_version(which)
 
-  release_branch <- create_release_branch()
+  release_branGch <- create_release_branch()
   switch_branch(release_branch)
 
   update_cran_comments()
@@ -263,14 +265,14 @@ check_post_release <- function() {
 
   ui_info("Checking contents of {ui_path('CRAN-RELEASE')}")
   if (!file.exists("CRAN-RELEASE")) {
-    abort('File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.')
+    abort("File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.")
   }
 
   release <- paste(readLines("CRAN-RELEASE"), collapse = "\n")
   rx <- "^.*[(]commit ([0-9a-f]+)[)].*$"
   commit <- grepl(rx, release)
   if (!commit) {
-    abort('Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.')
+    abort("Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.")
   }
   sha <- gsub(rx, "\\1", release)
 
@@ -291,6 +293,17 @@ check_post_release <- function() {
 
 gh_scopes <- function() {
   out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
-  if (out == "") return(character())
+  if (out == "") {
+    return(character())
+  }
   strsplit(out, ", *")[[1]]
+}
+
+check_gitignore <- function(files) {
+  files_ignored <- map_chr(files, ~ system2("git", c("check-ignore", .x), stdout = TRUE))
+  if (length(files_ignored >= 1)) {
+    cli::cli_alert_warning("The following files are listed in {.file .gitignore}:")
+    cli::cli_ul("{files_ignored}")
+    cli::cli_text("Some {.pkg fledge} automation might fail due to this. You may want to unignore them.")
+  }
 }
