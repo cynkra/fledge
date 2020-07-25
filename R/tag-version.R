@@ -27,19 +27,18 @@ tag_version_impl <- function(force) {
 }
 
 get_current_news <- function() {
-  news_path <- "NEWS.md"
-  news <- readLines(news_path)
-  top_level_headers <- grep("^# [a-zA-Z][a-zA-Z0-9.]+[a-zA-Z0-9] [0-9.-]+", news)
-  if (length(top_level_headers) == 0) return(character())
+  headers <- get_news_headers()
+  if (nrow(headers) == 0) return(character())
+  # FIXME: Add body column to get_news_headers()?
+  stopifnot(headers$line[[1]] == 1)
 
-  stopifnot(top_level_headers[[1]] == 1)
-
-  if (length(top_level_headers) == 1) {
-    current_news <- news[-1]
+  if (nrow(headers) == 1) {
+    n <- -1L
   } else {
-    current_news <- news[seq.int(top_level_headers[[1]] + 1, top_level_headers[[2]] - 1)]
+    n <- headers$line[[2]] - 1L
   }
 
+  current_news <- readLines(news_path, n)[-1]
   current_news <- paste(current_news, collapse = "\n")
   gsub("^\n*(.*[^\n])\n*$", "\\1", current_news)
 }
