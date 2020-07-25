@@ -33,7 +33,7 @@ pre_release_impl <- function(which) {
 
   bump_version(which)
 
-  release_branGch <- create_release_branch()
+  release_branch <- create_release_branch()
   switch_branch(release_branch)
 
   update_cran_comments()
