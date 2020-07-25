@@ -1,7 +1,7 @@
 update_news_impl <- function(range) {
   news <- collect_news(range)
 
-  ui_done("Adding new entries to {ui_path('NEWS.md')}")
+  ui_done("Adding new entries to {ui_path(news_path)}")
   add_to_news(news)
 }
 
