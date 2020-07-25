@@ -10,7 +10,7 @@
 - [ ] Checked on CI system, R {{{ latest_rversion }}}
 - [ ] Checked on win-builder, R devel
 
-- [ ] Check the boxes above after successful execution and remove this line. Then run `fledge::release().
+- [ ] Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
