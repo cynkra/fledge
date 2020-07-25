@@ -14,10 +14,25 @@ update_version_impl <- function(which) {
 
   ui_done("Adding header to {ui_path(news_path)}")
 
-  add_to_news(paste0(
-    "# ", desc$get("Package"), " ", new_version, "\n"
-  ))
+  header <- paste0(
+    "# ", desc$get("Package"), " ", new_version,
+    if (date_in_news_headers()) paste0(" (", Sys.Date(), ")"),
+    "\n"
+  )
+  add_to_news(header)
+
   desc$write()
+}
+
+date_in_news_headers <- function() {
+  headers <- get_news_headers()
+  if (nrow(headers) == 0) {
+    # Add date by default
+    return(TRUE)
+  }
+
+  dates <- grep("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]", headers$extra)
+  length(dates) > 0
 }
 
 get_news_headers <- function() {
