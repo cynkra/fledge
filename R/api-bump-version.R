@@ -7,6 +7,6 @@
 #' @export
 bump_version <- function(which = "dev") {
   check_which(which)
-  check_clean(c("DESCRIPTION", "NEWS.md"))
+  check_clean(c("DESCRIPTION", news_path))
   bump_version_impl(which)
 }

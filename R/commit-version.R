@@ -1,5 +1,5 @@
 commit_version_impl <- function() {
-  check_only_staged(c("DESCRIPTION", "NEWS.md"))
+  check_only_staged(c("DESCRIPTION", news_path))
 
   if (is_last_commit_bump()) {
     ui_done("Resetting to previous commit")
@@ -9,7 +9,7 @@ commit_version_impl <- function() {
     amending <- FALSE
   }
 
-  git2r::add(".", c("DESCRIPTION", "NEWS.md"))
+  git2r::add(".", c("DESCRIPTION", news_path))
   if (length(git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged) > 0) {
     ui_done("Committing changes")
     git2r::commit(".", get_commit_message())
