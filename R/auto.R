@@ -171,9 +171,10 @@ is_news_consistent <- function() {
 get_news_headers <- function() {
   news_path <- "NEWS.md"
   news <- readLines(news_path)
-  top_level_headers <- grep("^# [a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] [0-9.-]+", news)
+  rx <- "^# [a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] ([0-9][0-9.-]*).*$"
+  top_level_headers <- grep(rx, news)
   top_level_headers <- utils::head(top_level_headers, 2)
-  gsub("^# .* ", "", news[top_level_headers])
+  gsub(rx, "\\1", news[top_level_headers])
 }
 
 is_cran_comments_good <- function() {
