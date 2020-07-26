@@ -281,7 +281,8 @@ check_post_release <- function() {
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
       "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
-      "different from HEAD (", repo_head_sha, ")."
+      "different from HEAD (", repo_head_sha, "). ",
+      "Reset to the correct commit or overwrite with `devtools:::flag_release()`."
     )
 
     abort(msg)
