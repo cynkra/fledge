@@ -1,12 +1,17 @@
 Package: fledge
 Title: Wings for Your R Packages
 Version: 0.0.3.9006
-Date: 2020-05-26
 Authors@R: 
-    person(given = "Kirill",
-           family = "M\u00fcller",
-           role = c("aut", "cre"),
-           email = "krlmlr+r@mailbox.org")
+    c(person(given = "Kirill",
+             family = "M\u00fcller",
+             role = c("aut", "cre"),
+             email = "krlmlr+r@mailbox.org",
+             comment = c(ORCID = "0000-0002-1416-3412")),
+      person(given = "Patrick",
+             family = "Schratz",
+             role = "aut",
+             email = "patrick.schratz@gmail.com",
+             comment = c(ORCID = "0000-0003-0748-6624")))
 Description: Streamlines the process of versioning R packages
     and updating NEWS. Numbers are cheap, why not use them?
 License: GPL-3
