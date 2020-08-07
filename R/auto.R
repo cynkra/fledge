@@ -23,27 +23,54 @@ pre_release <- function(which = "patch") {
 
 pre_release_impl <- function(which) {
   stopifnot(git2r::is_branch(git2r::repository_head()))
+
+  # FIXME: This fails if the branch is not yet pushed.
+  # Always use the remote of the first remote branch that git2r::branch() finds?
   remote_name <- get_remote_name()
   main_branch <- get_branch_name()
 
   # FIXME: Require bumping to devel version before release
   # How to check for non-fledge repos?
 
+  # bump version on main branch to version set by user
   bump_version(which)
 
+  # switch to release branch and update cran-comments
   release_branch <- create_release_branch()
   switch_branch(release_branch)
-
   update_cran_comments()
-  push_to_new(remote_name)
 
+  # push main branch, bump to devel version and push again
+  push_to_new(remote_name)
   switch_branch(main_branch)
   bump_version()
   finalize_version(push = TRUE)
 
+  # switch to release branch and init pre_release actions
   switch_branch(release_branch)
   usethis::use_git_ignore("CRAN-RELEASE")
   usethis::use_build_ignore("CRAN-RELEASE")
+
+  # check scopes
+  stopifnot("repo" %in% gh_scopes())
+  ui_info("Committing {ui_code('.gitignore')} and {ui_code('.Rbuildignore')}.")
+  git2r::add(path = c(".gitignore", ".Rbuildignore"))
+  git2r::commit(message = "Update `.gitignore` and `.Rbuildignore`")
+
+  ui_info("Opening draft pull request with contents of {ui_code('cran-comments.md')}.")
+  gh::gh("POST /repos/:owner/:repo/pulls",
+         owner = github_info()$owner$login,
+         repo = github_info()$name,
+         title = sprintf("CRAN release v0.0.1test"),
+         head = release_branch,
+         base = main_branch,
+         maintainer_can_modify = TRUE,
+         draft = TRUE,
+         body = readChar("cran-comments.md", file.info(fileName)$size)
+  )
+  usethis::pr_view()
+
+  # user action items
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
@@ -56,7 +83,7 @@ get_branch_name <- function() {
 }
 
 get_remote_name <- function() {
-  git2r::branch_remote_name(git2r::branch_get_upstream(git2r::repository_head()))
+  git2r::branch_remote_name(git2r::branches(flags = "remote")[[1]])
 }
 
 create_release_branch <- function() {
