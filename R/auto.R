@@ -43,7 +43,7 @@ pre_release_impl <- function(which) {
 
   switch_branch(release_branch)
   usethis::use_git_ignore("CRAN-RELEASE")
-  usethis::use_biuld_ignore("CRAN-RELEASE")
+  usethis::use_build_ignore("CRAN-RELEASE")
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
