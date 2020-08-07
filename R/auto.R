@@ -59,14 +59,17 @@ pre_release_impl <- function(which) {
 
   ui_info("Opening draft pull request with contents of {ui_code('cran-comments.md')}.")
   gh::gh("POST /repos/:owner/:repo/pulls",
-         owner = github_info()$owner$login,
-         repo = github_info()$name,
-         title = sprintf("CRAN release v0.0.1test"),
-         head = release_branch,
-         base = main_branch,
-         maintainer_can_modify = TRUE,
-         draft = TRUE,
-         body = readChar("cran-comments.md", file.info(fileName)$size)
+    owner = github_info()$owner$login,
+    repo = github_info()$name,
+    title = sprintf(
+      "CRAN release v%s",
+      strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
+    ),
+    head = release_branch,
+    base = main_branch,
+    maintainer_can_modify = TRUE,
+    draft = TRUE,
+    body = readChar("cran-comments.md", file.info(fileName)$size)
   )
   usethis::pr_view()
 
@@ -291,14 +294,14 @@ check_post_release <- function() {
 
   ui_info("Checking contents of {ui_path('CRAN-RELEASE')}")
   if (!file.exists("CRAN-RELEASE")) {
-    abort('File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.')
+    abort("File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.")
   }
 
   release <- paste(readLines("CRAN-RELEASE"), collapse = "\n")
   rx <- "^.*[(]commit ([0-9a-f]+)[)].*$"
   commit <- grepl(rx, release)
   if (!commit) {
-    abort('Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.')
+    abort("Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.")
   }
   sha <- gsub(rx, "\\1", release)
 
@@ -320,6 +323,8 @@ check_post_release <- function() {
 
 gh_scopes <- function() {
   out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
-  if (out == "") return(character())
+  if (out == "") {
+    return(character())
+  }
   strsplit(out, ", *")[[1]]
 }
