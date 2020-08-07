@@ -1,5 +1,6 @@
 update_version_impl <- function(which) {
   new_version <- update_version_helper(which = which)
+  desc <- desc::desc(file = "DESCRIPTION")
 
   ui_done("Package version bumped to {ui_value(new_version)}")
 
