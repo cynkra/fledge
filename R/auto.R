@@ -332,7 +332,7 @@ create_pr = function(release_branch, main_branch) {
          base = main_branch,
          maintainer_can_modify = TRUE,
          draft = TRUE,
-         body = readChar("cran-comments.md", file.info(fileName)$size)
+         body = readChar("cran-comments.md", file.info("cran-comments.md")$size)
   )
   usethis::pr_view()
 }
