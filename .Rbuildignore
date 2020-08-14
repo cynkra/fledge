@@ -7,3 +7,5 @@
 ^tic\.R$
 ^_pkgdown\.yml$
 ^docs$
+^\.ccache$
+^\.github$
