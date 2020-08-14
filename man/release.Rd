@@ -12,6 +12,10 @@ release()
 
 post_release()
 }
+\arguments{
+\item{which}{Component of the version number to update. Supported
+values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+}
 \description{
 \code{pre_release()} is run when development of a package is finished
 and it is ready to be sent to CRAN.

@@ -11,6 +11,7 @@
 #' - Prompts the user to run `devtools::check_win_devel()`.
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
+#' @inheritParams bump_version
 #' @name release
 #' @export
 pre_release <- function(which = "patch") {
@@ -158,6 +159,7 @@ release_impl <- function() {
   stopifnot(is_cran_comments_good())
 
   push_head(get_head_branch())
+  # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   auto_confirm()
 }
