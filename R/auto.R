@@ -51,27 +51,14 @@ pre_release_impl <- function(which) {
   usethis::use_git_ignore("CRAN-RELEASE")
   usethis::use_build_ignore("CRAN-RELEASE")
 
-  # check scopes
-  stopifnot("repo" %in% gh_scopes())
-  ui_info("Committing {ui_code('.gitignore')} and {ui_code('.Rbuildignore')}.")
-  git2r::add(path = c(".gitignore", ".Rbuildignore"))
-  git2r::commit(message = "Update `.gitignore` and `.Rbuildignore`")
+  # check PAT scopes for PR
+  check_gh_scopes()
+
+  # ensure everything is committed
+  commit_ignore_files()
 
   ui_info("Opening draft pull request with contents of {ui_code('cran-comments.md')}.")
-  gh::gh("POST /repos/:owner/:repo/pulls",
-    owner = github_info()$owner$login,
-    repo = github_info()$name,
-    title = sprintf(
-      "CRAN release v%s",
-      strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
-    ),
-    head = release_branch,
-    base = main_branch,
-    maintainer_can_modify = TRUE,
-    draft = TRUE,
-    body = readChar("cran-comments.md", file.info(fileName)$size)
-  )
-  usethis::pr_view()
+  create_pr(release_branch, main_branch)
 
   # user action items
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
@@ -321,10 +308,37 @@ check_post_release <- function() {
   repo_head_sha
 }
 
+check_gh_scopes = function() {
+  stopifnot("repo" %in% gh_scopes())
+}
+
 gh_scopes <- function() {
   out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
   if (out == "") {
     return(character())
   }
   strsplit(out, ", *")[[1]]
+}
+
+create_pr = function(release_branch, main_branch) {
+  gh::gh("POST /repos/:owner/:repo/pulls",
+         owner = github_info()$owner$login,
+         repo = github_info()$name,
+         title = sprintf(
+           "CRAN release v%s",
+           strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
+         ),
+         head = release_branch,
+         base = main_branch,
+         maintainer_can_modify = TRUE,
+         draft = TRUE,
+         body = readChar("cran-comments.md", file.info(fileName)$size)
+  )
+  usethis::pr_view()
+}
+
+commit_ignore_files <- function() {
+  ui_info("Committing {ui_code('.gitignore')} and {ui_code('.Rbuildignore')}.")
+  git2r::add(path = c(".gitignore", ".Rbuildignore"))
+  git2r::commit(message = "Update `.gitignore` and `.Rbuildignore`")
 }
