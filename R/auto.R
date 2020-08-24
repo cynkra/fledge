@@ -320,10 +320,11 @@ gh_scopes <- function() {
   strsplit(out, ", *")[[1]]
 }
 
-create_pr = function(release_branch, main_branch) {
+create_pr <- function(release_branch, main_branch, remote_name) {
+  info <- github_info(remote = remote_name)
   gh::gh("POST /repos/:owner/:repo/pulls",
-         owner = github_info()$owner$login,
-         repo = github_info()$name,
+         owner = info$owner$login,
+         repo = info$name,
          title = sprintf(
            "CRAN release v%s",
            strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
