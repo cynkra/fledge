@@ -300,10 +300,14 @@ gh_scopes <- function() {
 }
 
 check_gitignore <- function(files) {
-  files_ignored <- map_int(files, ~ system2("git", c("check-ignore", "-q", .x), stdout = FALSE))
-  if (length(files_ignored >= 1)) {
+  is_ignored <- map_int(files, ~
+  system2("git", c("check-ignore", "-q", .x), stdout = FALSE))
+
+  if (0 %in% is_ignored) {
+    files_ignored <- files[which(is_ignored == 0)]
     cli::cli_alert_warning("The following files are listed in {.file .gitignore}:")
     cli::cli_ul("{files_ignored}")
-    cli::cli_text("Some {.pkg fledge} automation might fail due to this. You may want to unignore them.")
+    cli::cli_text("Certain {.pkg fledge} automation steps might fail due to this.
+      You may want to unignore them.")
   }
 }
