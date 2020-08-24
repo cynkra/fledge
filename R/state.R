@@ -1,29 +1,36 @@
-check_pre_release_state <- function(which, force = FALSE) {
+check_release_state <- function(which) {
 
-  # check version number
-  if (length(strsplit(as.character(desc::desc_get_version()), "[.]|-")[[1]]) < 4) {
-    ui_oops(paste0(
-      ui_code("pre_release()"),
-      ": Package versions needs to indicate a dev version before calling ",
-      ui_code("pre_release()"), "."
-    ))
-    state <- FALSE
-    return(state)
-  } else if (file.exists("cran-comments.md")) {
-    ui_oops(paste0(ui_code("pre_release()"), ": cran-comments.md already exists."))
-    state <- FALSE
-    return(state)
-  } else if (file.exists("CRAN-RELEASE")) {
-    ui_oops(paste0(ui_code("pre_release()"), ": CRAN-RELEASE already exists."))
-    state <- FALSE
-    return(state)
-  } else if (git2r::is_branch(sprintf("cran-%s", update_version_helper(which)))) {
-    ui_oops(sprintf(paste0(
-      ui_code("pre_release()"),
-      ": 'cran-%s' branch already exists.", update_version_helper(which)
-    )))
-    state <- FALSE
+  # meta info
+  new_version <- update_version_helper(which)$get_version()
+  pkg <- desc::desc_get_field("Package")
+  version_components <- length(strsplit(as.character(desc::desc_get_version()), "[.]|-")[[1]])
+  # mirrors do not seem to work (due to CRAN vacay?)
+  cran_details <- withr::with_options(
+    list(repos = structure(c(CRAN = "https://cloud.r-project.org/"))),
+    foghorn::cran_details(pkg, src = "website")
+  )
+  cran_version <- as.character(cran_details[1, "version"])
+  cran_inc <- withr::with_options(
+    list(repos = structure(c(CRAN = "https://cloud.r-project.org/"))),
+    {
+      incoming <- foghorn::cran_incoming(
+        pkg,
+        c("pretest", "inspect", "pending", "publish", "waiting", "recheck")
+      )
+      ifelse(nrow(incoming == 0), FALSE, TRUE)
+    }
+  )
+
+  # determine state
+  if (version_components == 4) {
+    return("pre-release")
+  } else if (new_version == cran_version) {
+    return("accepted")
+  } else if (cran_inc) {
+    return("submitted")
+  } else if (is_cran_comments_good()) {
+    return("ready-to-release")
   } else {
-    state <- TRUE
+    return("running-release-checks")
   }
 }
