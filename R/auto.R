@@ -58,7 +58,7 @@ pre_release_impl <- function(which) {
   commit_ignore_files()
 
   ui_info("Opening draft pull request with contents of {ui_code('cran-comments.md')}.")
-  create_pr(release_branch, main_branch)
+  create_pr(release_branch, main_branch, remote_name)
 
   # user action items
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
