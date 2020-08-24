@@ -300,7 +300,7 @@ gh_scopes <- function() {
 }
 
 check_gitignore <- function(files) {
-  files_ignored <- map_chr(files, ~ system2("git", c("check-ignore", .x), stdout = TRUE))
+  files_ignored <- map_int(files, ~ system2("git", c("check-ignore", "-q", .x), stdout = FALSE))
   if (length(files_ignored >= 1)) {
     cli::cli_alert_warning("The following files are listed in {.file .gitignore}:")
     cli::cli_ul("{files_ignored}")
