@@ -15,7 +15,9 @@ URL: http://krlmlr.github.io/fledge,
 BugReports: https://github.com/krlmlr/fledge/issues
 Imports: 
     cli,
+    clipr,
     desc (>= 1.2.0),
+    devtools,
     enc,
     foghorn,
     gh,
@@ -26,6 +28,7 @@ Imports:
     rematch2,
     rlang,
     rversions,
+    tibble,
     usethis (>= 1.5.0),
     withr
 Suggests: 

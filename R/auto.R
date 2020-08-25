@@ -11,6 +11,7 @@
 #' - Prompts the user to run `devtools::check_win_devel()`.
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
+#' @inheritParams bump_version
 #' @name release
 #' @export
 pre_release <- function(which = "patch") {
@@ -45,9 +46,11 @@ pre_release_impl <- function(which) {
 
   switch_branch(release_branch)
   usethis::use_git_ignore("CRAN-RELEASE")
+  usethis::use_build_ignore("CRAN-RELEASE")
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
+  ui_todo("Convert {ui_path('NEWS.md')} from ChangeLog format to release notes")
   ui_todo("Run {ui_code('fledge::release()')}")
   send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran() })")
 }
@@ -117,7 +120,7 @@ get_cransplainer <- function(package) {
 }
 
 is_new_submission <- function(package) {
-  !(package %in% rownames(available.packages(repos = c(CRAN = "https://cran.r-project.org"))))
+  !(package %in% rownames(utils::available.packages(repos = c(CRAN = "https://cran.r-project.org"))))
 }
 
 get_cransplainer_update <- function(package) {
@@ -158,6 +161,7 @@ release_impl <- function() {
   stopifnot(is_cran_comments_good())
 
   push_head(get_head_branch())
+  # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   auto_confirm()
 }
@@ -282,7 +286,8 @@ check_post_release <- function() {
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
       "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
-      "different from HEAD (", repo_head_sha, ")."
+      "different from HEAD (", repo_head_sha, "). ",
+      "Reset to the correct commit or overwrite with `devtools:::flag_release()`."
     )
 
     abort(msg)
