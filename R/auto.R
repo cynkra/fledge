@@ -11,10 +11,13 @@
 #' - Prompts the user to run `devtools::check_win_devel()`.
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
+#' @inheritParams bump_version
 #' @name release
 #' @export
 pre_release <- function(which = "patch") {
   check_only_modified(character())
+
+  check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("patch", "minor", "major"))
 
@@ -64,6 +67,7 @@ pre_release_impl <- function(which) {
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
+  ui_todo("Convert {ui_path('NEWS.md')} from ChangeLog format to release notes")
   ui_todo("Run {ui_code('fledge::release()')}")
   send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran() })")
 }
@@ -133,7 +137,7 @@ get_cransplainer <- function(package) {
 }
 
 is_new_submission <- function(package) {
-  !(package %in% rownames(available.packages(repos = c(CRAN = "https://cran.r-project.org"))))
+  !(package %in% rownames(utils::available.packages(repos = c(CRAN = "https://cran.r-project.org"))))
 }
 
 get_cransplainer_update <- function(package) {
@@ -174,6 +178,7 @@ release_impl <- function() {
   stopifnot(is_cran_comments_good())
 
   push_head(get_head_branch())
+  # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   auto_confirm()
 }
@@ -318,6 +323,22 @@ gh_scopes <- function() {
     return(character())
   }
   strsplit(out, ", *")[[1]]
+}
+
+check_gitignore <- function(files) {
+  is_ignored <- map_lgl(files, is_ignored)
+
+  if (any(is_ignored)) {
+    files_ignored <- files[is_ignored]
+    cli::cli_alert_warning("The following files are listed in {.file .gitignore}:")
+    cli::cli_ul("{files_ignored}")
+    cli::cli_text("Certain {.pkg fledge} automation steps might fail due to this.")
+    abort(paste0("Remove ", glue_collapse(files_ignored, ", "), " from .gitignore."))
+  }
+}
+
+is_ignored <- function(path) {
+  system2("git", c("check-ignore", "-q", path), stdout = FALSE) == 1
 }
 
 create_pr <- function(release_branch, main_branch, remote_name) {
