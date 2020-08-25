@@ -338,7 +338,7 @@ check_gitignore <- function(files) {
 }
 
 is_ignored <- function(path) {
-  system2("git", c("check-ignore", "-q", path), stdout = FALSE) == 1
+  system2("git", c("check-ignore", "-q", path), stdout = FALSE) != 1
 }
 
 create_pr <- function(release_branch, main_branch, remote_name) {
