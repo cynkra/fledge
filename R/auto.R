@@ -85,7 +85,7 @@ create_release_branch <- function() {
 
   ui_done("Creating branch {ui_path(branch_name)}.")
 
-  git2r::branch_create(name = branch_name)
+  git2r::branch_create(name = branch_name, force = TRUE)
   branch_name
 }
 
