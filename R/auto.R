@@ -30,13 +30,14 @@ pre_release_impl <- function(which) {
   # check PAT scopes for PR for early abort
   check_gh_scopes()
 
-  # FIXME: This fails if the branch is not yet pushed.
-  # Always use the remote of the first remote branch that git2r::branch() finds?
+  # We expect that this branch is pushed already, ok to fail here
   remote_name <- get_remote_name()
   main_branch <- get_branch_name()
 
-  # FIXME: Require bumping to devel version before release
-  # How to check for non-fledge repos?
+  # Commit ignored files as early as possible
+  usethis::use_git_ignore("CRAN-RELEASE")
+  usethis::use_build_ignore("CRAN-RELEASE")
+  commit_ignore_files()
 
   # bump version on main branch to version set by user
   bump_version(which)
@@ -54,11 +55,6 @@ pre_release_impl <- function(which) {
 
   # switch to release branch and init pre_release actions
   switch_branch(release_branch)
-  usethis::use_git_ignore("CRAN-RELEASE")
-  usethis::use_build_ignore("CRAN-RELEASE")
-
-  # ensure everything is committed
-  commit_ignore_files()
 
   ui_info("Opening draft pull request with contents of {ui_code('cran-comments.md')}.")
   create_pr(release_branch, main_branch, remote_name)
