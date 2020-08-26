@@ -60,7 +60,7 @@ pre_release_impl <- function(which, force) {
   switch_branch(release_branch)
 
   ui_info("Opening draft pull request with contents of {ui_code('cran-comments.md')}.")
-  create_pr(release_branch, main_branch, remote_name)
+  create_pull_request(release_branch, main_branch, remote_name)
 
   # user action items
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
@@ -342,7 +342,7 @@ is_ignored <- function(path) {
   system2("git", c("check-ignore", "-q", path), stdout = FALSE) != 1
 }
 
-create_pr <- function(release_branch, main_branch, remote_name) {
+create_pull_request <- function(release_branch, main_branch, remote_name) {
   info <- github_info(remote = remote_name)
   gh::gh("POST /repos/:owner/:repo/pulls",
          owner = info$owner$login,
