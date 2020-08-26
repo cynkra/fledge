@@ -12,19 +12,21 @@
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
 #' @inheritParams bump_version
+#' @param force Create branches and tags even if they exist.
+#'   Useful to recover from a previously failed attempt.
 #' @name release
 #' @export
-pre_release <- function(which = "patch") {
+pre_release <- function(which = "patch", force = FALSE) {
   check_only_modified(character())
 
   check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("patch", "minor", "major"))
 
-  with_repo(pre_release_impl(which))
+  with_repo(pre_release_impl(which, force))
 }
 
-pre_release_impl <- function(which) {
+pre_release_impl <- function(which, force) {
   stopifnot(git2r::is_branch(git2r::repository_head()))
 
   # check PAT scopes for PR for early abort
@@ -43,15 +45,16 @@ pre_release_impl <- function(which) {
   bump_version(which)
 
   # switch to release branch and update cran-comments
-  release_branch <- create_release_branch()
+  release_branch <- create_release_branch(force)
   switch_branch(release_branch)
   update_cran_comments()
 
   # push main branch, bump to devel version and push again
-  push_to_new(remote_name)
+  push_to_new(remote_name, force)
   switch_branch(main_branch)
-  bump_version()
-  finalize_version(push = TRUE)
+
+  # manual implementation of bump_version(), it doesn't expose `force` yet
+  bump_version_to_dev_with_force(force)
 
   # switch to release branch and init pre_release actions
   switch_branch(release_branch)
@@ -78,12 +81,12 @@ get_remote_name <- function(branch) {
   git2r::branch_remote_name(upstream)
 }
 
-create_release_branch <- function() {
+create_release_branch <- function(force) {
   branch_name <- paste0("cran-", desc::desc_get_version())
 
   ui_done("Creating branch {ui_path(branch_name)}.")
 
-  git2r::branch_create(name = branch_name, force = TRUE)
+  git2r::branch_create(name = branch_name, force = force)
   branch_name
 }
 

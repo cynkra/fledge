@@ -6,7 +6,7 @@
 \alias{post_release}
 \title{Automating CRAN release}
 \usage{
-pre_release(which = "patch")
+pre_release(which = "patch", force = FALSE)
 
 release()
 
@@ -15,6 +15,9 @@ post_release()
 \arguments{
 \item{which}{Component of the version number to update. Supported
 values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+
+\item{force}{Create branches and tags even if they exist.
+Useful to recover from a previously failed attempt.}
 }
 \description{
 \code{pre_release()} is run when development of a package is finished

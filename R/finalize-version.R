@@ -36,7 +36,7 @@ push_head <- function(head) {
   git2r::push(head)
 }
 
-push_to_new <- function(remote_name) {
+push_to_new <- function(remote_name, force) {
   branch_name <- get_branch_name()
 
   ui_done("Pushing {ui_value(branch_name)} to remote {ui_value(remote_name)}")
@@ -44,7 +44,7 @@ push_to_new <- function(remote_name) {
     git2r::repository(),
     name = remote_name,
     refspec = paste0("refs/heads/", branch_name),
-    force = TRUE,
+    force = force,
     set_upstream = TRUE
   )
 }
