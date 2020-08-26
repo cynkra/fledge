@@ -98,6 +98,19 @@ switch_branch <- function(name) {
 update_cran_comments <- function() {
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
+  old_crp_date <- get_old_crp_date()
+
+  if (!is.na(old_crp_date) && crp_date != old_crp_date) {
+    url <- glue("https://github.com/eddelbuettel/crp/compare/master@%7B{old_crp_date}%7D...master@%7B{crp_date}%7D")
+    utils::browseURL(url)
+
+    crp_cross <- " "
+    crp_changes <- glue("\n\nSee changes at {url}", .trim = FALSE)
+  } else {
+    crp_cross <- "x"
+    crp_changes <- ""
+  }
+
   cransplainer <- get_cransplainer(package)
 
   unlink("cran-comments.md")
@@ -108,6 +121,8 @@ update_cran_comments <- function() {
       package = package,
       version = desc::desc_get_version(),
       crp_date = crp_date,
+      crp_cross = crp_cross,
+      crp_changes = crp_changes,
       rversion = glue("{version$major}.{version$minor}"),
       latest_rversion = rversions::r_release()[["version"]],
       cransplainer = cransplainer
@@ -116,9 +131,6 @@ update_cran_comments <- function() {
     open = TRUE
   )
 
-  # FIXME: CRP compare
-  # https://github.com/octo-org/wikimania/compare/master@%7B07-22-16%7D...master@%7B08-04-16%7D
-
   git2r::add(path = "cran-comments.md")
   git2r::commit(message = "Update CRAN comments")
 }
@@ -126,6 +138,19 @@ update_cran_comments <- function() {
 get_crp_date <- function() {
   cmt <- gh::gh("/repos/eddelbuettel/crp/commits")[[1]]
   date <- cmt$commit$committer$date
+  as.Date(date)
+}
+
+get_old_crp_date <- function() {
+  if (!file.exists("cran-comments.md")) return(NA)
+  text <- get_cran_comments_text()
+
+  rx <- "^.* CRP .*([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]).*$"
+
+  crp <- grep(rx, text)
+  if (length(crp) == 0) return(NA)
+  crp <- crp[[1]]
+  date <- gsub(rx, "\\1", text[[crp]])
   as.Date(date)
 }
 
@@ -191,8 +216,12 @@ is_news_consistent <- function() {
   all(lengths(unclass(versions)) <= 3)
 }
 
+get_cran_comments_text <- function() {
+  readLines("cran-comments.md")
+}
+
 is_cran_comments_good <- function() {
-  text <- readLines("cran-comments.md")
+  text <- get_cran_comments_text()
   !any(grepl("- [ ]", text, fixed = TRUE))
 }
 
