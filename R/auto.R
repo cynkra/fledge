@@ -27,6 +27,9 @@ pre_release <- function(which = "patch") {
 pre_release_impl <- function(which) {
   stopifnot(git2r::is_branch(git2r::repository_head()))
 
+  # check PAT scopes for PR for early abort
+  check_gh_scopes()
+
   # FIXME: This fails if the branch is not yet pushed.
   # Always use the remote of the first remote branch that git2r::branch() finds?
   remote_name <- get_remote_name()
@@ -53,9 +56,6 @@ pre_release_impl <- function(which) {
   switch_branch(release_branch)
   usethis::use_git_ignore("CRAN-RELEASE")
   usethis::use_build_ignore("CRAN-RELEASE")
-
-  # check PAT scopes for PR
-  check_gh_scopes()
 
   # ensure everything is committed
   commit_ignore_files()
@@ -280,9 +280,7 @@ check_post_release <- function() {
   ui_info("Checking scope of {ui_code('GITHUB_PAT')} environment variable")
 
   # FIXME: Distinguish between public and private repo?
-  if (!("repo" %in% gh_scopes())) {
-    abort('Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.')
-  }
+  check_gh_scopes()
 
   ui_info("Checking contents of {ui_path('CRAN-RELEASE')}")
   if (!file.exists("CRAN-RELEASE")) {
@@ -313,8 +311,10 @@ check_post_release <- function() {
   repo_head_sha
 }
 
-check_gh_scopes = function() {
-  stopifnot("repo" %in% gh_scopes())
+check_gh_scopes <- function() {
+  if (!("repo" %in% gh_scopes())) {
+    abort('Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.')
+  }
 }
 
 gh_scopes <- function() {
