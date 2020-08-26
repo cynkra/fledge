@@ -73,7 +73,9 @@ get_branch_name <- function() {
 }
 
 get_remote_name <- function(branch) {
-  git2r::branch_remote_name(git2r::branches()[[branch]])
+  local <- git2r::branches(flags = "local")[[branch]]
+  upstream <- git2r::branch_get_upstream(local)
+  git2r::branch_remote_name(upstream)
 }
 
 create_release_branch <- function() {
