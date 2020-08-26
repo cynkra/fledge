@@ -385,6 +385,9 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 
   if (create) {
     info <- github_info(remote = remote_name)
+    template_path <- system.file("templates", "pr.md", package = "fledge")
+    body <- glue_collapse(readLines(template_path), sep = "\n")
+
     gh::gh("POST /repos/:owner/:repo/pulls",
       owner = info$owner$login,
       repo = info$name,
@@ -396,7 +399,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       base = main_branch,
       maintainer_can_modify = TRUE,
       draft = TRUE,
-      body = readChar("cran-comments.md", file.info("cran-comments.md")$size)
+      body = body
     )
   }
   usethis::pr_view()
