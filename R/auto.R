@@ -31,8 +31,8 @@ pre_release_impl <- function(which) {
   check_gh_scopes()
 
   # We expect that this branch is pushed already, ok to fail here
-  remote_name <- get_remote_name()
   main_branch <- get_branch_name()
+  remote_name <- get_remote_name(main_branch)
 
   # Commit ignored files as early as possible
   usethis::use_git_ignore("CRAN-RELEASE")
@@ -72,8 +72,8 @@ get_branch_name <- function() {
   git2r::repository_head()$name
 }
 
-get_remote_name <- function() {
-  git2r::branch_remote_name(git2r::branches(flags = "remote")[[1]])
+get_remote_name <- function(branch) {
+  git2r::branch_remote_name(git2r::branches()[[branch]])
 }
 
 create_release_branch <- function() {
