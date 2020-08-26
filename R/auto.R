@@ -174,14 +174,14 @@ get_cransplainer_update <- function(package) {
   details <- foghorn::cran_details(package)
   details <- details[details$result != "OK", ]
   if (nrow(details) == 0) {
-    return(paste0("- [x] ", checked_on, ", no errors found."))
+    return(paste0("- [x] ", checked_on, ", no problems found."))
   }
 
   url <- foghorn::visit_cran_check(package)
   ui_done("Review {ui_path(url)}")
 
   cransplainer <- paste0(
-    "- [x] ", checked_on, ", errors found: ", url, "\n",
+    "- [x] ", checked_on, ", problems found: ", url, "\n",
     paste0("- [ ] ", details$result, ": ", details$flavors, collapse = "\n")
   )
 
