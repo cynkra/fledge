@@ -32,14 +32,14 @@ push_tag <- function(tag) {
 }
 
 push_head <- function(head) {
-  ui_done('Pushing {ui_value(head$name)}')
+  ui_done("Pushing {ui_value(head$name)}")
   git2r::push(head)
 }
 
 push_to_new <- function(remote_name) {
   branch_name <- get_branch_name()
 
-  ui_done('Pushing {ui_value(branch_name)} to remote {ui_value(remote_name)}')
+  ui_done("Pushing {ui_value(branch_name)} to remote {ui_value(remote_name)}")
   git2r::push(
     git2r::repository(),
     name = remote_name,
