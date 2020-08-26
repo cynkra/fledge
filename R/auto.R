@@ -360,7 +360,10 @@ create_pr <- function(release_branch, main_branch, remote_name) {
 }
 
 commit_ignore_files <- function() {
-  ui_info("Committing {ui_code('.gitignore')} and {ui_code('.Rbuildignore')}.")
   git2r::add(path = c(".gitignore", ".Rbuildignore"))
-  git2r::commit(message = "Update `.gitignore` and `.Rbuildignore`")
+
+  if (length(git2r::status()$staged) > 0) {
+    ui_info("Committing {ui_code('.gitignore')} and {ui_code('.Rbuildignore')}.")
+    git2r::commit(message = "Update `.gitignore` and/or `.Rbuildignore`")
+  }
 }
