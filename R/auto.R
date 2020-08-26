@@ -60,7 +60,7 @@ pre_release_impl <- function(which, force) {
   switch_branch(release_branch)
 
   ui_info("Opening draft pull request with contents of {ui_code('cran-comments.md')}.")
-  create_pull_request(release_branch, main_branch, remote_name)
+  create_pull_request(release_branch, main_branch, remote_name, force)
 
   # user action items
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
@@ -342,21 +342,34 @@ is_ignored <- function(path) {
   system2("git", c("check-ignore", "-q", path), stdout = FALSE) != 1
 }
 
-create_pull_request <- function(release_branch, main_branch, remote_name) {
-  info <- github_info(remote = remote_name)
-  gh::gh("POST /repos/:owner/:repo/pulls",
-         owner = info$owner$login,
-         repo = info$name,
-         title = sprintf(
-           "CRAN release v%s",
-           strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
-         ),
-         head = release_branch,
-         base = main_branch,
-         maintainer_can_modify = TRUE,
-         draft = TRUE,
-         body = readChar("cran-comments.md", file.info("cran-comments.md")$size)
-  )
+create_pull_request <- function(release_branch, main_branch, remote_name, force) {
+  if (force) {
+    # Remove cached config so that pr_url() always checks
+    # if we happened to overwrite the branch
+    config_url <- glue("branch.{release_branch}.pr-url")
+    rlang::exec(git2r::config, !!config_url := NULL)
+
+    create <- is.null(usethis:::pr_url())
+  } else {
+    create <- TRUE
+  }
+
+  if (create) {
+    info <- github_info(remote = remote_name)
+    gh::gh("POST /repos/:owner/:repo/pulls",
+      owner = info$owner$login,
+      repo = info$name,
+      title = sprintf(
+        "CRAN release v%s",
+        strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
+      ),
+      head = release_branch,
+      base = main_branch,
+      maintainer_can_modify = TRUE,
+      draft = TRUE,
+      body = readChar("cran-comments.md", file.info("cran-comments.md")$size)
+    )
+  }
   usethis::pr_view()
 }
 
