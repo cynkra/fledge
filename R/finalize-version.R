@@ -44,6 +44,7 @@ push_to_new <- function(remote_name) {
     git2r::repository(),
     name = remote_name,
     refspec = paste0("refs/heads/", branch_name),
+    force = TRUE,
     set_upstream = TRUE
   )
 }
