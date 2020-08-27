@@ -20,6 +20,7 @@ URL: http://krlmlr.github.io/fledge,
     https://github.com/krlmlr/fledge
 BugReports: https://github.com/krlmlr/fledge/issues
 Imports: 
+    cli,
     desc (>= 1.2.0),
     enc,
     git2r (>= 0.26.0),
