@@ -1,3 +1,11 @@
+# fledge 0.0.3.9007
+
+- Add Patrick Schratz (@pat-s) a contributor (#50).
+- Use GitHub Actions (#49).
+- Dates are added to NEWS headers if existing headers have them, or for a new NEWS file (#29).
+- Move from `ui_*` to {cli} (#54)
+
+
 # fledge 0.0.3.9006
 
 - `bump_version()` and `get_top_level_commits()` are more robust at enumerating the commits: traversing the first parent from which `since` can be reached, instead of the first parent. This ensures that NEWS are more meaningful and avoids the occasional enumeration of all NEWS items since the beginning.
