@@ -1,12 +1,13 @@
 update_news_impl <- function(range) {
   news <- collect_news(range)
 
-  ui_done("Adding new entries to {ui_path(news_path)}")
+  cli_h2("Updating NEWS")
+  cli_alert("Adding new entries to {.file {news_path}}.")
   add_to_news(news)
 }
 
 collect_news <- function(range) {
-  ui_done("Scraping {ui_value(length(range))} commit messages")
+  cli_alert("Scraping {.field {length(range)}} commit messages.")
 
   messages <- gsub("\r\n", "\n", map_chr(range, "message"))
   messages_before_triple_dash <- map_chr(strsplit(messages, "\n---", fixed = TRUE), 1)
@@ -22,7 +23,7 @@ collect_news <- function(range) {
     }
   }
 
-  ui_done("Found {ui_value(length(message_items))} NEWS-worthy entries.")
+  cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
   paste0(paste(message_items, collapse = "\n"), "\n\n")
 }
 

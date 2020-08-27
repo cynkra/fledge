@@ -13,9 +13,10 @@ bump_version_impl <- function(which) {
   } else {
   #'     - Otherwise, [commit_version()].
     commit_version()
-    ui_info("Preparing package for release (CRAN or otherwise)")
+    cli_alert_info("Preparing package for release (CRAN or otherwise).")
     edit_news()
-    ui_todo("Convert the change log in {ui_path(news_path)} to release notes")
-    ui_todo("After CRAN release, call {ui_code('fledge::tag_version()')} and {ui_code('fledge::bump_version()')} to re-enter development mode")
+    cli_alert_warning("Convert the change log in {.file {news_path}} to release notes.")
+    cli_alert_warning("After CRAN release, call {.fun fledge::tag_version} and
+           {.fun fledge::bump_version} to re-enter development mode")
   }
 }
