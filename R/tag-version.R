@@ -5,7 +5,7 @@ tag_version_impl <- function(force) {
   desc <- desc::desc(file = "DESCRIPTION")
   version <- desc$get_version()
 
-  cli_h2("Tagging version")
+  cli_h2("Tagging Version")
 
   tag <- paste0("v", version)
   if (tag %in% names(git2r::tags())) {
@@ -21,7 +21,7 @@ tag_version_impl <- function(force) {
     }
   }
 
-  cli_alert("Creating tag {.emph {tag}} with tag message derived from
+  cli_alert("Creating tag {.field {tag}} with tag message derived from
                     {.file NEWS.md}.", wrap = TRUE)
   msg_header <- paste0(desc$get("Package"), " ", version)
   git2r::tag(".", tag, message = paste0(msg_header, "\n\n", current_news))

@@ -12,7 +12,7 @@ update_version_impl <- function(which) {
 
   cli_h2("Update Version")
 
-  cli_alert_success("Package version bumped to {.emph {new_version}}.")
+  cli_alert_success("Package version bumped to {.field {new_version}}.")
 
   cli_alert("Adding header to {.file {news_path}}.")
 

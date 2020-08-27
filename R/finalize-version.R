@@ -27,12 +27,12 @@ get_head_branch <- function() {
 }
 
 push_tag <- function(tag) {
-  cli_alert("Force-pushing tag {.emph {tag}}.")
+  cli_alert("Force-pushing tag {.field {tag}}.")
   git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
 }
 
 push_head <- function(head) {
-  cli_alert('Pushing {.emph {head$name}}.')
+  cli_alert('Pushing {.field {head$name}}.')
   git2r::push(head)
 }
 

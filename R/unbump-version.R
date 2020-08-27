@@ -13,10 +13,10 @@ unbump_version_impl <- function() {
 
   cli_alert_success("Safety checks complete.")
 
-  cli_alert("Deleting tag {.emph {tag$name}}.")
+  cli_alert("Deleting tag {.field {tag$name}}.")
   git2r::tag_delete(tag)
 
   parent_commit <- git2r::parents(last_commit)[[1]]
-  cli_alert_success("Resetting to parent commit {.emph {parent_commit$sha}}.")
+  cli_alert_success("Resetting to parent commit {.field {parent_commit$sha}}.")
   git2r::reset(parent_commit, "hard")
 }
