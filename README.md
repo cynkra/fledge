@@ -5,10 +5,7 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/krlmlr/fledge.svg?branch=master)](https://travis-ci.org/krlmlr/fledge)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/krlmlr/fledge?branch=master&svg=true)](https://ci.appveyor.com/project/krlmlr/fledge)
+[![tic](https://github.com/krlmlr/fledge/workflows/tic/badge.svg?branch=master)](https://github.com/krlmlr/fledge/actions)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN

@@ -15,7 +15,7 @@ finalize_version_impl <- function(push) {
     push_head(head)
   } else {
     edit_news()
-    ui_todo("Call {ui_code('fledge::finalize_version(push = TRUE)')}")
+    cli_alert_warning("Call {.code fledge::finalize_version(push = TRUE)}.")
     send_to_console("fledge::finalize_version(push = TRUE)")
   }
 }
@@ -27,12 +27,12 @@ get_head_branch <- function() {
 }
 
 push_tag <- function(tag) {
-  ui_done("Force-pushing tag {ui_value(tag)}")
+  cli_alert("Force-pushing tag {.field {tag}}.")
   git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
 }
 
 push_head <- function(head) {
-  ui_done("Pushing {ui_value(head$name)}")
+  cli_alert('Pushing {.field {head$name}}.')
   git2r::push(head)
 }
 
