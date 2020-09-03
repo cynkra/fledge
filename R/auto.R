@@ -211,6 +211,10 @@ release_impl <- function() {
 
 is_news_consistent <- function() {
   headers <- with_repo(get_news_headers())
+
+  # One entry is fine, zero entries are an error
+  if (length(headers$version) <= 1) return(length(headers$version) == 1)
+
   versions <- package_version(headers$version[1:2], strict = TRUE)
 
   all(lengths(unclass(versions)) <= 3)
