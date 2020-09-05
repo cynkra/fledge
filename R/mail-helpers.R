@@ -62,14 +62,14 @@ categorize_mails = function(package) {
 
 extract_upload_link = function(id) {
 
-  msg <- gm_message("17442fc5d127db4f")
+  msg <- gmailr::gm_message("17442fc5d127db4f")
 
   # find package name and version
-  stringr::str_extract(gm_subject(msg), "(?<=submission )(.*)")
+  stringr::str_extract(gmailr::gm_subject(msg), "(?<=submission )(.*)")
 
   # find upload link
   stringr::str_extract(
-    stringr::str_squish(gm_body(msg)),
+    stringr::str_squish(gmailr::gm_body(msg)),
     "(?<=into your browser: > > )(.*)(?= > > If)"
   )
 
