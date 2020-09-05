@@ -46,7 +46,7 @@ push_head <- function(head) {
 push_to_new <- function(remote_name, force) {
   branch_name <- get_branch_name()
 
-  ui_done("Pushing {ui_value(branch_name)} to remote {ui_value(remote_name)}")
+  cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
   git2r::push(
     git2r::repository(),
     name = remote_name,
