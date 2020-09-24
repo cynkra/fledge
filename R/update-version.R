@@ -2,9 +2,11 @@ update_version_impl <- function(which) {
 
   desc <- update_version_helper(which = which)
 
-  ui_done("Package version bumped to {ui_value(new_version)}")
+  cli_h2("Update Version")
 
-  ui_done("Adding header to {ui_path(news_path)}")
+  cli_alert_success("Package version bumped to {.field {new_version}}.")
+
+  cli_alert("Adding header to {.file {news_path}}.")
 
   header <- paste0(
     "# ", desc$get("Package"), " ", new_version,

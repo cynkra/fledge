@@ -5,21 +5,24 @@ tag_version_impl <- function(force) {
   desc <- desc::desc(file = "DESCRIPTION")
   version <- desc$get_version()
 
+  cli_h2("Tagging Version")
+
   tag <- paste0("v", version)
   if (tag %in% names(git2r::tags())) {
     if (!force) {
       if (git2r::sha(get_repo_head(tag)) == git2r::sha(get_repo_head())) {
-        ui_info("Tag {ui_value(tag)} exists and points to the current commit.")
+        cli_alert_info("Tag {.field {tag}} exists and points to the current commit.")
       } else {
         abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
       }
     } else {
-      ui_done("Deleting tag {ui_value(tag)}")
+      cli_alert("Deleting tag {.field {tag}}.")
       git2r::tag_delete(".", tag)
     }
   }
 
-  ui_done("Creating tag {ui_value(tag)} with tag message derived from {ui_path('NEWS.md')}")
+  cli_alert("Creating tag {.field {tag}} with tag message derived from
+                    {.file NEWS.md}.", wrap = TRUE)
   msg_header <- paste0(desc$get("Package"), " ", version)
   git2r::tag(".", tag, message = paste0(msg_header, "\n\n", current_news))
 

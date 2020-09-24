@@ -12,7 +12,11 @@ export(tag_version)
 export(unbump_version)
 export(update_news)
 export(update_version)
+<<<<<<< HEAD
 import(glue)
+=======
+import(cli)
+>>>>>>> master
 import(rlang)
 import(usethis)
 importFrom(purrr,discard)
