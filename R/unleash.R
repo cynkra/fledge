@@ -5,7 +5,7 @@ unleash <- function(which, force = FALSE) {
 
   switch(state,
     "pre-release" = pre_release(which, force),
-    "ready-to-release" = release(),
+    "ready-to-release" = release(which),
     "accepted" = post_release(),
     "submitted" = TRUE,
     "running-release-checks" = TRUE,

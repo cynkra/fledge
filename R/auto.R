@@ -145,13 +145,17 @@ get_crp_date <- function() {
 }
 
 get_old_crp_date <- function() {
-  if (!file.exists("cran-comments.md")) return(NA)
+  if (!file.exists("cran-comments.md")) {
+    return(NA)
+  }
   text <- get_cran_comments_text()
 
   rx <- "^.* CRP .*([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]).*$"
 
   crp <- grep(rx, text)
-  if (length(crp) == 0) return(NA)
+  if (length(crp) == 0) {
+    return(NA)
+  }
   crp <- crp[[1]]
   date <- gsub(rx, "\\1", text[[crp]])
   as.Date(date)
@@ -196,11 +200,11 @@ get_cransplainer_update <- function(package) {
 #' and offers help with accepting the submission.
 #'
 #' @export
-release <- function() {
-  with_repo(release_impl())
+release <- function(which) {
+  with_repo(release_impl(which))
 }
 
-release_impl <- function() {
+release_impl <- function(which) {
   check_only_modified(character())
 
   stopifnot(is_news_consistent())
@@ -209,7 +213,7 @@ release_impl <- function() {
   push_head(get_head_branch())
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
-  auto_confirm()
+  auto_confirm(which)
 }
 
 is_news_consistent <- function() {
@@ -229,6 +233,28 @@ is_cran_comments_good <- function() {
 }
 
 auto_confirm <- function() {
+  cli_alert_info("Checking automatic processing of CRAN upload mail
+                 (this only works if you opted in actively).")
+
+  # check version and name of package
+  new_version <- update_version_helper(which)$get_version()
+  pkg <- desc::desc_get_field("Package")
+
+  mails <- categorize_mails(pkg)
+
+  if (length(mails > 0)) {
+    # filter by submission mails
+    mails_filtered <- mails[mails$version == new_version & mails$type == "submission", ]
+    if (length(mails_filtered) > 0) {
+      upload_link <- extract_upload_link(mails_filtered$id)
+      cli_alert_success("Found upload link for {.field {pkg} v{new_version}} release.")
+      get_confirm_url(upload_link)
+      utils::browseURL(upload_link)
+    }
+  } else {
+    cli_alert_danger("Found no suitable mail in {.field fledge}'s mailbox ({.url fledge.package@gmail.com}) to autoprocess the upload.")
+  }
+
   ui_todo("Check your inbox for a confirmation e-mail from CRAN")
   ui_todo("Copy the URL to your clipboard")
 
