@@ -17,13 +17,16 @@
 #' @name release
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {
-  check_only_modified(character())
 
-  check_gitignore("cran-comments.md")
+  state <- check_pre_release_state(which = which, force = force)
 
-  stopifnot(which %in% c("patch", "minor", "major"))
+  if (state) {
+    check_only_modified(character())
 
-  with_repo(pre_release_impl(which, force))
+    stopifnot(which %in% c("patch", "minor", "major"))
+
+    with_repo(pre_release_impl(which, force))
+  }
 }
 
 pre_release_impl <- function(which, force) {

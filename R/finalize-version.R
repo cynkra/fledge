@@ -43,10 +43,10 @@ push_head <- function(head) {
   git2r::push(head)
 }
 
-push_to_new <- function(remote_name, force) {
+push_to_new <- function(remote_name) {
   branch_name <- get_branch_name()
 
-  ui_done("Pushing {ui_value(branch_name)} to remote {ui_value(remote_name)}")
+  cli_alert('Pushing {.field {branch_name}} to remote {.field {remote_name}}.')
   git2r::push(
     git2r::repository(),
     name = remote_name,
@@ -54,7 +54,7 @@ push_to_new <- function(remote_name, force) {
     force = force,
     set_upstream = TRUE
   )
- }
+}
 
 has_remote_branch <- function(branch) {
   !is.null(git2r::branch_get_upstream(branch))
