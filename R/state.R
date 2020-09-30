@@ -17,7 +17,7 @@ check_release_state <- function(which) {
         pkg,
         c("pretest", "inspect", "pending", "publish", "waiting", "recheck")
       )
-      ifelse(nrow(incoming == 0), FALSE, TRUE)
+      ifelse(nrow(incoming) == 0, FALSE, TRUE)
     }
   )
 

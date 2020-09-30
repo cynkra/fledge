@@ -18,15 +18,11 @@
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {
 
-  state <- check_pre_release_state(which = which, force = force)
+  check_only_modified(character())
 
-  if (state) {
-    check_only_modified(character())
+  stopifnot(which %in% c("patch", "minor", "major"))
 
-    stopifnot(which %in% c("patch", "minor", "major"))
-
-    with_repo(pre_release_impl(which, force))
-  }
+  with_repo(pre_release_impl(which, force))
 }
 
 pre_release_impl <- function(which, force) {
@@ -47,10 +43,14 @@ pre_release_impl <- function(which, force) {
   # bump version on main branch to version set by user
   bump_version(which)
 
+  cli_h2("Preparing CRAN release")
+
   # switch to release branch and update cran-comments
   release_branch <- create_release_branch(force)
   switch_branch(release_branch)
   update_cran_comments()
+
+  cli_h2("Pushing branches and bumping version")
 
   # push main branch, bump to devel version and push again
   push_to_new(remote_name, force)
@@ -99,6 +99,9 @@ switch_branch <- function(name) {
 }
 
 update_cran_comments <- function() {
+
+  cli_h2("Preparing cran-comments.md")
+
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
   old_crp_date <- get_old_crp_date()
@@ -134,8 +137,8 @@ update_cran_comments <- function() {
     open = TRUE
   )
 
-  git2r::add(path = "cran-comments.md")
-  git2r::commit(message = "Update CRAN comments")
+  git2r::add(path = c(".Rbuildignore", "cran-comments.md"), force = TRUE)
+  git2r::commit(message = "update cran-comments.md")
 }
 
 get_crp_date <- function() {
@@ -211,8 +214,13 @@ release_impl <- function(which) {
   stopifnot(is_cran_comments_good())
 
   push_head(get_head_branch())
+
+  cli_h2("Releasing to CRAN")
+
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
+  cli_alert_info("Waiting 10 seconds for the CRAN submission mail to arrive.")
+  Sys.sleep(10)
   auto_confirm(which)
 }
 
@@ -232,12 +240,12 @@ is_cran_comments_good <- function() {
   !any(grepl("- [ ]", text, fixed = TRUE))
 }
 
-auto_confirm <- function() {
+auto_confirm <- function(which) {
   cli_alert_info("Checking automatic processing of CRAN upload mail
                  (this only works if you opted in actively).")
 
   # check version and name of package
-  new_version <- update_version_helper(which)$get_version()
+  new_version <- desc::desc_get_version()
   pkg <- desc::desc_get_field("Package")
 
   mails <- categorize_mails(pkg)
@@ -246,35 +254,42 @@ auto_confirm <- function() {
     # filter by submission mails
     mails_filtered <- mails[mails$version == new_version & mails$type == "submission", ]
     if (length(mails_filtered) > 0) {
+
+      # if more than one match is found, always the first one is taken (usually
+      # the most recent one)
+      mails_filtered = mails_filtered[1, ]
+
       upload_link <- extract_upload_link(mails_filtered$id)
       cli_alert_success("Found upload link for {.field {pkg} v{new_version}} release.")
-      get_confirm_url(upload_link)
-      utils::browseURL(upload_link)
+      confirm_url = get_confirm_url(upload_link)
+      utils::browseURL(confirm_url)
     }
   } else {
-    cli_alert_danger("Found no suitable mail in {.field fledge}'s mailbox ({.url fledge.package@gmail.com}) to autoprocess the upload.")
-  }
+    cli_alert_danger("Found no suitable mail in {.field fledge}'s mailbox
+      ({.url fledge.package@gmail.com}) to autoprocess the upload.
+      Continuing manually.")
 
-  ui_todo("Check your inbox for a confirmation e-mail from CRAN")
-  ui_todo("Copy the URL to your clipboard")
+    ui_todo("Check your inbox for a confirmation e-mail from CRAN")
+    ui_todo("Copy the URL to your clipboard")
 
-  tryCatch(
-    repeat {
-      url <- clipr::read_clip()
-      if (has_length(url, 1) && grepl("^https://xmpalantir\\.wu\\.ac\\.at/cransubmit/conf_mail\\.php[?]code=", url)) {
-        break
+    tryCatch(
+      repeat {
+        url <- clipr::read_clip()
+        if (has_length(url, 1) && grepl("^https://xmpalantir\\.wu\\.ac\\.at/cransubmit/conf_mail\\.php[?]code=", url)) {
+          break
+        }
+        Sys.sleep(0.01)
+      },
+      interrupt = function(e) {
+        ui_todo("Restart with `fledge:::auto_confirm()` (or confirm manually), rerelease with `fledge:::release()`.")
+        rlang::cnd_signal(e)
       }
-      Sys.sleep(0.01)
-    },
-    interrupt = function(e) {
-      ui_todo("Restart with `fledge:::auto_confirm()` (or confirm manually), rerelease with `fledge:::release()`.")
-      rlang::cnd_signal(e)
-    }
-  )
+    )
 
-  code <- paste0('browseURL("', get_confirm_url(url), '")')
-  ui_todo("Run {ui_code(code)}")
-  send_to_console(code)
+    code <- paste0('browseURL("', get_confirm_url(url), '")')
+    ui_todo("Run {ui_code(code)}")
+    send_to_console(code)
+  }
 }
 
 confirm_submission <- function(url) {
@@ -414,8 +429,8 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 
   if (create) {
     info <- github_info(remote = remote_name)
-    template_path <- system.file("templates", "pr.md", package = "fledge")
-    body <- glue_collapse(readLines(template_path), sep = "\n")
+    # template_path <- system.file("templates", "pr.md", package = "fledge")
+    body <- readLines("cran-comments.md")
 
     gh::gh("POST /repos/:owner/:repo/pulls",
       owner = info$owner$login,

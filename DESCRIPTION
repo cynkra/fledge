@@ -29,6 +29,7 @@ Imports:
     gh,
     git2r (>= 0.26.0),
     glue,
+    gmailr,
     httr,
     purrr (>= 0.3.2),
     rematch2,
@@ -40,7 +41,6 @@ Imports:
 Suggests: 
     fansi,
     fs,
-    gmailr,
     knitr,
     rmarkdown,
     rstudioapi,

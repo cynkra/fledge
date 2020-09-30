@@ -15,10 +15,12 @@ bump_version_impl <- function(which) {
     commit_version()
     cli_alert_info("Preparing package for release (CRAN or otherwise).")
     edit_news()
-    cli_alert_warning("Convert the change log in {.file {news_path}} to release notes.")
+    cli_alert_warning("Convert the changelog in {.file {news_path}} to release notes.")
     cli_alert_warning("After CRAN release, call {.fun fledge::tag_version} and
-           {.fun fledge::bump_version} to re-enter development mode")
+      {.fun fledge::bump_version} to re-enter development mode.", wrap = TRUE)
   }
+  cli_par()
+  cli_end()
 }
 
 bump_version_to_dev_with_force <- function(force) {

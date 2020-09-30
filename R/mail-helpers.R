@@ -75,7 +75,7 @@ extract_upload_link <- function(id) {
   # find upload link
   stringr::str_extract(
     stringr::str_squish(gmailr::gm_body(msg)),
-    "(?<=into your browser: > > )(.*)(?= > > If)"
+    "(?<=into your browser: )(.*)(?= If)"
   )
 
 }

@@ -1,7 +1,7 @@
 # Feature: allow to specify a numeric version in `which`
 unleash <- function(which, force = FALSE) {
 
-  state <- check_release_state()
+  state <- check_release_state(which)
 
   switch(state,
     "pre-release" = pre_release(which, force),
