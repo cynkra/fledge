@@ -1,12 +1,13 @@
 update_version_impl <- function(which) {
 
   desc <- update_version_helper(which = which)
+  new_version = desc$get_version()
 
   cli_h2("Update Version")
 
   cli_alert_success("Package version bumped to {.field {new_version}}.")
 
-  cli_alert("Adding header to {.file {news_path}}.")
+  cli_alert("Adding header to {.file NEWS.md}.")
 
   header <- paste0(
     "# ", desc$get("Package"), " ", new_version,
