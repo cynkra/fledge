@@ -1,46 +1,47 @@
 get_mails <- function() {
   gmailr::gm_auth_configure()
   gmailr::gm_auth(email = "fledge.package@gmail.com", path = "~/.config/gmail/credentials.json")
-  gmailr::gm_threads()
+  gmailr::gm_messages()
 }
 
-filter_threads_by_package <- function(package) {
+filter_messages_by_package <- function(package) {
   mails <- get_mails()
   # filter all CRAN mails
   # FIXME: simpler?
   cran_filtered <- purrr::keep(
-    mails[[1]]$threads,
-    ~ stringr::str_extract(.x$snippet, "CRAN") %in% "CRAN"
+    mails[[1]]$messages, ~ {
+      subject <- gmailr::gm_subject(gmailr::gm_message(.x$id))
+      stringr::str_detect(subject, "CRAN")
+    }
   )
 
   # filter by package
-  purrr::keep(
-    cran_filtered,
-    ~ stringr::str_detect(.x$snippet, sprintf(" %s ", package))
+  package_filtered <- purrr::keep(
+    cran_filtered, ~ {
+      subject <- gmailr::gm_subject(gmailr::gm_message(.x$id))
+      stringr::str_detect(subject, sprintf(" %s ", package))
+    }
   )
+
+  map_chr(package_filtered, ~ .x$id)
 }
 
-get_version_from_mail <- function(filtered_mails) {
+get_version_from_mail <- function(message) {
 
-  msg <- gmailr::gm_thread(filtered_mails[[1]]$id)$messages[[1]]
   # find package name and version
-  match <- stringr::str_extract(gmailr::gm_subject(msg), "(?<=submission )(.*)")
+  match <- stringr::str_extract(gmailr::gm_subject(message), "(?<=submission )(.*)")
 
   split <- stringr::str_split(match, " ")[[1]]
   names(split) <- c("package", "version")
   return(split)
-
 }
 
 categorize_mails <- function(package) {
 
-  filtered <- filter_threads_by_package(package = package)
-  meta <- get_version_from_mail(filtered)
+  filtered <- filter_messages_by_package(package = package)
 
   purrr::map_dfr(filtered, ~ {
-
-    # FIXME: do for all mails in thread
-    msg <- gmailr::gm_thread(.x$id)$messages[[1]]
+    msg <- gmailr::gm_message(.x)
     subject <- gmailr::gm_subject(msg)
 
     if (grepl("pretest-publish", subject)) {
@@ -56,6 +57,8 @@ categorize_mails <- function(package) {
     date <- gmailr::gm_date(msg)
     id <- gmailr::gm_id(msg)
 
+    meta <- get_version_from_mail(msg)
+
     return(structure(c(
       type = type, date = date,
       package = meta[["package"]],
@@ -69,13 +72,9 @@ extract_upload_link <- function(id) {
 
   msg <- gmailr::gm_message(id)
 
-  # find package name and version
-  #stringr::str_extract(gmailr::gm_subject(msg), "(?<=submission )(.*)")
-
   # find upload link
   stringr::str_extract(
     stringr::str_squish(gmailr::gm_body(msg)),
     "(?<=into your browser: )(.*)(?= If)"
   )
-
 }
