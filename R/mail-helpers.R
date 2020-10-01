@@ -43,8 +43,16 @@ categorize_mails <- function(package) {
   purrr::map_dfr(filtered, ~ {
     msg <- gmailr::gm_message(.x)
     subject <- gmailr::gm_subject(msg)
+    body <- gmailr::gm_body(msg)
 
-    if (grepl("pretest-publish", subject)) {
+    #browser()
+    if (any(grepl("fix and resubmit", body))) {
+      type <- "rejection"
+    } else if (any(grepl("The following package was uploaded", body))) {
+      type <- "upload confirmation"
+    } else if (any(grepl("pending a manual inspection", body))) {
+      type <- "manual inspection"
+    } else if (grepl("pretest-publish", subject)) {
       type <- "acceptance"
     } else if (grepl("submission", subject)) {
       type <- "submission"
