@@ -16,7 +16,7 @@ filter_threads_by_package <- function(package) {
   # filter by package
   purrr::keep(
     cran_filtered,
-    ~ stringr::str_extract(.x$snippet, package) %in% package
+    ~ stringr::str_detect(.x$snippet, sprintf(" %s ", package))
   )
 }
 
