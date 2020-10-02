@@ -173,6 +173,7 @@ release_impl <- function() {
 
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
+  tag_release_candidate()
   auto_confirm()
 }
 
