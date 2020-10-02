@@ -252,6 +252,8 @@ post_release_impl <- function() {
 
   push_tag(tag)
 
+  delete_release_candidate_tags()
+
   usethis::use_github_release()
 
   # FIXME: Check if PR open, if yes merge PR instead

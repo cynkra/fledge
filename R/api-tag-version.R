@@ -19,3 +19,15 @@ tag_release_candidate = function(force = FALSE) {
   tag <- tag_release_candidate_impl(force)
   invisible(tag)
 }
+
+delete_release_candidate_tags = function() {
+
+  tag_names = names(git2r::tags())
+
+  index = which(tag_names %in% "-rc")
+
+  cli_alert("Deleting all release candidate tags.")
+
+  # delete all tags which contain "-rc"
+  git2r::tag_delete(git2r::tags()[index])
+}
