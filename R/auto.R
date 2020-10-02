@@ -20,7 +20,7 @@ pre_release <- function(which = "patch", force = FALSE) {
 
   stopifnot(which %in% c("patch", "minor", "major"))
 
-  with_repo(pre_release_impl(which, force))
+  with_repo(pre_release_impl(which))
 }
 
 pre_release_impl <- function(which) {
@@ -161,6 +161,7 @@ release <- function() {
 }
 
 release_impl <- function() {
+  check_for_rc()
   check_only_modified(character())
 
   stopifnot(is_news_consistent())
@@ -311,4 +312,19 @@ gh_scopes <- function() {
     return(character())
   }
   strsplit(out, ", *")[[1]]
+}
+
+check_for_rc <- function() {
+
+  # check if current commit is on a RC tag
+  sha_commit <- git2r::sha(git2r::last_commit())
+  sha_last_tag <- git2r::sha(git2r::tags()[1][[1]])
+
+  if (sha_commit == sha_last_tag) {
+    if ("-rc" %in% names(git2r::tags())[[1]]) {
+      stop("Running on a release candidate commit, terminating.")
+      cli_alert_warning("The branch must be at least one commit ahead of the
+                        last release candidate tag to initiate a new release.")
+    }
+  }
 }
