@@ -12,3 +12,10 @@ tag_version <- function(force = FALSE) {
   tag <- tag_version_impl(force)
   invisible(tag)
 }
+
+#' @rdname tag_version
+#' @export
+tag_release_candidate = function(force = FALSE) {
+  tag <- tag_release_candidate_impl(force)
+  invisible(tag)
+}

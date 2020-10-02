@@ -2,9 +2,12 @@
 % Please edit documentation in R/api-tag-version.R
 \name{tag_version}
 \alias{tag_version}
+\alias{tag_release_candidate}
 \title{Create a new version tag}
 \usage{
 tag_version(force = FALSE)
+
+tag_release_candidate(force = FALSE)
 }
 \arguments{
 \item{force}{Re-tag even if the last commit wasn't created by
