@@ -12,6 +12,8 @@
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
 #' @inheritParams bump_version
+#' @param force Re-tag even if the last commit wasn't created by
+#'   [bump_version()].  Useful when defining a CRAN release.
 #' @name release
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {

@@ -15,6 +15,9 @@ post_release()
 \arguments{
 \item{which}{Component of the version number to update. Supported
 values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+
+\item{force}{Re-tag even if the last commit wasn't created by
+\code{\link[=bump_version]{bump_version()}}.  Useful when defining a CRAN release.}
 }
 \description{
 \code{pre_release()} is run when development of a package is finished
