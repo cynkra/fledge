@@ -53,7 +53,7 @@ tag_release_candidate_impl <- function(force) {
   }
 
   msg_header <- paste0(desc$get("Package"), " ", version)
-  git2r::tag(".", tag, message = paste0(msg_header, "\n\n", current_news))
+  git2r::tag(".", tag, message = paste0(msg_header, "-rc\n\n", current_news))
 
   invisible(tag)
 }
