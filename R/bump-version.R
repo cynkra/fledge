@@ -19,4 +19,7 @@ bump_version_impl <- function(which) {
     cli_alert_warning("After CRAN release, call {.fun fledge::tag_version} and
            {.fun fledge::bump_version} to re-enter development mode")
   }
+
+  cli_par()
+  cli_end()
 }

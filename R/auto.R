@@ -16,15 +16,11 @@
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {
 
-  state <- check_pre_release_state(which = which, force = force)
+  check_only_modified(character())
 
-  if (state) {
-    check_only_modified(character())
+  stopifnot(which %in% c("patch", "minor", "major"))
 
-    stopifnot(which %in% c("patch", "minor", "major"))
-
-    with_repo(pre_release_impl(which))
-  }
+  with_repo(pre_release_impl(which, force))
 }
 
 pre_release_impl <- function(which) {
@@ -37,15 +33,19 @@ pre_release_impl <- function(which) {
 
   bump_version(which)
 
+  cli_h2("Preparing CRAN release")
+
   release_branch <- create_release_branch()
   switch_branch(release_branch)
 
   update_cran_comments()
-  push_to_new(remote_name)
 
+  cli_h2("Pushing branches and bumping version")
+
+  push_to_new(remote_name)
   switch_branch(main_branch)
-  bump_version()
-  finalize_version(push = TRUE)
+  # manual implementation of bump_version(), it doesn't expose `force` yet
+  bump_version_to_dev_with_force(force)
 
   switch_branch(release_branch)
   usethis::use_git_ignore("CRAN-RELEASE")
@@ -81,6 +81,9 @@ switch_branch <- function(name) {
 }
 
 update_cran_comments <- function() {
+
+  cli_h2("Preparing cran-comments.md")
+
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
   cransplainer <- get_cransplainer(package)
@@ -104,7 +107,7 @@ update_cran_comments <- function() {
   # FIXME: CRP compare
   # https://github.com/octo-org/wikimania/compare/master@%7B07-22-16%7D...master@%7B08-04-16%7D
 
-  git2r::add(path = "cran-comments.md")
+  git2r::add(path = "cran-comments.md", force = TRUE)
   git2r::commit(message = "Update CRAN comments")
 }
 
@@ -164,6 +167,9 @@ release_impl <- function() {
   stopifnot(is_cran_comments_good())
 
   push_head(get_head_branch())
+
+  cli_h2("Releasing to CRAN")
+
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   auto_confirm()
