@@ -6,7 +6,7 @@
 \alias{post_release}
 \title{Automating CRAN release}
 \usage{
-pre_release(which = "patch")
+pre_release(which = "patch", force = FALSE)
 
 release()
 
