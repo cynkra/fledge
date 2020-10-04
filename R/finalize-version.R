@@ -16,11 +16,7 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   } else if (suggest_finalize) {
     edit_news()
 
-    if (has_remote_branch(head)) {
-      command <- "fledge::finalize_version(push = TRUE)"
-    } else {
-      command <- "fledge::finalize_version()"
-    }
+    command <- "fledge::finalize_version(push = TRUE)"
 
     cli_alert_warning("Call {.code {command}}.")
     send_to_console(command)

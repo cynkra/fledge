@@ -3,7 +3,7 @@
 #' Return all top-level commits since a particular version
 #' as commit objects.
 #'
-#' @return A list of commit objects similarly to [git2r::commits()].
+#' @return A list of commit objects similarly to [gert::git_log()].
 #'
 #' @param since A commit or tag object, e.g. [get_last_tag()].
 #' @export

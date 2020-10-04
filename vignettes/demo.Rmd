@@ -2,7 +2,7 @@
 title: "Using fledge"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{demo}
+  %\VignetteIndexEntry{Using fledge}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -85,26 +85,27 @@ usethis::use_git()
 
 ```{r git-config, include = FALSE}
 # ...but only in interactive mode.
-git2r::config(user.name = "Test", user.email = "test@user.org")
+gert::git_config_set("user.name", "Test")
+gert::git_config_set("user.email", "test@user.org")
 ```
 
 In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
 In the demo this needs to be carried out manually.
 
 ```{r git-initial-commit, eval = !interactive()}
-git2r::add(path = ".")
-git2r::commit(message = "Initial commit.")
+gert::git_add(files = ".")
+gert::git_commit(message = "Initial commit.")
 ```
 
 ```{r git-show-init}
-git2r::commits()
-git2r::status()
+gert::git_log()
+gert::git_status()
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
 
 ```{r git-no-ff}
-git2r::config(merge.ff = "false")
+gert::git_config_set("merge.ff", "false")
 ```
 
 An alternative is to use squash commits.
@@ -127,9 +128,9 @@ cat(news, sep = "\n")
 This file needs to be tracked by Git:
 
 ```{r init-news-commit}
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Initial NEWS.md .")
+gert::git_add(files = ".")
+gert::git_status()
+gert::git_commit(message = "Initial NEWS.md .")
 ```
 
 ## The development phase
@@ -149,8 +150,8 @@ Note the use of the bullet (-) before the commit message.
 This indicates that the message should be included in `NEWS.md` when it is updated.
 
 ```{r commit-super}
-git2r::add(path = ".")
-git2r::commit(message = "- Add support for frobmication.")
+gert::git_add(files = ".")
+gert::git_commit(message = "- Add support for frobmication.")
 ```
 
 ### Create a test
@@ -166,9 +167,9 @@ In a real project we would substitute the testing code from the template by real
 In this demo we commit straight away, again with a bulleted message.
 
 ```{r commit-super-test}
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "- Add tests for frobnication.")
+gert::git_add(files = ".")
+gert::git_status()
+gert::git_commit(message = "- Add tests for frobnication.")
 ```
 
 ### Update NEWS.md
@@ -219,8 +220,8 @@ This requires changes to the code, and perhaps a new test.
 We create a branch and switch to this branch to implement this.
 
 ```{r super-frob-branch}
-git2r::branch_create(git2r::last_commit(), name = "f-super-frob")
-git2r::checkout(branch = "f-super-frob")
+gert::git_branch_create(name = "f-super-frob", ref = gert::git_commit_id())
+gert::git_branch_checkout(branch = "f-super-frob")
 ```
 
 On the branch, separate commits are used for the tests and the implementation.
@@ -228,15 +229,15 @@ These commit messages do not need to be formatted specially, because {fledge} wi
 
 ```{r super-frob}
 usethis::use_test("frob")
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Add super-frob tests.")
+gert::git_add(files = ".")
+gert::git_status()
+gert::git_commit(message = "Add super-frob tests.")
 
 usethis::use_r("frob")
 writeLines("# super-frob", "R/frob.R")
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Add super-frob implementation.")
+gert::git_add(files = ".")
+gert::git_status()
+gert::git_commit(message = "Add super-frob implementation.")
 ```
 
 This branch can be pushed to the remote as usual.
@@ -246,10 +247,10 @@ Only when merging we specify the message to be included in the changelog, again 
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
 ```{r super-frob-merge}
-git2r::checkout(branch = "master")
-git2r::merge(".", "f-super-frob", commit_on_success = FALSE)
-git2r::status()
-git2r::commit(message = "- Super-frobnication enabled.")
+gert::git_branch_checkout("master")
+gert::git_merge("f-super-frob", commit = FALSE)
+gert::git_status()
+gert::git_commit(message = "- Super-frobnication enabled.")
 ```
 
 The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...: use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
@@ -303,9 +304,9 @@ writeLines(news, "NEWS.md")
 Unlike with development versions, we commit the changes to `NEWS.md` manually:
 
 ```{r patch-news-write}
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Update NEWS.")
+gert::git_add(files = ".")
+gert::git_status()
+gert::git_commit(message = "Update NEWS.")
 ```
 
 The package is now ready to be released to CRAN.

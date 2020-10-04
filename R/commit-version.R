@@ -3,23 +3,25 @@ commit_version_impl <- function() {
 
   if (is_last_commit_bump()) {
     cli_alert("Resetting to previous commit.")
-    git2r::reset(git2r::revparse_single(revision = "HEAD^"))
+    gert::git_reset_soft(gert::git_log(max = 2)[2, "commit"])
     amending <- TRUE
   } else {
     amending <- FALSE
   }
 
-  git2r::add(".", c("DESCRIPTION", news_path))
-  if (length(git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged) > 0) {
+  gert::git_add(c("DESCRIPTION", news_path))
+  length(gert::git_status(staged = TRUE)$staged) > 0
+
+  if (length(gert::git_status(staged = TRUE)$staged) > 0) {
     cli_alert("Committing changes.")
-    git2r::commit(".", get_commit_message())
+    gert::git_commit(get_commit_message())
   }
 
   amending
 }
 
 is_last_commit_bump <- function() {
-  git2r::last_commit()$message == get_commit_message()
+  gert::git_log(max = 1)$message == get_commit_message()
 }
 
 get_commit_message <- function(version) {
@@ -30,14 +32,14 @@ get_commit_message <- function(version) {
 }
 
 check_clean <- function(forbidden_modifications) {
-  status <- git2r::status(".", unstaged = TRUE, untracked = TRUE)
-  stopifnot(!any(forbidden_modifications %in% unlist(status)))
+  status = gert::git_status()
+  stopifnot(!any(forbidden_modifications %in% basename(status$file)))
 }
 
 check_only_staged <- function(allowed_modifications) {
-  staged <- git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged
-  stopifnot(all(names(staged) == "modified"))
+  staged = gert::git_status(staged = TRUE)
+  stopifnot(all(staged$status == "modified"))
 
-  modified <- staged$modified
+  modified <- basename(staged$file)
   stopifnot(all(modified %in% allowed_modifications))
 }
