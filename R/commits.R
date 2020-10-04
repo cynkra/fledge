@@ -9,7 +9,6 @@ get_top_level_commits_impl <- function(since) {
     since_commit <- gert::git_commit_info(since$ref)
 
     ab <- gert::git_ahead_behind(commit$commit, ref = since_commit$id)
-    browser()
     if (ab$behind == 0) {
       abort(paste0(since, " not reachable from current HEAD."))
     }
