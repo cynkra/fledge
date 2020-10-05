@@ -38,7 +38,9 @@ tag_release_candidate_impl <- function(force) {
 
   cli_h2("Tagging Release Candidate")
 
-  tag <- paste0("v", version, "-rc")
+  suffix <- check_existing_rc()
+
+  tag <- paste0("v", version, "-rc", suffix)
   if (tag %in% names(git2r::tags())) {
     if (!force) {
       if (git2r::sha(get_repo_head(tag)) == git2r::sha(get_repo_head())) {
@@ -60,7 +62,9 @@ tag_release_candidate_impl <- function(force) {
 
 get_current_news <- function() {
   headers <- get_news_headers()
-  if (nrow(headers) == 0) return(character())
+  if (nrow(headers) == 0) {
+    return(character())
+  }
   # FIXME: Add body column to get_news_headers()?
   stopifnot(headers$line[[1]] == 1)
 
@@ -73,4 +77,18 @@ get_current_news <- function() {
   current_news <- readLines(news_path, n)[-1]
   current_news <- paste(current_news, collapse = "\n")
   gsub("^\n*(.*[^\n])\n*$", "\\1", current_news)
+}
+
+check_existing_rc <- function() {
+
+  tags_filtered <- grep("rc", names(git2r::tags()), value = T)
+
+  if (length(tags_filtered != 0)) {
+    index <- length(tags_filtered) + 1
+
+  } else {
+    index <- 1
+  }
+  return(index)
+
 }

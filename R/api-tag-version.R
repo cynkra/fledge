@@ -24,7 +24,7 @@ delete_release_candidate_tags = function() {
 
   tag_names = names(git2r::tags())
 
-  index = which(tag_names %in% "-rc")
+  index = grep("-rc", tag_names)
 
   cli_alert("Deleting all release candidate tags.")
 
