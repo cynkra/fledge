@@ -220,7 +220,7 @@ This requires changes to the code, and perhaps a new test.
 We create a branch and switch to this branch to implement this.
 
 ```{r super-frob-branch}
-gert::git_branch_create(name = "f-super-frob", ref = gert::git_commit_id())
+gert::git_branch_create(branch = "f-super-frob")
 gert::git_branch_checkout(branch = "f-super-frob")
 ```
 
