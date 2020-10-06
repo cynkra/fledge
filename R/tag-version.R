@@ -10,7 +10,7 @@ tag_version_impl <- function(force) {
   tag <- paste0("v", version)
   if (tag %in% gert::git_tag_list()$name) {
     if (!force) {
-      if (gert::git_commit_info(tag)$id == gert::git_log(max = 1)) {
+      if (gert::git_commit_info(tag)$id == gert::git_log(max = 1)$commit) {
         cli_alert_info("Tag {.field {tag}} exists and points to the current commit.")
       } else {
         abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
@@ -24,14 +24,16 @@ tag_version_impl <- function(force) {
   cli_alert("Creating tag {.field {tag}} with tag message derived from
                     {.file NEWS.md}.", wrap = TRUE)
   msg_header <- paste0(desc$get("Package"), " ", version)
-  gert::git_tag_create(tag, message =  paste0(msg_header, "\n\n", current_news))
+  gert::git_tag_create(tag, message = paste0(msg_header, "\n\n", current_news))
 
   invisible(tag)
 }
 
 get_current_news <- function() {
   headers <- get_news_headers()
-  if (nrow(headers) == 0) return(character())
+  if (nrow(headers) == 0) {
+    return(character())
+  }
   # FIXME: Add body column to get_news_headers()?
   stopifnot(headers$line[[1]] == 1)
 

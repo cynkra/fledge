@@ -15,7 +15,7 @@ We will develop it from scratch and also maintain a changelog as the development
 Finally, we will demonstrate how this changelog can eventually be converted to release notes when the package is submitted to CRAN.
 
 ```{r setup, include = FALSE}
-options(crayon.enabled = TRUE)
+options(crayon.enabled = TRUE, usethis.quiet = TRUE)
 fansi::set_knit_hooks(knitr::knit_hooks, "output")
 fansi::set_knit_hooks(knitr::knit_hooks, "message")
 ```
