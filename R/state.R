@@ -1,7 +1,7 @@
 check_release_state <- function(which) {
 
   # meta info
-  new_version <- update_version_helper(which)$get_version()
+  new_version <- desc::desc_get_version()
   pkg <- desc::desc_get_field("Package")
   version_components <- length(strsplit(as.character(desc::desc_get_version()), "[.]|-")[[1]])
   # mirrors do not seem to work (due to CRAN vacay?)
