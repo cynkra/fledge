@@ -7,11 +7,11 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   force <- commit_version()
   #' 1. [tag_version()], setting `force = TRUE` if and only if `commit_version()`
   #'   amended a commit.
-  tag <- tag_version()
+  tag <- tag_version(force)
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
     cli_alert("Force-pushing tag {.field {tag}}.")
-    gert::git_tag_push(tag, force = TRUE)
+    gert::git_tag_push(tag, force = force)
     gert::git_push()
   } else if (suggest_finalize) {
     edit_news()
