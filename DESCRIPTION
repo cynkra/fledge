@@ -23,7 +23,7 @@ Imports:
     cli,
     desc (>= 1.2.0),
     enc,
-    gert (>= 0.3.9007),
+    gert (>= 0.9000),
     purrr (>= 0.3.2),
     rematch2,
     rlang,
