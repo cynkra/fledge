@@ -12,12 +12,14 @@
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
 #' @inheritParams bump_version
-#' @param force Re-tag even if the last commit wasn't created by
-#'   [bump_version()].  Useful when defining a CRAN release.
+#' @param force Create branches and tags even if they exist.
+#'   Useful to recover from a previously failed attempt.
 #' @name release
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {
   check_only_modified(character())
+
+  check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("patch", "minor", "major"))
 
@@ -27,8 +29,17 @@ pre_release <- function(which = "patch", force = FALSE) {
 pre_release_impl <- function(which) {
 
   stopifnot(git2r::is_branch(git2r::repository_head()))
+  
+   # check PAT scopes for PR for early abort
+  check_gh_scopes()
+  
   remote_name <- get_remote_name()
   main_branch <- get_branch_name()
+  
+  # Commit ignored files as early as possible
+  usethis::use_git_ignore("CRAN-RELEASE")
+  usethis::use_build_ignore("CRAN-RELEASE")
+  commit_ignore_files()
 
   # FIXME: Require bumping to devel version before release
   # How to check for non-fledge repos?
@@ -52,6 +63,7 @@ pre_release_impl <- function(which) {
   switch_branch(release_branch)
   usethis::use_git_ignore("CRAN-RELEASE")
   usethis::use_build_ignore("CRAN-RELEASE")
+  
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
@@ -64,16 +76,18 @@ get_branch_name <- function() {
   git2r::repository_head()$name
 }
 
-get_remote_name <- function() {
-  git2r::branch_remote_name(git2r::branch_get_upstream(git2r::repository_head()))
+get_remote_name <- function(branch) {
+  local <- git2r::branches(flags = "local")[[branch]]
+  upstream <- git2r::branch_get_upstream(local)
+  git2r::branch_remote_name(upstream)
 }
 
-create_release_branch <- function() {
+create_release_branch <- function(force) {
   branch_name <- paste0("cran-", desc::desc_get_version())
 
   ui_done("Creating branch {ui_path(branch_name)}.")
 
-  git2r::branch_create(name = branch_name)
+  git2r::branch_create(name = branch_name, force = force)
   branch_name
 }
 
@@ -83,11 +97,21 @@ switch_branch <- function(name) {
 }
 
 update_cran_comments <- function() {
-
-  cli_h2("Preparing cran-comments.md")
-
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
+  old_crp_date <- get_old_crp_date()
+
+  if (!is.na(old_crp_date) && crp_date != old_crp_date) {
+    url <- glue("https://github.com/eddelbuettel/crp/compare/master@%7B{old_crp_date}%7D...master@%7B{crp_date}%7D")
+    utils::browseURL(url)
+
+    crp_cross <- " "
+    crp_changes <- glue("\n\nSee changes at {url}", .trim = FALSE)
+  } else {
+    crp_cross <- "x"
+    crp_changes <- ""
+  }
+
   cransplainer <- get_cransplainer(package)
 
   unlink("cran-comments.md")
@@ -98,6 +122,8 @@ update_cran_comments <- function() {
       package = package,
       version = desc::desc_get_version(),
       crp_date = crp_date,
+      crp_cross = crp_cross,
+      crp_changes = crp_changes,
       rversion = glue("{version$major}.{version$minor}"),
       latest_rversion = rversions::r_release()[["version"]],
       cransplainer = cransplainer
@@ -106,9 +132,6 @@ update_cran_comments <- function() {
     open = TRUE
   )
 
-  # FIXME: CRP compare
-  # https://github.com/octo-org/wikimania/compare/master@%7B07-22-16%7D...master@%7B08-04-16%7D
-
   git2r::add(path = "cran-comments.md", force = TRUE)
   git2r::commit(message = "Update CRAN comments")
 }
@@ -116,6 +139,19 @@ update_cran_comments <- function() {
 get_crp_date <- function() {
   cmt <- gh::gh("/repos/eddelbuettel/crp/commits")[[1]]
   date <- cmt$commit$committer$date
+  as.Date(date)
+}
+
+get_old_crp_date <- function() {
+  if (!file.exists("cran-comments.md")) return(NA)
+  text <- get_cran_comments_text()
+
+  rx <- "^.* CRP .*([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]).*$"
+
+  crp <- grep(rx, text)
+  if (length(crp) == 0) return(NA)
+  crp <- crp[[1]]
+  date <- gsub(rx, "\\1", text[[crp]])
   as.Date(date)
 }
 
@@ -140,14 +176,14 @@ get_cransplainer_update <- function(package) {
   details <- foghorn::cran_details(package)
   details <- details[details$result != "OK", ]
   if (nrow(details) == 0) {
-    return(paste0("- [x] ", checked_on, ", no errors found."))
+    return(paste0("- [x] ", checked_on, ", no problems found."))
   }
 
   url <- foghorn::visit_cran_check(package)
   ui_done("Review {ui_path(url)}")
 
   cransplainer <- paste0(
-    "- [x] ", checked_on, ", errors found: ", url, "\n",
+    "- [x] ", checked_on, ", problems found: ", url, "\n",
     paste0("- [ ] ", details$result, ": ", details$flavors, collapse = "\n")
   )
 
@@ -184,13 +220,21 @@ release_impl <- function() {
 
 is_news_consistent <- function() {
   headers <- with_repo(get_news_headers())
+
+  # One entry is fine, zero entries are an error
+  if (length(headers$version) <= 1) return(length(headers$version) == 1)
+
   versions <- package_version(headers$version[1:2], strict = TRUE)
 
   all(lengths(unclass(versions)) <= 3)
 }
 
+get_cran_comments_text <- function() {
+  readLines("cran-comments.md")
+}
+
 is_cran_comments_good <- function() {
-  text <- readLines("cran-comments.md")
+  text <- get_cran_comments_text()
   !any(grepl("- [ ]", text, fixed = TRUE))
 }
 
@@ -307,9 +351,7 @@ check_post_release <- function() {
   ui_info("Checking scope of {ui_code('GITHUB_PAT')} environment variable.")
 
   # FIXME: Distinguish between public and private repo?
-  if (!("repo" %in% gh_scopes())) {
-    abort('Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.')
-  }
+  check_gh_scopes()
 
   ui_info("Checking contents of {ui_path('CRAN-RELEASE')}.")
   if (!file.exists("CRAN-RELEASE")) {
@@ -340,6 +382,12 @@ check_post_release <- function() {
   return(invisible(repo_head_sha))
 }
 
+check_gh_scopes <- function() {
+  if (!("repo" %in% gh_scopes())) {
+    abort('Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.')
+  }
+}
+
 gh_scopes <- function() {
   out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
   if (out == "") {
@@ -360,5 +408,64 @@ check_for_rc <- function() {
       cli_alert_warning("The branch must be at least one commit ahead of the
                         last release candidate tag to initiate a new release.")
     }
+  }
+}
+
+check_gitignore <- function(files) {
+  is_ignored <- map_lgl(files, is_ignored)
+
+  if (any(is_ignored)) {
+    files_ignored <- files[is_ignored]
+    cli::cli_alert_warning("The following files are listed in {.file .gitignore}:")
+    cli::cli_ul("{files_ignored}")
+    cli::cli_text("Certain {.pkg fledge} automation steps might fail due to this.")
+    abort(paste0("Remove ", glue_collapse(files_ignored, ", "), " from .gitignore."))
+  }
+}
+
+is_ignored <- function(path) {
+  system2("git", c("check-ignore", "-q", path), stdout = FALSE) != 1
+}
+
+create_pull_request <- function(release_branch, main_branch, remote_name, force) {
+  if (force) {
+    # Remove cached config so that pr_url() always checks
+    # if we happened to overwrite the branch
+    config_url <- glue("branch.{release_branch}.pr-url")
+    rlang::exec(git2r::config, !!config_url := NULL)
+
+    create <- is.null(usethis:::pr_url())
+  } else {
+    create <- TRUE
+  }
+
+  if (create) {
+    info <- github_info(remote = remote_name)
+    template_path <- system.file("templates", "pr.md", package = "fledge")
+    body <- glue_collapse(readLines(template_path), sep = "\n")
+
+    gh::gh("POST /repos/:owner/:repo/pulls",
+      owner = info$owner$login,
+      repo = info$name,
+      title = sprintf(
+        "CRAN release v%s",
+        strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
+      ),
+      head = release_branch,
+      base = main_branch,
+      maintainer_can_modify = TRUE,
+      draft = TRUE,
+      body = body
+    )
+  }
+  usethis::pr_view()
+}
+
+commit_ignore_files <- function() {
+  git2r::add(path = c(".gitignore", ".Rbuildignore"))
+
+  if (length(git2r::status()$staged) > 0) {
+    ui_info("Committing {ui_code('.gitignore')} and {ui_code('.Rbuildignore')}.")
+    git2r::commit(message = "Update `.gitignore` and/or `.Rbuildignore`")
   }
 }
