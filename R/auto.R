@@ -17,7 +17,6 @@
 #' @name release
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {
-
   check_only_modified(character())
 
   stopifnot(which %in% c("patch", "minor", "major"))
@@ -26,6 +25,7 @@ pre_release <- function(which = "patch", force = FALSE) {
 }
 
 pre_release_impl <- function(which) {
+
   stopifnot(git2r::is_branch(git2r::repository_head()))
   remote_name <- get_remote_name()
   main_branch <- get_branch_name()
@@ -132,6 +132,7 @@ is_new_submission <- function(package) {
 }
 
 get_cransplainer_update <- function(package) {
+
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
   checked_on <- paste0("Checked on ", Sys.Date())
@@ -163,6 +164,7 @@ release <- function() {
 }
 
 release_impl <- function() {
+
   check_for_rc()
   check_only_modified(character())
 
@@ -175,7 +177,7 @@ release_impl <- function() {
 
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
-  tag = tag_release_candidate()
+  tag <- tag_release_candidate()
   push_tag(tag)
   auto_confirm()
 }
@@ -223,6 +225,7 @@ confirm_submission <- function(url) {
 }
 
 get_confirm_url <- function(url) {
+
   parsed <- httr::parse_url(url)
 
   parsed$query$policy_check2 <- "on"
@@ -247,6 +250,9 @@ post_release <- function() {
 }
 
 post_release_impl <- function() {
+
+  cli_h2("Post-release actions")
+
   check_only_modified(c(".Rbuildignore", "CRAN-RELEASE"))
 
   check_post_release()
@@ -259,11 +265,32 @@ post_release_impl <- function() {
 
   usethis::use_github_release()
 
-  # FIXME: Check if PR open, if yes merge PR instead
-  release_branch <- get_branch_name()
-  switch_branch(get_main_branch())
-  merge_branch(release_branch)
-  push_head(get_head_branch())
+  # FIXME: integrate `gh` system lib dep
+  # FIXME: clean up mess
+
+  # check if gh is avail
+  is_gh_avail <- suppressWarnings(try(system2("gh", stdout = FALSE, stderr = FALSE), silent = TRUE))
+  if (is_gh_avail == 0) {
+    pr_list <- system2("gh", c("pr", "list"), stdout = TRUE)
+    if (any(grep("CRAN release", pr_list))) {
+      pr_info <- grep("CRAN release", pr_list, value = TRUE)
+      pr_number <- strsplit(pr_info, split = "\t")[[1]][1]
+      system2("gh", c("pr", "ready", pr_number))
+      system2("gh", c("pr", "merge", "--merge", pr_number))
+    } else {
+      cli_h2("Merging Pull Request containing release")
+      release_branch <- get_branch_name()
+      switch_branch(get_main_branch())
+      merge_branch(release_branch)
+      push_head(get_head_branch())
+    }
+  } else {
+    cli_h2("Merging Pull Request containing release")
+    release_branch <- get_branch_name()
+    switch_branch(get_main_branch())
+    merge_branch(release_branch)
+    push_head(get_head_branch())
+  }
 }
 
 get_main_branch <- function() {
@@ -276,14 +303,15 @@ merge_branch <- function(other_branch) {
 }
 
 check_post_release <- function() {
-  ui_info("Checking scope of {ui_code('GITHUB_PAT')} environment variable")
+
+  ui_info("Checking scope of {ui_code('GITHUB_PAT')} environment variable.")
 
   # FIXME: Distinguish between public and private repo?
   if (!("repo" %in% gh_scopes())) {
     abort('Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.')
   }
 
-  ui_info("Checking contents of {ui_path('CRAN-RELEASE')}")
+  ui_info("Checking contents of {ui_path('CRAN-RELEASE')}.")
   if (!file.exists("CRAN-RELEASE")) {
     abort("File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.")
   }
@@ -309,7 +337,7 @@ check_post_release <- function() {
     abort(msg)
   }
 
-  repo_head_sha
+  return(invisible(repo_head_sha))
 }
 
 gh_scopes <- function() {
