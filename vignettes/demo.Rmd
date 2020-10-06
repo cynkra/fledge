@@ -221,7 +221,6 @@ We create a branch and switch to this branch to implement this.
 
 ```{r super-frob-branch}
 gert::git_branch_create(branch = "f-super-frob")
-gert::git_branch_checkout(branch = "f-super-frob")
 ```
 
 On the branch, separate commits are used for the tests and the implementation.
