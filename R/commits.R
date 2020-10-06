@@ -7,8 +7,8 @@ get_top_level_commits_impl <- function(since) {
 
   if (!is.null(since)) {
 
-    ab <- gert::git_ahead_behind(commit$commit, ref = since$commit)
-    if (ab$behind == 0) {
+    ab <- gert::git_ahead_behind(ref = commit$commit, upstream = since$commit)
+    if (ab$behind > 0) {
       abort(paste0(since, " not reachable from current HEAD."))
     }
     gert::git_log()[1:(ab$behind + 1), ]
