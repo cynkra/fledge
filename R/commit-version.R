@@ -9,12 +9,15 @@ commit_version_impl <- function() {
     amending <- FALSE
   }
 
-  gert::git_add(c("DESCRIPTION", news_path))
-  length(gert::git_status(staged = TRUE)$staged) > 0
+  # need to get paths from git status to account for subdirs
+  news_path = grep("DESCRIPTION", gert::git_status()$file, value = TRUE)
+  descr_path = grep("NEWS.md", gert::git_status()$file, value = TRUE)
+
+  gert::git_add(c(descr_path, news_path))
 
   if (length(gert::git_status(staged = TRUE)$staged) > 0) {
     cli_alert("Committing changes.")
-    gert::git_commit(get_commit_message())
+    gert::git_commit(get_commit_message(), repo = gert::git_info()$path)
   }
 
   amending
@@ -28,7 +31,7 @@ get_commit_message <- function(version) {
   desc <- desc::desc(file = "DESCRIPTION")
   version <- desc$get_version()
 
-  paste0("Bump version to ", version)
+  paste0("Bump version to ", version, "\n")
 }
 
 check_clean <- function(forbidden_modifications) {
