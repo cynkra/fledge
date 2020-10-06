@@ -24,10 +24,11 @@ delete_release_candidate_tags = function() {
 
   tag_names = names(git2r::tags())
 
-  index = grep("-rc", tag_names)
+  tags_to_delete = grep("-rc", tag_names, value = TRUE)
 
   cli_alert("Deleting all release candidate tags.")
 
   # delete all tags which contain "-rc"
-  git2r::tag_delete(git2r::tags()[index])
+  # # not vectorized :/?
+  invisible(lapply(tags_to_delete, function(x) git2r::tag_delete(".", x)))
 }
