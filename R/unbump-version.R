@@ -17,8 +17,7 @@ unbump_version_impl <- function() {
   gert::git_tag_delete(tag$name)
 
   parent_commit_id = gert::git_commit_info(last_commit$commit)$parent
-  gert::git_commit_info(parent_commit_id)
 
-  cli_alert_success("Resetting to parent commit {.field {parent_commit$id}}.")
-  gert::git_reset_hard(parent_commit$commit)
+  cli_alert_success("Resetting to parent commit {.field {parent_commit_id}}.")
+  gert::git_reset_hard(parent_commit_id)
 }
