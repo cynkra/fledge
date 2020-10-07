@@ -28,13 +28,13 @@ pre_release <- function(which = "patch", force = FALSE) {
 
 pre_release_impl <- function(which) {
   stopifnot(git2r::is_branch(git2r::repository_head()))
-  
+
    # check PAT scopes for PR for early abort
   check_gh_scopes()
-  
+
   remote_name <- get_remote_name()
   main_branch <- get_branch_name()
-  
+
   # Commit ignored files as early as possible
   usethis::use_git_ignore("CRAN-RELEASE")
   usethis::use_build_ignore("CRAN-RELEASE")
@@ -56,13 +56,16 @@ pre_release_impl <- function(which) {
 
   push_to_new(remote_name)
   switch_branch(main_branch)
+  # to trigger a run with the release version
+  push_head(main_branch)
   # manual implementation of bump_version(), it doesn't expose `force` yet
   bump_version_to_dev_with_force(force)
+  push_head(main_branch)
 
   switch_branch(release_branch)
   usethis::use_git_ignore("CRAN-RELEASE")
   usethis::use_build_ignore("CRAN-RELEASE")
-  
+
   ui_todo("Run {ui_code('devtools::check_win_devel()')}")
   ui_todo("Run {ui_code('rhub::check_for_cran()')}")
   ui_todo("Check all items in {ui_path('cran-comments.md')}")
