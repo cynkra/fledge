@@ -23,7 +23,7 @@ Imports:
     cli,
     desc (>= 1.2.0),
     enc,
-    gert (>= 0.9000),
+    gert (>= 1.0.0),
     purrr (>= 0.3.2),
     rematch2,
     rlang,
@@ -39,8 +39,6 @@ Suggests:
     testthat
 VignetteBuilder: 
     knitr
-Remotes: 
-    r-lib/gert
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
