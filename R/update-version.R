@@ -3,7 +3,7 @@ update_version_impl <- function(which) {
   desc <- update_version_helper(which = which)
   new_version = desc$get_version()
 
-  cli_h2("Update Version")
+  cli_h2("Updating Version")
 
   cli_alert_success("Package version bumped to {.field {new_version}}.")
 
