@@ -42,5 +42,8 @@ make_prepend <- function(news) {
 }
 
 edit_news <- function() {
-  edit_file(news_path)
+  withr::with_options(
+    list(usethis.quiet = TRUE),
+    edit_file(news_path)
+  )
 }
