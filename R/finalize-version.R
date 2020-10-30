@@ -46,6 +46,7 @@ push_head <- function(head) {
 push_to_new <- function(remote_name, force) {
   branch_name <- get_branch_name()
 
+
   cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
 
   git2r::push(
