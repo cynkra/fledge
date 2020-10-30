@@ -35,12 +35,12 @@ get_commit_message <- function(version) {
 }
 
 check_clean <- function(forbidden_modifications) {
-  status = gert::git_status()
+  status <- gert::git_status()
   stopifnot(!any(forbidden_modifications %in% basename(status$file)))
 }
 
 check_only_staged <- function(allowed_modifications) {
-  staged = gert::git_status(staged = TRUE)
+  staged <- gert::git_status(staged = TRUE)
   stopifnot(all(staged$status == "modified"))
 
   modified <- basename(staged$file)
