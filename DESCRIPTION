@@ -4,7 +4,7 @@ Version: 0.0.3.9007
 Date: 2020-08-27
 Authors@R: 
     c(person(given = "Kirill",
-             family = "Müller",
+             family = "M\u00fcller",
              role = c("aut", "cre"),
              email = "krlmlr+r@mailbox.org",
              comment = c(ORCID = "0000-0002-1416-3412")),
