@@ -7,9 +7,14 @@ check_release_state <- function(which) {
   # mirrors do not seem to work (due to CRAN vacay?)
   cran_details <- withr::with_options(
     list(repos = structure(c(CRAN = "https://cloud.r-project.org/"))),
-    foghorn::cran_details(pkg, src = "website")
+    tryCatch(foghorn::cran_details(pkg, src = "website"), error = function(e) {
+      print("Package not yet on CRAN, skipping {foghorn} checks.")
+      return(NULL)
+    })
   )
-  cran_version <- as.character(cran_details[1, "version"])
+  if (!is.null(cran_details)) {
+    cran_version <- as.character(cran_details[1, "version"])
+  }
   cran_inc <- withr::with_options(
     list(repos = structure(c(CRAN = "https://cloud.r-project.org/"))),
     {
