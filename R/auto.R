@@ -60,20 +60,25 @@ pre_release_impl <- function(which, force) {
 
   cli_h2("Pushing branches and bumping version")
 
+  push_to_new(remote_name)
+  switch_branch(main_branch)
+  # to trigger a run with the release version
+  push_head(main_branch)
 
   cli_h1("2. Bumping main branch to dev version and updating NEWS")
+
   # manual implementation of bump_version(), it doesn't expose `force` yet
   bump_version_to_dev_with_force(force)
+  push_head(main_branch)
 
-  cli_h1("3. Opening Pull Request for release branch")
+  cli_h1("3. Opening draft pull request with contents from {.file cran-comments.md}.")
   # switch to release branch and init pre_release actions
   switch_branch(release_branch)
-
-  cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   create_pull_request(release_branch, main_branch, remote_name, force)
 
   # user action items
   cli_h1("4. User Action Items")
+  
   cli_div(theme = list(ul = list(color = "magenta")))
   cli_ul("Run {.code devtools::check_win_devel()}.")
   cli_ul("Check all items in {.file cran-comments.md}.")
