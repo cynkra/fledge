@@ -62,7 +62,6 @@ has_remote_branch <- function(branch) {
 
 send_to_console <- function(code) {
   if (Sys.getenv("RSTUDIO") != 1) {
-    cat(code)
     return()
   }
   if (!is_installed("rstudioapi")) {
