@@ -56,7 +56,6 @@ push_to_new <- function(remote_name, force) {
 push_tag <- function(tag) {
   cli_alert("Force-pushing tag {.field {tag}}.")
   gert::git_tag_push(tag,
-    remote = "origin",
-    refspec = paste0("refs/tags/", tag), force = TRUE
+    remote = "origin", force = TRUE
   )
 }
