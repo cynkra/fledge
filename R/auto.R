@@ -58,7 +58,7 @@ pre_release_impl <- function(which, force) {
 
   cli_h2("Pushing branches and bumping version")
 
-  push_to_new(remote_name)
+  push_to_new(remote_name, force)
   switch_branch(main_branch)
   # to trigger a run with the release version
   push_head(main_branch)
@@ -230,7 +230,7 @@ release_impl <- function() {
   stopifnot(is_news_consistent())
   stopifnot(is_cran_comments_good())
 
-  push_head(get_head_branch())
+  push_head(gert::git_branch())
 
   cli_h2("Releasing to CRAN")
 
@@ -351,14 +351,14 @@ post_release_impl <- function() {
       release_branch <- get_branch_name()
       switch_branch(get_main_branch())
       merge_branch(release_branch)
-      push_head(get_head_branch())
+      push_head(gert::git_branch())
     }
   } else {
     cli_h2("Merging Pull Request containing release")
     release_branch <- get_branch_name()
     switch_branch(get_main_branch())
     merge_branch(release_branch)
-    push_head(get_head_branch())
+    push_head(gert::git_branch())
   }
 }
 

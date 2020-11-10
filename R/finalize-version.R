@@ -35,8 +35,8 @@ send_to_console <- function(code) {
 }
 
 push_head <- function(head) {
-  cli_alert("Pushing {.field {head$name}}.")
-  gert::git_push(head)
+  cli_alert("Pushing {.field {head}}.")
+  gert::git_push()
 }
 
 push_to_new <- function(remote_name, force) {
@@ -48,4 +48,9 @@ push_to_new <- function(remote_name, force) {
     force = force,
     refspec = paste0("refs/heads/", branch_name)
   )
+}
+
+push_tag <- function(tag) {
+  cli_alert("Force-pushing tag {.field {tag}}.")
+  gert::git_tag_push(name = tag, force = TRUE)
 }

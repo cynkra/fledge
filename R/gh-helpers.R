@@ -17,7 +17,7 @@ get_remote_url <- function(path, remote) {
       remote_name, remote_names
     ))
   }
-  gert::git_remote_info(r)$url
+  gert::git_remote_info(remote_name)$url
 }
 
 extract_repo <- function(url) {
