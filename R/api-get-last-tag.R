@@ -2,7 +2,7 @@
 #'
 #' Returns the most recent Git tag.
 #'
-#' @return An element from this repo's [git2r::tags()].
+#' @return An object of the repo's [gert::git_tag_list()].
 #'
 #' @export
 get_last_tag <- function() {

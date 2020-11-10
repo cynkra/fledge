@@ -10,6 +10,8 @@
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge)
+[![Codecov test
+coverage](https://codecov.io/gh/krlmlr/fledge/branch/master/graph/badge.svg)](https://codecov.io/gh/krlmlr/fledge?branch=master)
 <!-- badges: end -->
 
 {fledge} has been designed to streamline the process of versioning R

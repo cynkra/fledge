@@ -10,7 +10,7 @@ get_top_level_commits(since)
 \item{since}{A commit or tag object, e.g. \code{\link[=get_last_tag]{get_last_tag()}}.}
 }
 \value{
-A list of commit objects similarly to \code{\link[git2r:commits]{git2r::commits()}}.
+A list of commit objects similarly to \code{\link[gert:git_commit]{gert::git_log()}}.
 }
 \description{
 Return all top-level commits since a particular version

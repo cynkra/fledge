@@ -2,9 +2,9 @@ Package: fledge
 Title: Wings for Your R Packages
 Version: 0.0.3.9007
 Date: 2020-08-27
-Authors@R: 
+Authors@R:
     c(person(given = "Kirill",
-             family = "M\u00fcller",
+             family = "Müller",
              role = c("aut", "cre"),
              email = "krlmlr+r@mailbox.org",
              comment = c(ORCID = "0000-0002-1416-3412")),
@@ -19,15 +19,15 @@ License: GPL-3
 URL: http://krlmlr.github.io/fledge,
     https://github.com/krlmlr/fledge
 BugReports: https://github.com/krlmlr/fledge/issues
-Imports: 
+Imports:
     cli,
     clipr,
     desc (>= 1.2.0),
     devtools,
     enc,
     foghorn,
+    gert (>= 1.0.0),
     gh,
-    git2r (>= 0.26.0),
     glue,
     httr,
     purrr (>= 0.3.2),
@@ -37,14 +37,15 @@ Imports:
     tibble,
     usethis (>= 1.5.0),
     withr
-Suggests: 
+Suggests:
+    covr,
     fansi,
     fs,
     knitr,
     rmarkdown,
     rstudioapi,
     testthat
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 LazyData: true
