@@ -273,7 +273,7 @@ auto_confirm <- function() {
   )
 
   code <- paste0('browseURL("', get_confirm_url(url), '")')
-  cli_ul("Run {.cdoe {code}}.")
+  cli_alert("Run {.code {code}}.")
   send_to_console(code)
 }
 
