@@ -30,8 +30,11 @@ send_to_console <- function(code) {
   if (!is_interactive()) {
     return()
   }
-
-  rstudioapi::sendToConsole(code, execute = FALSE)
+  if (Sys.getenv("RSTUDIO") != 1) {
+    cat(code)
+  } else {
+    rstudioapi::sendToConsole(code, execute = FALSE)
+  }
 }
 
 push_head <- function(head) {
@@ -52,5 +55,8 @@ push_to_new <- function(remote_name, force) {
 
 push_tag <- function(tag) {
   cli_alert("Force-pushing tag {.field {tag}}.")
-  gert::git_tag_push(name = tag, force = TRUE)
+  gert::git_tag_push(tag,
+    remote = "origin",
+    refspec = paste0("refs/tags/", tag), force = TRUE
+  )
 }
