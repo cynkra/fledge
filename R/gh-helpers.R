@@ -6,8 +6,7 @@ github_info <- function(path = usethis::proj_get(),
 }
 
 get_remote_url <- function(path, remote) {
-  r <- git2r::repository(path, discover = TRUE)
-  remote_names <- git2r::remotes(r)
+  remote_names <- gert::git_remote_list()$name
   if (!length(remote_names)) {
     stopc("Failed to lookup git remotes")
   }
@@ -18,7 +17,7 @@ get_remote_url <- function(path, remote) {
       remote_name, remote_names
     ))
   }
-  git2r::remote_url(r, remote_name)
+  gert::git_remote_info(r)$url
 }
 
 extract_repo <- function(url) {

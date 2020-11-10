@@ -41,21 +41,21 @@ tag_release_candidate_impl <- function(force) {
   suffix <- check_existing_rc()
 
   tag <- paste0("v", version, "-rc", suffix)
-  if (tag %in% names(git2r::tags())) {
+  if (tag %in% gert::git_tag_list()$name) {
     if (!force) {
-      if (git2r::sha(get_repo_head(tag)) == git2r::sha(get_repo_head())) {
+      if (gert::git_commit_id() == tail(gert::git_tag_list(), 1)$commit) {
         cli_alert_info("Tag {.field {tag}} exists and points to the current commit.")
       } else {
         abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
       }
     } else {
       cli_alert("Deleting tag {.field {tag}}.")
-      git2r::tag_delete(".", tag)
+      gert::git_tag_delete(tag)
     }
   }
 
   msg_header <- paste0(desc$get("Package"), " ", version)
-  git2r::tag(".", tag, message = paste0(msg_header, "-rc\n\n", current_news))
+  gert::git_tag_create(tag, message = paste0(msg_header, "-rc\n\n", current_news))
 
   invisible(tag)
 }
@@ -81,7 +81,7 @@ get_current_news <- function() {
 
 check_existing_rc <- function() {
 
-  tags_filtered <- grep("rc", names(git2r::tags()), value = T)
+  tags_filtered <- grep("rc", gert::git_tag_list()$name, value = TRUE)
 
   if (length(tags_filtered != 0)) {
     index <- length(tags_filtered) + 1

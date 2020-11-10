@@ -33,9 +33,7 @@ pre_release_impl <- function(which, force) {
 
   cat(boxx("pre-release", border_style = "double"))
 
-  stopifnot(git2r::is_branch(git2r::repository_head()))
-
-   # check PAT scopes for PR for early abort
+  # check PAT scopes for PR for early abort
   check_gh_scopes()
 
   remote_name <- get_remote_name()
@@ -78,7 +76,7 @@ pre_release_impl <- function(which, force) {
 
   # user action items
   cli_h1("4. User Action Items")
-  
+
   cli_div(theme = list(ul = list(color = "magenta")))
   cli_ul("Run {.code devtools::check_win_devel()}.")
   cli_ul("Check all items in {.file cran-comments.md}.")
@@ -93,13 +91,11 @@ pre_release_impl <- function(which, force) {
 }
 
 get_branch_name <- function() {
-  git2r::repository_head()$name
+  gert::git_branch()
 }
 
 get_remote_name <- function(branch) {
-  local <- git2r::branches(flags = "local")[[branch]]
-  upstream <- git2r::branch_get_upstream(local)
-  git2r::branch_remote_name(upstream)
+  gert::git_info()$remote
 }
 
 create_release_branch <- function(force) {
@@ -107,13 +103,13 @@ create_release_branch <- function(force) {
 
   cli_alert("Creating branch {.field {branch_name}}.")
 
-  git2r::branch_create(name = branch_name, force = force)
+  gert::git_branch_create(branch_name)
   branch_name
 }
 
 switch_branch <- function(name) {
   cli_alert("Switching to branch {.field {name}}.")
-  git2r::checkout(branch = name)
+  gert::git_branch_checkout(name)
 }
 
 update_cran_comments <- function() {
@@ -155,8 +151,8 @@ update_cran_comments <- function() {
     )
   )
 
-  git2r::add(path = "cran-comments.md", force = TRUE)
-  git2r::commit(message = "Update CRAN comments")
+  gert::git_add("cran-comments.md", force = TRUE)
+  gert::git_commit(message = "Update CRAN comments")
 }
 
 get_crp_date <- function() {
@@ -372,7 +368,7 @@ get_main_branch <- function() {
 }
 
 merge_branch <- function(other_branch) {
-  git2r::merge(git2r::repository(), other_branch, fail = TRUE)
+  gert::git_merge(other_branch)
 }
 
 check_post_release <- function() {
@@ -398,7 +394,7 @@ check_post_release <- function() {
 
   sha_rx <- paste0("^", sha)
   repo_head <- get_repo_head()
-  repo_head_sha <- git2r::sha(repo_head)
+  repo_head_sha <- gert::git_commit_id()
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
       "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
@@ -429,11 +425,12 @@ gh_scopes <- function() {
 check_for_rc <- function() {
 
   # check if current commit is on a RC tag
-  sha_commit <- git2r::sha(git2r::last_commit())
-  sha_last_tag <- git2r::sha(git2r::tags()[1][[1]])
+  sha_commit <- gert::git_commit_id()
+  sha_last_tag <- tail(gert::git_tag_list(), 1)$commit
+
 
   if (sha_commit == sha_last_tag) {
-    if ("-rc" %in% names(git2r::tags())[[1]]) {
+    if ("-rc" %in% tail(gert::git_tag_list(), 1)$name) {
       stop("Running on a release candidate commit, terminating.")
       cli_alert_warning("The branch must be at least one commit ahead of the
                         last release candidate tag to initiate a new release.")
@@ -461,8 +458,9 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
   if (force) {
     # Remove cached config so that pr_url() always checks
     # if we happened to overwrite the branch
-    config_url <- glue("branch.{release_branch}.pr-url")
-    rlang::exec(git2r::config, !!config_url := NULL)
+    # FIXME: not sure if this is needed with gert?
+    # config_url <- glue("branch.{release_branch}.pr-url")
+    # rlang::exec(git2r::config, !!config_url := NULL)
 
     create <- is.null(usethis:::pr_url())
   } else {
@@ -479,7 +477,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       repo = info$name,
       title = sprintf(
         "CRAN release v%s",
-        strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
+        strsplit(gert::git_info()$shorthand, "cran-")[[1]][2]
       ),
       head = release_branch,
       base = main_branch,
@@ -492,10 +490,10 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 }
 
 commit_ignore_files <- function() {
-  git2r::add(path = c(".gitignore", ".Rbuildignore"))
+  gert::git_add(c(".gitignore", ".Rbuildignore"))
 
-  if (length(git2r::status()$staged) > 0) {
+  if (nrow(gert::git_status(staged = TRUE)) > 0) {
     cli_alert("Committing {.file .gitignore} and {.file .Rbuildignore}.")
-    git2r::commit(message = "Update `.gitignore` and/or `.Rbuildignore`")
+    gert::git_commit(message = "Update `.gitignore` and/or `.Rbuildignore`")
   }
 }

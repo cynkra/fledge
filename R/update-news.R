@@ -8,7 +8,7 @@ update_news_impl <- function(range) {
 
 collect_news <- function(range) {
   if (is.null(range)) {
-    range = data.frame()
+    range <- data.frame()
   }
   cli_alert("Scraping {.field {nrow(range)}} commit messages.")
 

@@ -24,8 +24,12 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
 }
 
 send_to_console <- function(code) {
-  if (!is_installed("rstudioapi")) return()
-  if (!is_interactive()) return()
+  if (!is_installed("rstudioapi")) {
+    return()
+  }
+  if (!is_interactive()) {
+    return()
+  }
 
   rstudioapi::sendToConsole(code, execute = FALSE)
 }
