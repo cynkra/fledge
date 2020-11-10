@@ -33,3 +33,19 @@ send_to_console <- function(code) {
 
   rstudioapi::sendToConsole(code, execute = FALSE)
 }
+
+push_head <- function(head) {
+  cli_alert("Pushing {.field {head$name}}.")
+  gert::git_push(head)
+}
+
+push_to_new <- function(remote_name, force) {
+  branch_name <- get_branch_name()
+
+  cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
+
+  gert::git_push(remote_name,
+    force = force,
+    refspec = paste0("refs/heads/", branch_name)
+  )
+}
