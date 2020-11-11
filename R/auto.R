@@ -393,7 +393,6 @@ check_post_release <- function() {
   sha <- gsub(rx, "\\1", release)
 
   sha_rx <- paste0("^", sha)
-  repo_head <- get_repo_head()
   repo_head_sha <- gert::git_commit_id()
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
