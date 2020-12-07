@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Wings for Your R Packages">
-<meta property="og:description" content="Streamlines the process of versioning R
-    packages and updating NEWS. Numbers are cheap, why not use them?">
+<meta property="og:description" content="Streamlines the process of versioning R packages
+    and updating NEWS. Numbers are cheap, why not use them?">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -33,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9007</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/fledge.html">Get started</a>
 </li>
@@ -102,7 +96,8 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install from GitHub using</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"krlmlr/fledge"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"krlmlr/fledge"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -111,31 +106,37 @@
 <ul>
 <li>
 <p>To configure your package for the first-time with {fledge}, use</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span>()
-<span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span>()</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>From now on, use bullet points (<code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
 </li>
 <li>
 <p>To assign a new <code>"dev"</code> version number to the R package and update <code>NEWS.md</code>, use</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span>()
-<span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span>()</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>To assign a new version number to the R package before release to CRAN, use</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)
-<span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/commit_version.html">commit_version</a></span>()</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span>
+<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/commit_version.html">commit_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Substitute <code>"patch"</code> by <code>"minor"</code> or <code>"major"</code> if applicable.</p>
 </li>
 <li>
 <p>To tag a version when the package has been accepted to CRAN, use</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/tag_version.html">tag_version</a></span>()</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Call</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span>()</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>to immediately switch to a development version.</p>
 </li>
 <li>
 <p>To undo the last version bump, use</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="reference/unbump_version.html">unbump_version</a></span>()</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/unbump_version.html">unbump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
 </div>
@@ -162,17 +163,18 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://krlmlr.info">Kirill Müller</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<a href="http://krlmlr.info">Kirill Müller</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Patrick Schratz <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-0748-6624" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/krlmlr/fledge"><img src="https://travis-ci.org/krlmlr/fledge.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/krlmlr/fledge"><img src="https://ci.appveyor.com/api/projects/status/github/krlmlr/fledge?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
+<li><a href="https://github.com/krlmlr/fledge/actions"><img src="https://github.com/krlmlr/fledge/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
 <li><a href="https://cran.r-project.org/package=fledge"><img src="https://www.r-pkg.org/badges/version/fledge" alt="CRAN status"></a></li>
+<li><a href="https://codecov.io/gh/krlmlr/fledge?branch=master"><img src="https://codecov.io/gh/krlmlr/fledge/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 </div>
@@ -180,11 +182,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://krlmlr.info">Kirill Müller</a>.</p>
+  <p>Developed by <a href="http://krlmlr.info">Kirill Müller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

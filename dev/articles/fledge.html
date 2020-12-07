@@ -32,18 +32,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9007</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/fledge.html">Get started</a>
 </li>
@@ -83,7 +77,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="fledge_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Get started with fledge</h1>
@@ -96,13 +90,15 @@
 
     
     
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">fledge</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://krlmlr.github.io/fledge">fledge</a></span><span class="op">)</span></code></pre></div>
 <p>The goal of {fledge} is to streamline the process of versioning R packages and updating the <code>NEWS.md</code> file. It applies to R packages that are being version controlled on GitHub. By incorporating a few simple and easy steps during the development process, you can ensure that versioning and updating of <code>NEWS.md</code> and <code>DESCRIPTION</code> is easily achieved for release.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The package can be installed from GitHub using the command</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"krlmlr/fledge"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"krlmlr/fledge"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="why-use-fledge" class="section level2">
 <h2 class="hasAnchor">
@@ -195,12 +191,14 @@
 <li><p>In commit messages to master, mark everything that should go to <code>NEWS.md</code> with a bullet point (<code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>). This is applicable to single commits, merge commits, or pull requests. Do not edit <code>NEWS.md</code> manually.</p></li>
 <li>
 <p>When you want to assign a version number to the current state of your R package, call</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The default argument for bump_version is “dev”. So the dev part of the version number will be updated. It is good practice to assign a new version number before switching focus to another project.</p>
 </li>
 <li>
 <p>Edit <code>NEWS.md</code> if required. Then call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> as below.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/finalize_version.html">finalize_version</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>This achieves the following:</p>
 <pre><code> * `NEWS.md` is now composed, based on the most recent commit messages.
    To understand how `NEWS.md` is updated by fledge, see the section on `NEWS.md` implementation.
@@ -216,12 +214,14 @@
 <ol style="list-style-type: decimal">
 <li>
 <p>Call bump_version() with the appropriate argument (<code>"patch"</code>, <code>"major"</code>, <code>"minor"</code>). e.g.,</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Edit <code>NEWS.md</code>, convert the “change log” to “release notes” – a higher-level description of features and bug fixes.</p></li>
 <li>
 <p>Call <code><a href="../reference/commit_version.html">commit_version()</a></code> as below</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="kw pkg">fledge</span><span class="kw ns">::</span><span class="fu"><a href="../reference/commit_version.html">commit_version</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/commit_version.html">commit_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Make any necessary adjustments before releasing to CRAN.</p></li>
 <li>
@@ -242,7 +242,7 @@ fledge::bump_version()</a></code></pre>
 </h3>
 <p>New entries are added to <code>NEWS.md</code> from commit messages to commits in <code>master</code>.</p>
 <ul>
-<li>Only top-level commits are considered (roughly equivalent to <code>git log --first-parent</code>.) The messages from these commits are parsed. Only lines that start with a star <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or a dash <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> are included.</li>
+<li><p>Only top-level commits are considered (roughly equivalent to <code>git log --first-parent</code>.) The messages from these commits are parsed. Only lines that start with a star <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or a dash <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> are included.</p></li>
 <li>
 <p>If a line starts with three dashes, then everything past that line is excluded. Example: the following commit message</p>
 <pre><code>Merge f-fancy-feature to master, closes #5678
@@ -274,9 +274,9 @@ The fancy feature consists of the components:
 <li><p>Calls <code><a href="../reference/update_version.html">update_version()</a></code> to increment the version in <code>DESCRIPTION</code> and add a header to <code>NEWS.md</code>.</p></li>
 </ol>
 </div>
-<div id="tagging-for-dev-vs-other-releases" class="section level3">
+<div id="tagging-for-dev-vs--other-releases" class="section level3">
 <h3 class="hasAnchor">
-<a href="#tagging-for-dev-vs-other-releases" class="anchor"></a>Tagging for “dev” vs. other releases</h3>
+<a href="#tagging-for-dev-vs--other-releases" class="anchor"></a>Tagging for “dev” vs. other releases</h3>
 <p><code><a href="../reference/bump_version.html">bump_version()</a></code> continues depending on the release type:</p>
 <ul>
 <li>
@@ -290,7 +290,7 @@ The fancy feature consists of the components:
 <a href="#caveats" class="anchor"></a>Caveats</h2>
 <p>If you rebase after creating a tag, you need to call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to make sure the tag is moved to the mainline branch.</p>
 <p>If you pushed after calling <code><a href="../reference/finalize_version.html">finalize_version()</a></code> (directly or indirectly), the tag may have been pushed as well. In this case, invoke</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="fu">git</span> push origin :vx.y.z.9www</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">git</span> push origin :vx.y.z.9www</span></code></pre></div>
 <p>(where <code>x.y.z.9www</code> is the new version) to delete the newly created remote tag. This is the reason why {fledge} only tags <code>"dev"</code> releases automatically. Other releases always must be tagged manually with <code><a href="../reference/tag_version.html">tag_version()</a></code>.</p>
 </div>
   </div>
@@ -306,11 +306,11 @@ The fancy feature consists of the components:
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://krlmlr.info">Kirill Müller</a>.</p>
+  <p>Developed by <a href="http://krlmlr.info">Kirill Müller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
