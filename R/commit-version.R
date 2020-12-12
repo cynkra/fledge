@@ -12,7 +12,33 @@ commit_version_impl <- function() {
   git2r::add(".", c("DESCRIPTION", news_path))
   if (length(git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged) > 0) {
     cli_alert("Committing changes.")
-    git2r::commit(".", get_commit_message())
+
+    # For stable Rmarkdown output
+    if (Sys.getenv("IN_PKGDOWN") != "") {
+      author_time <- unclass(parsedate::parse_iso_8601(Sys.getenv("GIT_AUTHOR_DATE")))[[1]]
+      author <- structure(
+        list(
+          name = Sys.getenv("GIT_AUTHOR_NAME"),
+          email = Sys.getenv("GIT_AUTHOR_EMAIL"),
+          when = structure(list(time = author_time, offset = 0), class = "git_time")
+        ),
+        class = "git_signature"
+      )
+      committer_time <- unclass(parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE")))[[1]]
+      committer <- structure(
+        list(
+          name = Sys.getenv("GIT_COMMITTER_NAME"),
+          email = Sys.getenv("GIT_COMMITTER_EMAIL"),
+          when = structure(list(time = committer_time, offset = 0), class = "git_time")
+        ),
+        class = "git_signature"
+      )
+    } else {
+      author <- NULL
+      committer <- NULL
+    }
+
+    git2r::commit(".", get_commit_message(), author = author, committer = committer)
   }
 
   amending
