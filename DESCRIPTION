@@ -38,6 +38,7 @@ Imports:
     usethis (>= 1.5.0),
     withr
 Suggests: 
+    covr,
     fansi,
     fs,
     knitr,
