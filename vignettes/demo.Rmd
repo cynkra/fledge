@@ -102,19 +102,19 @@ git2r::config(user.name = "Test", user.email = "test@user.org")
 In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
 In the demo this needs to be carried out manually.
 
-```{bash git-initial-commit, eval = !interactive()}
+```{bash git-initial-commit, eval = !interactive(), error = (.Platform$OS.type == "windows")}
 git add .
 git commit -m "Initial commit."
 ```
 
-```{bash git-show-init}
+```{bash git-show-init, error = (.Platform$OS.type == "windows")}
 git log --numstat
 git status
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
 
-```{bash git-no-ff}
+```{bash git-no-ff, error = (.Platform$OS.type == "windows")}
 git config merge.ff false
 ```
 
@@ -137,7 +137,7 @@ cat(news, sep = "\n")
 
 This file needs to be tracked by Git:
 
-```{bash init-news-commit}
+```{bash init-news-commit, error = (.Platform$OS.type == "windows")}
 git add .
 git status
 git commit -m "Initial NEWS.md ."
@@ -159,7 +159,7 @@ We commit this file to Git with a relevant message.
 Note the use of the bullet (-) before the commit message.
 This indicates that the message should be included in `NEWS.md` when it is updated.
 
-```{bash commit-super}
+```{bash commit-super, error = (.Platform$OS.type == "windows")}
 git add .
 git commit -m "- Add support for frobmication."
 ```
@@ -176,7 +176,7 @@ cat(readLines("tests/testthat/test-super.R"), sep = "\n")
 In a real project we would substitute the testing code from the template by real tests.
 In this demo we commit straight away, again with a bulleted message.
 
-```{bash commit-super-test}
+```{bash commit-super-test, error = (.Platform$OS.type == "windows")}
 git add .
 git status
 git commit -m "- Add tests for frobnication."
@@ -229,7 +229,7 @@ In this demo, no remote repository is set up, and the push process is not shown.
 This requires changes to the code, and perhaps a new test.
 We create a branch and switch to this branch to implement this.
 
-```{bash super-frob-branch}
+```{bash super-frob-branch, error = (.Platform$OS.type == "windows")}
 git checkout -b f-super-frob
 ```
 
@@ -241,7 +241,7 @@ usethis::use_test("frob")
 ```
 
 
-```{bash super-frob-commit}
+```{bash super-frob-commit, error = (.Platform$OS.type == "windows")}
 git add .
 git status
 git commit -m "Add super-frob tests."
@@ -254,7 +254,7 @@ writeLines("# super-frob", "R/frob.R")
 ```
 
 
-```{bash super-frob-2-commit}
+```{bash super-frob-2-commit, error = (.Platform$OS.type == "windows")}
 git add .
 git status
 git commit -m "Add super-frob implementation."
@@ -266,7 +266,7 @@ Only when merging we specify the message to be included in the changelog, again 
 [^merge-ff]: Note that we really need a merge commit here; the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
-```{bash super-frob-merge}
+```{bash super-frob-merge, error = (.Platform$OS.type == "windows")}
 git checkout master
 git merge f-super-frob --no-commit
 git status
@@ -323,7 +323,7 @@ writeLines(news, "NEWS.md")
 
 Unlike with development versions, we commit the changes to `NEWS.md` manually:
 
-```{bash patch-news-write}
+```{bash patch-news-write, error = (.Platform$OS.type == "windows")}
 git add .
 git status
 git commit -m "Update NEWS."
