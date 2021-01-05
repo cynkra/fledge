@@ -23,10 +23,8 @@ pre_release <- function(which = "patch", force = FALSE) {
 
   stopifnot(which %in% c("patch", "minor", "major"))
 
-  with_options(
-    list(usethis.quiet = TRUE),
-    with_repo(pre_release_impl(which, force))
-  )
+  local_options(usethis.quiet = TRUE)
+  with_repo(pre_release_impl(which, force))
 }
 
 pre_release_impl <- function(which, force) {
@@ -130,24 +128,22 @@ update_cran_comments <- function() {
   cransplainer <- get_cransplainer(package)
 
   unlink("cran-comments.md")
-  withr::with_options(
-    list(usethis.quiet = TRUE),
-    use_template(
-      "cran-comments.md",
-      package = "fledge",
-      data = list(
-        package = package,
-        version = desc::desc_get_version(),
-        crp_date = crp_date,
-        crp_cross = crp_cross,
-        crp_changes = crp_changes,
-        rversion = glue("{version$major}.{version$minor}"),
-        latest_rversion = rversions::r_release()[["version"]],
-        cransplainer = cransplainer
-      ),
-      ignore = TRUE,
-      open = TRUE
-    )
+  local_options(usethis.quiet = TRUE)
+  use_template(
+    "cran-comments.md",
+    package = "fledge",
+    data = list(
+      package = package,
+      version = desc::desc_get_version(),
+      crp_date = crp_date,
+      crp_cross = crp_cross,
+      crp_changes = crp_changes,
+      rversion = glue("{version$major}.{version$minor}"),
+      latest_rversion = rversions::r_release()[["version"]],
+      cransplainer = cransplainer
+    ),
+    ignore = TRUE,
+    open = TRUE
   )
 
   git2r::add(path = "cran-comments.md")
