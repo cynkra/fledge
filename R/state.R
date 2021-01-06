@@ -15,8 +15,8 @@ check_release_state <- function(which) {
   if (!is.null(cran_details)) {
     cran_version <- cran_details$version
     # shortly after acceptance both old and new versions are reported
-    cran_version = unlist(strsplit(cran_version, ", "))
-    cran_version = tail(cran_version, 1)
+    cran_version <- unlist(strsplit(cran_version, ", "))
+    cran_version <- head(cran_version, 1)
   }
   cran_inc <- withr::with_options(
     list(repos = structure(c(CRAN = "https://cloud.r-project.org/"))),
