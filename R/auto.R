@@ -360,6 +360,9 @@ post_release_impl <- function() {
     merge_branch(release_branch)
     push_head(gert::git_branch())
   }
+
+  switch_branch(main_branch)
+  gert::git_branch_delete(release_branch)
 }
 
 get_main_branch <- function() {
