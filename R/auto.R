@@ -74,15 +74,16 @@ pre_release_impl <- function(which, force) {
   cli_h1("4. User Action Items")
   cli_div(theme = list(ul = list(color = "magenta")))
   cli_ul("Run {.code devtools::check_win_devel()}.")
-  cli_ul("Check all items in {.file cran-comments.md}.")
   cli_ul("Run {.code rhub::check_for_cran()}.")
+  cli_ul("Run {.code urlchecker::url_update()}.")
+  cli_ul("Check all items in {.file cran-comments.md}.")
   cli_ul("Convert {.file NEWS.md} from changelog format to release notes.")
   cli_ul("Run {.code fledge::release()}.")
   cli_end()
 
   Sys.sleep(2)
 
-  send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran() })")
+  send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran(); urlchecker::url_update() })")
 }
 
 get_branch_name <- function() {
