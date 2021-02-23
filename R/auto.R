@@ -349,14 +349,14 @@ post_release_impl <- function() {
     } else {
       cli_h2("Merging Pull Request containing release")
       release_branch <- get_branch_name()
-      switch_branch(get_main_branch())
+      switch_branch(get_default_branch())
       merge_branch(release_branch)
       push_head(gert::git_branch())
     }
   } else {
     cli_h2("Merging Pull Request containing release")
     release_branch <- get_branch_name()
-    switch_branch(get_main_branch())
+    switch_branch(get_default_branch())
     merge_branch(release_branch)
     push_head(gert::git_branch())
   }
@@ -365,9 +365,8 @@ post_release_impl <- function() {
   gert::git_branch_delete(release_branch)
 }
 
-get_main_branch <- function() {
-  # FIXME: How to determine dynamically?
-  "master"
+get_default_branch <- function() {
+  gh::gh("/repos/:repo", repo = github_info()$full_name)$default_branch
 }
 
 merge_branch <- function(other_branch) {
