@@ -1,7 +1,7 @@
 check_release_state <- function(which) {
 
   # meta info
-  new_version <- desc::desc_get_version()
+  new_version <- as.character(desc::desc_get_version())
   pkg <- desc::desc_get_field("Package")
   version_components <- length(strsplit(as.character(desc::desc_get_version()), "[.]|-")[[1]])
   # mirrors do not seem to work (due to CRAN vacay?)
@@ -15,8 +15,8 @@ check_release_state <- function(which) {
   if (!is.null(cran_details)) {
     cran_version <- cran_details$version
     # shortly after acceptance both old and new versions are reported
+    # hence we extract all and check for a partial match
     cran_version <- unlist(strsplit(cran_version, ", "))
-    cran_version <- head(cran_version, 1)
   }
   cran_inc <- withr::with_options(
     list(repos = structure(c(CRAN = "https://cloud.r-project.org/"))),
@@ -32,7 +32,7 @@ check_release_state <- function(which) {
   # determine state
   if (version_components == 4) {
     return("pre-release")
-  } else if (new_version == cran_version) {
+  } else if (any(new_version %in% cran_version)) {
     return("accepted")
   } else if (cran_inc) {
     return("submitted")
