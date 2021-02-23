@@ -6,20 +6,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wings for Your R Packages • fledge</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Wings for Your R Packages">
-<meta property="og:description" content="Streamlines the process of versioning R
-    packages and updating NEWS. Numbers are cheap, why not use them?">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="Streamlines the process of versioning R packages
+    and updating NEWS. Numbers are cheap, why not use them?">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,18 +34,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fledge</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.9007</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/fledge.html">Get started</a>
 </li>
@@ -68,8 +64,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/krlmlr/fledge">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/krlmlr/fledge/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,14 +90,15 @@
 <div id="demo" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demo" class="anchor"></a>Demo</h2>
-<p><a href="https://asciinema.org/a/173876"><img src="https://github.com/krlmlr/fledge/raw/master/readme/demo.gif" alt="asciinema demo"></a></p>
+<p><a href="https://asciinema.org/a/173876" class="external-link"><img src="https://github.com/krlmlr/fledge/raw/master/readme/demo.gif" alt="asciinema demo"></a></p>
 <p>Click on the image to show in a separate tab.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install from GitHub using</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"krlmlr/fledge"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"krlmlr/fledge"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -110,80 +107,93 @@
 <ul>
 <li>
 <p>To configure your package for the first-time with {fledge}, use</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
-<p>From now on, use bullet points (<code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>From now on, use bullet points (<code><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">*</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">-</a></code>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
 </li>
 <li>
 <p>To assign a new <code>"dev"</code> version number to the R package and update <code>NEWS.md</code>, use</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>To assign a new version number to the R package before release to CRAN, use</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>(<span class="st">"patch"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/commit_version.html">commit_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span>
+<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/commit_version.html">commit_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Substitute <code>"patch"</code> by <code>"minor"</code> or <code>"major"</code> if applicable.</p>
 </li>
 <li>
 <p>To tag a version when the package has been accepted to CRAN, use</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/tag_version.html">tag_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Call</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>to immediately switch to a development version.</p>
 </li>
 <li>
 <p>To undo the last version bump, use</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fledge<span class="op">::</span><span class="kw"><a href="https://krlmlr.github.io/fledge/reference/unbump_version.html">unbump_version</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/unbump_version.html">unbump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/krlmlr/fledge">https://​github.com/​krlmlr/​fledge</a>
+<li>Browse source code at <br><a href="https://github.com/krlmlr/fledge/">https://​github.com/​krlmlr/​fledge/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/krlmlr/fledge/issues">https://​github.com/​krlmlr/​fledge/​issues</a>
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
 </div>
+
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://krlmlr.info">Kirill Müller</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<a href="http://krlmlr.info">Kirill Müller</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Patrick Schratz <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-0748-6624" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/krlmlr/fledge"><img src="https://travis-ci.org/krlmlr/fledge.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/krlmlr/fledge"><img src="https://ci.appveyor.com/api/projects/status/github/krlmlr/fledge?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
-<li><a href="https://cran.r-project.org/package=fledge"><img src="https://www.r-pkg.org/badges/version/fledge" alt="CRAN status"></a></li>
+<li><a href="https://github.com/krlmlr/fledge/actions" class="external-link"><img src="https://github.com/krlmlr/fledge/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
+<li><a href="https://cran.r-project.org/package=fledge" class="external-link"><img src="https://www.r-pkg.org/badges/version/fledge" alt="CRAN status"></a></li>
+<li><a href="https://codecov.io/gh/krlmlr/fledge?branch=master" class="external-link"><img src="https://codecov.io/gh/krlmlr/fledge/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://krlmlr.info">Kirill Müller</a>.</p>
+  <p></p>
+<p>Developed by <a href="http://krlmlr.info" class="external-link">Kirill Müller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -191,6 +201,8 @@
 
   
 
+
+  
 
   </body>
 </html>
