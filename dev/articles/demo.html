@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -62,7 +64,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/krlmlr/fledge/">
+  <a href="https://github.com/krlmlr/fledge/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,7 +85,7 @@
       <h1 data-toc-skip>Using fledge</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/krlmlr/fledge/blob/master/vignettes/demo.Rmd"><code>vignettes/demo.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/krlmlr/fledge/blob/master/vignettes/demo.Rmd" class="external-link"><code>vignettes/demo.Rmd</code></a></small>
       <div class="hidden name"><code>demo.Rmd</code></div>
 
     </div>
@@ -104,14 +106,14 @@
 <a href="#create-a-package" class="anchor"></a>Create a package</h3>
 <p>We will start by creating a new package. For this demo, the package is created in a temporary directory. A real project will live somewhere in your home directory.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tempdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="st">"fledge"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="va">tempdir</span><span class="op">)</span></code></pre></div>
-<p>The <code><a href="https://usethis.r-lib.org/reference/create_package.html">usethis::create_package()</a></code> function sets up a package project ready for development. The output shows the details of the package created.</p>
+<code class="sourceCode R"><span class="va">tempdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"fledge"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">tempdir</span><span class="op">)</span></code></pre></div>
+<p>The <code><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">usethis::create_package()</a></code> function sets up a package project ready for development. The output shows the details of the package created.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/create_package.html">create_package</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tempdir</span>, <span class="st">"SuperFrob"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/RtmpVoYO3y/fledge5d5315a93279/SuperFrob/'</span><span>
+<code class="sourceCode R"><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">create_package</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tempdir</span>, <span class="st">"SuperFrob"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'/tmp/RtmpMT9p9R/fledge51927b5d37e/SuperFrob/'</span><span>
 </span></code></pre>
-<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpVoYO3y/fledge5d5315a93279/SuperFrob'</span><span>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpMT9p9R/fledge51927b5d37e/SuperFrob'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Creating </span><span style="color: #0000BB;">'R/'</span><span>
 </span></code></pre>
@@ -136,12 +138,12 @@
 </span></code></pre>
 <p>In an interactive RStudio session, a new window opens. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html">proj_set</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpVoYO3y/fledge5d5315a93279/SuperFrob'</span><span>
+<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_set</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting active project to </span><span style="color: #0000BB;">'/tmp/RtmpMT9p9R/fledge51927b5d37e/SuperFrob'</span><span>
 </span></code></pre>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html">dir_tree</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-output"><code>## <span style="color: #0000BB;font-weight: bold;">.</span><span>
 ## ├── DESCRIPTION
 ## ├── NAMESPACE
@@ -153,52 +155,52 @@
 <a href="#create-and-configure-a-git-repository" class="anchor"></a>Create and configure a Git repository</h3>
 <p>Next we set up this package for development and create a Git repository for the package.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html">use_git</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">use_git</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Initialising Git repo
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding </span><span style="color: #0000BB;">'.Rproj.user'</span><span>, </span><span style="color: #0000BB;">'.Rhistory'</span><span>, </span><span style="color: #0000BB;">'.Rdata'</span><span>, </span><span style="color: #0000BB;">'.httr-oauth'</span><span>, </span><span style="color: #0000BB;">'.DS_Store'</span><span> to </span><span style="color: #0000BB;">'.gitignore'</span><span>
 </span></code></pre>
-<p>In interactive mode, the <code><a href="https://usethis.r-lib.org/reference/use_git.html">usethis::use_git()</a></code> function creates an initial commit, and the repository is in a clean state. In the demo this needs to be carried out manually.</p>
+<p>In interactive mode, the <code><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">usethis::use_git()</a></code> function creates an initial commit, and the repository is in a clean state. In the demo this needs to be carried out manually.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial commit."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [b455599] 2021-01-12: Initial commit.</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html" class="external-link">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial commit."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [4bce9dc] 2021-02-23: Initial commit.</code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commits.html">commits</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commits.html" class="external-link">commits</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
-## [b455599] 2021-01-12: Initial commit.</code></pre>
+## [4bce9dc] 2021-02-23: Initial commit.</code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html" class="external-link">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>For working in branches, it is recommended to turn off fast-forward merging:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/config.html">config</a></span><span class="op">(</span>merge.ff <span class="op">=</span> <span class="st">"false"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/config.html" class="external-link">config</a></span><span class="op">(</span>merge.ff <span class="op">=</span> <span class="st">"false"</span><span class="op">)</span></code></pre></div>
 <p>An alternative is to use squash commits.</p>
 </div>
 <div id="create-initial-news-md-file" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-initial-news-md-file" class="anchor"></a>Create initial NEWS.md file</h3>
-<p>An initial NEWS file can be created with <code><a href="https://usethis.r-lib.org/reference/use_news_md.html">usethis::use_news_md()</a></code>.</p>
+<p>An initial NEWS file can be created with <code><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">usethis::use_news_md()</a></code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html">use_news_md</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">use_news_md</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Writing </span><span style="color: #0000BB;">'NEWS.md'</span><span>
 </span></code></pre>
 <p>Let’s take a look at the contents:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html">proj_path</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_path</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # SuperFrob 0.0.0.9000
 ## 
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
 <p>This file needs to be tracked by Git:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html" class="external-link">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html" class="external-link">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Staged changes:
 ##  New:        NEWS.md</code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial NEWS.md ."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [a846166] 2021-01-12: Initial NEWS.md .</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial NEWS.md ."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [9c423b7] 2021-02-23: Initial NEWS.md .</code></pre>
 </div>
 </div>
 <div id="the-development-phase" class="section level2">
@@ -209,25 +211,25 @@
 <a href="#create-an-r-file" class="anchor"></a>Create an R file</h3>
 <p>Now we start coding in the functionality for the package. We start by creating the new R file called <code>super.R</code> and adding frobnication code.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html">use_r</a></span><span class="op">(</span><span class="st">"super"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"super"</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'R/super.R'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Call </span><span style="color: #555555;">`use_test()`</span><span> to create a matching test file
 </span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="st">"# frobnicate"</span>, <span class="st">"R/super.R"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"# frobnicate"</span>, <span class="st">"R/super.R"</span><span class="op">)</span></code></pre></div>
 <p>We commit this file to Git with a relevant message. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in <code>NEWS.md</code> when it is updated.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"- Add support for frobmication."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [597f49a] 2021-01-12: - Add support for frobmication.</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html" class="external-link">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"- Add support for frobmication."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [5972fd1] 2021-02-23: - Add support for frobmication.</code></pre>
 </div>
 <div id="create-a-test" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-a-test" class="anchor"></a>Create a test</h3>
 <p>The code in <code>super.R</code> warrants a test:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html">use_test</a></span><span class="op">(</span><span class="st">"super"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"super"</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Adding </span><span style="color: #0000BB;">'testthat'</span><span> to </span><span style="color: #00BB00;">Suggests</span><span> field in DESCRIPTION
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Setting </span><span style="color: #00BB00;">Config/testthat/edition</span><span> field in DESCRIPTION to </span><span style="color: #0000BB;">'3'</span><span>
@@ -241,21 +243,21 @@
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'tests/testthat/test-super.R'</span><span>
 </span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"tests/testthat/test-super.R"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"tests/testthat/test-super.R"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## test_that("multiplication works", {
 ##   expect_equal(2 * 2, 4)
 ## })</code></pre>
 <p>In a real project we would substitute the testing code from the template by real tests. In this demo we commit straight away, again with a bulleted message.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html" class="external-link">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html" class="external-link">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Staged changes:
 ##  Modified:   DESCRIPTION
 ##  New:        tests/testthat.R
 ##  New:        tests/testthat/test-super.R</code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"- Add tests for frobnication."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [05093ef] 2021-01-12: - Add tests for frobnication.</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"- Add tests for frobnication."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [672112d] 2021-02-23: - Add tests for frobnication.</code></pre>
 </div>
 <div id="update-news-md" class="section level3">
 <h3 class="hasAnchor">
@@ -299,8 +301,8 @@
 <a href="#review-news-md" class="anchor"></a>Review NEWS.md</h3>
 <p>Let us see what <code>NEWS.md</code> looks like after that bump.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # SuperFrob 0.0.0.9001
 ## 
 ## - Add tests for frobnication.
@@ -312,8 +314,8 @@
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
 <p>While reviewing we notice that there was a typo in one of the comments. Let’s fix the typo:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"frobmication"</span>, <span class="st">"frobnication"</span>, <span class="va">news</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"frobmication"</span>, <span class="st">"frobnication"</span>, <span class="va">news</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # SuperFrob 0.0.0.9001
 ## 
 ## - Add tests for frobnication.
@@ -324,7 +326,7 @@
 ## 
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="va">news</span>, <span class="st">"NEWS.md"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">news</span>, <span class="st">"NEWS.md"</span><span class="op">)</span></code></pre></div>
 <p>This does not affect the original commit message, only <code>NEWS.md</code>.</p>
 </div>
 <div id="finalize-version" class="section level3">
@@ -350,51 +352,51 @@
 <a href="#change-code-and-commit" class="anchor"></a>Change code and commit</h3>
 <p>{SuperFrob} with frobnication is tested, now we want to enhance with super-frob. This requires changes to the code, and perhaps a new test. We create a branch and switch to this branch to implement this.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/branch_create.html">branch_create</a></span><span class="op">(</span><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/last_commit.html">last_commit</a></span><span class="op">(</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"f-super-frob"</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/checkout.html">checkout</a></span><span class="op">(</span>branch <span class="op">=</span> <span class="st">"f-super-frob"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/branch_create.html" class="external-link">branch_create</a></span><span class="op">(</span><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/last_commit.html" class="external-link">last_commit</a></span><span class="op">(</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"f-super-frob"</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/checkout.html" class="external-link">checkout</a></span><span class="op">(</span>branch <span class="op">=</span> <span class="st">"f-super-frob"</span><span class="op">)</span></code></pre></div>
 <p>On the branch, separate commits are used for the tests and the implementation. These commit messages do not need to be formatted specially, because {fledge} will ignore them anyway.</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html">use_test</a></span><span class="op">(</span><span class="st">"frob"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"frob"</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-message"><code>## <span style="color: #00BB00;">✔</span><span> Writing </span><span style="color: #0000BB;">'tests/testthat/test-frob.R'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'tests/testthat/test-frob.R'</span><span>
 </span></code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html" class="external-link">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html" class="external-link">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Staged changes:
 ##  New:        tests/testthat/test-frob.R</code></pre>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Add super-frob tests."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [43df78b] 2021-01-12: Add super-frob tests.</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Add super-frob tests."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [218ebbe] 2021-02-23: Add super-frob tests.</code></pre>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html">use_r</a></span><span class="op">(</span><span class="st">"frob"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"frob"</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Edit </span><span style="color: #0000BB;">'R/frob.R'</span><span>
 </span></code></pre>
 <pre class="fansi fansi-message"><code>## <span style="color: #BB0000;">●</span><span> Call </span><span style="color: #555555;">`use_test()`</span><span> to create a matching test file
 </span></code></pre>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="st">"# super-frob"</span>, <span class="st">"R/frob.R"</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"# super-frob"</span>, <span class="st">"R/frob.R"</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html" class="external-link">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html" class="external-link">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Staged changes:
 ##  New:        R/frob.R</code></pre>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Add super-frob implementation."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [4c06259] 2021-01-12: Add super-frob implementation.</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Add super-frob implementation."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [272b06f] 2021-02-23: Add super-frob implementation.</code></pre>
 <p>This branch can be pushed to the remote as usual. Only when merging we specify the message to be included in the changelog, again with a bullet.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/checkout.html">checkout</a></span><span class="op">(</span>branch <span class="op">=</span> <span class="st">"master"</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"f-super-frob"</span>, commit_on_success <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/checkout.html" class="external-link">checkout</a></span><span class="op">(</span>branch <span class="op">=</span> <span class="st">"master"</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"f-super-frob"</span>, commit_on_success <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>## Merge</code></pre>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html" class="external-link">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Staged changes:
 ##  New:        R/frob.R
 ##  New:        tests/testthat/test-frob.R</code></pre>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"- Super-frobnication enabled."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [bc2e0d4] 2021-01-12: - Super-frobnication enabled.</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"- Super-frobnication enabled."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [2ac1fbf] 2021-02-23: - Super-frobnication enabled.</code></pre>
 <p>The same strategy can be used when merging a pull/merge/… request on GitHub, GitLab, …: use bullet points in the merge commit message to indicate the items to include in <code>NEWS.md</code>.</p>
 <p>Now that we have added super-frobnication support to our package, it is time to bump the version again.</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
@@ -430,8 +432,8 @@
 </span></code></pre>
 <pre><code>## NULL</code></pre>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # SuperFrob 0.0.0.9002
 ## 
 ## - Super-frobnication enabled.
@@ -493,8 +495,8 @@
 <a href="#generate-release-notes" class="anchor"></a>Generate release notes</h3>
 <p>We review the <code>NEWS.md</code> that were generated by {fledge}:</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # SuperFrob 0.0.1
 ## 
 ## - Same as previous version.
@@ -516,29 +518,29 @@
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
 <p>Some of the intermediate commit messages are not relevant in the release notes for this release. We need to edit <code>NEWS.md</code> to convert the changelog to meaningful release notes.</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">news</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">5</span>
-<span class="va">news</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">news</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">5</span>
+<span class="va">news</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="st">"Initial CRAN release."</span>,
   <span class="st">""</span>,
   <span class="st">"Basic functionality: Super-frobnication."</span>
 <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # SuperFrob 0.0.1
 ## 
 ## Initial CRAN release.
 ## 
 ## Basic functionality: Super-frobnication.</code></pre>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="va">news</span>, <span class="st">"NEWS.md"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">news</span>, <span class="st">"NEWS.md"</span><span class="op">)</span></code></pre></div>
 <p>Unlike with development versions, we commit the changes to <code>NEWS.md</code> manually:</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/add.html" class="external-link">add</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
+<span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/status.html" class="external-link">status</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Staged changes:
 ##  Modified:   NEWS.md</code></pre>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Update NEWS."</span><span class="op">)</span></code></pre></div>
-<pre><code>## [434331b] 2021-01-12: Update NEWS.</code></pre>
+<code class="sourceCode R"><span class="fu">git2r</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/git2r/reference/commit.html" class="external-link">commit</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Update NEWS."</span><span class="op">)</span></code></pre></div>
+<pre><code>## [604ec4b] 2021-02-23: Update NEWS.</code></pre>
 <p>The package is now ready to be released to CRAN. I prefer <code>devtools::use_release_issue()</code> to create a checklist of things to do before release, and <code>devtools::submit_cran()</code> to submit. The <code>devtools::release()</code> function is a more verbose alternative.</p>
 </div>
 </div>
@@ -563,7 +565,7 @@
 <div id="create-github-release" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-github-release" class="anchor"></a>Create GitHub release</h3>
-<p>If your package is hosted on GitHub, <code><a href="https://usethis.r-lib.org/reference/use_github_release.html">usethis::use_github_release()</a></code> creates a draft GitHub release from the contents already in <code>NEWS.md</code>. You need to submit the draft release from the GitHub release page.</p>
+<p>If your package is hosted on GitHub, <code><a href="https://usethis.r-lib.org/reference/use_github_release.html" class="external-link">usethis::use_github_release()</a></code> creates a draft GitHub release from the contents already in <code>NEWS.md</code>. You need to submit the draft release from the GitHub release page.</p>
 </div>
 <div id="restart-development" class="section level3">
 <h3 class="hasAnchor">
@@ -602,8 +604,8 @@
 </span></code></pre>
 <pre><code>## NULL</code></pre>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">news</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # SuperFrob 0.0.1.9000
 ## 
 ## - Same as previous version.
@@ -636,11 +638,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://krlmlr.info">Kirill Müller</a>, Patrick Schratz.</p>
+  <p></p>
+<p>Developed by <a href="http://krlmlr.info" class="external-link">Kirill Müller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -648,6 +652,8 @@
 
   
 
+
+  
 
   </body>
 </html>
