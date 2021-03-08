@@ -36,6 +36,9 @@ pre_release_impl <- function(which, force) {
   # check PAT scopes for PR for early abort
   check_gh_scopes()
 
+  # Begin extension points
+  # End extension points
+
   # We expect that this branch is pushed already, ok to fail here
   main_branch <- get_branch_name()
   remote_name <- get_remote_name(main_branch)
@@ -84,6 +87,9 @@ pre_release_impl <- function(which, force) {
   Sys.sleep(2)
 
   send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran(); urlchecker::url_update() })")
+
+  # Begin extension points
+  # End extension points
 }
 
 get_branch_name <- function() {
@@ -223,10 +229,16 @@ release_impl <- function() {
   stopifnot(is_news_consistent())
   stopifnot(is_cran_comments_good())
 
+  # Begin extension points
+  # End extension points
+
   push_head(get_head_branch())
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   auto_confirm()
+
+  # Begin extension points
+  # End extension points
 }
 
 is_news_consistent <- function() {
@@ -310,6 +322,9 @@ post_release_impl <- function() {
 
   check_post_release()
 
+  # Begin extension points
+  # End extension points
+
   tag <- tag_version(force = TRUE)
 
   push_tag(tag)
@@ -321,6 +336,9 @@ post_release_impl <- function() {
   switch_branch(get_main_branch())
   merge_branch(release_branch)
   push_head(get_head_branch())
+
+  # Begin extension points
+  # End extension points
 }
 
 get_main_branch <- function() {
