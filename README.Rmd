@@ -1,7 +1,5 @@
 ---
-output:
-  github_document:
-    html_preview: false
+output: downlit::readme_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -24,7 +22,9 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 {fledge} has been designed to streamline the process of versioning R packages on _Git_, with the functionality to automatically update `NEWS.md` and `DESCRIPTION` with relevant information from recent commit messages.
-For details on usage and implementation, refer the [Get Started](https://krlmlr.github.io/fledge/articles/fledge.html) article.
+Numbers are cheap, why not use them?
+
+For details on usage and implementation, refer to `vignette("fledge")`.
 
 ## Demo
 
