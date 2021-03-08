@@ -48,8 +48,14 @@ has_remote_branch <- function(branch) {
 }
 
 send_to_console <- function(code) {
-  if (!is_installed("rstudioapi")) return()
   if (!is_interactive()) return()
+  if (!is_installed("rstudioapi")) return()
+  if (!rstudioapi::hasFun("sendToConsole")) return()
 
-  rstudioapi::sendToConsole(code, execute = FALSE)
+  tryCatch(
+    rstudioapi::sendToConsole(code, execute = FALSE),
+    error = function(e) {
+      rstudioapi::sendToConsole(paste0("FALSE || ", code), execute = TRUE)
+    }
+  )
 }
