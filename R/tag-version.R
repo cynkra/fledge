@@ -33,7 +33,7 @@ get_current_news <- function() {
   headers <- get_news_headers()
   if (nrow(headers) == 0) return(character())
   # FIXME: Add body column to get_news_headers()?
-  stopifnot(headers$line[[1]] == 1)
+  stopifnot(headers$line[[1]] %in% 1:3)
 
   if (nrow(headers) == 1) {
     n <- -1L

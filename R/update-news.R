@@ -28,6 +28,7 @@ collect_news <- function(range) {
 }
 
 news_path <- "NEWS.md"
+news_comment <- "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
 
 add_to_news <- function(news) {
   enc::transform_lines_enc(news_path, make_prepend(news))
@@ -36,8 +37,16 @@ add_to_news <- function(news) {
 
 make_prepend <- function(news) {
   force(news)
+
   function(x) {
-    c(news, x)
+    if (x[[1]] == news_comment) {
+      x <- x[-1]
+      if (x[[1]] == "") {
+        x <- x[-1]
+      }
+    }
+
+    c(news_comment, "", news, x)
   }
 }
 
