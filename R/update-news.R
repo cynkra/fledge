@@ -35,8 +35,8 @@ add_to_news <- function(news) {
   invisible(news_path)
 }
 
-make_prepend <- function(x) {
-  force(x)
+make_prepend <- function(news) {
+  force(news)
 
   function(x) {
     if (x[[1]] == news_comment) {
