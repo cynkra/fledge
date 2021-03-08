@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9007</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9012</span>
       </span>
     </div>
 
@@ -87,7 +87,9 @@
 <a href="#fledge" class="anchor"></a>fledge</h1></div>
 <!-- badges: start -->
 
-<p>{fledge} has been designed to streamline the process of versioning R packages on <em>Git</em>, with the functionality to automatically update <code>NEWS.md</code> and <code>DESCRIPTION</code> with relevant information from recent commit messages. For details on usage and implementation, refer the <a href="https://krlmlr.github.io/fledge/articles/fledge.html">Get Started</a> article.</p>
+<!-- badges: end -->
+<p>{fledge} has been designed to streamline the process of versioning R packages on <em>Git</em>, with the functionality to automatically update <code>NEWS.md</code> and <code>DESCRIPTION</code> with relevant information from recent commit messages. Numbers are cheap, why not use them?</p>
+<p>For details on usage and implementation, refer to <code><a href="articles/fledge.html">vignette("fledge")</a></code>.</p>
 <div id="demo" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demo" class="anchor"></a>Demo</h2>
@@ -98,8 +100,8 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install from GitHub using</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"krlmlr/fledge"</span><span class="op">)</span></code></pre></div>
+<pre class="chroma">
+<span class="nf">devtools</span><span class="nf">::</span><span class="nf"><a href="https://devtools.r-lib.org//reference/remote-reexports.html" class="external-link">install_github</a></span><span class="o">(</span><span class="s">"krlmlr/fledge"</span><span class="o">)</span></pre>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -108,37 +110,37 @@
 <ul>
 <li>
 <p>To configure your package for the first-time with {fledge}, use</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>From now on, use bullet points (<code><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">*</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">-</a></code>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
+<pre class="chroma">
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="o">)</span>
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span><span class="o">(</span><span class="o">)</span></pre>
+<p>From now on, use bullet points (<a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link"><code>*</code></a> or <a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link"><code>-</code></a>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
 </li>
 <li>
 <p>To assign a new <code>"dev"</code> version number to the R package and update <code>NEWS.md</code>, use</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre class="chroma">
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="o">)</span>
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/finalize_version.html">finalize_version</a></span><span class="o">(</span><span class="o">)</span></pre>
 </li>
 <li>
 <p>To assign a new version number to the R package before release to CRAN, use</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span>
-<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/commit_version.html">commit_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre class="chroma">
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="s">"patch"</span><span class="o">)</span>
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/commit_version.html">commit_version</a></span><span class="o">(</span><span class="o">)</span></pre>
 <p>Substitute <code>"patch"</code> by <code>"minor"</code> or <code>"major"</code> if applicable.</p>
 </li>
 <li>
 <p>To tag a version when the package has been accepted to CRAN, use</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre class="chroma">
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/tag_version.html">tag_version</a></span><span class="o">(</span><span class="o">)</span></pre>
 <p>Call</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre class="chroma">
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="o">)</span></pre>
 <p>to immediately switch to a development version.</p>
 </li>
 <li>
 <p>To undo the last version bump, use</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="reference/unbump_version.html">unbump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre class="chroma">
+<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://krlmlr.github.io/fledge/reference/unbump_version.html">unbump_version</a></span><span class="o">(</span><span class="o">)</span></pre>
 </li>
 </ul>
 </div>
