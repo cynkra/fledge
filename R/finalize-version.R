@@ -55,7 +55,7 @@ send_to_console <- function(code) {
   tryCatch(
     rstudioapi::sendToConsole(code, execute = FALSE),
     error = function(e) {
-      rstudioapi::sendToConsole(paste0("FALSE || ", code), execute = TRUE)
+      rstudioapi::sendToConsole(paste0("if (FALSE) ", code), execute = TRUE)
     }
   )
 }
