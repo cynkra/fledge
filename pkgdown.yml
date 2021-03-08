@@ -4,7 +4,7 @@ pkgdown_sha: 9c95f00d2505ddd83c4722e019202370715d3a3d
 articles:
   demo: demo.html
   fledge: fledge.html
-last_built: 2021-03-08T04:38Z
+last_built: 2021-03-08T04:39Z
 urls:
   reference: https://krlmlr.github.io/fledge/reference
   article: https://krlmlr.github.io/fledge/articles
