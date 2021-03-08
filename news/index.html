@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
@@ -131,103 +131,43 @@
       <small>Source: <a href='https://github.com/krlmlr/fledge/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="fledge-0039012" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9012">
-<a href="#fledge-0039012" class="anchor"></a>fledge 0.0.3.9012</h1>
+    <div id="fledge-004" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.4">
+<a href="#fledge-004" class="anchor"></a>fledge 0.0.4</h1>
+<div id="features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#features" class="anchor"></a>Features</h2>
 <ul>
-<li>Same as previous version.</li>
-</ul>
-</div>
-    <div id="fledge-0039011" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9011">
-<a href="#fledge-0039011" class="anchor"></a>fledge 0.0.3.9011</h1>
-<ul>
-<li>Internal changes only.</li>
-</ul>
-</div>
-    <div id="fledge-0039010" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9010">
-<a href="#fledge-0039010" class="anchor"></a>fledge 0.0.3.9010</h1>
-<ul>
-<li>Prepend NEWS comment.</li>
-<li>
-<code>sendToConsole()</code> works in VS Code.</li>
-<li>
-<code><a href="../reference/bump_version.html">bump_version()</a></code> gives correct advice if no remote branch exists.</li>
-</ul>
-</div>
-    <div id="fledge-0039007" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9007">
-<a href="#fledge-0039007" class="anchor"></a>fledge 0.0.3.9007</h1>
-<ul>
-<li>Add Patrick Schratz (<a href='https://github.com/pat-s'>@pat-s</a>) a contributor (<a href='https://github.com/krlmlr/fledge/issues/50'>#50</a>).</li>
-<li>Use GitHub Actions (<a href='https://github.com/krlmlr/fledge/issues/49'>#49</a>).</li>
+<li>Prepend NEWS comment to discourage edits.</li>
 <li>Dates are added to NEWS headers if existing headers have them, or for a new NEWS file (<a href='https://github.com/krlmlr/fledge/issues/29'>#29</a>).</li>
-<li>Move from <code>ui_*</code> to {cli} (<a href='https://github.com/krlmlr/fledge/issues/54'>#54</a>)</li>
-</ul>
-</div>
-    <div id="fledge-0039006" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9006">
-<a href="#fledge-0039006" class="anchor"></a>fledge 0.0.3.9006</h1>
-<ul>
 <li>
-<code><a href="../reference/bump_version.html">bump_version()</a></code> and <code><a href="../reference/get_top_level_commits.html">get_top_level_commits()</a></code> are more robust at enumerating the commits: traversing the first parent from which <code>since</code> can be reached, instead of the first parent. This ensures that NEWS are more meaningful and avoids the occasional enumeration of all NEWS items since the beginning.</li>
-</ul>
-</div>
-    <div id="fledge-0039005" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9005">
-<a href="#fledge-0039005" class="anchor"></a>fledge 0.0.3.9005</h1>
-<ul>
-<li>Same as previous version.</li>
-</ul>
-</div>
-    <div id="fledge-0039004" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9004">
-<a href="#fledge-0039004" class="anchor"></a>fledge 0.0.3.9004</h1>
-<ul>
-<li>Same as previous version.</li>
-</ul>
-</div>
-    <div id="fledge-0039003" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9003">
-<a href="#fledge-0039003" class="anchor"></a>fledge 0.0.3.9003</h1>
-<ul>
-<li>Same as previous version.</li>
-</ul>
-</div>
-    <div id="fledge-0039002" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9002">
-<a href="#fledge-0039002" class="anchor"></a>fledge 0.0.3.9002</h1>
-<ul>
-<li>
-<code><a href="../reference/finalize_version.html">finalize_version(push = TRUE)</a></code> also pushes to master.</li>
-<li>
-<code><a href="../reference/finalize_version.html">finalize_version()</a></code> calls <code>edit_news()</code>.</li>
-<li>Tweak demo.</li>
-<li>
-<code><a href="../reference/finalize_version.html">finalize_version()</a></code> sends <code><a href="../reference/finalize_version.html">finalize_version(push = TRUE)</a></code> to the RStudio console.</li>
-</ul>
-</div>
-    <div id="fledge-0039001" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9001">
-<a href="#fledge-0039001" class="anchor"></a>fledge 0.0.3.9001</h1>
-<ul>
-<li>
-<code><a href="../reference/finalize_version.html">finalize_version()</a></code> gains <code>push</code> argument, this considerably simplifies the workflow.</li>
-<li>Prefer <code>ui_done()</code> over <code>ui_info()</code> to report on action taken.</li>
+<code><a href="../reference/finalize_version.html">finalize_version()</a></code> gains <code>push</code> argument which pushes the tag and the main branch, this considerably simplifies the workflow. It calls <code>edit_news()</code> and sends <code><a href="../reference/finalize_version.html">finalize_version(push = TRUE)</a></code> to the RStudio or VS Code console.</li>
 <li>
 <code><a href="../reference/tag_version.html">tag_version()</a></code> returns name of created tag, invisibly.</li>
 <li>
 <code><a href="../reference/tag_version.html">tag_version(force = FALSE)</a></code> re-tags an existing tag if it points to the same commit.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<code><a href="../reference/bump_version.html">bump_version()</a></code> gives correct advice if no remote branch exists.</li>
+<li>
+<code><a href="../reference/bump_version.html">bump_version()</a></code> and <code><a href="../reference/get_top_level_commits.html">get_top_level_commits()</a></code> are more robust at enumerating the commits: traversing the first parent from which <code>since</code> can be reached, instead of the first parent. This ensures that NEWS are more meaningful and avoids the occasional enumeration of all NEWS items since the beginning.</li>
+</ul>
+</div>
+<div id="internal" class="section level2">
+<h2 class="hasAnchor">
+<a href="#internal" class="anchor"></a>Internal</h2>
+<ul>
+<li>Add Patrick Schratz (<a href='https://github.com/pat-s'>@pat-s</a>) a contributor (<a href='https://github.com/krlmlr/fledge/issues/50'>#50</a>).</li>
+<li>Use GitHub Actions (<a href='https://github.com/krlmlr/fledge/issues/49'>#49</a>).</li>
+<li>Move from <code>ui_*</code> to {cli} (<a href='https://github.com/krlmlr/fledge/issues/54'>#54</a>)</li>
 <li>Import rlang.</li>
 </ul>
 </div>
-    <div id="fledge-0039000" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3.9000">
-<a href="#fledge-0039000" class="anchor"></a>fledge 0.0.3.9000</h1>
-<ul>
-<li>Same as previous version.</li>
-</ul>
 </div>
     <div id="fledge-003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.3">
