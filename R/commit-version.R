@@ -17,7 +17,7 @@ commit_version_impl <- function() {
 
   if (length(gert::git_status(staged = TRUE)$staged) > 0) {
     cli_alert("Committing changes.")
-    gert::git_commit(get_commit_message(), repo = gert::git_info()$path)
+    gert::git_commit(get_commit_message())
   }
 
   amending
