@@ -43,7 +43,6 @@ check_only_staged <- function(allowed_modifications) {
   staged <- gert::git_status(staged = TRUE)
   stopifnot(all(staged$status == "modified"))
 
-  git_root <- usethis::proj_get()
-  modified <- paste0(git_root, "/", staged$file)
-  stopifnot(all(modified %in% paste0(git_root, "/", allowed_modifications)))
+  modified <- staged$modified
+  stopifnot(all(modified %in% allowed_modifications))
 }
