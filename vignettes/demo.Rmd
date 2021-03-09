@@ -219,6 +219,7 @@ This requires changes to the code, and perhaps a new test.
 We create a branch and switch to this branch to implement this.
 
 ```{r super-frob-branch}
+default_branch = git2r::repository_head()$name
 git2r::branch_create(git2r::last_commit(), name = "f-super-frob")
 git2r::checkout(branch = "f-super-frob")
 ```
@@ -246,7 +247,7 @@ Only when merging we specify the message to be included in the changelog, again 
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
 ```{r super-frob-merge}
-git2r::checkout(branch = "master")
+git2r::checkout(branch = default_branch)
 git2r::merge(".", "f-super-frob", commit_on_success = FALSE)
 git2r::status()
 git2r::commit(message = "- Super-frobnication enabled.")
