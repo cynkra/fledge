@@ -220,6 +220,7 @@ This requires changes to the code, and perhaps a new test.
 We create a branch and switch to this branch to implement this.
 
 ```{r super-frob-branch}
+default_branch <- gert::git_info()$shorthand
 gert::git_branch_create(branch = "f-super-frob")
 ```
 
@@ -246,7 +247,7 @@ Only when merging we specify the message to be included in the changelog, again 
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
 ```{r super-frob-merge}
-gert::git_branch_checkout("main")
+gert::git_branch_checkout(default_branch)
 gert::git_merge("f-super-frob", commit = FALSE)
 gert::git_status()
 gert::git_commit(message = "- Super-frobnication enabled.")
