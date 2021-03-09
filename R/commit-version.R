@@ -10,8 +10,8 @@ commit_version_impl <- function() {
   }
 
   # need to get paths from git status to account for subdirs
-  news_path = grep("DESCRIPTION", gert::git_status()$file, value = TRUE)
-  descr_path = grep("NEWS.md", gert::git_status()$file, value = TRUE)
+  news_path <- grep("DESCRIPTION", gert::git_status()$file, value = TRUE)
+  descr_path <- grep("NEWS.md", gert::git_status()$file, value = TRUE)
 
   gert::git_add(c(descr_path, news_path))
 
