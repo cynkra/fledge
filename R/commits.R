@@ -11,7 +11,7 @@ get_top_level_commits_impl <- function(since) {
     if (ab$behind > 0) {
       abort(paste0(since, " not reachable from current HEAD."))
     }
-    gert::git_log()[1:(ab$behind + 1), ]
+    utils::head(gert::git_log(), ab$behind + 1)
   } else {
     since_commit <- NULL
     since_commit
