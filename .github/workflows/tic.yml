@@ -98,14 +98,6 @@ jobs:
         if: runner.os == 'Linux' && matrix.config.pkgdown != ''
         run: sudo apt install libharfbuzz-dev libfribidi-dev
 
-      - name: "[Custom block] [Linux] Install libgit2"
-        if: runner.os == 'Linux'
-        run: sudo apt install libgit2-dev
-
-      - name: "[Custom block] [macOS] Install libgit2"
-        if: runner.os == 'macOS'
-        run: brew install libgit2
-
       - name: "[Stage] Install"
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
         run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
