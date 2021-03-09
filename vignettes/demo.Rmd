@@ -246,7 +246,7 @@ Only when merging we specify the message to be included in the changelog, again 
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
 ```{r super-frob-merge}
-gert::git_branch_checkout("master")
+gert::git_branch_checkout("main")
 gert::git_merge("f-super-frob", commit = FALSE)
 gert::git_status()
 gert::git_commit(message = "- Super-frobnication enabled.")
