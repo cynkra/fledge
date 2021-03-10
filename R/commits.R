@@ -53,12 +53,10 @@ get_last_tag_impl <- function() {
     all_tags <- git2r::tags()
   })
 
-  if (length(all_tags) == 0) {
-    return(NULL)
-  }
+  if (length(all_tags) == 0) return(NULL)
 
   tags_ab <- map(all_tags, git2r::ahead_behind, repo_head)
-  tags_only_b <- discard(tags_ab, ~ .[[1]] > 0)
+  tags_only_b <- discard(tags_ab, ~.[[1]] > 0)
   tags_b <- map_int(tags_only_b, 2)
 
   min_tag <- names(tags_b)[which.min(tags_b)]
