@@ -39,7 +39,7 @@ push_tag <- function(tag) {
 }
 
 push_head <- function(head) {
-  cli_alert("Pushing {.field {head$name}}.")
+  cli_alert('Pushing {.field {head$name}}.')
   git2r::push(head)
 }
 

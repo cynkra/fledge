@@ -32,9 +32,7 @@ get_first_parent <- function(commit, since) {
   repeat {
     all_parents <- git2r::parents(commit)
     first_parent <- get_parent_since(all_parents, since)
-    if (is_null(first_parent)) {
-      return(commits)
-    }
+    if (is_null(first_parent)) return(commits)
 
     commits <- c(commits, list(first_parent))
     commit <- first_parent
@@ -42,12 +40,8 @@ get_first_parent <- function(commit, since) {
 }
 
 get_parent_since <- function(all_parents, since) {
-  if (is_empty(all_parents)) {
-    return(NULL)
-  }
-  if (is_null(since)) {
-    return(all_parents[[1]])
-  }
+  if (is_empty(all_parents)) return(NULL)
+  if (is_null(since)) return(all_parents[[1]])
 
   purrr::detect(all_parents, ~ git2r::ahead_behind(.x, since)[[2]] == 0)
 }
