@@ -32,7 +32,9 @@ get_first_parent <- function(commit, since) {
   repeat {
     all_parents <- git2r::parents(commit)
     first_parent <- get_parent_since(all_parents, since)
-    if (is_null(first_parent)) return(commits)
+    if (is_null(first_parent)) {
+      return(commits)
+    }
 
     commits <- c(commits, list(first_parent))
     commit <- first_parent
@@ -40,8 +42,12 @@ get_first_parent <- function(commit, since) {
 }
 
 get_parent_since <- function(all_parents, since) {
-  if (is_empty(all_parents)) return(NULL)
-  if (is_null(since)) return(all_parents[[1]])
+  if (is_empty(all_parents)) {
+    return(NULL)
+  }
+  if (is_null(since)) {
+    return(all_parents[[1]])
+  }
 
   purrr::detect(all_parents, ~ git2r::ahead_behind(.x, since)[[2]] == 0)
 }
@@ -53,10 +59,12 @@ get_last_tag_impl <- function() {
     all_tags <- git2r::tags()
   })
 
-  if (length(all_tags) == 0) return(NULL)
+  if (length(all_tags) == 0) {
+    return(NULL)
+  }
 
   tags_ab <- map(all_tags, git2r::ahead_behind, repo_head)
-  tags_only_b <- discard(tags_ab, ~.[[1]] > 0)
+  tags_only_b <- discard(tags_ab, ~ .[[1]] > 0)
   tags_b <- map_int(tags_only_b, 2)
 
   min_tag <- names(tags_b)[which.min(tags_b)]

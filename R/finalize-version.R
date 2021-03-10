@@ -39,7 +39,7 @@ push_tag <- function(tag) {
 }
 
 push_head <- function(head) {
-  cli_alert('Pushing {.field {head$name}}.')
+  cli_alert("Pushing {.field {head$name}}.")
   git2r::push(head)
 }
 
@@ -48,9 +48,15 @@ has_remote_branch <- function(branch) {
 }
 
 send_to_console <- function(code) {
-  if (!is_interactive()) return()
-  if (!is_installed("rstudioapi")) return()
-  if (!rstudioapi::hasFun("sendToConsole")) return()
+  if (!is_interactive()) {
+    return()
+  }
+  if (!is_installed("rstudioapi")) {
+    return()
+  }
+  if (!rstudioapi::hasFun("sendToConsole")) {
+    return()
+  }
 
   tryCatch(
     rstudioapi::sendToConsole(code, execute = FALSE),
