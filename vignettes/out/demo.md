@@ -237,7 +237,7 @@ fledge::bump_version()
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
 ## 
-## ── [1m[1mUpdate Version[1m[22m ──
+## ── [1m[1mUpdating Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.0.9001[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
@@ -246,7 +246,6 @@ fledge::bump_version()
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
 ## → Creating tag [32m[32mv0.0.0.9001[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
-## [31m●[39m Edit [34m'NEWS.md'[39m
 ## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 ```
@@ -409,7 +408,7 @@ fledge::bump_version()
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
 ## 
-## ── [1m[1mUpdate Version[1m[22m ──
+## ── [1m[1mUpdating Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.0.9002[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
@@ -418,7 +417,6 @@ fledge::bump_version()
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
 ## → Creating tag [32m[32mv0.0.0.9002[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
-## [31m●[39m Edit [34m'NEWS.md'[39m
 ## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 news <- readLines("NEWS.md")
@@ -462,16 +460,15 @@ fledge::bump_version("patch")
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
 ## 
-## ── [1m[1mUpdate Version[1m[22m ──
+## ── [1m[1mUpdating Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.1[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
 ## → Committing changes.
-## [36mℹ[39m Preparing package for release (CRAN or otherwise).
-## [31m●[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Convert the change log in [34m[34mNEWS.md[34m[39m to release notes.
-## [33m![39m After CRAN release, call [30m[47m[30m[47m`fledge::tag_version()`[47m[30m[49m[39m and
-## [30m[47m[30m[47m`fledge::bump_version()`[47m[30m[49m[39m to re-enter development mode
+## 
+## ── [1m[1mPreparing package for CRAN release[1m[22m ──
+## 
+## ● Convert the changelog in [34m[34mNEWS.md[34m[39m to release notes.
 ```
 
 This updates the version of our package to 0.0.4.
@@ -589,7 +586,7 @@ fledge::bump_version()
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
 ## 
-## ── [1m[1mUpdate Version[1m[22m ──
+## ── [1m[1mUpdating Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.1.9000[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
@@ -598,7 +595,6 @@ fledge::bump_version()
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
 ## → Creating tag [32m[32mv0.0.1.9000[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
-## [31m●[39m Edit [34m'NEWS.md'[39m
 ## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 news <- readLines("NEWS.md")
