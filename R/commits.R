@@ -11,6 +11,10 @@ get_top_level_commits_impl <- function(since) {
   commit <- git2r::commits(time = FALSE, n = 1)[[1]]
 
   if (!is.null(since)) {
+    if (is.character(since)) {
+      since <- git2r::lookup(sha = since)
+    }
+
     since_commit <- git2r::lookup_commit(since)
     ab <- git2r::ahead_behind(commit, since_commit)
     if (ab[[2]] > 0) {

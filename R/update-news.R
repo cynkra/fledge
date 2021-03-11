@@ -9,6 +9,10 @@ update_news_impl <- function(range) {
 collect_news <- function(range) {
   cli_alert("Scraping {.field {length(range)}} commit messages.")
 
+  if (is.character(range)) {
+    range <- lapply(range, git2r::lookup, repo = ".")
+  }
+
   messages <- gsub("\r\n", "\n", map_chr(range, "message"))
   messages_before_triple_dash <- map_chr(strsplit(messages, "\n---", fixed = TRUE), 1)
   message_lines <- strsplit(messages_before_triple_dash, "\n", fixed = TRUE)
