@@ -9,15 +9,31 @@ commit_version_impl <- function() {
     amending <- FALSE
   }
 
-  # need to get paths from git status to account for subdirs
-  news_path <- grep("DESCRIPTION", gert::git_status()$file, value = TRUE)
-  descr_path <- grep("NEWS.md", gert::git_status()$file, value = TRUE)
-
-  gert::git_add(c(descr_path, news_path))
+  gert::git_add(c("DESCRIPTION", news_path))
 
   if (length(gert::git_status(staged = TRUE)$staged) > 0) {
     cli_alert("Committing changes.")
-    gert::git_commit(get_commit_message())
+
+    # For stable Rmarkdown output
+    if (Sys.getenv("IN_PKGDOWN") != "") {
+      author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_AUTHOR_DATE"))
+      author <- gert::git_signature(
+        name = Sys.getenv("GIT_AUTHOR_NAME"),
+        email = Sys.getenv("GIT_AUTHOR_EMAIL"),
+        time = author_time
+      )
+      committer_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
+      committer <- gert::git_signature(
+        name = Sys.getenv("GIT_COMMITTER_NAME"),
+        email = Sys.getenv("GIT_COMMITTER_EMAIL"),
+        time = committer_time
+      )
+    } else {
+      author <- NULL
+      committer <- NULL
+    }
+
+    gert::git_commit(get_commit_message(), author = author, committer = committer)
   }
 
   amending

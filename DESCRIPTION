@@ -36,6 +36,7 @@ Suggests:
     fs,
     git2r,
     knitr,
+    parsedate,
     rmarkdown,
     rstudioapi,
     testthat
