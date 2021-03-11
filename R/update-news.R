@@ -10,7 +10,7 @@ collect_news <- function(range) {
   cli_alert("Scraping {.field {length(range)}} commit messages.")
 
   if (is.character(range)) {
-    range <- lapply(range, git2r::lookup, repo = ".")
+    range <- map(range, git2r::lookup, repo = ".")
   }
 
   messages <- gsub("\r\n", "\n", map_chr(range, "message"))
