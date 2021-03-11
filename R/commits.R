@@ -8,7 +8,7 @@ with_repo <- function(code) {
 }
 
 get_top_level_commits_impl <- function(since) {
-  commit <- git2r::commits(get_repo(), time = FALSE, n = 1)[[1]]
+  commit <- git2r::commits(time = FALSE, n = 1)[[1]]
 
   if (!is.null(since)) {
     since_commit <- git2r::lookup_commit(since)
