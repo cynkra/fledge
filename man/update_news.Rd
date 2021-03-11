@@ -4,11 +4,16 @@
 \alias{update_news}
 \title{Update NEWS.md with messages from top-level commits}
 \usage{
-update_news(range = get_top_level_commits(since = get_last_tag()))
+update_news(
+  messages = get_top_level_commits(since = get_last_tag())$message,
+  range = NULL
+)
 }
 \arguments{
-\item{range}{A commit range as character vector of SHAs,
-e.g. as returned from \code{\link[=get_top_level_commits]{get_top_level_commits()}}.}
+\item{messages}{A character vector of commit messages,
+e.g. as in the \code{message} column in the return value of \code{\link[=get_top_level_commits]{get_top_level_commits()}}.}
+
+\item{range}{Deprecated.}
 }
 \description{
 Lists all commits from a range (default: top-level commits since the most

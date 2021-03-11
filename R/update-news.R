@@ -1,20 +1,16 @@
-update_news_impl <- function(range) {
-  news <- collect_news(range)
+update_news_impl <- function(messages) {
+  news <- collect_news(messages)
 
   cli_h2("Updating NEWS")
   cli_alert("Adding new entries to {.file {news_path}}.")
   add_to_news(news)
 }
 
-collect_news <- function(range) {
-  cli_alert("Scraping {.field {length(range)}} commit messages.")
+collect_news <- function(messages) {
+  cli_alert("Scraping {.field {length(messages)}} commit messages.")
 
-  if (is.character(range)) {
-    range <- map(range, git2r::lookup, repo = ".")
-  }
-
-  messages <- gsub("\r\n", "\n", map_chr(range, "message"))
-  messages_before_triple_dash <- map_chr(strsplit(messages, "\n---", fixed = TRUE), 1)
+  messages_lf <- gsub("\r\n", "\n", messages)
+  messages_before_triple_dash <- map_chr(strsplit(messages_lf, "\n---", fixed = TRUE), 1)
   message_lines <- strsplit(messages_before_triple_dash, "\n", fixed = TRUE)
   message_bullets <- map(message_lines, keep, ~ grepl("^[*-]", .))
 
