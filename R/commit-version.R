@@ -59,6 +59,6 @@ check_only_staged <- function(allowed_modifications) {
   staged <- gert::git_status(staged = TRUE)
   stopifnot(all(staged$status == "modified"))
 
-  modified <- staged$modified
+  modified <- staged$file
   stopifnot(all(modified %in% allowed_modifications))
 }

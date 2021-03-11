@@ -241,9 +241,7 @@ fledge::bump_version()
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.0.9001[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Warning: Unknown or uninitialised column: `modified`.
 ## → Committing changes.
-## Warning: Unknown or uninitialised column: `modified`.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
@@ -304,10 +302,8 @@ update. It should be called when `NEWS.md` is manually updated.
 
 ``` r
 fledge::finalize_version()
-## Warning: Unknown or uninitialised column: `modified`.
 ## → Resetting to previous commit.
 ## → Committing changes.
-## Warning: Unknown or uninitialised column: `modified`.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
@@ -417,9 +413,7 @@ fledge::bump_version()
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.0.9002[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Warning: Unknown or uninitialised column: `modified`.
 ## → Committing changes.
-## Warning: Unknown or uninitialised column: `modified`.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
@@ -472,7 +466,6 @@ fledge::bump_version("patch")
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.1[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Warning: Unknown or uninitialised column: `modified`.
 ## → Committing changes.
 ## [36mℹ[39m Preparing package for release (CRAN or otherwise).
 ## [31m●[39m Edit [34m'NEWS.md'[39m
@@ -567,7 +560,6 @@ It is now the time to tag the released version using the
 
 ``` r
 fledge::tag_version()
-## Warning: Unknown or uninitialised column: `modified`.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
@@ -601,9 +593,7 @@ fledge::bump_version()
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.1.9000[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Warning: Unknown or uninitialised column: `modified`.
 ## → Committing changes.
-## Warning: Unknown or uninitialised column: `modified`.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
