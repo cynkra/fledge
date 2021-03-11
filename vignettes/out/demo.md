@@ -247,7 +247,7 @@ fledge::bump_version()
 ## 
 ## → Creating tag [32m[32mv0.0.0.9001[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
 ## [31m●[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version(push = TRUE)`[47m[30m[49m[39m.
+## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 ```
 
@@ -419,7 +419,7 @@ fledge::bump_version()
 ## 
 ## → Creating tag [32m[32mv0.0.0.9002[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
 ## [31m●[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version(push = TRUE)`[47m[30m[49m[39m.
+## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
@@ -599,7 +599,7 @@ fledge::bump_version()
 ## 
 ## → Creating tag [32m[32mv0.0.1.9000[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
 ## [31m●[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version(push = TRUE)`[47m[30m[49m[39m.
+## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
