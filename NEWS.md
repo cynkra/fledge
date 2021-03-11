@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.5.9000
+
+- Same as previous version.
+
+
 # fledge 0.0.5
 
 - Use {gert} instead of {git2r} for interacting with Git (#57).
