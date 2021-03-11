@@ -230,8 +230,8 @@ the package and also update `NEWS.md`.
 
 ``` r
 fledge::bump_version()
-## → Scraping [32m[32m0[32m[39m commit messages.
-## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
+## → Scraping [32m[32m4[32m[39m commit messages.
+## [32m✔[39m Found [32m[32m2[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
@@ -264,7 +264,8 @@ cat(news, sep = "\n")
 ## 
 ## # SuperFrob 0.0.0.9001
 ## 
-## - Same as previous version.
+## - Add tests for frobnication.
+## - Add support for frobmication.
 ## 
 ## 
 ## # SuperFrob 0.0.0.9000
@@ -282,7 +283,8 @@ cat(news, sep = "\n")
 ## 
 ## # SuperFrob 0.0.0.9001
 ## 
-## - Same as previous version.
+## - Add tests for frobnication.
+## - Add support for frobnication.
 ## 
 ## 
 ## # SuperFrob 0.0.0.9000
@@ -347,7 +349,7 @@ git commit -m "Add super-frob tests."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [f-super-frob f3fdcc5] Add super-frob tests.
+## [f-super-frob dabb1ac] Add super-frob tests.
 ##  1 file changed, 3 insertions(+)
 ##  create mode 100644 tests/testthat/test-frob.R
 ```
@@ -368,7 +370,7 @@ git commit -m "Add super-frob implementation."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   R/frob.R
 ## 
-## [f-super-frob 751d987] Add super-frob implementation.
+## [f-super-frob 4c73d5b] Add super-frob implementation.
 ##  1 file changed, 1 insertion(+)
 ##  create mode 100644 R/frob.R
 ```
@@ -392,7 +394,7 @@ git commit -m "- Super-frobnication enabled."
 ##  new file:   R/frob.R
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [main c8f53e6] - Super-frobnication enabled.
+## [main bbe77ab] - Super-frobnication enabled.
 ```
 
 The same strategy can be used when merging a pull/merge/… request on
@@ -404,7 +406,7 @@ time to bump the version again.
 
 ``` r
 fledge::bump_version()
-## → Scraping [32m[32m6[32m[39m commit messages.
+## → Scraping [32m[32m1[32m[39m commit messages.
 ## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
@@ -436,7 +438,8 @@ cat(news, sep = "\n")
 ## 
 ## # SuperFrob 0.0.0.9001
 ## 
-## - Same as previous version.
+## - Add tests for frobnication.
+## - Add support for frobnication.
 ## 
 ## 
 ## # SuperFrob 0.0.0.9000
@@ -458,7 +461,7 @@ We wish to release this package as a patch and so we use
 
 ``` r
 fledge::bump_version("patch")
-## → Scraping [32m[32m6[32m[39m commit messages.
+## → Scraping [32m[32m1[32m[39m commit messages.
 ## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
@@ -491,7 +494,7 @@ cat(news, sep = "\n")
 ## 
 ## # SuperFrob 0.0.1
 ## 
-## - Internal changes only.
+## - Same as previous version.
 ## 
 ## 
 ## # SuperFrob 0.0.0.9002
@@ -501,7 +504,8 @@ cat(news, sep = "\n")
 ## 
 ## # SuperFrob 0.0.0.9001
 ## 
-## - Same as previous version.
+## - Add tests for frobnication.
+## - Add support for frobnication.
 ## 
 ## 
 ## # SuperFrob 0.0.0.9000
@@ -541,8 +545,8 @@ git commit -m "Update NEWS."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  modified:   NEWS.md
 ## 
-## [main e7eba97] Update NEWS.
-##  1 file changed, 2 insertions(+), 17 deletions(-)
+## [main 859cbf5] Update NEWS.
+##  1 file changed, 2 insertions(+), 18 deletions(-)
 ```
 
 The package is now ready to be released to CRAN. I prefer
@@ -586,7 +590,7 @@ We will now make the package ready for future development. The
 
 ``` r
 fledge::bump_version()
-## → Scraping [32m[32m6[32m[39m commit messages.
+## → Scraping [32m[32m1[32m[39m commit messages.
 ## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
@@ -613,7 +617,7 @@ cat(news, sep = "\n")
 ## 
 ## # SuperFrob 0.0.1.9000 (2021-03-11)
 ## 
-## - Internal changes only.
+## - Same as previous version.
 ## 
 ## 
 ## Initial CRAN release.
