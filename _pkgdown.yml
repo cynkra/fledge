@@ -5,7 +5,7 @@ template:
     bootswatch: flatly # https://bootswatch.com/flatly/
 
 development:
-  mode: release
+  mode: auto
 
 authors:
   Kirill Müller:
