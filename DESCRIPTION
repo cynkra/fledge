@@ -16,9 +16,9 @@ Authors@R:
 Description: Streamlines the process of versioning R packages
     and updating NEWS. Numbers are cheap, why not use them?
 License: GPL-3
-URL: http://krlmlr.github.io/fledge,
-    https://github.com/krlmlr/fledge
-BugReports: https://github.com/krlmlr/fledge/issues
+URL: http://cynkra.github.io/fledge,
+    https://github.com/cynkra/fledge
+BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
     cli,
     desc (>= 1.2.0),
