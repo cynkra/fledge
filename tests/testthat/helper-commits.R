@@ -9,7 +9,12 @@ touch <- function(file, bullet = TRUE) {
 create_repo <- function(repo) {
   unlink(repo, recursive = TRUE, force = TRUE)
 
-  gert::git_init(repo)
+  tryCatch(
+    gert::git_init(repo),
+    error = function(e) {
+      skip("Can't init repository")
+    }
+  )
 
   withr::local_dir(repo)
 
