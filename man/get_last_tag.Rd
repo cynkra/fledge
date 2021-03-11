@@ -7,7 +7,7 @@
 get_last_tag()
 }
 \value{
-An object of the repo's \code{\link[gert:git_tag]{gert::git_tag_list()}}.
+The SHA of the commit representing the last tag.
 }
 \description{
 Returns the most recent Git tag.
