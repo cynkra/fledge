@@ -12,9 +12,9 @@ get_top_level_commits_impl <- function(since) {
     }
     utils::head(gert::git_log(), ab$behind + 1)
   } else {
-    since_commit <- NULL
-    since_commit
+    gert::git_log()
   }
+
 }
 
 get_first_parent <- function(commit, since) {
@@ -60,5 +60,5 @@ get_last_tag_impl <- function() {
   names(tags_b) <- names(tags_only_b)
 
   min_tag <- which.min(tags_b)
-  gert::git_tag_list(match = names(min_tag))
+  gert::git_tag_list(match = names(min_tag))$commit
 }
