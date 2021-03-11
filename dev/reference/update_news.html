@@ -81,7 +81,7 @@ recent tag) and adds bullets from their body to NEWS.md." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.3.9012</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.4.9000</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@ recent tag) and adds bullets from their body to NEWS.md." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/fledge/">
+  <a href="https://github.com/cynkra/fledge/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -130,7 +130,7 @@ recent tag) and adds bullets from their body to NEWS.md." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Update NEWS.md with messages from top-level commits</h1>
-    <small class="dont-index">Source: <a href='https://github.com/krlmlr/fledge/blob/master/R/api-update-news.R'><code>R/api-update-news.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/cynkra/fledge/blob/master/R/api-update-news.R'><code>R/api-update-news.R</code></a></small>
     <div class="hidden name"><code>update_news.Rd</code></div>
     </div>
 
@@ -139,14 +139,22 @@ recent tag) and adds bullets from their body to NEWS.md." />
 recent tag) and adds bullets from their body to <code>NEWS.md</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>update_news</span><span class='op'>(</span>range <span class='op'>=</span> <span class='fu'><a href='get_top_level_commits.html'>get_top_level_commits</a></span><span class='op'>(</span>since <span class='op'>=</span> <span class='fu'><a href='get_last_tag.html'>get_last_tag</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>update_news</span><span class='op'>(</span>
+  messages <span class='op'>=</span> <span class='fu'><a href='get_top_level_commits.html'>get_top_level_commits</a></span><span class='op'>(</span>since <span class='op'>=</span> <span class='fu'><a href='get_last_tag.html'>get_last_tag</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>message</span>,
+  range <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>messages</th>
+      <td><p>A character vector of commit messages,
+e.g. as in the <code>message</code> column in the return value of <code><a href='get_top_level_commits.html'>get_top_level_commits()</a></code>.</p></td>
+    </tr>
+    <tr>
       <th>range</th>
-      <td><p>range</p></td>
+      <td><p>Deprecated.</p></td>
     </tr>
     </table>
 
