@@ -11,17 +11,15 @@ and easy steps during the development process, you can ensure that
 versioning and updating of `NEWS.md` and `DESCRIPTION` is easily
 achieved for release.
 
-Installation
-------------
+## Installation
 
 The package can be installed from GitHub using the command
 
 ``` r
-devtools::install_github("krlmlr/fledge")
+devtools::install_github("cynkra/fledge")
 ```
 
-Why use fledge?
----------------
+## Why use fledge?
 
 Without {fledge}, you probably follow these steps at different stages of
 your workflow.
@@ -43,8 +41,7 @@ achieved with just one function call.
 Using {fledge} would not only save you time, but will also streamline
 the process of versioning and updating `NEWS.md`.
 
-Functions
----------
+## Functions
 
 {fledge} consists of the following functions that enable versioning at
 different stages through the package development lifecycle.
@@ -58,8 +55,7 @@ different stages through the package development lifecycle.
 | `update_news()`       | Update `NEWS.md` with messages from top level commits                                                | Used by `bump_version()`            |
 | `update_version()`    | Update `NEWS.md` and `DESCRIPTION` with a new version                                                | Used by `bump_version()`            |
 
-Usage
------
+## Usage
 
 The following sections show, how to combine these functions at different
 stages with any R package on GitHub. All {fledge} commands should be
@@ -114,7 +110,7 @@ to be included throughout the development workflow.
     This achieves the following:
 
          * `NEWS.md` is now composed, based on the most recent commit messages.
-           To understand how `NEWS.md` is updated by fledge, see the section on `NEWS.md` implementation.
+             To understand how `NEWS.md` is updated by fledge, see the section on `NEWS.md` implementation.
          * A new version number is assigned automatically (this is modeled after `usethis::use_version()`)
          * A tag matching the version number is assigned automatically, with the most recent `NEWS.md` messages included in the tag's message.
 
@@ -147,8 +143,7 @@ When you want to release your package to CRAN, follow the steps below:
         fledge::tag_version()
         fledge::bump_version()
 
-Implementation
---------------
+## Implementation
 
 The following sections explain, how things actually work inside fledge
 
@@ -213,8 +208,7 @@ does the following
     commit as much as you like. The tag is created only after you use
     `tag_version()` manually.
 
-Caveats
--------
+## Caveats
 
 If you rebase after creating a tag, you need to call
 `finalize_version()` to make sure the tag is moved to the mainline
