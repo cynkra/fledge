@@ -8,9 +8,13 @@ with_repo <- function(code) {
 }
 
 get_top_level_commits_impl <- function(since) {
-  commit <- git2r::commits(get_repo(), time = FALSE, n = 1)[[1]]
+  commit <- git2r::commits(time = FALSE, n = 1)[[1]]
 
   if (!is.null(since)) {
+    if (is.character(since)) {
+      since <- git2r::lookup(sha = since)
+    }
+
     since_commit <- git2r::lookup_commit(since)
     ab <- git2r::ahead_behind(commit, since_commit)
     if (ab[[2]] > 0) {
@@ -20,7 +24,10 @@ get_top_level_commits_impl <- function(since) {
     since_commit <- NULL
   }
 
-  get_first_parent(commit, since_commit)
+  commits <- get_first_parent(commit, since_commit)
+  sha <- map_chr(commits, "sha")
+  message <- map_chr(commits, "message")
+  tibble::tibble(commit = sha, message)
 }
 
 get_first_parent <- function(commit, since) {
@@ -60,7 +67,7 @@ get_last_tag_impl <- function() {
   tags_b <- map_int(tags_only_b, 2)
 
   min_tag <- names(tags_b)[which.min(tags_b)]
-  all_tags[[min_tag]]
+  git2r::lookup_commit(all_tags[[min_tag]])$sha
 }
 
 get_repo_head <- function(ref = NULL) {
