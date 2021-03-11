@@ -47,6 +47,7 @@ get_commit_message <- function(version) {
   desc <- desc::desc(file = "DESCRIPTION")
   version <- desc$get_version()
 
+  # gert always appends a newline to the commit messages
   paste0("Bump version to ", version, "\n")
 }
 
