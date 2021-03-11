@@ -17,11 +17,14 @@ Finally, we will demonstrate how this changelog can eventually be converted to r
 This guide shows mostly R code, and uses Bash shell code for Git commands.
 
 ```{r setup, include = FALSE}
-if (identical(Sys.getenv("IN_PKGDOWN"), "true")) {
+in_pkgdown <- identical(Sys.getenv("IN_PKGDOWN"), "true")
+if (in_pkgdown) {
   options(crayon.enabled = TRUE)
 }
+
 knitr::opts_chunk$set(
-  collapse = TRUE
+  collapse = TRUE,
+  error = !in_pkgdown
 )
 Sys.setenv(GIT_AUTHOR_DATE = "2020-12-12 12:47:37Z")
 Sys.setenv(GIT_AUTHOR_NAME = "Kirill Müller")
@@ -91,7 +94,7 @@ fs::dir_tree()
 Next we set up this package for development and create a Git repository for the package.
 We use `git init` to get a predictable branch name.
 
-```{bash git, error = (.Platform$OS.type == "windows")}
+```{bash git}
 git init --initial-branch=main
 ```
 
@@ -103,19 +106,19 @@ git2r::config(user.name = "Test", user.email = "test@user.org")
 In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
 In the demo this needs to be carried out manually.
 
-```{bash git-initial-commit, error = (.Platform$OS.type == "windows")}
+```{bash git-initial-commit}
 git add .
 git commit -m "Initial commit."
 ```
 
-```{bash git-show-init, error = (.Platform$OS.type == "windows")}
+```{bash git-show-init}
 git log --numstat
 git status
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
 
-```{bash git-no-ff, error = (.Platform$OS.type == "windows")}
+```{bash git-no-ff}
 git config merge.ff false
 ```
 
@@ -138,7 +141,7 @@ cat(news, sep = "\n")
 
 This file needs to be tracked by Git:
 
-```{bash init-news-commit, error = (.Platform$OS.type == "windows")}
+```{bash init-news-commit}
 git add .
 git status
 git commit -m "Initial NEWS.md ."
@@ -160,7 +163,7 @@ We commit this file to Git with a relevant message.
 Note the use of the bullet (-) before the commit message.
 This indicates that the message should be included in `NEWS.md` when it is updated.
 
-```{bash commit-super, error = (.Platform$OS.type == "windows")}
+```{bash commit-super}
 git add .
 git commit -m "- Add support for frobmication."
 ```
@@ -177,7 +180,7 @@ cat(readLines("tests/testthat/test-super.R"), sep = "\n")
 In a real project we would substitute the testing code from the template by real tests.
 In this demo we commit straight away, again with a bulleted message.
 
-```{bash commit-super-test, error = (.Platform$OS.type == "windows")}
+```{bash commit-super-test}
 git add .
 git status
 git commit -m "- Add tests for frobnication."
@@ -230,7 +233,7 @@ In this demo, no remote repository is set up, and the push process is not shown.
 This requires changes to the code, and perhaps a new test.
 We create a branch and switch to this branch to implement this.
 
-```{bash super-frob-branch, error = (.Platform$OS.type == "windows")}
+```{bash super-frob-branch}
 git checkout -b f-super-frob
 ```
 
@@ -242,7 +245,7 @@ usethis::use_test("frob")
 ```
 
 
-```{bash super-frob-commit, error = (.Platform$OS.type == "windows")}
+```{bash super-frob-commit}
 git add .
 git status
 git commit -m "Add super-frob tests."
@@ -255,7 +258,7 @@ writeLines("# super-frob", "R/frob.R")
 ```
 
 
-```{bash super-frob-2-commit, error = (.Platform$OS.type == "windows")}
+```{bash super-frob-2-commit}
 git add .
 git status
 git commit -m "Add super-frob implementation."
@@ -267,7 +270,7 @@ Only when merging we specify the message to be included in the changelog, again 
 [^merge-ff]: Note that we really need a merge commit here; the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
-```{bash super-frob-merge, error = (.Platform$OS.type == "windows")}
+```{bash super-frob-merge}
 git checkout main
 git merge f-super-frob --no-commit
 git status
@@ -324,7 +327,7 @@ writeLines(news, "NEWS.md")
 
 Unlike with development versions, we commit the changes to `NEWS.md` manually:
 
-```{bash patch-news-write, error = (.Platform$OS.type == "windows")}
+```{bash patch-news-write}
 git add .
 git status
 git commit -m "Update NEWS."
