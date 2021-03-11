@@ -1,5 +1,17 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.5.9000
+
+- Same as previous version.
+
+
+# fledge 0.0.5
+
+- Use {gert} instead of {git2r} for interacting with Git (#57).
+- The API no longer accepts or returns git2r objects (#77).
+- `vignette("demo")` now shows the same results with each run (#70).
+
+
 # fledge 0.0.4
 
 ## Features
