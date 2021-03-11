@@ -64,7 +64,7 @@ get_last_tag_impl <- function() {
   tags_b <- map_int(tags_only_b, 2)
 
   min_tag <- names(tags_b)[which.min(tags_b)]
-  all_tags[[min_tag]]
+  git2r::lookup_commit(all_tags[[min_tag]])$sha
 }
 
 get_repo_head <- function(ref = NULL) {
