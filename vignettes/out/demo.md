@@ -402,7 +402,7 @@ time to bump the version again.
 
 ``` r
 fledge::bump_version()
-## → Scraping [32m[32m1[32m[39m commit messages.
+## → Scraping [32m[32m2[32m[39m commit messages.
 ## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
