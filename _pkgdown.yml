@@ -1,11 +1,11 @@
-url: https://krlmlr.github.io/fledge
+url: https://cynkra.github.io/fledge
 
 template:
   params:
     bootswatch: flatly # https://bootswatch.com/flatly/
 
 development:
-  mode: release
+  mode: auto
 
 authors:
   Kirill Müller:

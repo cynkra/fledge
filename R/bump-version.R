@@ -8,10 +8,10 @@ bump_version_impl <- function(which) {
   update_version(which = which)
   #' 3. Depending on the `which` argument:
   if (which == "dev") {
-  #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
+    #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
     finalize_version_impl(push = FALSE)
   } else {
-  #'     - Otherwise, [commit_version()].
+    #'     - Otherwise, [commit_version()].
     commit_version()
 
     cli_h2("Preparing package for CRAN release")

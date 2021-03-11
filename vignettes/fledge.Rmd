@@ -28,7 +28,7 @@ By incorporating a few simple and easy steps during the development process, you
 The package can be installed from GitHub using the command
 
 ```r
-devtools::install_github("krlmlr/fledge")
+devtools::install_github("cynkra/fledge")
 ```
 
 ## Why use fledge?
