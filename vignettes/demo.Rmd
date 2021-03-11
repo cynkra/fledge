@@ -91,7 +91,7 @@ fs::dir_tree()
 Next we set up this package for development and create a Git repository for the package.
 We use `git init` to get a predictable branch name.
 
-```{bash git}
+```{bash git, error = (.Platform$OS.type == "windows")}
 git init --initial-branch=main
 ```
 
@@ -103,7 +103,7 @@ git2r::config(user.name = "Test", user.email = "test@user.org")
 In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
 In the demo this needs to be carried out manually.
 
-```{bash git-initial-commit, eval = !interactive(), error = (.Platform$OS.type == "windows")}
+```{bash git-initial-commit, error = (.Platform$OS.type == "windows")}
 git add .
 git commit -m "Initial commit."
 ```
