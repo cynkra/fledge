@@ -8,5 +8,5 @@
 #' @param since A commit or tag object, e.g. [get_last_tag()].
 #' @export
 get_top_level_commits <- function(since) {
-  get_top_level_commits_impl(since)
+  with_repo(get_top_level_commits_impl(since))
 }
