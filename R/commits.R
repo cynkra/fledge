@@ -3,32 +3,32 @@ with_repo <- function(code) {
 }
 
 get_top_level_commits_impl <- function(since) {
-  commit <- gert::git_log(max = 1)
+  commit <- gert::git_log(max = 1)$commit
 
   if (!is.null(since)) {
-    ab <- gert::git_ahead_behind(ref = commit$commit, upstream = since)
+    ab <- gert::git_ahead_behind(since, commit)
     if (ab$behind > 0) {
       abort(paste0(since, " not reachable from current HEAD."))
     }
-    utils::head(gert::git_log(), ab$behind + 1)
-  } else {
-    gert::git_log()
   }
 
+  commit <- get_first_parent(commit, since)
+  message <- map_chr(commit, ~ gert::git_commit_info(.x)$message)
+  tibble::tibble(commit, message)
 }
 
 get_first_parent <- function(commit, since) {
-  commits <- list(commit)
-  if (!is.null(since) && commit$sha == since$sha) {
+  commits <- commit
+  if (!is.null(since) && commit == since) {
     return(commits)
   }
 
   repeat {
-    all_parents <- git2r::parents(commit)
+    all_parents <- gert::git_commit_info(commit)$parents
     first_parent <- get_parent_since(all_parents, since)
     if (is_null(first_parent)) return(commits)
 
-    commits <- c(commits, list(first_parent))
+    commits <- c(commits, first_parent)
     commit <- first_parent
   }
 }
@@ -37,7 +37,7 @@ get_parent_since <- function(all_parents, since) {
   if (is_empty(all_parents)) return(NULL)
   if (is_null(since)) return(all_parents[[1]])
 
-  purrr::detect(all_parents, ~ git2r::ahead_behind(.x, since)[[2]] == 0)
+  purrr::detect(all_parents, ~ gert::git_ahead_behind(since, .x)$behind == 0)
 }
 
 get_last_tag_impl <- function() {
