@@ -98,11 +98,6 @@ We use `git init` to get a predictable branch name.
 git init --initial-branch=main
 ```
 
-```{r git-config, include = FALSE}
-# ...but only in interactive mode.
-git2r::config(user.name = "Test", user.email = "test@user.org")
-```
-
 In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
 In the demo this needs to be carried out manually.
 
