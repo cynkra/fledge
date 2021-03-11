@@ -35,7 +35,6 @@ Suggests:
     covr,
     fansi,
     fs,
-    git2r,
     knitr,
     parsedate,
     rmarkdown,
