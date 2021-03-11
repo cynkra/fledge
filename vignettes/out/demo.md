@@ -53,10 +53,6 @@ pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
 ## [34mRoxygen[39m: list(markdown = TRUE)
 ## [34mRoxygenNote[39m: 7.1.1.9001
 ## [32m✔[39m Writing [34m'NAMESPACE'[39m
-## [32m✔[39m Writing [34m'SuperFrob.Rproj'[39m
-## [32m✔[39m Adding [34m'^SuperFrob\\.Rproj$'[39m to [34m'.Rbuildignore'[39m
-## [32m✔[39m Adding [34m'.Rproj.user'[39m to [34m'.gitignore'[39m
-## [32m✔[39m Adding [34m'^\\.Rproj\\.user$'[39m to [34m'.Rbuildignore'[39m
 ## [32m✔[39m Setting active project to [34m'/home/kirill/git/R/fledge'[39m
 ```
 
@@ -77,8 +73,7 @@ fs::dir_tree()
 ## [01;34m.[0m
 ## ├── DESCRIPTION
 ## ├── NAMESPACE
-## ├── [01;34mR[0m
-## └── SuperFrob.Rproj
+## └── [01;34mR[0m
 ```
 
 ### Create and configure a Git repository
@@ -98,25 +93,25 @@ needs to be carried out manually.
 ``` bash
 git add .
 git commit -m "Initial commit."
+## [main (root-commit) 2842738] Initial commit.
+##  2 files changed, 21 insertions(+)
+##  create mode 100644 DESCRIPTION
+##  create mode 100644 NAMESPACE
 ```
 
 ``` bash
 git log --numstat
 git status
-## fatal: your current branch 'main' does not have any commits yet
+## commit 2842738d3382d6607ed1245cbd928fa18c9e28a9
+## Author: Kirill Müller <krlmlr+r@mailbox.org>
+## Date:   Sat Dec 12 12:47:37 2020 +0000
+## 
+##     Initial commit.
+## 
+## 19   0   DESCRIPTION
+## 2    0   NAMESPACE
 ## On branch main
-## 
-## No commits yet
-## 
-## Untracked files:
-##   (use "git add <file>..." to include in what will be committed)
-##  .Rbuildignore
-##  .gitignore
-##  DESCRIPTION
-##  NAMESPACE
-##  SuperFrob.Rproj
-## 
-## nothing added to commit but untracked files present (use "git add" to track)
+## nothing to commit, working tree clean
 ```
 
 For working in branches, it is recommended to turn off fast-forward
@@ -154,26 +149,13 @@ git add .
 git status
 git commit -m "Initial NEWS.md ."
 ## On branch main
-## 
-## No commits yet
-## 
 ## Changes to be committed:
-##   (use "git rm --cached <file>..." to unstage)
-##  new file:   .Rbuildignore
-##  new file:   .gitignore
-##  new file:   DESCRIPTION
-##  new file:   NAMESPACE
+##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   NEWS.md
-##  new file:   SuperFrob.Rproj
 ## 
-## [main (root-commit) 839826e] Initial NEWS.md .
-##  6 files changed, 44 insertions(+)
-##  create mode 100644 .Rbuildignore
-##  create mode 100644 .gitignore
-##  create mode 100644 DESCRIPTION
-##  create mode 100644 NAMESPACE
+## [main 07ead4b] Initial NEWS.md .
+##  1 file changed, 3 insertions(+)
 ##  create mode 100644 NEWS.md
-##  create mode 100644 SuperFrob.Rproj
 ```
 
 ## The development phase
@@ -197,7 +179,7 @@ should be included in `NEWS.md` when it is updated.
 ``` bash
 git add .
 git commit -m "- Add support for frobmication."
-## [main 310027a] - Add support for frobmication.
+## [main cac487a] - Add support for frobmication.
 ##  1 file changed, 1 insertion(+)
 ##  create mode 100644 R/super.R
 ```
@@ -235,7 +217,7 @@ git commit -m "- Add tests for frobnication."
 ##  new file:   tests/testthat.R
 ##  new file:   tests/testthat/test-super.R
 ## 
-## [main e46bf85] - Add tests for frobnication.
+## [main e5a37de] - Add tests for frobnication.
 ##  3 files changed, 10 insertions(+)
 ##  create mode 100644 tests/testthat.R
 ##  create mode 100644 tests/testthat/test-super.R
@@ -248,24 +230,23 @@ the package and also update `NEWS.md`.
 
 ``` r
 fledge::bump_version()
-## → Scraping [32m[32m3[32m[39m commit messages.
+## → Scraping [32m[32m4[32m[39m commit messages.
 ## [32m✔[39m Found [32m[32m2[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## 
-## ── [1m[1mUpdating Version[1m[22m ──
+## ── [1m[1mUpdate Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.0.9001[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## → Committing changes.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
 ## → Creating tag [32m[32mv0.0.0.9001[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
+## [31m●[39m Edit [34m'NEWS.md'[39m
 ## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 ```
@@ -364,7 +345,7 @@ git commit -m "Add super-frob tests."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [f-super-frob 1b29394] Add super-frob tests.
+## [f-super-frob 6824a47] Add super-frob tests.
 ##  1 file changed, 3 insertions(+)
 ##  create mode 100644 tests/testthat/test-frob.R
 ```
@@ -385,7 +366,7 @@ git commit -m "Add super-frob implementation."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   R/frob.R
 ## 
-## [f-super-frob 9db0f66] Add super-frob implementation.
+## [f-super-frob 111630e] Add super-frob implementation.
 ##  1 file changed, 1 insertion(+)
 ##  create mode 100644 R/frob.R
 ```
@@ -409,7 +390,7 @@ git commit -m "- Super-frobnication enabled."
 ##  new file:   R/frob.R
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [main eb5eff3] - Super-frobnication enabled.
+## [main 0babe73] - Super-frobnication enabled.
 ```
 
 The same strategy can be used when merging a pull/merge/… request on
@@ -427,18 +408,17 @@ fledge::bump_version()
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## 
-## ── [1m[1mUpdating Version[1m[22m ──
+## ── [1m[1mUpdate Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.0.9002[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## → Committing changes.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
 ## → Creating tag [32m[32mv0.0.0.9002[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
+## [31m●[39m Edit [34m'NEWS.md'[39m
 ## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 news <- readLines("NEWS.md")
@@ -481,18 +461,17 @@ fledge::bump_version("patch")
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## 
-## ── [1m[1mUpdating Version[1m[22m ──
+## ── [1m[1mUpdate Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.1[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## → Committing changes.
-## 
-## ── [1m[1mPreparing package for CRAN release[1m[22m ──
-## 
-## ● Convert the changelog in [34m[34mNEWS.md[34m[39m to release notes.
+## [36mℹ[39m Preparing package for release (CRAN or otherwise).
+## [31m●[39m Edit [34m'NEWS.md'[39m
+## [33m![39m Convert the change log in [34m[34mNEWS.md[34m[39m to release notes.
+## [33m![39m After CRAN release, call [30m[47m[30m[47m`fledge::tag_version()`[47m[30m[49m[39m and
+## [30m[47m[30m[47m`fledge::bump_version()`[47m[30m[49m[39m to re-enter development mode
 ```
 
 This updates the version of our package to 0.0.4.
@@ -559,7 +538,7 @@ git commit -m "Update NEWS."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  modified:   NEWS.md
 ## 
-## [main 46ccb90] Update NEWS.
+## [main fb18eb6] Update NEWS.
 ##  1 file changed, 2 insertions(+), 18 deletions(-)
 ```
 
@@ -609,18 +588,17 @@ fledge::bump_version()
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
 ## → Adding new entries to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## 
-## ── [1m[1mUpdating Version[1m[22m ──
+## ── [1m[1mUpdate Version[1m[22m ──
 ## 
 ## [32m✔[39m Package version bumped to [32m[32m0.0.1.9000[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
-## Files changed: NEWS.md
 ## → Committing changes.
 ## 
 ## ── [1m[1mTagging Version[1m[22m ──
 ## 
 ## → Creating tag [32m[32mv0.0.1.9000[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.
+## [31m●[39m Edit [34m'NEWS.md'[39m
 ## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.
 ## NULL
 news <- readLines("NEWS.md")
