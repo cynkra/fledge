@@ -1,3 +1,22 @@
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+
+# fledge 0.0.3.9012
+
+- Same as previous version.
+
+
+# fledge 0.0.3.9011
+
+- Internal changes only.
+
+
+# fledge 0.0.3.9010
+
+- Prepend NEWS comment.
+- `sendToConsole()` works in VS Code.
+- `bump_version()` gives correct advice if no remote branch exists.
+
+
 # fledge 0.0.3.9007
 
 - Add Patrick Schratz (@pat-s) a contributor (#50).
