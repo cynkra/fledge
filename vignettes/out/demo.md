@@ -345,7 +345,7 @@ git commit -m "Add super-frob tests."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [f-super-frob 6824a47] Add super-frob tests.
+## [f-super-frob dabb1ac] Add super-frob tests.
 ##  1 file changed, 3 insertions(+)
 ##  create mode 100644 tests/testthat/test-frob.R
 ```
@@ -366,7 +366,7 @@ git commit -m "Add super-frob implementation."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   R/frob.R
 ## 
-## [f-super-frob 111630e] Add super-frob implementation.
+## [f-super-frob 4c73d5b] Add super-frob implementation.
 ##  1 file changed, 1 insertion(+)
 ##  create mode 100644 R/frob.R
 ```
@@ -390,7 +390,7 @@ git commit -m "- Super-frobnication enabled."
 ##  new file:   R/frob.R
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [main 0babe73] - Super-frobnication enabled.
+## [main bbe77ab] - Super-frobnication enabled.
 ```
 
 The same strategy can be used when merging a pull/merge/… request on
@@ -538,7 +538,7 @@ git commit -m "Update NEWS."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  modified:   NEWS.md
 ## 
-## [main fb18eb6] Update NEWS.
+## [main 859cbf5] Update NEWS.
 ##  1 file changed, 2 insertions(+), 18 deletions(-)
 ```
 

@@ -1,7 +1,7 @@
 #' @rdname finalize_version
 #' @usage NULL
 finalize_version_impl <- function(push, suggest_finalize = TRUE) {
-  head <- get_head_branch()
+  head <- gert::git_branch()
 
   #' @description
   #' 1. [commit_version()]
@@ -27,30 +27,31 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   }
 }
 
-get_head_branch <- function() {
-  head <- git2r::repository_head()
-  stopifnot(git2r::is_branch(head))
-  head
-}
-
 push_tag <- function(tag) {
   cli_alert("Force-pushing tag {.field {tag}}.")
-  git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
+  gert::git_tag_push(tag, force = force)
 }
 
 push_head <- function(head) {
-  cli_alert('Pushing {.field {head$name}}.')
-  git2r::push(head)
+  cli_alert('Pushing {.field {head}}.')
+  gert::git_push()
 }
 
 has_remote_branch <- function(branch) {
-  !is.null(git2r::branch_get_upstream(branch))
+  branches <- gert::git_branch_list(local = TRUE)
+  !is.na(branches$upstream[branches$name == branch])
 }
 
 send_to_console <- function(code) {
-  if (!is_interactive()) return()
-  if (!is_installed("rstudioapi")) return()
-  if (!rstudioapi::hasFun("sendToConsole")) return()
+  if (!is_interactive()) {
+    return()
+  }
+  if (!is_installed("rstudioapi")) {
+    return()
+  }
+  if (!rstudioapi::hasFun("sendToConsole")) {
+    return()
+  }
 
   tryCatch(
     rstudioapi::sendToConsole(code, execute = FALSE),
