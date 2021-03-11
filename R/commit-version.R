@@ -11,7 +11,7 @@ commit_version_impl <- function() {
 
   gert::git_add(c("DESCRIPTION", news_path))
 
-  if (length(gert::git_status(staged = TRUE)$staged) > 0) {
+  if (nrow(gert::git_status(staged = TRUE)) > 0) {
     cli_alert("Committing changes.")
 
     # For stable Rmarkdown output
