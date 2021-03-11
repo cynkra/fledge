@@ -4,13 +4,18 @@
 \alias{get_top_level_commits}
 \title{All top-level commits}
 \usage{
-get_top_level_commits(since)
+get_top_level_commits(since = NULL)
 }
 \arguments{
-\item{since}{A commit SHA, e.g. as returned from \code{\link[=get_last_tag]{get_last_tag()}}.}
+\item{since}{A commit SHA, e.g. as returned from \code{\link[=get_last_tag]{get_last_tag()}}.
+If \code{NULL}, the entire log is retrieved.}
 }
 \value{
-A character vector of commit SHAs.
+A \link{tibble} with at least two columns:
+\itemize{
+\item \code{commit}: the commit SHA
+\item \code{message}: the commit message
+}
 }
 \description{
 Return all top-level commits since a particular version

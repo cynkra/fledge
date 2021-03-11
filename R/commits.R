@@ -24,7 +24,10 @@ get_top_level_commits_impl <- function(since) {
     since_commit <- NULL
   }
 
-  get_first_parent(commit, since_commit)
+  commits <- get_first_parent(commit, since_commit)
+  sha <- map_chr(commits, "sha")
+  message <- map_chr(commits, "message")
+  tibble::tibble(commit = sha, message)
 }
 
 get_first_parent <- function(commit, since) {

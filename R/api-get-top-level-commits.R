@@ -3,10 +3,13 @@
 #' Return all top-level commits since a particular version
 #' as commit objects.
 #'
-#' @return A character vector of commit SHAs.
+#' @return A [tibble] with at least two columns:
+#' - `commit`: the commit SHA
+#' - `message`: the commit message
 #'
 #' @param since A commit SHA, e.g. as returned from [get_last_tag()].
+#'   If `NULL`, the entire log is retrieved.
 #' @export
-get_top_level_commits <- function(since) {
+get_top_level_commits <- function(since = NULL) {
   with_repo(get_top_level_commits_impl(since))
 }
