@@ -89,9 +89,10 @@ fs::dir_tree()
 ### Create and configure a Git repository
 
 Next we set up this package for development and create a Git repository for the package.
+We use `git init` to get a predictable branch name.
 
-```{r git}
-usethis::use_git()
+```{bash git}
+git init --initial-branch=main
 ```
 
 ```{r git-config, include = FALSE}
@@ -267,7 +268,7 @@ Only when merging we specify the message to be included in the changelog, again 
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
 ```{bash super-frob-merge, error = (.Platform$OS.type == "windows")}
-git checkout master
+git checkout main
 git merge f-super-frob --no-commit
 git status
 git commit -m "- Super-frobnication enabled."
@@ -288,7 +289,7 @@ cat(news, sep = "\n")
 After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN.
 This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.
 
-### Bump version for release 
+### Bump version for release
 
 We wish to release this package as a patch and so we use `fledge::bump_version()` with the "patch" argument.
 
