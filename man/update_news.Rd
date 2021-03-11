@@ -7,7 +7,8 @@
 update_news(range = get_top_level_commits(since = get_last_tag()))
 }
 \arguments{
-\item{range}{range}
+\item{range}{A commit range as character vector of SHAs,
+e.g. as returned from \code{\link[=get_top_level_commits]{get_top_level_commits()}}.}
 }
 \description{
 Lists all commits from a range (default: top-level commits since the most

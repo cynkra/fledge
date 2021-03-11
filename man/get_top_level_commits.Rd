@@ -7,10 +7,10 @@
 get_top_level_commits(since)
 }
 \arguments{
-\item{since}{A commit or tag object, e.g. \code{\link[=get_last_tag]{get_last_tag()}}.}
+\item{since}{A commit SHA, e.g. as returned from \code{\link[=get_last_tag]{get_last_tag()}}.}
 }
 \value{
-A list of commit objects similarly to \code{\link[git2r:commits]{git2r::commits()}}.
+A character vector of commit SHAs.
 }
 \description{
 Return all top-level commits since a particular version
