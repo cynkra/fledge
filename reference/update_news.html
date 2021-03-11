@@ -139,14 +139,22 @@ recent tag) and adds bullets from their body to NEWS.md." />
 recent tag) and adds bullets from their body to <code>NEWS.md</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>update_news</span><span class='op'>(</span>range <span class='op'>=</span> <span class='fu'><a href='get_top_level_commits.html'>get_top_level_commits</a></span><span class='op'>(</span>since <span class='op'>=</span> <span class='fu'><a href='get_last_tag.html'>get_last_tag</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>update_news</span><span class='op'>(</span>
+  messages <span class='op'>=</span> <span class='fu'><a href='get_top_level_commits.html'>get_top_level_commits</a></span><span class='op'>(</span>since <span class='op'>=</span> <span class='fu'><a href='get_last_tag.html'>get_last_tag</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>message</span>,
+  range <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>messages</th>
+      <td><p>A character vector of commit messages,
+e.g. as in the <code>message</code> column in the return value of <code><a href='get_top_level_commits.html'>get_top_level_commits()</a></code>.</p></td>
+    </tr>
+    <tr>
       <th>range</th>
-      <td><p>range</p></td>
+      <td><p>Deprecated.</p></td>
     </tr>
     </table>
 

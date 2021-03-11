@@ -139,20 +139,25 @@ as commit objects." />
 as commit objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_top_level_commits</span><span class='op'>(</span><span class='va'>since</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_top_level_commits</span><span class='op'>(</span>since <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>since</th>
-      <td><p>A commit or tag object, e.g. <code><a href='get_last_tag.html'>get_last_tag()</a></code>.</p></td>
+      <td><p>A commit SHA, e.g. as returned from <code><a href='get_last_tag.html'>get_last_tag()</a></code>.
+If <code>NULL</code>, the entire log is retrieved.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of commit objects similarly to <code><a href='https://docs.ropensci.org/git2r/reference/commits.html'>git2r::commits()</a></code>.</p>
+    <p>A tibble with at least two columns:</p><ul>
+<li><p><code>commit</code>: the commit SHA</p></li>
+<li><p><code>message</code>: the commit message</p></li>
+</ul>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
