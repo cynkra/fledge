@@ -24,9 +24,8 @@ bump_version_to_dev_with_force <- function(force) {
   update_news()
   update_version()
 
-  head <- get_head_branch()
   force <- commit_version() || force
   tag <- tag_version(force)
   push_tag(tag)
-  push_head(head)
+  push_head()
 }

@@ -232,7 +232,7 @@ release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  push_head(get_head_branch())
+  push_head()
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   auto_confirm()
@@ -335,7 +335,7 @@ post_release_impl <- function() {
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
   merge_branch(release_branch)
-  push_head(get_head_branch())
+  push_head()
 
   # Begin extension points
   # End extension points
