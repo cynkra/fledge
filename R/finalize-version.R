@@ -1,8 +1,6 @@
 #' @rdname finalize_version
 #' @usage NULL
 finalize_version_impl <- function(push, suggest_finalize = TRUE) {
-  head <- gert::git_branch()
-
   #' @description
   #' 1. [commit_version()]
   force <- commit_version()
@@ -12,11 +10,11 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
     push_tag(tag)
-    push_head(head)
+    push_head()
   } else if (suggest_finalize) {
     edit_news()
 
-    if (has_remote_branch(head)) {
+    if (has_remote_branch(gert::git_branch())) {
       command <- "fledge::finalize_version(push = TRUE)"
     } else {
       command <- "fledge::finalize_version()"
@@ -32,7 +30,8 @@ push_tag <- function(tag) {
   gert::git_tag_push(tag, force = force)
 }
 
-push_head <- function(head) {
+push_head <- function() {
+  head <- gert::git_branch()
   cli_alert('Pushing {.field {head}}.')
   gert::git_push()
 }
