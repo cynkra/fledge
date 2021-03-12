@@ -195,7 +195,7 @@ is_new_submission <- function(package) {
 get_cransplainer_update <- function(package) {
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
-  checked_on <- paste0("Checked on ", Sys.Date())
+  checked_on <- paste0("Checked on ", get_date())
 
   details <- foghorn::cran_details(package)
   details <- details[details$result != "OK", ]
