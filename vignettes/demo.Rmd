@@ -52,8 +52,15 @@ dir.create(tempdir)
 The `usethis::create_package()` function sets up a package project ready for development.
 The output shows the details of the package created.
 
-```{r create-package}
+```{r create-package, eval = FALSE}
 pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
+```
+
+```{r create-package-real, echo = FALSE}
+pkg <- usethis::create_package(
+  file.path(tempdir, "SuperFrob"),
+  fields = list(Date = as.Date(Sys.getenv("GIT_COMMITTER_DATE")))
+)
 ```
 
 In an interactive RStudio session, a new window opens.
@@ -295,7 +302,7 @@ We wish to release this package as a patch and so we use `fledge::bump_version()
 fledge::bump_version("patch")
 ```
 
-This updates the version of our package to `r desc::desc_get_version()`.
+This updates the version of our package to `r desc::desc_get_version(usethis::proj_get())`.
 
 ### Generate release notes
 

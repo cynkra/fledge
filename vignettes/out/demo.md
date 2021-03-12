@@ -33,28 +33,29 @@ for development. The output shows the details of the package created.
 
 ``` r
 pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
-## [32m✔[39m Creating [34m'/tmp/RtmpGalley/fledge/SuperFrob/'[39m
-## [32m✔[39m Setting active project to [34m'/tmp/RtmpGalley/fledge/SuperFrob'[39m
-## [32m✔[39m Creating [34m'R/'[39m
-## [32m✔[39m Writing [34m'DESCRIPTION'[39m
-## [34mPackage[39m: SuperFrob
-## [34mTitle[39m: What the Package Does (One Line, Title Case)
-## [34mVersion[39m: 0.0.0.9000
-## [34mDate[39m: 2021-03-11
-## [34mAuthors@R[39m (parsed):
-##     * Kirill Müller <krlmlr+r@mailbox.org> [aut, cre] (<https://orcid.org/0000-0002-1416-3412>)
-## [34mDescription[39m: What the package does (one paragraph).
-## [34mLicense[39m: GPL-3
-## [34mURL[39m: https://github.com/krlmlr/fledge,
-##     https://krlmlr.github.io/fledge
-## [34mBugReports[39m: https://github.com/krlmlr/fledge/issues
-## [34mEncoding[39m: UTF-8
-## [34mLazyData[39m: true
-## [34mRoxygen[39m: list(markdown = TRUE)
-## [34mRoxygenNote[39m: 7.1.1.9001
-## [32m✔[39m Writing [34m'NAMESPACE'[39m
-## [32m✔[39m Setting active project to [34m'/home/kirill/git/R/fledge'[39m
 ```
+
+    ## [32m✔[39m Creating [34m'/tmp/RtmpGalley/fledge/SuperFrob/'[39m
+    ## [32m✔[39m Setting active project to [34m'/tmp/RtmpGalley/fledge/SuperFrob'[39m
+    ## [32m✔[39m Creating [34m'R/'[39m
+    ## [32m✔[39m Writing [34m'DESCRIPTION'[39m
+    ## [34mPackage[39m: SuperFrob
+    ## [34mTitle[39m: What the Package Does (One Line, Title Case)
+    ## [34mVersion[39m: 0.0.0.9000
+    ## [34mDate[39m: 2020-12-12
+    ## [34mAuthors@R[39m (parsed):
+    ##     * Kirill Müller <krlmlr+r@mailbox.org> [aut, cre] (<https://orcid.org/0000-0002-1416-3412>)
+    ## [34mDescription[39m: What the package does (one paragraph).
+    ## [34mLicense[39m: GPL-3
+    ## [34mURL[39m: https://github.com/krlmlr/fledge,
+    ##     https://krlmlr.github.io/fledge
+    ## [34mBugReports[39m: https://github.com/krlmlr/fledge/issues
+    ## [34mEncoding[39m: UTF-8
+    ## [34mLazyData[39m: true
+    ## [34mRoxygen[39m: list(markdown = TRUE)
+    ## [34mRoxygenNote[39m: 7.1.1.9001
+    ## [32m✔[39m Writing [34m'NAMESPACE'[39m
+    ## [32m✔[39m Setting active project to [34m'/home/kirill/git/R/fledge'[39m
 
 In an interactive RStudio session, a new window opens. Users of other
 environments would change the working directory manually. For this demo,
@@ -93,7 +94,7 @@ needs to be carried out manually.
 ``` bash
 git add .
 git commit -m "Initial commit."
-## [main (root-commit) 2842738] Initial commit.
+## [main (root-commit) 6b7a327] Initial commit.
 ##  2 files changed, 21 insertions(+)
 ##  create mode 100644 DESCRIPTION
 ##  create mode 100644 NAMESPACE
@@ -102,7 +103,7 @@ git commit -m "Initial commit."
 ``` bash
 git log --numstat
 git status
-## commit 2842738d3382d6607ed1245cbd928fa18c9e28a9
+## commit 6b7a327e5f9aab2cbffb96e564dadba10b4fe980
 ## Author: Kirill Müller <krlmlr+r@mailbox.org>
 ## Date:   Sat Dec 12 12:47:37 2020 +0000
 ## 
@@ -153,7 +154,7 @@ git commit -m "Initial NEWS.md ."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   NEWS.md
 ## 
-## [main 07ead4b] Initial NEWS.md .
+## [main 0e11567] Initial NEWS.md .
 ##  1 file changed, 3 insertions(+)
 ##  create mode 100644 NEWS.md
 ```
@@ -179,7 +180,7 @@ should be included in `NEWS.md` when it is updated.
 ``` bash
 git add .
 git commit -m "- Add support for frobmication."
-## [main cac487a] - Add support for frobmication.
+## [main ea0a1ab] - Add support for frobmication.
 ##  1 file changed, 1 insertion(+)
 ##  create mode 100644 R/super.R
 ```
@@ -217,7 +218,7 @@ git commit -m "- Add tests for frobnication."
 ##  new file:   tests/testthat.R
 ##  new file:   tests/testthat/test-super.R
 ## 
-## [main e5a37de] - Add tests for frobnication.
+## [main cd7fc85] - Add tests for frobnication.
 ##  3 files changed, 10 insertions(+)
 ##  create mode 100644 tests/testthat.R
 ##  create mode 100644 tests/testthat/test-super.R
@@ -345,7 +346,7 @@ git commit -m "Add super-frob tests."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [f-super-frob dabb1ac] Add super-frob tests.
+## [f-super-frob 2dd13f8] Add super-frob tests.
 ##  1 file changed, 3 insertions(+)
 ##  create mode 100644 tests/testthat/test-frob.R
 ```
@@ -366,7 +367,7 @@ git commit -m "Add super-frob implementation."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  new file:   R/frob.R
 ## 
-## [f-super-frob 4c73d5b] Add super-frob implementation.
+## [f-super-frob deafe71] Add super-frob implementation.
 ##  1 file changed, 1 insertion(+)
 ##  create mode 100644 R/frob.R
 ```
@@ -390,7 +391,7 @@ git commit -m "- Super-frobnication enabled."
 ##  new file:   R/frob.R
 ##  new file:   tests/testthat/test-frob.R
 ## 
-## [main bbe77ab] - Super-frobnication enabled.
+## [main cbb9de3] - Super-frobnication enabled.
 ```
 
 The same strategy can be used when merging a pull/merge/… request on
@@ -474,7 +475,7 @@ fledge::bump_version("patch")
 ## [30m[47m[30m[47m`fledge::bump_version()`[47m[30m[49m[39m to re-enter development mode
 ```
 
-This updates the version of our package to 0.0.4.
+This updates the version of our package to 0.0.1.
 
 ### Generate release notes
 
@@ -538,7 +539,7 @@ git commit -m "Update NEWS."
 ##   (use "git restore --staged <file>..." to unstage)
 ##  modified:   NEWS.md
 ## 
-## [main 859cbf5] Update NEWS.
+## [main 1a55745] Update NEWS.
 ##  1 file changed, 2 insertions(+), 18 deletions(-)
 ```
 
@@ -605,7 +606,7 @@ news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 ## 
-## # SuperFrob 0.0.1.9000 (2021-03-11)
+## # SuperFrob 0.0.1.9000 (2020-12-12)
 ## 
 ## - Same as previous version.
 ## 
