@@ -370,8 +370,7 @@ check_post_release <- function() {
   sha <- gsub(rx, "\\1", release)
 
   sha_rx <- paste0("^", sha)
-  repo_head <- get_repo_head()
-  repo_head_sha <- git2r::sha(repo_head)
+  repo_head_sha <- gert::git_log(max = 1)$commit
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
       "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
