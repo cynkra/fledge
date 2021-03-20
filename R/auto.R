@@ -344,8 +344,8 @@ post_release_impl <- function() {
 get_main_branch <- function() {
   # FIXME: make remote dynamic
   remotes = gert::git_remote_ls(verbose = FALSE, remote = "origin")
-  main_branch = basename(as.character(remotes[remotes$ref == "HEAD", "symref"]))
-  return(main_branch)
+  default_branch = basename(as.character(remotes[remotes$ref == "HEAD", "symref"]))
+  return(default_branch)
 }
 
 merge_branch <- function(other_branch) {
