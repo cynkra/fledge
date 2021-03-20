@@ -342,8 +342,10 @@ post_release_impl <- function() {
 }
 
 get_main_branch <- function() {
-  # FIXME: How to determine dynamically?
-  "master"
+  # FIXME: make remote dynamic
+  remotes = gert::git_remote_ls(verbose = FALSE, remote = "origin")
+  main_branch = basename(as.character(remotes[remotes$ref == "HEAD", "symref"]))
+  return(main_branch)
 }
 
 merge_branch <- function(other_branch) {
