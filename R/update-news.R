@@ -10,7 +10,8 @@ collect_news <- function(messages) {
   cli_alert("Scraping {.field {length(messages)}} commit messages.")
 
   messages_lf <- gsub("\r\n", "\n", messages)
-  messages_before_triple_dash <- map_chr(strsplit(messages_lf, "\n---", fixed = TRUE), 1)
+  messages_nonempty <- messages_lf[messages_lf != ""]
+  messages_before_triple_dash <- map_chr(strsplit(messages_nonempty, "\n---", fixed = TRUE), 1)
   message_lines <- strsplit(messages_before_triple_dash, "\n", fixed = TRUE)
   message_bullets <- map(message_lines, keep, ~ grepl("^[*-]", .))
 
