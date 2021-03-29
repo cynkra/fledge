@@ -1,70 +1,38 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# fledge 0.0.3.9012
+# fledge 0.0.5.9000
 
 - Same as previous version.
 
 
-# fledge 0.0.3.9011
+# fledge 0.0.5
 
-- Internal changes only.
+- Use {gert} instead of {git2r} for interacting with Git (#57).
+- The API no longer accepts or returns git2r objects (#77).
+- `vignette("demo")` now shows the same results with each run (#70).
 
 
-# fledge 0.0.3.9010
+# fledge 0.0.4
 
-- Prepend NEWS comment.
-- `sendToConsole()` works in VS Code.
+## Features
+
+- Prepend NEWS comment to discourage edits.
+- Dates are added to NEWS headers if existing headers have them, or for a new NEWS file (#29).
+- `finalize_version()` gains `push` argument which pushes the tag and the main branch, this considerably simplifies the workflow. It calls `edit_news()` and sends `finalize_version(push = TRUE)` to the RStudio or VS Code console.
+- `tag_version()` returns name of created tag, invisibly.
+- `tag_version(force = FALSE)` re-tags an existing tag if it points to the same commit.
+
+## Bug fixes
+
 - `bump_version()` gives correct advice if no remote branch exists.
+- `bump_version()` and `get_top_level_commits()` are more robust at enumerating the commits: traversing the first parent from which `since` can be reached, instead of the first parent. This ensures that NEWS are more meaningful and avoids the occasional enumeration of all NEWS items since the beginning.
 
-
-# fledge 0.0.3.9007
+## Internal
 
 - Add Patrick Schratz (@pat-s) a contributor (#50).
 - Use GitHub Actions (#49).
-- Dates are added to NEWS headers if existing headers have them, or for a new NEWS file (#29).
 - Move from `ui_*` to {cli} (#54)
-
-
-# fledge 0.0.3.9006
-
-- `bump_version()` and `get_top_level_commits()` are more robust at enumerating the commits: traversing the first parent from which `since` can be reached, instead of the first parent. This ensures that NEWS are more meaningful and avoids the occasional enumeration of all NEWS items since the beginning.
-
-
-# fledge 0.0.3.9005
-
-- Same as previous version.
-
-
-# fledge 0.0.3.9004
-
-- Same as previous version.
-
-
-# fledge 0.0.3.9003
-
-- Same as previous version.
-
-
-# fledge 0.0.3.9002
-
-- `finalize_version(push = TRUE)` also pushes to master.
-- `finalize_version()` calls `edit_news()`.
-- Tweak demo.
-- `finalize_version()` sends `finalize_version(push = TRUE)` to the RStudio console.
-
-
-# fledge 0.0.3.9001
-
-- `finalize_version()` gains `push` argument, this considerably simplifies the workflow.
-- Prefer `ui_done()` over `ui_info()` to report on action taken.
-- `tag_version()` returns name of created tag, invisibly.
-- `tag_version(force = FALSE)` re-tags an existing tag if it points to the same commit.
 - Import rlang.
-
-
-# fledge 0.0.3.9000
-
-- Same as previous version.
 
 
 # fledge 0.0.3

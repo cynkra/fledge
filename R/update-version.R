@@ -2,7 +2,7 @@ update_version_impl <- function(which) {
   desc <- desc::desc(file = "DESCRIPTION")
 
   if (desc$has_fields("Date")) {
-    desc$set("Date", Sys.Date())
+    desc$set("Date", get_date())
   }
 
   # https://github.com/r-lib/desc/issues/93
@@ -18,7 +18,7 @@ update_version_impl <- function(which) {
 
   header <- paste0(
     "# ", desc$get("Package"), " ", new_version,
-    if (date_in_news_headers()) paste0(" (", Sys.Date(), ")"),
+    if (date_in_news_headers()) paste0(" (", get_date(), ")"),
     "\n"
   )
   add_to_news(header)
@@ -43,4 +43,13 @@ get_news_headers <- function() {
   out <- rematch2::re_match(news, rx)
   out <- tibble::add_column(out, line = seq_len(nrow(out)), .before = 1)
   out[!is.na(out$package), grep("^[^.]", names(out), value = TRUE)]
+}
+
+get_date <- function() {
+  # For stable Rmarkdown output
+  if (Sys.getenv("IN_PKGDOWN") == "") {
+    return(Sys.Date())
+  }
+  author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
+  as.Date(author_time)
 }

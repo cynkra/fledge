@@ -14,10 +14,24 @@ We are going to call our package "{SuperFrob}".
 We will develop it from scratch and also maintain a changelog as the development progresses.
 Finally, we will demonstrate how this changelog can eventually be converted to release notes when the package is submitted to CRAN.
 
+This guide shows mostly R code, and uses Bash shell code for Git commands.
+
 ```{r setup, include = FALSE}
-options(crayon.enabled = TRUE)
-fansi::set_knit_hooks(knitr::knit_hooks, "output")
-fansi::set_knit_hooks(knitr::knit_hooks, "message")
+in_pkgdown <- identical(Sys.getenv("IN_PKGDOWN"), "true")
+if (in_pkgdown) {
+  options(crayon.enabled = TRUE)
+}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  error = !in_pkgdown
+)
+Sys.setenv(GIT_AUTHOR_DATE = "2020-12-12 12:47:37Z")
+Sys.setenv(GIT_AUTHOR_NAME = "Kirill Müller")
+Sys.setenv(GIT_AUTHOR_EMAIL = "krlmlr+r@mailbox.org")
+Sys.setenv(GIT_COMMITTER_DATE = "2020-12-12 12:47:37Z")
+Sys.setenv(GIT_COMMITTER_NAME = "Kirill Müller")
+Sys.setenv(GIT_COMMITTER_EMAIL = "krlmlr+r@mailbox.org")
 ```
 
 ## Set up the development environment
@@ -31,15 +45,22 @@ For this demo, the package is created in a temporary directory.
 A real project will live somewhere in your home directory.
 
 ```{r tempdir}
-tempdir <- tempfile("fledge")
+tempdir <- file.path(tempdir(), "fledge")
 dir.create(tempdir)
 ```
 
 The `usethis::create_package()` function sets up a package project ready for development.
 The output shows the details of the package created.
 
-```{r create-package}
+```{r create-package, eval = FALSE}
 pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
+```
+
+```{r create-package-real, echo = FALSE}
+pkg <- usethis::create_package(
+  file.path(tempdir, "SuperFrob"),
+  fields = list(Date = as.Date(Sys.getenv("GIT_COMMITTER_DATE")))
+)
 ```
 
 In an interactive RStudio session, a new window opens.
@@ -78,33 +99,29 @@ fs::dir_tree()
 ### Create and configure a Git repository
 
 Next we set up this package for development and create a Git repository for the package.
+We use `git init` to get a predictable branch name.
 
-```{r git}
-usethis::use_git()
-```
-
-```{r git-config, include = FALSE}
-# ...but only in interactive mode.
-git2r::config(user.name = "Test", user.email = "test@user.org")
+```{bash git}
+git init --initial-branch=main
 ```
 
 In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
 In the demo this needs to be carried out manually.
 
-```{r git-initial-commit, eval = !interactive()}
-git2r::add(path = ".")
-git2r::commit(message = "Initial commit.")
+```{bash git-initial-commit}
+git add .
+git commit -m "Initial commit."
 ```
 
-```{r git-show-init}
-git2r::commits()
-git2r::status()
+```{bash git-show-init}
+git log --numstat
+git status
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
 
-```{r git-no-ff}
-git2r::config(merge.ff = "false")
+```{bash git-no-ff}
+git config merge.ff false
 ```
 
 An alternative is to use squash commits.
@@ -126,10 +143,10 @@ cat(news, sep = "\n")
 
 This file needs to be tracked by Git:
 
-```{r init-news-commit}
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Initial NEWS.md .")
+```{bash init-news-commit}
+git add .
+git status
+git commit -m "Initial NEWS.md ."
 ```
 
 ## The development phase
@@ -148,9 +165,9 @@ We commit this file to Git with a relevant message.
 Note the use of the bullet (-) before the commit message.
 This indicates that the message should be included in `NEWS.md` when it is updated.
 
-```{r commit-super}
-git2r::add(path = ".")
-git2r::commit(message = "- Add support for frobmication.")
+```{bash commit-super}
+git add .
+git commit -m "- Add support for frobmication."
 ```
 
 ### Create a test
@@ -165,10 +182,10 @@ cat(readLines("tests/testthat/test-super.R"), sep = "\n")
 In a real project we would substitute the testing code from the template by real tests.
 In this demo we commit straight away, again with a bulleted message.
 
-```{r commit-super-test}
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "- Add tests for frobnication.")
+```{bash commit-super-test}
+git add .
+git status
+git commit -m "- Add tests for frobnication."
 ```
 
 ### Update NEWS.md
@@ -203,7 +220,7 @@ This does not affect the original commit message, only `NEWS.md`.
 
 After tweaking `NEWS.md`, it is important to use `fledge::finalize_version()` and not to commit manually.
 This ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
-It should be called every time `NEWS.md` is manually updated.
+It should be called when `NEWS.md` is manually updated.
 
 ```{r news-finalize}
 fledge::finalize_version()
@@ -218,9 +235,8 @@ In this demo, no remote repository is set up, and the push process is not shown.
 This requires changes to the code, and perhaps a new test.
 We create a branch and switch to this branch to implement this.
 
-```{r super-frob-branch}
-git2r::branch_create(git2r::last_commit(), name = "f-super-frob")
-git2r::checkout(branch = "f-super-frob")
+```{bash super-frob-branch}
+git checkout -b f-super-frob
 ```
 
 On the branch, separate commits are used for the tests and the implementation.
@@ -228,15 +244,26 @@ These commit messages do not need to be formatted specially, because {fledge} wi
 
 ```{r super-frob}
 usethis::use_test("frob")
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Add super-frob tests.")
+```
 
+
+```{bash super-frob-commit}
+git add .
+git status
+git commit -m "Add super-frob tests."
+```
+
+
+```{r super-frob-2}
 usethis::use_r("frob")
 writeLines("# super-frob", "R/frob.R")
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Add super-frob implementation.")
+```
+
+
+```{bash super-frob-2-commit}
+git add .
+git status
+git commit -m "Add super-frob implementation."
 ```
 
 This branch can be pushed to the remote as usual.
@@ -245,11 +272,11 @@ Only when merging we specify the message to be included in the changelog, again 
 [^merge-ff]: Note that we really need a merge commit here; the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
-```{r super-frob-merge}
-git2r::checkout(branch = "master")
-git2r::merge(".", "f-super-frob", commit_on_success = FALSE)
-git2r::status()
-git2r::commit(message = "- Super-frobnication enabled.")
+```{bash super-frob-merge}
+git checkout main
+git merge f-super-frob --no-commit
+git status
+git commit -m "- Super-frobnication enabled."
 ```
 
 The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...: use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
@@ -267,7 +294,7 @@ cat(news, sep = "\n")
 After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN.
 This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.
 
-### Bump version for release 
+### Bump version for release
 
 We wish to release this package as a patch and so we use `fledge::bump_version()` with the "patch" argument.
 
@@ -275,7 +302,7 @@ We wish to release this package as a patch and so we use `fledge::bump_version()
 fledge::bump_version("patch")
 ```
 
-This updates the version of our package to `r desc::desc_get_version()`.
+This updates the version of our package to `r desc::desc_get_version(usethis::proj_get())`.
 
 ### Generate release notes
 
@@ -302,10 +329,10 @@ writeLines(news, "NEWS.md")
 
 Unlike with development versions, we commit the changes to `NEWS.md` manually:
 
-```{r patch-news-write}
-git2r::add(path = ".")
-git2r::status()
-git2r::commit(message = "Update NEWS.")
+```{bash patch-news-write}
+git add .
+git status
+git commit -m "Update NEWS."
 ```
 
 The package is now ready to be released to CRAN.
