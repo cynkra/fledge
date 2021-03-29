@@ -341,11 +341,6 @@ post_release_impl <- function() {
   # End extension points
 }
 
-get_main_branch <- function() {
-  # FIXME: How to determine dynamically?
-  "master"
-}
-
 merge_branch <- function(other_branch) {
   git2r::merge(git2r::repository(), other_branch, fail = TRUE)
 }

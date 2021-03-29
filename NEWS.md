@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.5.9001
+
+- `bump_version()` fails if the current branch is not the main branch (#78).
+- Ignore empty commit messages.
+
+
 # fledge 0.0.5.9000
 
 - Same as previous version.
