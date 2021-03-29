@@ -195,7 +195,7 @@ is_new_submission <- function(package) {
 get_cransplainer_update <- function(package) {
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
-  checked_on <- paste0("Checked on ", Sys.Date())
+  checked_on <- paste0("Checked on ", get_date())
 
   details <- foghorn::cran_details(package)
   details <- details[details$result != "OK", ]
@@ -232,7 +232,7 @@ release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  push_head(get_head_branch())
+  push_head()
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   auto_confirm()
@@ -335,7 +335,7 @@ post_release_impl <- function() {
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
   merge_branch(release_branch)
-  push_head(get_head_branch())
+  push_head()
 
   # Begin extension points
   # End extension points
@@ -372,8 +372,7 @@ check_post_release <- function() {
   sha <- gsub(rx, "\\1", release)
 
   sha_rx <- paste0("^", sha)
-  repo_head <- get_repo_head()
-  repo_head_sha <- git2r::sha(repo_head)
+  repo_head_sha <- gert::git_log(max = 1)$commit
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
       "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
