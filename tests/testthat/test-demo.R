@@ -7,4 +7,3 @@ test_that("demo.Rmd does not change", {
   })
   expect_equal(old, new)
 })
-
