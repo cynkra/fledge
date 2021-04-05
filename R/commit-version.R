@@ -57,19 +57,19 @@ check_clean <- function(forbidden_modifications) {
 }
 
 check_only_modified <- function(allowed_modifications) {
-  status <- git2r::status(".", unstaged = TRUE, untracked = TRUE)
-  if (length(status$unstaged) > 0 || length(status$untracked) > 0 ||
-      length(status$staged) > 0) {
+
+  status <- gert::git_status()
+  if (nrow(status_gert) > 0) {
     cli::cli_alert_danger("Found untracked/unstaged/staged files in the git index:
-    {.file {unlist(status)}}. Please commit or discard them and
+    {.file {unlist(status$file)}}. Please commit or discard them and
     try again.", wrap = TRUE)
   }
   stopifnot(all(unlist(status) %in% allowed_modifications))
 }
 
 check_only_staged <- function(allowed_modifications) {
-  staged <- git2r::status(".", unstaged = FALSE, untracked = FALSE)$staged
-  stopifnot(all(names(staged) == "modified"))
+  staged <- gert::git_status(staged = TRUE)
+  stopifnot(all(staged$status == "modified"))
 
   modified <- staged$modified
   stopifnot(all(modified %in% allowed_modifications))
