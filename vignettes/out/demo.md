@@ -32,7 +32,6 @@ your home directory.
 
 ``` r
 tempdir <- file.path(Sys.getenv("TMPDIR"), "Rtmpfoo/fledge")
-unlink(tempdir, force = TRUE, recursive = TRUE)
 dir.create(tempdir, recursive = TRUE)
 ```
 

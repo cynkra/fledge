@@ -50,7 +50,6 @@ A real project will live somewhere in your home directory.
 
 ```{r tempdir}
 tempdir <- file.path(Sys.getenv("TMPDIR"), "Rtmpfoo/fledge")
-unlink(tempdir, force = TRUE, recursive = TRUE)
 dir.create(tempdir, recursive = TRUE)
 ```
 
