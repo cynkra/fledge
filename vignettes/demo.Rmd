@@ -32,6 +32,10 @@ Sys.setenv(GIT_AUTHOR_EMAIL = "krlmlr+r@mailbox.org")
 Sys.setenv(GIT_COMMITTER_DATE = "2020-12-12 12:47:37Z")
 Sys.setenv(GIT_COMMITTER_NAME = "Kirill Müller")
 Sys.setenv(GIT_COMMITTER_EMAIL = "krlmlr+r@mailbox.org")
+
+# clean before execution
+tempdir <- file.path(Sys.getenv("TMPDIR"), "Rtmpfoo/fledge")
+unlink(tempdir, force = TRUE, recursive = TRUE)
 ```
 
 ## Set up the development environment
