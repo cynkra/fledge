@@ -31,8 +31,9 @@ created in a temporary directory. A real project will live somewhere in
 your home directory.
 
 ``` r
-tempdir <- file.path(tempdir(), "fledge")
-dir.create(tempdir)
+tempdir <- file.path(Sys.getenv("TMPDIR"), "Rtmpfoo/fledge")
+unlink(tempdir, force = TRUE, recursive = TRUE)
+dir.create(tempdir, recursive = TRUE)
 ```
 
 The `usethis::create_package()` function sets up a package project ready
@@ -42,8 +43,8 @@ for development. The output shows the details of the package created.
 pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
 ```
 
-    ## [32m✔[39m Creating [34m'/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/RtmptBKt3y/fledge/SuperFrob/'[39m
-    ## [32m✔[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/RtmptBKt3y/fledge/SuperFrob'[39m
+    ## [32m✔[39m Creating [34m'/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob/'[39m
+    ## [32m✔[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob'[39m
     ## [32m✔[39m Creating [34m'R/'[39m
     ## [32m✔[39m Writing [34m'DESCRIPTION'[39m
     ## [34mPackage[39m: SuperFrob
@@ -68,7 +69,7 @@ we manually set the active project.
 
 ``` r
 usethis::proj_set()
-## [32m✔[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/RtmptBKt3y/fledge/SuperFrob'[39m
+## [32m✔[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob'[39m
 ```
 
 The infrastructure files and directories that comprise a minimal R
@@ -90,7 +91,7 @@ for the package. We use `git init` to get a predictable branch name.
 ``` bash
 # required git >= 2.28
 git init -b main
-## Initialized empty Git repository in /private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/RtmptBKt3y/fledge/SuperFrob/.git/
+## Initialized empty Git repository in /private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob/.git/
 ```
 
 In interactive mode, the `usethis::use_git()` function creates an

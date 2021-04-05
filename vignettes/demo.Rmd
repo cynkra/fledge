@@ -45,8 +45,9 @@ For this demo, the package is created in a temporary directory.
 A real project will live somewhere in your home directory.
 
 ```{r tempdir}
-tempdir <- file.path(tempdir(), "fledge")
-dir.create(tempdir)
+tempdir <- file.path(Sys.getenv("TMPDIR"), "Rtmpfoo/fledge")
+unlink(tempdir, force = TRUE, recursive = TRUE)
+dir.create(tempdir, recursive = TRUE)
 ```
 
 The `usethis::create_package()` function sets up a package project ready for development.
@@ -372,3 +373,8 @@ cat(news, sep = "\n")
 ```
 
 Push to remote.
+
+```{r cleanup, echo=FALSE}
+# unlink(tempdir, force = TRUE, recursive = TRUE)
+```
+
