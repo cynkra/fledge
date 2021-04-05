@@ -15,6 +15,7 @@ values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"maj
 Calls the following functions:
 
 \enumerate{
+\item Verify that the current branch is the main branch.
 \item \code{\link[=update_news]{update_news()}}
 \item \code{\link[=update_version]{update_version()}}, using the \code{which} argument
 \item Depending on the \code{which} argument:

@@ -1,7 +1,7 @@
 Package: fledge
 Title: Wings for Your R Packages
-Version: 0.0.4
-Date: 2021-03-08
+Version: 0.0.5.9001
+Date: 2021-03-29
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
@@ -23,7 +23,8 @@ Imports:
     cli,
     desc (>= 1.2.0),
     enc,
-    git2r (>= 0.26.0),
+    gert (>= 1.0.0),
+    lifecycle,
     purrr (>= 0.3.2),
     rematch2,
     rlang,
@@ -35,12 +36,13 @@ Suggests:
     fansi,
     fs,
     knitr,
+    parsedate,
     rmarkdown,
     rstudioapi,
-    testthat
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.1.9001
+Config/testthat/edition: 3
