@@ -1,9 +1,9 @@
 test_that("demo.Rmd does not change", {
   dir <- usethis::proj_get()
   withr::with_dir(dir, {
-    old <- readLines("vignettes/out/demo.md")
+    old <- system.file("vignettes/out/demo.md", package = "fledge")
     callr::r(function() galley::galley_article("demo"))
-    new <- readLines("vignettes/out/demo.md")
+    new <- system.file("vignettes/out/demo.md", package = "fledge")
   })
   expect_equal(old, new)
 })
