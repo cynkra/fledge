@@ -376,8 +376,3 @@ cat(news, sep = "\n")
 ```
 
 Push to remote.
-
-```{r cleanup, echo=FALSE}
-# unlink(tempdir, force = TRUE, recursive = TRUE)
-```
-

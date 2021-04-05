@@ -42,10 +42,10 @@ for development. The output shows the details of the package created.
 pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
 ```
 
-    ## [32m✔[39m Creating [34m'/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob/'[39m
-    ## [32m✔[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob'[39m
-    ## [32m✔[39m Creating [34m'R/'[39m
-    ## [32m✔[39m Writing [34m'DESCRIPTION'[39m
+    ## [32m✓[39m Creating [34m'/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob/'[39m
+    ## [32m✓[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob'[39m
+    ## [32m✓[39m Creating [34m'R/'[39m
+    ## [32m✓[39m Writing [34m'DESCRIPTION'[39m
     ## [34mPackage[39m: SuperFrob
     ## [34mTitle[39m: What the Package Does (One Line, Title Case)
     ## [34mVersion[39m: 0.0.0.9000
@@ -59,8 +59,8 @@ pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
     ## [34mLazyData[39m: true
     ## [34mRoxygen[39m: list(markdown = TRUE)
     ## [34mRoxygenNote[39m: 7.1.1
-    ## [32m✔[39m Writing [34m'NAMESPACE'[39m
-    ## [32m✔[39m Setting active project to [34m'/Users/pjs/git/fledge'[39m
+    ## [32m✓[39m Writing [34m'NAMESPACE'[39m
+    ## [32m✓[39m Setting active project to [34m'/Users/pjs/git/fledge'[39m
 
 In an interactive RStudio session, a new window opens. Users of other
 environments would change the working directory manually. For this demo,
@@ -68,7 +68,7 @@ we manually set the active project.
 
 ``` r
 usethis::proj_set()
-## [32m✔[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob'[39m
+## [32m✓[39m Setting active project to [34m'/private/var/folders/wp/vf2dpq8j02xd0pw15rz4qqkm0000gn/T/Rtmpfoo/fledge/SuperFrob'[39m
 ```
 
 The infrastructure files and directories that comprise a minimal R
@@ -136,7 +136,7 @@ An initial NEWS file can be created with `usethis::use_news_md()`.
 
 ``` r
 usethis::use_news_md()
-## [32m✔[39m Writing [34m'NEWS.md'[39m
+## [32m✓[39m Writing [34m'NEWS.md'[39m
 ```
 
 Let’s take a look at the contents:
@@ -197,11 +197,11 @@ The code in `super.R` warrants a test:
 
 ``` r
 usethis::use_test("super")
-## [32m✔[39m Adding [34m'testthat'[39m to [32mSuggests[39m field in DESCRIPTION
-## [32m✔[39m Setting [32mConfig/testthat/edition[39m field in DESCRIPTION to [34m'3'[39m
-## [32m✔[39m Creating [34m'tests/testthat/'[39m
-## [32m✔[39m Writing [34m'tests/testthat.R'[39m
-## [32m✔[39m Writing [34m'tests/testthat/test-super.R'[39m
+## [32m✓[39m Adding [34m'testthat'[39m to [32mSuggests[39m field in DESCRIPTION
+## [32m✓[39m Setting [32mConfig/testthat/edition[39m field in DESCRIPTION to [34m'3'[39m
+## [32m✓[39m Creating [34m'tests/testthat/'[39m
+## [32m✓[39m Writing [34m'tests/testthat.R'[39m
+## [32m✓[39m Writing [34m'tests/testthat/test-super.R'[39m
 ## [31m●[39m Edit [34m'tests/testthat/test-super.R'[39m
 cat(readLines("tests/testthat/test-super.R"), sep = "\n")
 ## test_that("multiplication works", {
@@ -238,7 +238,7 @@ the package and also update `NEWS.md`.
 ``` r
 fledge::bump_version()
 ## → Scraping [32m[32m4[32m[39m commit messages.
-## [32m✔[39m Found [32m[32m2[32m[39m NEWS-worthy entries.
+## [32m✓[39m Found [32m[32m2[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
@@ -246,7 +246,7 @@ fledge::bump_version()
 ## 
 ## ── [1m[1mUpdate Version[1m[22m ──
 ## 
-## [32m✔[39m Package version bumped to [32m[32m0.0.0.9001[32m[39m.
+## [32m✓[39m Package version bumped to [32m[32m0.0.0.9001[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
 ## → Committing changes.
 ## 
@@ -339,7 +339,7 @@ specially, because {fledge} will ignore them anyway.
 
 ``` r
 usethis::use_test("frob")
-## [32m✔[39m Writing [34m'tests/testthat/test-frob.R'[39m
+## [32m✓[39m Writing [34m'tests/testthat/test-frob.R'[39m
 ## [31m●[39m Edit [34m'tests/testthat/test-frob.R'[39m
 ```
 
@@ -410,7 +410,7 @@ time to bump the version again.
 ``` r
 fledge::bump_version()
 ## → Scraping [32m[32m2[32m[39m commit messages.
-## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
+## [32m✓[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
@@ -418,7 +418,7 @@ fledge::bump_version()
 ## 
 ## ── [1m[1mUpdate Version[1m[22m ──
 ## 
-## [32m✔[39m Package version bumped to [32m[32m0.0.0.9002[32m[39m.
+## [32m✓[39m Package version bumped to [32m[32m0.0.0.9002[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
 ## → Committing changes.
 ## 
@@ -463,7 +463,7 @@ We wish to release this package as a patch and so we use
 ``` r
 fledge::bump_version("patch")
 ## → Scraping [32m[32m1[32m[39m commit messages.
-## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
+## [32m✓[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
@@ -471,7 +471,7 @@ fledge::bump_version("patch")
 ## 
 ## ── [1m[1mUpdate Version[1m[22m ──
 ## 
-## [32m✔[39m Package version bumped to [32m[32m0.0.1[32m[39m.
+## [32m✓[39m Package version bumped to [32m[32m0.0.1[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
 ## → Committing changes.
 ## [36mℹ[39m Preparing package for release (CRAN or otherwise).
@@ -590,7 +590,7 @@ We will now make the package ready for future development. The
 ``` r
 fledge::bump_version()
 ## → Scraping [32m[32m1[32m[39m commit messages.
-## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
+## [32m✓[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
 ## 
 ## ── [1m[1mUpdating NEWS[1m[22m ──
 ## 
@@ -598,7 +598,7 @@ fledge::bump_version()
 ## 
 ## ── [1m[1mUpdate Version[1m[22m ──
 ## 
-## [32m✔[39m Package version bumped to [32m[32m0.0.1.9000[32m[39m.
+## [32m✓[39m Package version bumped to [32m[32m0.0.1.9000[32m[39m.
 ## → Adding header to [34m[34mNEWS.md[34m[39m.
 ## → Committing changes.
 ## 
