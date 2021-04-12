@@ -1,6 +1,5 @@
-github_info <- function(path = usethis::proj_get(),
-                        remote = "origin") {
-  remote_url <- get_remote_url(path, remote)
+github_info <- function(remote = "origin") {
+  remote_url <- get_remote_url(remote)
   repo <- extract_repo(remote_url)
   get_repo_data(repo)
 }

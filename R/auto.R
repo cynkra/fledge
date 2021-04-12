@@ -99,7 +99,12 @@ get_branch_name <- function() {
 
 get_remote_name <- function(branch) {
   branch_info <- gert::git_branch_list()
-  branch_info[branch_info$name == branch, ]$upstream
+  upstream <- branch_info[branch_info$name == branch, ]$upstream
+
+  # The third path component of the full upstream branch
+  remote <- gsub("^refs/remotes/([^/]+)/.*$", "\\1", upstream)
+  stopifnot(remote != upstream)
+  remote
 }
 
 create_release_branch <- function(force) {
