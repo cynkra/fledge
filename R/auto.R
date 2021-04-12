@@ -107,7 +107,7 @@ create_release_branch <- function(force) {
 
   cli_alert("Creating branch {.field {branch_name}}.")
 
-  gert::git_branch_checkout(branch = branch_name, force = force)
+  gert::git_branch_create(branch = branch_name)
   branch_name
 }
 
