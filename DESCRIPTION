@@ -28,6 +28,7 @@ Imports:
     foghorn,
     gert (>= 1.0.0),
     gh,
+    git2r,
     glue,
     httr,
     lifecycle,
