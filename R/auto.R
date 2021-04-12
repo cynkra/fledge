@@ -416,7 +416,13 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     config_url <- glue("branch.{release_branch}.pr-url")
     rlang::exec(git2r::config, !!config_url := NULL)
 
-    create <- is.null(usethis:::pr_url())
+    pr_list <- gh::gh("/repos/cynkra/fledge/pulls",
+      "head" = get_branch_name(), "sort" = "created"
+    )
+    create <- !any(vapply(pr_list, function(x) x$head$ref,
+      FUN.VALUE = character(1)
+    ) == get_branch_name())
+
   } else {
     create <- TRUE
   }
