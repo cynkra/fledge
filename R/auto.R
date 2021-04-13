@@ -28,7 +28,6 @@ pre_release <- function(which = "patch", force = FALSE) {
 }
 
 pre_release_impl <- function(which, force) {
-
   cat(boxx("pre-release", border_style = "double"))
 
   stopifnot(git2r::is_branch(git2r::repository_head()))
@@ -416,13 +415,18 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     config_url <- glue("branch.{release_branch}.pr-url")
     rlang::exec(git2r::config, !!config_url := NULL)
 
-    pr_list <- gh::gh("/repos/cynkra/fledge/pulls",
-      "head" = get_branch_name(), "sort" = "created"
-    )
-    create <- !any(vapply(pr_list, function(x) x$head$ref,
-      FUN.VALUE = character(1)
-    ) == get_branch_name())
+    info <- github_info(remote = remote_name)
 
+    pr_list <- gh::gh("/repos/{owner}/{repo}/pulls",
+      "head" = get_branch_name(),
+      owner = info$owner$login,
+      repo = info$name
+    )
+
+    pr_head_branch <- vapply(pr_list, function(x) x$head$ref,
+      FUN.VALUE = character(1)
+    )
+    create <- !any(pr_head_branch == get_branch_name())
   } else {
     create <- TRUE
   }
