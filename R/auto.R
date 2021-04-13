@@ -99,7 +99,9 @@ get_branch_name <- function() {
 
 get_remote_name <- function(branch) {
   branch_info <- gert::git_branch_list()
-  upstream <- branch_info[branch_info$name == branch, ]$upstream
+  # branch_info$name is unique: remote branches are prefixed with their remote name.
+  branch_info$upstream[branch_info$name == branch]
+  upstream <- branch_info$upstream[branch_info$name == branch]
 
   # The third path component of the full upstream branch
   remote <- gsub("^refs/remotes/([^/]+)/.*$", "\\1", upstream)
