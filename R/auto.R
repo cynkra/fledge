@@ -31,8 +31,8 @@ pre_release_impl <- function(which, force) {
 
   cat(boxx("pre-release", border_style = "double"))
 
-  # not sure how to do this in gert
-  stopifnot(git2r::is_branch(git2r::repository_head()))
+  # https://github.com/r-lib/gert/issues/139
+  stopifnot(gert::git_branch() != "HEAD")
 
   # check PAT scopes for PR for early abort
   check_gh_scopes()
