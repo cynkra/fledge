@@ -419,7 +419,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     # Remove cached config so that pr_url() always checks
     # if we happened to overwrite the branch
     config_url <- glue("branch.{release_branch}.pr-url")
-    rlang::exec(gert::git_config_set, !!config_url, NULL)
+    gert::git_config_set(config_url, NULL)
 
     create <- is.null(usethis:::pr_url())
   } else {
