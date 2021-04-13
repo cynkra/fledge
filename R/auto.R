@@ -28,6 +28,8 @@ pre_release <- function(which = "patch", force = FALSE) {
 }
 
 pre_release_impl <- function(which, force) {
+  # FIXME: Needs repair in create_release_branch()
+  stopifnot(!force)
 
   cat(boxx("pre-release", border_style = "double"))
 
@@ -114,6 +116,16 @@ create_release_branch <- function(force) {
 
   cli_alert("Creating branch {.field {branch_name}}.")
 
+  # FIXME: Obey `force` argument
+  stopifnot(!force)
+
+  # if (gert::git_branch_exists(branch_name)) {
+  #   if (force) {
+  #     gert::git_branch_delete(branch_name)
+  #   } else {
+  #     abort(...)
+  #   }
+  # }
   gert::git_branch_create(branch = branch_name)
   branch_name
 }
