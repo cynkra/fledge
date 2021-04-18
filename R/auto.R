@@ -433,11 +433,12 @@ gh_scopes <- function() {
 check_for_rc <- function() {
 
   # check if current commit is on a RC tag
-  sha_commit <- git2r::sha(git2r::last_commit())
-  sha_last_tag <- git2r::sha(git2r::tags()[1][[1]])
+  sha_commit <- gert::git_commit_id()
+  sha_last_tag <- tail(gert::git_tag_list(), 1)$commit
+
 
   if (sha_commit == sha_last_tag) {
-    if ("-rc" %in% names(git2r::tags())[[1]]) {
+    if ("-rc" %in% tail(gert::git_tag_list(), 1)$name) {
       stop("Running on a release candidate commit, terminating.")
       cli_alert_warning("The branch must be at least one commit ahead of the
                         last release candidate tag to initiate a new release.")

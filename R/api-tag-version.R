@@ -22,13 +22,11 @@ tag_release_candidate = function(force = FALSE) {
 
 delete_release_candidate_tags = function() {
 
-  tag_names = names(git2r::tags())
+  tag_names = gert::git_tag_list()$name
 
   tags_to_delete = grep("-rc", tag_names, value = TRUE)
 
   cli_alert("Deleting all release candidate tags.")
 
-  # delete all tags which contain "-rc"
-  # # not vectorized :/?
-  invisible(lapply(tags_to_delete, function(x) git2r::tag_delete(".", x)))
+  gert::git_tag_delete(tags_to_delete)
 }
