@@ -1,7 +1,5 @@
 ---
-output:
-  github_document:
-    html_preview: false
+output: downlit::readme_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -17,17 +15,20 @@ knitr::opts_chunk$set(
 # fledge
 
 <!-- badges: start -->
-[![tic](https://github.com/krlmlr/fledge/workflows/tic/badge.svg?branch=master)](https://github.com/krlmlr/fledge/actions)
+[![tic](https://github.com/cynkra/fledge/workflows/tic/badge.svg?branch=master)](https://github.com/cynkra/fledge/actions)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge)
+[![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/master/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=master)
 <!-- badges: end -->
 
 {fledge} has been designed to streamline the process of versioning R packages on _Git_, with the functionality to automatically update `NEWS.md` and `DESCRIPTION` with relevant information from recent commit messages.
-For details on usage and implementation, refer the [Get Started](https://krlmlr.github.io/fledge/articles/fledge.html) article.
+Numbers are cheap, why not use them?
+
+For details on usage and implementation, refer to `vignette("fledge")`.
 
 ## Demo
 
-[![asciinema demo](https://github.com/krlmlr/fledge/raw/master/readme/demo.gif)](https://asciinema.org/a/173876)
+[![asciinema demo](https://github.com/cynkra/fledge/raw/master/readme/demo.gif)](https://asciinema.org/a/173876)
 
 Click on the image to show in a separate tab.
 
@@ -36,7 +37,7 @@ Click on the image to show in a separate tab.
 Install from GitHub using
 
 ```r
-devtools::install_github("krlmlr/fledge")
+devtools::install_github("cynkra/fledge")
 ```
 
 ## Usage

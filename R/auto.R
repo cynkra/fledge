@@ -23,22 +23,26 @@ pre_release <- function(which = "patch", force = FALSE) {
 
   stopifnot(which %in% c("patch", "minor", "major"))
 
-  with_options(
-    list(usethis.quiet = TRUE),
-    with_repo(pre_release_impl(which, force))
-  )
+  local_options(usethis.quiet = TRUE)
+  with_repo(pre_release_impl(which, force))
 }
 
 pre_release_impl <- function(which, force) {
+  # FIXME: Needs repair in create_release_branch()
+  stopifnot(!force)
 
   cat(boxx("pre-release", border_style = "double"))
 
-  stopifnot(git2r::is_branch(git2r::repository_head()))
+  # https://github.com/r-lib/gert/issues/139
+  stopifnot(gert::git_branch() != "HEAD")
 
    # check PAT scopes for PR for early abort
   check_gh_scopes()
 
-  remote_name <- get_remote_name()
+  # Begin extension points
+  # End extension points
+
+  # We expect that this branch is pushed already, ok to fail here
   main_branch <- get_branch_name()
 
   # Commit ignored files as early as possible
@@ -78,28 +82,38 @@ pre_release_impl <- function(which, force) {
 
   # user action items
   cli_h1("4. User Action Items")
-  
+
   cli_div(theme = list(ul = list(color = "magenta")))
   cli_ul("Run {.code devtools::check_win_devel()}.")
-  cli_ul("Check all items in {.file cran-comments.md}.")
   cli_ul("Run {.code rhub::check_for_cran()}.")
+  cli_ul("Run {.code urlchecker::url_update()}.")
+  cli_ul("Check all items in {.file cran-comments.md}.")
   cli_ul("Convert {.file NEWS.md} from changelog format to release notes.")
   cli_ul("Run {.code fledge::release()}.")
   cli_end()
 
   Sys.sleep(2)
 
-  send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran() })")
+  send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran(); urlchecker::url_update() })")
+
+  # Begin extension points
+  # End extension points
 }
 
 get_branch_name <- function() {
-  git2r::repository_head()$name
+  gert::git_branch()
 }
 
 get_remote_name <- function(branch) {
-  local <- git2r::branches(flags = "local")[[branch]]
-  upstream <- git2r::branch_get_upstream(local)
-  git2r::branch_remote_name(upstream)
+  branch_info <- gert::git_branch_list()
+  # branch_info$name is unique: remote branches are prefixed with their remote name.
+  branch_info$upstream[branch_info$name == branch]
+  upstream <- branch_info$upstream[branch_info$name == branch]
+
+  # The third path component of the full upstream branch
+  remote <- gsub("^refs/remotes/([^/]+)/.*$", "\\1", upstream)
+  stopifnot(remote != upstream)
+  remote
 }
 
 create_release_branch <- function(force) {
@@ -107,13 +121,23 @@ create_release_branch <- function(force) {
 
   cli_alert("Creating branch {.field {branch_name}}.")
 
-  git2r::branch_create(name = branch_name, force = force)
+  # FIXME: Obey `force` argument
+  stopifnot(!force)
+
+  # if (gert::git_branch_exists(branch_name)) {
+  #   if (force) {
+  #     gert::git_branch_delete(branch_name)
+  #   } else {
+  #     abort(...)
+  #   }
+  # }
+  gert::git_branch_create(branch = branch_name)
   branch_name
 }
 
 switch_branch <- function(name) {
   cli_alert("Switching to branch {.field {name}}.")
-  git2r::checkout(branch = name)
+  gert::git_branch_checkout(branch = name)
 }
 
 update_cran_comments <- function() {
@@ -135,28 +159,26 @@ update_cran_comments <- function() {
   cransplainer <- get_cransplainer(package)
 
   unlink("cran-comments.md")
-  withr::with_options(
-    list(usethis.quiet = TRUE),
-    use_template(
-      "cran-comments.md",
-      package = "fledge",
-      data = list(
-        package = package,
-        version = desc::desc_get_version(),
-        crp_date = crp_date,
-        crp_cross = crp_cross,
-        crp_changes = crp_changes,
-        rversion = glue("{version$major}.{version$minor}"),
-        latest_rversion = rversions::r_release()[["version"]],
-        cransplainer = cransplainer
-      ),
-      ignore = TRUE,
-      open = TRUE
-    )
+  local_options(usethis.quiet = TRUE)
+  use_template(
+    "cran-comments.md",
+    package = "fledge",
+    data = list(
+      package = package,
+      version = desc::desc_get_version(),
+      crp_date = crp_date,
+      crp_cross = crp_cross,
+      crp_changes = crp_changes,
+      rversion = glue("{version$major}.{version$minor}"),
+      latest_rversion = rversions::r_release()[["version"]],
+      cransplainer = cransplainer
+    ),
+    ignore = TRUE,
+    open = TRUE
   )
 
-  git2r::add(path = "cran-comments.md", force = TRUE)
-  git2r::commit(message = "Update CRAN comments")
+  gert::git_add(files = "cran-comments.md")
+  gert::git_commit(message = "Update CRAN comments")
 }
 
 get_crp_date <- function() {
@@ -198,7 +220,7 @@ get_cransplainer_update <- function(package) {
 
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
-  checked_on <- paste0("Checked on ", Sys.Date())
+  checked_on <- paste0("Checked on ", get_date())
 
   details <- foghorn::cran_details(package)
   details <- details[details$result != "OK", ]
@@ -234,15 +256,18 @@ release_impl <- function() {
   stopifnot(is_news_consistent())
   stopifnot(is_cran_comments_good())
 
-  push_head(get_head_branch())
+  # Begin extension points
+  # End extension points
 
-  cli_h2("Releasing to CRAN")
-
+  push_head()
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
   tag <- tag_release_candidate()
   push_tag(tag)
   auto_confirm()
+
+  # Begin extension points
+  # End extension points
 }
 
 is_news_consistent <- function() {
@@ -330,6 +355,9 @@ post_release_impl <- function() {
 
   check_post_release()
 
+  # Begin extension points
+  # End extension points
+
   tag <- tag_version(force = TRUE)
 
   push_tag(tag)
@@ -338,41 +366,18 @@ post_release_impl <- function() {
 
   usethis::use_github_release()
 
-  # FIXME: integrate `gh` system lib dep
-  # FIXME: clean up mess
+  # FIXME: Check if PR open, if yes merge PR instead
+  release_branch <- get_branch_name()
+  switch_branch(get_main_branch())
+  merge_branch(release_branch)
+  push_head()
 
-  # check if gh is avail
-  is_gh_avail <- suppressWarnings(try(system2("gh", stdout = FALSE, stderr = FALSE), silent = TRUE))
-  if (is_gh_avail == 0) {
-    pr_list <- system2("gh", c("pr", "list"), stdout = TRUE)
-    if (any(grep("CRAN release", pr_list))) {
-      pr_info <- grep("CRAN release", pr_list, value = TRUE)
-      pr_number <- strsplit(pr_info, split = "\t")[[1]][1]
-      system2("gh", c("pr", "ready", pr_number))
-      system2("gh", c("pr", "merge", "--merge", pr_number))
-    } else {
-      cli_h2("Merging Pull Request containing release")
-      release_branch <- get_branch_name()
-      switch_branch(get_main_branch())
-      merge_branch(release_branch)
-      push_head(get_head_branch())
-    }
-  } else {
-    cli_h2("Merging Pull Request containing release")
-    release_branch <- get_branch_name()
-    switch_branch(get_main_branch())
-    merge_branch(release_branch)
-    push_head(get_head_branch())
-  }
-}
-
-get_main_branch <- function() {
-  # FIXME: How to determine dynamically?
-  "master"
+  # Begin extension points
+  # End extension points
 }
 
 merge_branch <- function(other_branch) {
-  git2r::merge(git2r::repository(), other_branch, fail = TRUE)
+  gert::git_merge(other_branch)
 }
 
 check_post_release <- function() {
@@ -397,8 +402,7 @@ check_post_release <- function() {
   sha <- gsub(rx, "\\1", release)
 
   sha_rx <- paste0("^", sha)
-  repo_head <- get_repo_head()
-  repo_head_sha <- git2r::sha(repo_head)
+  repo_head_sha <- gert::git_log(max = 1)$commit
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
       "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
@@ -462,7 +466,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     # Remove cached config so that pr_url() always checks
     # if we happened to overwrite the branch
     config_url <- glue("branch.{release_branch}.pr-url")
-    rlang::exec(git2r::config, !!config_url := NULL)
+    gert::git_config_set(config_url, NULL)
 
     create <- is.null(usethis:::pr_url())
   } else {
@@ -479,7 +483,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       repo = info$name,
       title = sprintf(
         "CRAN release v%s",
-        strsplit(git2r::repository_head()$name, "cran-")[[1]][2]
+        strsplit(gert::git_branch(), "cran-")[[1]][2]
       ),
       head = release_branch,
       base = main_branch,
@@ -492,10 +496,11 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 }
 
 commit_ignore_files <- function() {
-  git2r::add(path = c(".gitignore", ".Rbuildignore"))
+  gert::git_add(files = c(".gitignore", ".Rbuildignore"))
 
-  if (length(git2r::status()$staged) > 0) {
+
+  if (nrow(gert::git_status(staged = TRUE)) > 0) {
     cli_alert("Committing {.file .gitignore} and {.file .Rbuildignore}.")
-    git2r::commit(message = "Update `.gitignore` and/or `.Rbuildignore`")
+    gert::git_commit(message = "Update `.gitignore` and/or `.Rbuildignore`")
   }
 }

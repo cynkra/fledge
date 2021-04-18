@@ -1,8 +1,6 @@
 #' @rdname finalize_version
 #' @usage NULL
 finalize_version_impl <- function(push, suggest_finalize = TRUE) {
-  head <- get_head_branch()
-
   #' @description
   #' 1. [commit_version()]
   force <- commit_version()
@@ -12,11 +10,11 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
     push_tag(tag)
-    push_head(head)
+    push_head()
   } else if (suggest_finalize) {
     edit_news()
 
-    if (has_remote_branch(head)) {
+    if (has_remote_branch(gert::git_branch())) {
       command <- "fledge::finalize_version(push = TRUE)"
     } else {
       command <- "fledge::finalize_version()"
@@ -27,20 +25,15 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   }
 }
 
-get_head_branch <- function() {
-  head <- git2r::repository_head()
-  stopifnot(git2r::is_branch(head))
-  head
-}
-
 push_tag <- function(tag) {
   cli_alert("Force-pushing tag {.field {tag}}.")
-  git2r::push(name = "origin", refspec = paste0("refs/tags/", tag), force = TRUE)
+  gert::git_tag_push(tag, force = force)
 }
 
-push_head <- function(head) {
-  cli_alert('Pushing {.field {head$name}}.')
-  git2r::push(head)
+push_head <- function() {
+  head <- gert::git_branch()
+  cli_alert('Pushing {.field {head}}.')
+  gert::git_push()
 }
 
 push_to_new <- function(remote_name, force) {
@@ -48,23 +41,34 @@ push_to_new <- function(remote_name, force) {
 
 
   cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
-
-  git2r::push(
-    git2r::repository(),
-    name = remote_name,
+  gert::git_push(
     refspec = paste0("refs/heads/", branch_name),
+    remote = remote_name,
     force = force,
     set_upstream = TRUE
   )
  }
 
 has_remote_branch <- function(branch) {
-  !is.null(git2r::branch_get_upstream(branch))
+  branches <- gert::git_branch_list(local = TRUE)
+  !is.na(branches$upstream[branches$name == branch])
 }
 
 send_to_console <- function(code) {
-  if (!is_installed("rstudioapi")) return()
-  if (!is_interactive()) return()
+  if (!is_interactive()) {
+    return()
+  }
+  if (!is_installed("rstudioapi")) {
+    return()
+  }
+  if (!rstudioapi::hasFun("sendToConsole")) {
+    return()
+  }
 
-  rstudioapi::sendToConsole(code, execute = FALSE)
+  tryCatch(
+    rstudioapi::sendToConsole(code, execute = FALSE),
+    error = function(e) {
+      rstudioapi::sendToConsole(paste0("if (FALSE) ", code), execute = TRUE)
+    }
+  )
 }

@@ -2,21 +2,22 @@
 #' @usage NULL
 unbump_version_impl <- function() {
   tag <- get_last_tag()
-  last_commit <- git2r::last_commit()
+  last_commit <- gert::git_log(max = 1)
 
   cli_alert_info("Checking if working copy is clean.")
-  stopifnot(sum(map_int(git2r::status(), length)) == 0)
+  stopifnot(sum(map_int(gert::git_status(), length)) == 0)
   cli_alert_info("Checking if last tag points to last commit.")
-  stopifnot(tag$target == last_commit$sha)
+  stopifnot(tag$commit == last_commit$commit)
   cli_alert_info("Checking if commit messages match.")
   stopifnot(is_last_commit_bump())
 
   cli_alert_success("Safety checks complete.")
 
   cli_alert("Deleting tag {.field {tag$name}}.")
-  git2r::tag_delete(tag)
+  gert::git_tag_delete(tag$name)
 
-  parent_commit <- git2r::parents(last_commit)[[1]]
-  cli_alert_success("Resetting to parent commit {.field {parent_commit$sha}}.")
-  git2r::reset(parent_commit, "hard")
+  parent_commit_id <- gert::git_commit_info(last_commit$commit)$parent
+
+  cli_alert_success("Resetting to parent commit {.field {parent_commit_id}}.")
+  gert::git_reset_hard(parent_commit_id)
 }

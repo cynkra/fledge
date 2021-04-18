@@ -28,7 +28,7 @@ By incorporating a few simple and easy steps during the development process, you
 The package can be installed from GitHub using the command
 
 ```r
-devtools::install_github("krlmlr/fledge")
+devtools::install_github("cynkra/fledge")
 ```
 
 ## Why use fledge?
@@ -113,7 +113,7 @@ In order to do this, the following steps need to be included throughout the deve
     This achieves the following:
 
         * `NEWS.md` is now composed, based on the most recent commit messages.
-          To understand how `NEWS.md` is updated by fledge, see the section on `NEWS.md` implementation.
+            To understand how `NEWS.md` is updated by fledge, see the section on `NEWS.md` implementation.
         * A new version number is assigned automatically (this is modeled after `usethis::use_version()`)
         * A tag matching the version number is assigned automatically, with the most recent `NEWS.md` messages included in the tag's message.
 

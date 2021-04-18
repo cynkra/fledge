@@ -9,3 +9,4 @@
 ^docs$
 ^\.ccache$
 ^\.github$
+^codecov\.yml$
