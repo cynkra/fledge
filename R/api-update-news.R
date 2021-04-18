@@ -9,7 +9,8 @@
 update_news <- function(messages = get_top_level_commits(since = get_last_tag())$message, range = NULL) {
   if (!is.null(range) || is.list(messages)) {
     deprecate_stop("0.0.5", "fledge::update_news(range = )",
-      details = "Pass a vector of `messages`.")
+      details = "Pass a vector of `messages`."
+    )
   }
 
   with_repo(update_news_impl(messages))

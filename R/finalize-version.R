@@ -32,7 +32,7 @@ push_tag <- function(tag) {
 
 push_head <- function() {
   head <- gert::git_branch()
-  cli_alert('Pushing {.field {head}}.')
+  cli_alert("Pushing {.field {head}}.")
   gert::git_push()
 }
 
@@ -46,7 +46,7 @@ push_to_new <- function(remote_name, force) {
     force = force,
     set_upstream = TRUE
   )
- }
+}
 
 has_remote_branch <- function(branch) {
   branches <- gert::git_branch_list(local = TRUE)
