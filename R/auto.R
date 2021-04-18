@@ -64,12 +64,12 @@ pre_release_impl <- function(which, force) {
   # push main branch, bump to devel version and push again
   push_to_new(remote_name, force)
   switch_branch(main_branch)
-  push_head(main_branch)
+  push_head()
 
   cli_h1("2. Bumping main branch to dev version and updating NEWS")
   # manual implementation of bump_version(), it doesn't expose `force` yet
   bump_version_to_dev_with_force(force)
-  push_head(main_branch)
+  push_head()
 
   cli_h1("3. Opening Pull Request for release branch")
   # switch to release branch and init pre_release actions
