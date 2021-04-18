@@ -80,12 +80,10 @@ get_current_news <- function() {
 }
 
 check_existing_rc <- function() {
-
   tags_filtered <- grep("rc", gert::git_tag_list()$name, value = TRUE)
 
   if (length(tags_filtered != 0)) {
     index <- length(tags_filtered) + 1
-
   } else {
     index <- 1
   }

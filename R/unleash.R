@@ -1,6 +1,5 @@
 # Feature: allow to specify a numeric version in `which`
 unleash <- function(which, force = FALSE) {
-
   state <- check_release_state(which)
 
   switch(state,

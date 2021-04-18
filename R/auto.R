@@ -245,7 +245,6 @@ release <- function() {
 }
 
 release_impl <- function() {
-
   check_for_rc()
   check_only_modified(character())
 
@@ -343,7 +342,6 @@ post_release <- function() {
 }
 
 post_release_impl <- function() {
-
   cli_h2("Post-release actions")
 
   check_only_modified(c(".Rbuildignore", "CRAN-RELEASE"))
