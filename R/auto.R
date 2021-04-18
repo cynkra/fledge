@@ -57,11 +57,12 @@ pre_release_impl <- function(which, force) {
   bump_version(which)
 
   # switch to release branch and update cran-comments
-  release_branch <- create_release_branch()
+  release_branch <- create_release_branch(force)
   switch_branch(release_branch)
   update_cran_comments()
 
-  push_to_new(remote_name)
+  # push main branch, bump to devel version and push again
+  push_to_new(remote_name, force)
   switch_branch(main_branch)
   push_head(main_branch)
 
@@ -73,12 +74,12 @@ pre_release_impl <- function(which, force) {
   cli_h1("3. Opening Pull Request for release branch")
   # switch to release branch and init pre_release actions
   switch_branch(release_branch)
+
   cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   create_pull_request(release_branch, main_branch, remote_name, force)
 
   # user action items
   cli_h1("4. User Action Items")
-
   cli_div(theme = list(ul = list(color = "magenta")))
   cli_ul("Run {.code devtools::check_win_devel()}.")
   cli_ul("Run {.code rhub::check_for_cran()}.")
@@ -213,7 +214,6 @@ is_new_submission <- function(package) {
 }
 
 get_cransplainer_update <- function(package) {
-
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
   checked_on <- paste0("Checked on ", get_date())
