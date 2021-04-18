@@ -36,7 +36,7 @@ pre_release_impl <- function(which, force) {
   # https://github.com/r-lib/gert/issues/139
   stopifnot(gert::git_branch() != "HEAD")
 
-   # check PAT scopes for PR for early abort
+  # check PAT scopes for PR for early abort
   check_gh_scopes()
 
   # Begin extension points
@@ -44,6 +44,7 @@ pre_release_impl <- function(which, force) {
 
   # We expect that this branch is pushed already, ok to fail here
   main_branch <- get_branch_name()
+  remote_name <- get_remote_name(main_branch)
 
   # Commit ignored files as early as possible
   usethis::use_git_ignore("CRAN-RELEASE")
@@ -55,29 +56,24 @@ pre_release_impl <- function(which, force) {
   # bump version on main branch to version set by user
   bump_version(which)
 
-  cli_h2("Preparing CRAN release")
-
+  # switch to release branch and update cran-comments
   release_branch <- create_release_branch()
   switch_branch(release_branch)
-
   update_cran_comments()
-
-  cli_h2("Pushing branches and bumping version")
 
   push_to_new(remote_name)
   switch_branch(main_branch)
-  # to trigger a run with the release version
   push_head(main_branch)
 
   cli_h1("2. Bumping main branch to dev version and updating NEWS")
-
   # manual implementation of bump_version(), it doesn't expose `force` yet
   bump_version_to_dev_with_force(force)
   push_head(main_branch)
 
-  cli_h1("3. Opening draft pull request with contents from {.file cran-comments.md}.")
+  cli_h1("3. Opening Pull Request for release branch")
   # switch to release branch and init pre_release actions
   switch_branch(release_branch)
+  cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   create_pull_request(release_branch, main_branch, remote_name, force)
 
   # user action items
@@ -323,7 +319,6 @@ confirm_submission <- function(url) {
 }
 
 get_confirm_url <- function(url) {
-
   parsed <- httr::parse_url(url)
 
   parsed$query$policy_check2 <- "on"
@@ -381,14 +376,12 @@ merge_branch <- function(other_branch) {
 }
 
 check_post_release <- function() {
-
   cli_alert("Checking scope of {.var GITHUB_PAT} environment variable.")
 
   # FIXME: Distinguish between public and private repo?
   check_gh_scopes()
 
   cli_alert("Checking contents of {.file CRAN-RELEASE}.")
-
   if (!file.exists("CRAN-RELEASE")) {
     abort("File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.")
   }
