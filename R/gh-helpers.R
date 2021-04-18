@@ -1,24 +1,11 @@
-github_info <- function(path = usethis::proj_get(),
-                        remote = "origin") {
-  remote_url <- get_remote_url(path, remote)
+github_info <- function(remote = "origin") {
+  remote_url <- get_remote_url(remote)
   repo <- extract_repo(remote_url)
   get_repo_data(repo)
 }
 
-get_remote_url <- function(path, remote) {
-  r <- git2r::repository(path, discover = TRUE)
-  remote_names <- git2r::remotes(r)
-  if (!length(remote_names)) {
-    stopc("Failed to lookup git remotes")
-  }
-  remote_name <- remote
-  if (!(remote_name %in% remote_names)) {
-    stopc(sprintf(
-      "No remote named '%s' found in remotes: '%s'.",
-      remote_name, remote_names
-    ))
-  }
-  git2r::remote_url(r, remote_name)
+get_remote_url <- function(remote) {
+  gert::git_remote_info(remote = remote)$url
 }
 
 extract_repo <- function(url) {
