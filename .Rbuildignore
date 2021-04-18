@@ -2,9 +2,6 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^readme$
-^\.travis\.yml$
-^appveyor\.yml$
-^tic\.R$
 ^_pkgdown\.yml$
 ^docs$
 ^\.ccache$
