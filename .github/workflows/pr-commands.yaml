@@ -53,6 +53,18 @@ jobs:
       - uses: r-lib/actions/pr-push@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+  merge:
+    if: startsWith(github.event.comment.body, '/merge')
+    name: merge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create and merge pull request
+        # FIXME: Get pull request number
+        run: |
+          set -exo pipefail
+          PR_URL=$(curl -s -X POST --header "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --data '{ "head": "${{ github.base_ref }}", "base": "${{ github.head_ref }}", "title": "Merge back PR target branch", "body": "." }' https://api.github.com/repos/${{ github.repository }}/pulls | jq -r .url )
+          echo $PR_URL
+          curl -s -X PUT --header "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $PR_URL/merge
   # A mock job just to ensure we have a successful build status
   finish:
     runs-on: ubuntu-latest
