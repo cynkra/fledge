@@ -6,10 +6,10 @@ jobs:
   document:
     if: startsWith(github.event.comment.body, '/document')
     name: document
-    runs-on: ubuntu-20.04
+    # macos is actually better here due to native binary packages
+    runs-on: macos-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/pr-fetch@master
@@ -29,14 +29,6 @@ jobs:
           install.packages(c("remotes", "roxygen2"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-
-      # Begin custom: before install
-      - name: Install libgit2
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install -y libgit2-dev
-      # End custom: before install
-
       - name: Document
         run: |
           roxygen2::roxygenise()
@@ -51,10 +43,10 @@ jobs:
   style:
     if: startsWith(github.event.comment.body, '/style')
     name: style
-    runs-on: ubuntu-20.04
+    # macos is actually better here due to native binary packages
+    runs-on: macos-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/pr-fetch@master
