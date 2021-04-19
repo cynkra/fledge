@@ -4,7 +4,7 @@ on:
 name: Commands
 jobs:
   document:
-    if: ${{ github.event.issue.pull_request }} and startsWith(github.event.comment.body, '/document')
+    if: startsWith(github.event.comment.body, '/document')
     name: document
     runs-on: ubuntu-latest
     env:
@@ -29,7 +29,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
   style:
-    if: ${{ github.event.issue.pull_request }} and startsWith(github.event.comment.body, '/style')
+    if: startsWith(github.event.comment.body, '/style')
     name: style
     runs-on: ubuntu-latest
     env:
@@ -54,7 +54,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
   merge:
-    if: ${{ github.event.issue.pull_request }} and startsWith(github.event.comment.body, '/merge')
+    if: startsWith(github.event.comment.body, '/merge')
     name: merge
     runs-on: ubuntu-latest
     steps:
