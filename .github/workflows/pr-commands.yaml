@@ -49,6 +49,7 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           install-r: false
+      - name: Install dependencies
         run: |
           install.packages("styler")
         shell: Rscript {0}
