@@ -48,7 +48,7 @@ jobs:
         run: Rscript -e 'styler::style_pkg()'
       - name: commit
         run: |
-          git add \*.R
+          git add '*.R' '*.Rmd'
           git commit -m 'Style'
       - uses: r-lib/actions/pr-push@master
         with:
