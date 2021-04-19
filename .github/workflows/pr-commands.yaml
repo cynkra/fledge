@@ -19,7 +19,6 @@ jobs:
         with:
           install-r: false
       - name: Configure Git identity
-        if: github.event_name == 'push'
         run: |
           env | sort
           git config --local user.name "$GITHUB_ACTOR"
@@ -65,7 +64,6 @@ jobs:
         with:
           install-r: false
       - name: Configure Git identity
-        if: github.event_name == 'push'
         run: |
           env | sort
           git config --local user.name "$GITHUB_ACTOR"
