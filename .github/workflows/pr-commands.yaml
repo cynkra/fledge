@@ -30,6 +30,14 @@ jobs:
           install.packages(c("remotes", "roxygen2"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+
+      # Begin custom: before install
+      - name: Install libgit2
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y libgit2-dev
+      # End custom: before install
+
       - name: Document
         run: |
           roxygen2::roxygenise()
