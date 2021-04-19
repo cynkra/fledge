@@ -18,6 +18,13 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           install-r: false
+      - name: Configure Git identity
+        if: github.event_name == 'push'
+        run: |
+          env | sort
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        shell: bash
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "roxygen2"))
@@ -49,6 +56,13 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           install-r: false
+      - name: Configure Git identity
+        if: github.event_name == 'push'
+        run: |
+          env | sort
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        shell: bash
       - name: Install dependencies
         run: |
           install.packages("styler")
