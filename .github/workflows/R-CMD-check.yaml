@@ -37,10 +37,8 @@ jobs:
       matrix:
         config:
           - { os: macOS-latest,                 r: 'release' }
-          - { os: macOS-latest,                 r: 'devel' }
           - { os: windows-latest,               r: 'release', rspm: "https://packagemanager.rstudio.com/all/latest" }
           - { os: windows-latest,               r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/all/latest" }
-          - { os: windows-latest,               r: 'devel',  rspm: "https://packagemanager.rstudio.com/all/latest" }
           - { os: ubuntu-, os-version: 20.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
           - { os: ubuntu-, os-version: 18.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest" }
           - { os: ubuntu-, os-version: 18.04,   r: 'devel',   rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest", http-user-agent: "R/4.0.0 (ubuntu-18.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
@@ -59,6 +57,8 @@ jobs:
           # End custom: R 3.3
 
           # Begin custom: matrix elements
+          - { os: macOS-latest,                 r: 'devel' }
+          - { os: windows-latest,               r: 'devel',  rspm: "https://packagemanager.rstudio.com/all/latest" }
           # End custom: matrix elements
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
