@@ -55,6 +55,7 @@ pre_release_impl <- function(which, force) {
 
   # bump version on main branch to version set by user
   bump_version(which)
+  push_to_new(remote_name, force)
 
   # switch to release branch and update cran-comments
   release_branch <- create_release_branch(force)
