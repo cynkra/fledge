@@ -27,7 +27,7 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
 
 push_tag <- function(tag) {
   cli_alert("Force-pushing tag {.field {tag}}.")
-  gert::git_tag_push(tag, force = force)
+  gert::git_tag_push(tag, force = TRUE)
 }
 
 push_head <- function() {
