@@ -56,14 +56,15 @@ get_last_tag_impl <- function() {
   }
 
   tags_ab <- map(all_tags$name, ~ gert::git_ahead_behind(upstream = repo_head$commit, ref = .x))
-  # in case no tag exists yet, return the most recent commit
-  if (length(tags_ab) == 0) {
-    return(NULL)
-  }
   names(tags_ab) <- all_tags$name
   tags_only_b <- discard(tags_ab, ~ .[[1]] > 0)
   tags_b <- map_int(tags_only_b, 2)
   names(tags_b) <- names(tags_only_b)
+
+  # in case no tag exists yet, return the most recent commit
+  if (length(tags_b) == 0) {
+    return(NULL)
+  }
 
   min_tag <- which.min(tags_b)
   gert::git_tag_list(match = names(min_tag))$commit

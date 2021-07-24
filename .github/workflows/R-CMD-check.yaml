@@ -16,7 +16,7 @@ on:
       - master
       - "r-*"
   schedule:
-    - cron:  '20 2 * * *'
+    - cron:  '10 0 * * *'
 
 name: rcc
 
@@ -31,6 +31,9 @@ jobs:
 
     strategy:
       fail-fast: false
+      # Ensure that the "cancel" workflow gets a chance to run quickly, even if we just pushed
+      # Need to figure out how to smoke-test
+      max-parallel: 5
       matrix:
         config:
           - { os: macOS-latest,                 r: 'release' }
@@ -54,6 +57,8 @@ jobs:
           # End custom: R 3.3
 
           # Begin custom: matrix elements
+          - { os: macOS-latest,                 r: 'devel' }
+          - { os: windows-latest,               r: 'devel',  rspm: "https://packagemanager.rstudio.com/all/latest" }
           # End custom: matrix elements
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -71,6 +76,13 @@ jobs:
         shell: bash
 
       - uses: actions/checkout@v2
+
+      # Begin custom: before install
+      - name: Install libgit2
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y libgit2-dev
+      # End custom: before install
 
       - uses: r-lib/actions/setup-r@v1
         with:
@@ -108,12 +120,11 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "${{matrix.config.os-version}}"))')
 
-      # Begin custom: before install
-      - name: Install libgit2
+      - name: Add fake qpdf and checkbashisms
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get install -y libgit2-dev
-      # End custom: before install
+          sudo ln -s $(which true) /usr/local/bin/qpdf
+          sudo ln -s $(which true) /usr/local/bin/checkbashisms
 
       - name: Install dependencies
         run: |
@@ -141,6 +152,7 @@ jobs:
           options(crayon.enabled = TRUE)
           error_on <- "note"
           # Begin custom: rcmdcheck error_on
+          error_on <- "warning"
           # End custom: rcmdcheck error_on
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = error_on, check_dir = "check")
         shell: Rscript {0}
