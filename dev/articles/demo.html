@@ -94,17 +94,17 @@
     
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>Introduction</h2>
 <p>This guide will demonstrate how to use {fledge}, using a mock R package as an example. We are going to call our package “{SuperFrob}”. We will develop it from scratch and also maintain a changelog as the development progresses. Finally, we will demonstrate how this changelog can eventually be converted to release notes when the package is submitted to CRAN.</p>
 <p>This guide shows mostly R code, and uses Bash shell code for Git commands.</p>
 </div>
 <div id="set-up-the-development-environment" class="section level2">
 <h2 class="hasAnchor">
-<a href="#set-up-the-development-environment" class="anchor"></a>Set up the development environment</h2>
+<a href="#set-up-the-development-environment" class="anchor" aria-hidden="true"></a>Set up the development environment</h2>
 <p>Before we start development for {SuperFrob}, we set up the basic development environment required for any typical R package.</p>
 <div id="create-a-package" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-a-package" class="anchor"></a>Create a package</h3>
+<a href="#create-a-package" class="anchor" aria-hidden="true"></a>Create a package</h3>
 <p>We will start by creating a new package. For this demo, the package is created in a temporary directory. A real project will live somewhere in your home directory.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tempdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"fledge"</span><span class="op">)</span>
@@ -112,8 +112,8 @@
 <p>The <code><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">usethis::create_package()</a></code> function sets up a package project ready for development. The output shows the details of the package created.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">create_package</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tempdir</span>, <span class="st">"SuperFrob"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [32m✔[39m Creating [34m'/tmp/RtmpEo2Uou/fledge/SuperFrob/'[39m
-## [32m✔[39m Setting active project to [34m'/tmp/RtmpEo2Uou/fledge/SuperFrob'[39m
+<pre><code>## [32m✔[39m Creating [34m'/tmp/RtmpccnDoM/fledge/SuperFrob/'[39m
+## [32m✔[39m Setting active project to [34m'/tmp/RtmpccnDoM/fledge/SuperFrob'[39m
 ## [32m✔[39m Creating [34m'R/'[39m
 ## [32m✔[39m Writing [34m'DESCRIPTION'[39m
 ## [34mPackage[39m: SuperFrob
@@ -134,7 +134,7 @@
 <p>In an interactive RStudio session, a new window opens. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_set</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [32m✔[39m Setting active project to [34m'/tmp/RtmpEo2Uou/fledge/SuperFrob'[39m</span></code></pre></div>
+<span class="co">## [32m✔[39m Setting active project to [34m'/tmp/RtmpccnDoM/fledge/SuperFrob'[39m</span></code></pre></div>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="op">)</span>
@@ -145,10 +145,10 @@
 </div>
 <div id="create-and-configure-a-git-repository" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-and-configure-a-git-repository" class="anchor"></a>Create and configure a Git repository</h3>
+<a href="#create-and-configure-a-git-repository" class="anchor" aria-hidden="true"></a>Create and configure a Git repository</h3>
 <p>Next we set up this package for development and create a Git repository for the package. We use <code>git init</code> to get a predictable branch name.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">git</span> init --initial-branch=main</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## Initialized empty Git repository in /tmp/RtmpEo2Uou/fledge/SuperFrob/.git/</span></span></code></pre></div>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## Initialized empty Git repository in /tmp/RtmpccnDoM/fledge/SuperFrob/.git/</span></span></code></pre></div>
 <p>In interactive mode, the <code><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">usethis::use_git()</a></code> function creates an initial commit, and the repository is in a clean state. In the demo this needs to be carried out manually.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">git</span> add .</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="fu">git</span> commit -m <span class="st">"Initial commit."</span></span>
@@ -174,7 +174,7 @@
 </div>
 <div id="create-initial-news-md-file" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-initial-news-md-file" class="anchor"></a>Create initial NEWS.md file</h3>
+<a href="#create-initial-news-md-file" class="anchor" aria-hidden="true"></a>Create initial NEWS.md file</h3>
 <p>An initial NEWS file can be created with <code><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">usethis::use_news_md()</a></code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">use_news_md</a></span><span class="op">(</span><span class="op">)</span>
@@ -202,15 +202,15 @@
 </div>
 <div id="the-development-phase" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-development-phase" class="anchor"></a>The development phase</h2>
+<a href="#the-development-phase" class="anchor" aria-hidden="true"></a>The development phase</h2>
 <div id="create-an-r-file" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-an-r-file" class="anchor"></a>Create an R file</h3>
+<a href="#create-an-r-file" class="anchor" aria-hidden="true"></a>Create an R file</h3>
 <p>Now we start coding in the functionality for the package. We start by creating the new R file called <code>super.R</code> and adding frobnication code.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"super"</span><span class="op">)</span>
-<span class="co">## [31m●[39m Edit [34m'R/super.R'[39m</span>
-<span class="co">## [31m●[39m Call [90m`use_test()`[39m to create a matching test file</span>
+<span class="co">## [31m•[39m Edit [34m'R/super.R'[39m</span>
+<span class="co">## [31m•[39m Call [90m`use_test()`[39m to create a matching test file</span>
 <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"# frobnicate"</span>, <span class="st">"R/super.R"</span><span class="op">)</span></code></pre></div>
 <p>We commit this file to Git with a relevant message. Note the use of the bullet (-) before the commit message. This indicates that the message should be included in <code>NEWS.md</code> when it is updated.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">git</span> add .</span>
@@ -221,7 +221,7 @@
 </div>
 <div id="create-a-test" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-a-test" class="anchor"></a>Create a test</h3>
+<a href="#create-a-test" class="anchor" aria-hidden="true"></a>Create a test</h3>
 <p>The code in <code>super.R</code> warrants a test:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"super"</span><span class="op">)</span>
@@ -230,7 +230,7 @@
 <span class="co">## [32m✔[39m Creating [34m'tests/testthat/'[39m</span>
 <span class="co">## [32m✔[39m Writing [34m'tests/testthat.R'[39m</span>
 <span class="co">## [32m✔[39m Writing [34m'tests/testthat/test-super.R'[39m</span>
-<span class="co">## [31m●[39m Edit [34m'tests/testthat/test-super.R'[39m</span>
+<span class="co">## [31m•[39m Edit [34m'tests/testthat/test-super.R'[39m</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"tests/testthat/test-super.R"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
 <span class="co">## test_that("multiplication works", {</span>
 <span class="co">##   expect_equal(2 * 2, 4)</span>
@@ -253,7 +253,7 @@
 </div>
 <div id="update-news-md" class="section level3">
 <h3 class="hasAnchor">
-<a href="#update-news-md" class="anchor"></a>Update NEWS.md</h3>
+<a href="#update-news-md" class="anchor" aria-hidden="true"></a>Update NEWS.md</h3>
 <p>We use <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> to assign a new dev version number to the package and also update <code>NEWS.md</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
@@ -273,13 +273,13 @@
 <span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
 <span class="co">## </span>
 <span class="co">## → Creating tag [32m[32mv0.0.0.9001[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span>
-<span class="co">## [31m●[39m Edit [34m'NEWS.md'[39m</span>
+<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
 <span class="co">## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.</span>
 <span class="co">## NULL</span></code></pre></div>
 </div>
 <div id="review-news-md" class="section level3">
 <h3 class="hasAnchor">
-<a href="#review-news-md" class="anchor"></a>Review NEWS.md</h3>
+<a href="#review-news-md" class="anchor" aria-hidden="true"></a>Review NEWS.md</h3>
 <p>Let us see what <code>NEWS.md</code> looks like after that bump.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
@@ -315,7 +315,7 @@
 </div>
 <div id="finalize-version" class="section level3">
 <h3 class="hasAnchor">
-<a href="#finalize-version" class="anchor"></a>Finalize version</h3>
+<a href="#finalize-version" class="anchor" aria-hidden="true"></a>Finalize version</h3>
 <p>After tweaking <code>NEWS.md</code>, it is important to use <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code> and not to commit manually. This ensures that the tag is set to the correct version in spite of the <code>NEWS.md</code> update. It should be called when <code>NEWS.md</code> is manually updated.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span>
@@ -326,11 +326,11 @@
 <span class="co">## </span>
 <span class="co">## → Deleting tag [32m[32mv0.0.0.9001[32m[39m.</span>
 <span class="co">## → Creating tag [32m[32mv0.0.0.9001[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span></code></pre></div>
-<p>When done, we push to the <em>remote</em> (GitHub or another Git service) with tags using <code><a href="../reference/finalize_version.html">fledge::finalize_version(push = TRUE)</a></code>, as advised. In this demo, no remote repository is set up, and the push process is not shown.</p>
+<p>When done, we push to the <em>remote</em> (GitHub or another Git service) with tags using <code>fledge::finalize_version(push = TRUE)</code>, as advised. In this demo, no remote repository is set up, and the push process is not shown.</p>
 </div>
 <div id="change-code-and-commit" class="section level3">
 <h3 class="hasAnchor">
-<a href="#change-code-and-commit" class="anchor"></a>Change code and commit</h3>
+<a href="#change-code-and-commit" class="anchor" aria-hidden="true"></a>Change code and commit</h3>
 <p>{SuperFrob} with frobnication is tested, now we want to enhance with super-frob. This requires changes to the code, and perhaps a new test. We create a branch and switch to this branch to implement this.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">git</span> checkout -b f-super-frob</span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="co">## Switched to a new branch 'f-super-frob'</span></span></code></pre></div>
@@ -338,7 +338,7 @@
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"frob"</span><span class="op">)</span>
 <span class="co">## [32m✔[39m Writing [34m'tests/testthat/test-frob.R'[39m</span>
-<span class="co">## [31m●[39m Edit [34m'tests/testthat/test-frob.R'[39m</span></code></pre></div>
+<span class="co">## [31m•[39m Edit [34m'tests/testthat/test-frob.R'[39m</span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">git</span> add .</span>
 <span id="cb23-2"><a href="#cb23-2"></a><span class="fu">git</span> status</span>
 <span id="cb23-3"><a href="#cb23-3"></a><span class="fu">git</span> commit -m <span class="st">"Add super-frob tests."</span></span>
@@ -352,8 +352,8 @@
 <span id="cb23-11"><a href="#cb23-11"></a><span class="co">##  create mode 100644 tests/testthat/test-frob.R</span></span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"frob"</span><span class="op">)</span>
-<span class="co">## [31m●[39m Edit [34m'R/frob.R'[39m</span>
-<span class="co">## [31m●[39m Call [90m`use_test()`[39m to create a matching test file</span>
+<span class="co">## [31m•[39m Edit [34m'R/frob.R'[39m</span>
+<span class="co">## [31m•[39m Call [90m`use_test()`[39m to create a matching test file</span>
 <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"# super-frob"</span>, <span class="st">"R/frob.R"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">git</span> add .</span>
 <span id="cb25-2"><a href="#cb25-2"></a><span class="fu">git</span> status</span>
@@ -402,7 +402,7 @@
 <span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
 <span class="co">## </span>
 <span class="co">## → Creating tag [32m[32mv0.0.0.9002[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span>
-<span class="co">## [31m●[39m Edit [34m'NEWS.md'[39m</span>
+<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
 <span class="co">## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.</span>
 <span class="co">## NULL</span>
 <span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
@@ -427,11 +427,11 @@
 </div>
 <div id="prepare-for-release" class="section level2">
 <h2 class="hasAnchor">
-<a href="#prepare-for-release" class="anchor"></a>Prepare for release</h2>
+<a href="#prepare-for-release" class="anchor" aria-hidden="true"></a>Prepare for release</h2>
 <p>After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN. This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.</p>
 <div id="bump-version-for-release" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bump-version-for-release" class="anchor"></a>Bump version for release</h3>
+<a href="#bump-version-for-release" class="anchor" aria-hidden="true"></a>Bump version for release</h3>
 <p>We wish to release this package as a patch and so we use <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> with the “patch” argument.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span>
@@ -448,7 +448,7 @@
 <span class="co">## → Adding header to [34m[34mNEWS.md[34m[39m.</span>
 <span class="co">## → Committing changes.</span>
 <span class="co">## [36mℹ[39m Preparing package for release (CRAN or otherwise).</span>
-<span class="co">## [31m●[39m Edit [34m'NEWS.md'[39m</span>
+<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
 <span class="co">## [33m![39m Convert the change log in [34m[34mNEWS.md[34m[39m to release notes.</span>
 <span class="co">## [33m![39m After CRAN release, call [30m[47m[30m[47m`fledge::tag_version()`[47m[30m[49m[39m and</span>
 <span class="co">## [30m[47m[30m[47m`fledge::bump_version()`[47m[30m[49m[39m to re-enter development mode</span></code></pre></div>
@@ -456,7 +456,7 @@
 </div>
 <div id="generate-release-notes" class="section level3">
 <h3 class="hasAnchor">
-<a href="#generate-release-notes" class="anchor"></a>Generate release notes</h3>
+<a href="#generate-release-notes" class="anchor" aria-hidden="true"></a>Generate release notes</h3>
 <p>We review the <code>NEWS.md</code> that were generated by {fledge}:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
@@ -513,11 +513,11 @@
 </div>
 <div id="after-release" class="section level2">
 <h2 class="hasAnchor">
-<a href="#after-release" class="anchor"></a>After release</h2>
+<a href="#after-release" class="anchor" aria-hidden="true"></a>After release</h2>
 <p>Some time passed and our {SuperFrob} package was accepted on CRAN. At this stage, {fledge} can help to tag the released version and create a new version for development.</p>
 <div id="tag-version" class="section level3">
 <h3 class="hasAnchor">
-<a href="#tag-version" class="anchor"></a>Tag version</h3>
+<a href="#tag-version" class="anchor" aria-hidden="true"></a>Tag version</h3>
 <p>It is now the time to tag the released version using the <code><a href="../reference/tag_version.html">fledge::tag_version()</a></code> function.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span>
@@ -529,12 +529,12 @@
 </div>
 <div id="create-github-release" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-github-release" class="anchor"></a>Create GitHub release</h3>
+<a href="#create-github-release" class="anchor" aria-hidden="true"></a>Create GitHub release</h3>
 <p>If your package is hosted on GitHub, <code><a href="https://usethis.r-lib.org/reference/use_github_release.html" class="external-link">usethis::use_github_release()</a></code> creates a draft GitHub release from the contents already in <code>NEWS.md</code>. You need to submit the draft release from the GitHub release page.</p>
 </div>
 <div id="restart-development" class="section level3">
 <h3 class="hasAnchor">
-<a href="#restart-development" class="anchor"></a>Restart development</h3>
+<a href="#restart-development" class="anchor" aria-hidden="true"></a>Restart development</h3>
 <p>We will now make the package ready for future development. The <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> takes care of it.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
@@ -554,7 +554,7 @@
 <span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
 <span class="co">## </span>
 <span class="co">## → Creating tag [32m[32mv0.0.1.9000[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span>
-<span class="co">## [31m●[39m Edit [34m'NEWS.md'[39m</span>
+<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
 <span class="co">## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.</span>
 <span class="co">## NULL</span>
 <span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>

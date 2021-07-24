@@ -57,7 +57,6 @@
 
 
 
-
   
 
   
@@ -134,117 +133,93 @@
 
     <div id="fledge-0059001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.5.9001">
-<a href="#fledge-0059001" class="anchor"></a>fledge 0.0.5.9001</h1>
-<ul>
-<li>
+<a href="#fledge-0059001" class="anchor" aria-hidden="true"></a>fledge 0.0.5.9001</h1>
+<ul><li>
 <code><a href="../reference/bump_version.html">bump_version()</a></code> fails if the current branch is not the main branch (<a href='https://github.com/cynkra/fledge/issues/78'>#78</a>).</li>
 <li>Ignore empty commit messages.</li>
-</ul>
-</div>
+</ul></div>
     <div id="fledge-0059000" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.5.9000">
-<a href="#fledge-0059000" class="anchor"></a>fledge 0.0.5.9000</h1>
-<ul>
-<li>Same as previous version.</li>
-</ul>
-</div>
+<a href="#fledge-0059000" class="anchor" aria-hidden="true"></a>fledge 0.0.5.9000</h1>
+<ul><li>Same as previous version.</li>
+</ul></div>
     <div id="fledge-005" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.5">
-<a href="#fledge-005" class="anchor"></a>fledge 0.0.5</h1>
-<ul>
-<li>Use {gert} instead of {git2r} for interacting with Git (<a href='https://github.com/cynkra/fledge/issues/57'>#57</a>).</li>
+<a href="#fledge-005" class="anchor" aria-hidden="true"></a>fledge 0.0.5</h1>
+<ul><li>Use {gert} instead of {git2r} for interacting with Git (<a href='https://github.com/cynkra/fledge/issues/57'>#57</a>).</li>
 <li>The API no longer accepts or returns git2r objects (<a href='https://github.com/cynkra/fledge/issues/77'>#77</a>).</li>
 <li>
 <code><a href="../articles/demo.html">vignette("demo")</a></code> now shows the same results with each run (<a href='https://github.com/cynkra/fledge/issues/70'>#70</a>).</li>
-</ul>
-</div>
+</ul></div>
     <div id="fledge-004" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.4">
-<a href="#fledge-004" class="anchor"></a>fledge 0.0.4</h1>
+<a href="#fledge-004" class="anchor" aria-hidden="true"></a>fledge 0.0.4</h1>
 <div id="features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#features" class="anchor"></a>Features</h2>
-<ul>
-<li>Prepend NEWS comment to discourage edits.</li>
+<a href="#features" class="anchor" aria-hidden="true"></a>Features</h2>
+<ul><li>Prepend NEWS comment to discourage edits.</li>
 <li>Dates are added to NEWS headers if existing headers have them, or for a new NEWS file (<a href='https://github.com/cynkra/fledge/issues/29'>#29</a>).</li>
 <li>
-<code><a href="../reference/finalize_version.html">finalize_version()</a></code> gains <code>push</code> argument which pushes the tag and the main branch, this considerably simplifies the workflow. It calls <code>edit_news()</code> and sends <code><a href="../reference/finalize_version.html">finalize_version(push = TRUE)</a></code> to the RStudio or VS Code console.</li>
+<code><a href="../reference/finalize_version.html">finalize_version()</a></code> gains <code>push</code> argument which pushes the tag and the main branch, this considerably simplifies the workflow. It calls <code>edit_news()</code> and sends <code>finalize_version(push = TRUE)</code> to the RStudio or VS Code console.</li>
 <li>
 <code><a href="../reference/tag_version.html">tag_version()</a></code> returns name of created tag, invisibly.</li>
 <li>
-<code><a href="../reference/tag_version.html">tag_version(force = FALSE)</a></code> re-tags an existing tag if it points to the same commit.</li>
-</ul>
-</div>
+<code>tag_version(force = FALSE)</code> re-tags an existing tag if it points to the same commit.</li>
+</ul></div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
-<ul>
-<li>
+<a href="#bug-fixes" class="anchor" aria-hidden="true"></a>Bug fixes</h2>
+<ul><li>
 <code><a href="../reference/bump_version.html">bump_version()</a></code> gives correct advice if no remote branch exists.</li>
 <li>
 <code><a href="../reference/bump_version.html">bump_version()</a></code> and <code><a href="../reference/get_top_level_commits.html">get_top_level_commits()</a></code> are more robust at enumerating the commits: traversing the first parent from which <code>since</code> can be reached, instead of the first parent. This ensures that NEWS are more meaningful and avoids the occasional enumeration of all NEWS items since the beginning.</li>
-</ul>
-</div>
+</ul></div>
 <div id="internal" class="section level2">
 <h2 class="hasAnchor">
-<a href="#internal" class="anchor"></a>Internal</h2>
-<ul>
-<li>Add Patrick Schratz (<a href='https://github.com/pat-s'>@pat-s</a>) a contributor (<a href='https://github.com/cynkra/fledge/issues/50'>#50</a>).</li>
+<a href="#internal" class="anchor" aria-hidden="true"></a>Internal</h2>
+<ul><li>Add Patrick Schratz (<a href='https://github.com/pat-s'>@pat-s</a>) a contributor (<a href='https://github.com/cynkra/fledge/issues/50'>#50</a>).</li>
 <li>Use GitHub Actions (<a href='https://github.com/cynkra/fledge/issues/49'>#49</a>).</li>
 <li>Move from <code>ui_*</code> to {cli} (<a href='https://github.com/cynkra/fledge/issues/54'>#54</a>)</li>
 <li>Import rlang.</li>
-</ul>
-</div>
+</ul></div>
 </div>
     <div id="fledge-003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.3">
-<a href="#fledge-003" class="anchor"></a>fledge 0.0.3</h1>
-<ul>
-<li>Check that <code>DESCRIPTION</code> and <code>NEWS.md</code> are clean before bumping (<a href='https://github.com/cynkra/fledge/issues/10'>#10</a>).</li>
+<a href="#fledge-003" class="anchor" aria-hidden="true"></a>fledge 0.0.3</h1>
+<ul><li>Check that <code>DESCRIPTION</code> and <code>NEWS.md</code> are clean before bumping (<a href='https://github.com/cynkra/fledge/issues/10'>#10</a>).</li>
 <li>Add demo vignette (<a href='https://github.com/cynkra/fledge/issues/19'>#19</a>, <a href='https://github.com/kaslee'>@kaslee</a>).</li>
 <li>Convert <code>"\r\n"</code> to <code>"\n"</code> in Git messages, these can occur when merging a PR on GitHub.</li>
-</ul>
-</div>
+</ul></div>
     <div id="fledge-002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.2">
-<a href="#fledge-002" class="anchor"></a>fledge 0.0.2</h1>
-<ul>
-<li>New “Get started” article (<a href='https://github.com/cynkra/fledge/issues/15'>#15</a>).</li>
-</ul>
-</div>
+<a href="#fledge-002" class="anchor" aria-hidden="true"></a>fledge 0.0.2</h1>
+<ul><li>New “Get started” article (<a href='https://github.com/cynkra/fledge/issues/15'>#15</a>).</li>
+</ul></div>
     <div id="fledge-0019001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9001">
-<a href="#fledge-0019001" class="anchor"></a>fledge 0.0.1.9001</h1>
-<ul>
-<li>Test for manual tagging (<a href='https://github.com/cynkra/fledge/issues/6'>#6</a>).</li>
-</ul>
-</div>
+<a href="#fledge-0019001" class="anchor" aria-hidden="true"></a>fledge 0.0.1.9001</h1>
+<ul><li>Test for manual tagging (<a href='https://github.com/cynkra/fledge/issues/6'>#6</a>).</li>
+</ul></div>
     <div id="fledge-0019000" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9000">
-<a href="#fledge-0019000" class="anchor"></a>fledge 0.0.1.9000</h1>
-<ul>
-<li>Use {enc} for safe writing of files, preserving line endings (<a href='https://github.com/cynkra/fledge/issues/14'>#14</a>).</li>
-</ul>
-</div>
+<a href="#fledge-0019000" class="anchor" aria-hidden="true"></a>fledge 0.0.1.9000</h1>
+<ul><li>Use {enc} for safe writing of files, preserving line endings (<a href='https://github.com/cynkra/fledge/issues/14'>#14</a>).</li>
+</ul></div>
     <div id="fledge-001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1">
-<a href="#fledge-001" class="anchor"></a>fledge 0.0.1</h1>
+<a href="#fledge-001" class="anchor" aria-hidden="true"></a>fledge 0.0.1</h1>
 <p>Change log management utility, initial release.</p>
 <p>The main entry point is <code><a href="../reference/bump_version.html">bump_version()</a></code>, which does the following:</p>
-<ol style="list-style-type: decimal">
-<li>
+<ol style="list-style-type: decimal"><li>
 <code><a href="../reference/update_news.html">update_news()</a></code>: collects <code>NEWS</code> entries from top-level commits</li>
 <li>
 <code><a href="../reference/update_version.html">update_version()</a></code>: bump version in <code>DESCRIPTION</code>, add header to <code>NEWS.md</code>
 </li>
 <li>Depending on the kind of update:
-<ul>
-<li>If “dev”, <code><a href="../reference/finalize_version.html">finalize_version()</a></code>: commit <code>DESCRIPTION</code> and <code>NEWS.md</code>, create tag with message</li>
+<ul><li>If “dev”, <code><a href="../reference/finalize_version.html">finalize_version()</a></code>: commit <code>DESCRIPTION</code> and <code>NEWS.md</code>, create tag with message</li>
 <li>Otherwise, <code><a href="../reference/commit_version.html">commit_version()</a></code>; the user needs to call <code><a href="../reference/tag_version.html">tag_version()</a></code> manually</li>
-</ul>
-</li>
-</ol>
-<p>If you haven’t committed since updating <code>NEWS.md</code> and <code>DESCRIPTION</code>, you can also edit <code>NEWS.md</code> and call <code><a href="../reference/tag_version.html">tag_version()</a></code> again. Both the commit and the tag will be updated.</p>
+</ul></li>
+</ol><p>If you haven’t committed since updating <code>NEWS.md</code> and <code>DESCRIPTION</code>, you can also edit <code>NEWS.md</code> and call <code><a href="../reference/tag_version.html">tag_version()</a></code> again. Both the commit and the tag will be updated.</p>
 <p>Bumping can be undone with <code><a href="../reference/unbump_version.html">unbump_version()</a></code>.</p>
 <p>If the <code>DESCRIPTION</code> has a <code>"Date"</code> field, it is populated with the current date in <code><a href="../reference/update_version.html">update_version()</a></code>.</p>
 <p>An empty list of changes adds a “Same as previous version” bullet. This allows bumping to a dev version immediately after CRAN release.</p>
