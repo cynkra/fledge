@@ -361,6 +361,9 @@ post_release_impl <- function() {
 }
 
 merge_branch <- function(other_branch) {
+  cli_alert("Merging release branch.")
+  cli_alert_info("If this fails, resolve the conflict manually and push.")
+
   gert::git_merge(other_branch)
 }
 
