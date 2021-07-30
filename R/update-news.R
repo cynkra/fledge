@@ -52,5 +52,6 @@ make_prepend <- function(news) {
 }
 
 edit_news <- function() {
+  local_options(usethis.quiet = TRUE)
   edit_file(news_path)
 }

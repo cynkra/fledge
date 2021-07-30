@@ -27,13 +27,25 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
 
 push_tag <- function(tag) {
   cli_alert("Force-pushing tag {.field {tag}}.")
-  gert::git_tag_push(tag, force = force)
+  gert::git_tag_push(tag, force = TRUE)
 }
 
 push_head <- function() {
   head <- gert::git_branch()
-  cli_alert('Pushing {.field {head}}.')
+  cli_alert("Pushing {.field {head}}.")
   gert::git_push()
+}
+
+push_to_new <- function(remote_name, force) {
+  branch_name <- get_branch_name()
+
+  cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
+  gert::git_push(
+    refspec = paste0("refs/heads/", branch_name),
+    remote = remote_name,
+    force = force,
+    set_upstream = TRUE
+  )
 }
 
 has_remote_branch <- function(branch) {

@@ -1,0 +1,3 @@
+- [ ] Resolve all tasks in `cran-comments.md`
+- [ ] Run `fledge::release()`
+- [ ] When the package is accepted on CRAN, run `fledge::post_release()`
