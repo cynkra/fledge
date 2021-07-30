@@ -57,7 +57,6 @@ jobs:
           # End custom: R 3.3
 
           # Begin custom: matrix elements
-          - { os: macOS-latest,                 r: 'devel' }
           - { os: windows-latest,               r: 'devel',  rspm: "https://packagemanager.rstudio.com/all/latest" }
           # End custom: matrix elements
     env:
@@ -115,6 +114,7 @@ jobs:
       - name: Install system dependencies
         if: runner.os == 'Linux'
         run: |
+          sudo apt-get update -y
           while read -r cmd
           do
             eval sudo $cmd
