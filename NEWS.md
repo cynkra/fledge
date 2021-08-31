@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.5.9002
+
+- Fix `unbump_version()`.
+- `update_news()` uses a `NULL` default instead of a complex expression. The `range` argument is removed.
+- `get_last_tag()` gains an explanation regarding annotated tags.
+
+
 # fledge 0.0.5.9001
 
 - `bump_version()` fails if the current branch is not the main branch (#78).
