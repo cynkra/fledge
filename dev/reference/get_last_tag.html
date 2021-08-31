@@ -142,7 +142,10 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The SHA of the commit representing the last tag.</p>
+    <p>The SHA of the commit representing the last tag.
+For annotated tags (as created by fledge), the SHA may be different
+from the SHA of the commit that this tag points to.
+Use <code><a href='https://docs.ropensci.org/gert/reference/git_commit.html'>gert::git_log()</a></code> to find the actual commit.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
