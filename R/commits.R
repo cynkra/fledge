@@ -61,5 +61,5 @@ get_last_tag_impl <- function() {
   }
 
   min_tag <- which.min(tags_b)
-  gert::git_tag_list(match = names(min_tag))$commit
+  gert::git_tag_list(match = names(min_tag))
 }

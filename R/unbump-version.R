@@ -2,7 +2,7 @@
 #' @usage NULL
 unbump_version_impl <- function() {
   tag <- get_last_tag()
-  tag_last_commit <- gert::git_log(tag, max = 1)
+  tag_last_commit <- gert::git_log(tag$commit, max = 1)
   last_commit <- gert::git_log(max = 1)
 
   cli_alert_info("Checking if working copy is clean.")
