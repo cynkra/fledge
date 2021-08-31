@@ -4,10 +4,12 @@
 #' recent tag) and adds bullets from their body to `NEWS.md`.
 #' @param messages A character vector of commit messages,
 #'   e.g. as in the `message` column in the return value of [get_top_level_commits()].
-#' @param range Deprecated.
+#'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
 #' @export
-update_news <- function(messages = get_top_level_commits(since = get_last_tag())$message, range = NULL) {
-  if (!is.null(range) || is.list(messages)) {
+update_news <- function(messages = NULL) {
+  if (is.null(messages)) {
+    messages <- get_top_level_commits(since = get_last_tag())$message
+  } else if (is.list(messages)) {
     deprecate_stop("0.0.5", "fledge::update_news(range = )",
       details = "Pass a vector of `messages`.")
   }
