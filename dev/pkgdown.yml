@@ -4,7 +4,7 @@ pkgdown_sha: ce9781a15c7ea07df9fb17a11295ba4abec0b54b
 articles:
   demo: demo.html
   fledge: fledge.html
-last_built: 2021-08-31T05:25Z
+last_built: 2021-08-31T05:26Z
 urls:
   reference: https://cynkra.github.io/fledge/reference
   article: https://cynkra.github.io/fledge/articles
