@@ -8,6 +8,9 @@ get_last_tag()
 }
 \value{
 The SHA of the commit representing the last tag.
+For annotated tags (as created by fledge), the SHA may be different
+from the SHA of the commit that this tag points to.
+Use \code{\link[gert:git_commit]{gert::git_log()}} to find the actual commit.
 }
 \description{
 Returns the most recent Git tag.
