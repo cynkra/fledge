@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.5.9003
+
+- `get_last_tag()` returns a tibble.
+
+
 # fledge 0.0.5.9002
 
 - Fix `unbump_version()`.
