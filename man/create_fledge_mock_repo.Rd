@@ -10,7 +10,8 @@ create_fledge_mock_repo(
   name = "Kirill Müller",
   email = "mail@example.com",
   date = "2020-12-12",
-  tempdir = withr::local_tempdir(pattern = "fledge"),
+  tempdir = withr::local_tempdir(pattern = "fledge", .local_envir = parent.frame(n =
+    2)),
   news = FALSE
 )
 }
