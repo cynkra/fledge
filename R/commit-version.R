@@ -14,18 +14,25 @@ commit_version_impl <- function() {
   if (nrow(gert::git_status(staged = TRUE)) > 0) {
     cli_alert("Committing changes.")
 
-    # For stable Rmarkdown output
-    if (Sys.getenv("IN_PKGDOWN") != "") {
-      author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_AUTHOR_DATE"))
+    # For stable examples output (R Markdown etc.)
+    # Default to DESCRIPTION fields
+    if (in_example()) {
+      author_time <- parsedate::parse_iso_8601(
+        Sys.getenv("GIT_AUTHOR_DATE", default_datetime())
+      )
+
       author <- gert::git_signature(
-        name = Sys.getenv("GIT_AUTHOR_NAME"),
-        email = Sys.getenv("GIT_AUTHOR_EMAIL"),
+        name = Sys.getenv("GIT_AUTHOR_NAME", desc_author_name()),
+        email = Sys.getenv("GIT_AUTHOR_EMAIL", desc_author_email()),
         time = author_time
       )
-      committer_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
+      committer_time <- parsedate::parse_iso_8601(
+        Sys.getenv("GIT_COMMITTER_DATE", default_datetime())
+      )
+
       committer <- gert::git_signature(
-        name = Sys.getenv("GIT_COMMITTER_NAME"),
-        email = Sys.getenv("GIT_COMMITTER_EMAIL"),
+        name = Sys.getenv("GIT_COMMITTER_NAME", desc_author_name()),
+        email = Sys.getenv("GIT_COMMITTER_EMAIL", desc_author_email()),
         time = committer_time
       )
     } else {
@@ -62,4 +69,28 @@ check_only_staged <- function(allowed_modifications) {
 
   modified <- staged$file
   stopifnot(all(modified %in% allowed_modifications))
+}
+
+in_example <- function() {
+  in_pkgdown <- (Sys.getenv("IN_PKGDOWN") != "")
+
+  is_test_repo <- (!is.na(desc::desc_get("context")))
+  non_interactive_example <- is_test_repo && !rlang::is_interactive()
+
+  in_pkgdown || non_interactive_example
+}
+
+desc_author_name <- function() {
+  sub(" <.*", "", desc::desc_get_maintainer())
+}
+
+desc_author_email <- function() {
+  sub(">", "", sub(".*<", "", desc::desc_get_maintainer()))
+}
+
+default_datetime <- function() {
+  sprintf(
+    "%s 12:47:37Z",
+    desc::desc_get_field("Date")
+  )
 }

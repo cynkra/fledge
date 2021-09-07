@@ -2,6 +2,7 @@
 
 export(bump_version)
 export(commit_version)
+export(create_fledge_mock_repo)
 export(finalize_version)
 export(get_last_tag)
 export(get_top_level_commits)
