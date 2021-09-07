@@ -10,8 +10,8 @@ create_fledge_mock_repo(
   name = "Kirill Müller",
   email = "mail@example.com",
   date = "2020-12-12",
-  tempdir = withr::local_tempdir(pattern = "fledge", .local_envir = parent.frame(n =
-    2))
+  tempdir = withr::local_tempdir(pattern = "fledge"),
+  news = FALSE
 )
 }
 \arguments{
@@ -24,6 +24,10 @@ create_fledge_mock_repo(
 \item{email}{Email for DESCRIPTION and git.}
 
 \item{date}{String of time for DESCRIPTION and git.}
+
+\item{tempdir}{Directory within which to create the mock package folder.}
+
+\item{news}{If TRUE, create a NEWS.md file.}
 }
 \value{
 

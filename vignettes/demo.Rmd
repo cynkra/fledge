@@ -384,7 +384,8 @@ cat(news, sep = "\n")
 Push to remote, add features with relevant commits (after mergining a branch or not), `bump_version()`, etc.
 Happy development, and happy smooth filling of the changelog!
 
-```{r end, pkg=FALSE, echo=FALSE, message=FALSE}
+```{r end, pkg=FALSE, eval=FALSE}
+# I need to get smarter about temporary directories Rmd etc.
 usethis::local_project(path = dirname(knitr::current_input(dir = TRUE)))
 fs::dir_delete(pkg_dir)
 ```

@@ -5,19 +5,19 @@
 #' @param name Name for DESCRIPTION and git.
 #' @param email Email for DESCRIPTION and git.
 #' @param date String of time for DESCRIPTION and git.
+#' @param tempdir Directory within which to create the mock package folder.
+#' @param news If TRUE, create a NEWS.md file.
 #'
 #' @return
 #' @export
 #'
 create_fledge_mock_repo <- function(open = rlang::is_interactive(),
                                pkg = "tea",
-                               name = "Kirill Müller",
+                               name = "Kirill M\u00fcller",
                                email = "mail@example.com",
                                date = "2020-12-12",
-                               tempdir = withr::local_tempdir(
-                                 pattern = "fledge",
-                                 .local_envir = parent.frame(n = 2)
-                              )
+                               tempdir = withr::local_tempdir(pattern = "fledge"),
+                               news = FALSE
                               ) {
 
   withr::local_options(usethis.quiet = TRUE)
@@ -40,6 +40,16 @@ create_fledge_mock_repo <- function(open = rlang::is_interactive(),
     gert::git_branch_delete("master")
   }
 
+  if (news) {
+    usethis::with_project(
+      path = pkg, {
+        rlang::with_interactive({usethis::use_news_md()}, value = FALSE)
+        gert::git_add("NEWS.md")
+        gert::git_commit("Add NEWS.md to track changes.")
+      }
+    )
+  }
+
   return(pkg)
 }
 
@@ -60,4 +70,3 @@ set_usethis_desc <- function(name, email, date) {
     .local_envir = parent.frame(n = 2)
   )
 }
-
