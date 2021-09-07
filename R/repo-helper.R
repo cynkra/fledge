@@ -29,12 +29,15 @@ create_fledge_mock_repo <- function(open = rlang::is_interactive(),
     open = open
   )
 
-  gert::git_init(path = pkg)
-  gert::git_add(".", repo = pkg)
-  gert::git_commit("First commit", repo = pkg)
-  if ("master" %in% gert::git_branch_list(repo = pkg)$name) {
-    gert::git_branch_create("main", repo = pkg)
-    gert::git_branch_delete("master", repo = pkg)
+  withr::local_dir(new = pkg)
+  gert::git_init()
+  gert::git_config_set("user.name", name)
+  gert::git_config_set("user.email", email)
+  gert::git_add(".")
+  gert::git_commit("First commit")
+  if ("master" %in% gert::git_branch_list()$name) {
+    gert::git_branch_create("main")
+    gert::git_branch_delete("master")
   }
 
   return(pkg)
