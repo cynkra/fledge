@@ -56,20 +56,8 @@ In an interactive RStudio session, a new window opens and you would work there.
 Users of other environments would change the working directory manually.
 For this demo, we manually set the active project.
 
-```{r set-focus, include = FALSE}
-wd <- dirname(knitr::current_input(dir = TRUE))
-knitr::knit_hooks$set(
-  pkg = function(before, options, envir) {
-    if (before) {
-      wd <<- setwd(pkg)
-      usethis::local_project(pkg)
-    } else {
-      setwd(wd)
-    }
-    invisible()
-  }
-)
-knitr::opts_chunk$set(pkg = TRUE)
+```{r, change-dir, include=FALSE}
+knitr::opts_knit$set(root.dir = pkg)
 ```
 
 ```{r pkg-location}
@@ -383,8 +371,10 @@ news <- readLines("NEWS.md")
 Push to remote, add features with relevant commits (after mergining a branch or not), `bump_version()`, etc.
 Happy development, and happy smooth filling of the changelog!
 
-```{r end, pkg=FALSE, eval=TRUE}
-# I need to get smarter about temporary directories Rmd etc.
-usethis::local_project(path = dirname(knitr::current_input(dir = TRUE)))
+```{r, end, include=FALSE}
+knitr::opts_knit$set(root.dir = dirname(knitr::current_input(dir = TRUE)))
+```
+
+```{r end2, pkg=FALSE, eval=TRUE}
 unlink(pkg_dir, recursive = TRUE)
 ```
