@@ -6,8 +6,8 @@
 \usage{
 create_demo_project(
   open = rlang::is_interactive(),
-  pkg = "tea",
-  name = "Kirill Müller",
+  name = "tea",
+  maintainer = "Kirill Müller",
   email = "mail@example.com",
   date = "2020-12-12",
   dir = file.path(tempdir(check = TRUE), "fledge"),
@@ -17,9 +17,9 @@ create_demo_project(
 \arguments{
 \item{open}{Whether to open the new project.}
 
-\item{pkg}{Package name.}
+\item{name}{Package name.}
 
-\item{name}{Name for DESCRIPTION and git.}
+\item{maintainer}{Name for DESCRIPTION and git.}
 
 \item{email}{Email for DESCRIPTION and git.}
 

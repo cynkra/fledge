@@ -1,8 +1,8 @@
 #' Create example repo for fledge demos
 #'
 #' @param open Whether to open the new project.
-#' @param pkg Package name.
-#' @param name Name for DESCRIPTION and git.
+#' @param name Package name.
+#' @param maintainer Name for DESCRIPTION and git.
 #' @param email Email for DESCRIPTION and git.
 #' @param date String of time for DESCRIPTION and git.
 #' @param dir Directory within which to create the mock package folder.
@@ -12,8 +12,8 @@
 #' @export
 #'
 create_demo_project <- function(open = rlang::is_interactive(),
-                                pkg = "tea",
-                                name = "Kirill M\u00fcller",
+                                name = "tea",
+                                maintainer = "Kirill M\u00fcller",
                                 email = "mail@example.com",
                                 date = "2020-12-12",
                                 dir = file.path(tempdir(check = TRUE), "fledge"),
@@ -22,16 +22,16 @@ create_demo_project <- function(open = rlang::is_interactive(),
 
   withr::local_options(usethis.quiet = TRUE)
 
-  set_usethis_desc(name = name, email = email, date = date)
+  set_usethis_desc(maintainer = maintainer, email = email, date = date)
   pkg <- usethis::create_package(
-    file.path(tempdir, pkg),
+    file.path(dir, name),
     fields = list(Date = as.Date(date)),
     open = open
   )
 
   withr::local_dir(new = pkg)
   gert::git_init()
-  gert::git_config_set("user.name", name)
+  gert::git_config_set("user.name", maintainer)
   gert::git_config_set("user.email", email)
   gert::git_add(".")
   gert::git_commit("First commit")
@@ -54,13 +54,13 @@ create_demo_project <- function(open = rlang::is_interactive(),
 }
 
 
-set_usethis_desc <- function(name, email, date) {
+set_usethis_desc <- function(maintainer, email, date) {
   withr::local_options(
-    usethis.full_name = name,
+    usethis.full_name = maintainer,
     usethis.protocol  = "ssh",
     usethis.description = list(
       "Authors@R" = utils::person(
-        name,
+        maintainer,
         email = email,
         role = c("aut", "cre"),
       ),
