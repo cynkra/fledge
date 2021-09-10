@@ -49,7 +49,7 @@ pkg <- usethis::create_package("tea")
 ```{r create-package-real, echo = FALSE}
 pkg_dir <- file.path(tempdir(check = TRUE), "fledge")
 dir.create(pkg_dir)
-pkg <- fledge::create_fledge_mock_repo("tea", open = FALSE, tempdir = pkg_dir)
+pkg <- fledge::create_demo_project("tea", open = FALSE, tempdir = pkg_dir)
 ```
 
 In an interactive RStudio session, a new window opens and you would work there.
