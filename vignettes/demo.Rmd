@@ -49,7 +49,7 @@ pkg <- usethis::create_package("tea")
 ```{r create-package-real, echo = FALSE}
 pkg_dir <- file.path(tempdir(check = TRUE), "fledge")
 dir.create(pkg_dir)
-pkg <- fledge::create_demo_project("tea", open = FALSE, tempdir = pkg_dir)
+pkg <- fledge::create_demo_project("tea", open = FALSE, dir = pkg_dir)
 ```
 
 In an interactive RStudio session, a new window opens and you would work there.
@@ -153,7 +153,7 @@ What's important is the content of the commit message.
 
 ```{r commit-cup, results='hide'}
 gert::git_add("R/cup.R")
-gert::git_commit("- Add support for a cup of tee.")
+gert::git_commit("- New cup_of_tea() function makes it easy to drink a cup of tea.")
 
 ```
 
@@ -298,7 +298,7 @@ Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 ```{r bowl-merge, results='hide'}
 gert::git_branch_checkout("main")
 gert::git_merge("f-bowl", commit = FALSE)
-gert::git_commit("- Bowl of tea enabled.")
+gert::git_commit("- New bowl_of_tea() function makes it easy to drink a bowl of tea.")
 ```
 
 The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...: use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
@@ -378,14 +378,13 @@ The `fledge::bump_version()` takes care of it.
 ```{r bump-dev}
 fledge::bump_version()
 news <- readLines("NEWS.md")
-cat(news, sep = "\n")
 ```
 
 Push to remote, add features with relevant commits (after mergining a branch or not), `bump_version()`, etc.
 Happy development, and happy smooth filling of the changelog!
 
-```{r end, pkg=FALSE, eval=FALSE}
+```{r end, pkg=FALSE, eval=TRUE}
 # I need to get smarter about temporary directories Rmd etc.
 usethis::local_project(path = dirname(knitr::current_input(dir = TRUE)))
-fs::dir_delete(pkg_dir)
+unlink(pkg_dir, recursive = TRUE)
 ```
