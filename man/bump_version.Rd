@@ -31,7 +31,7 @@ tempdir <- file.path(tempdir(check = TRUE), "fledge")
 dir.create(tempdir)
 # Create said mock package.
 # Set open to TRUE if you want to play in the mock package.
-pkg <- create_demo_project(open = FALSE, news = TRUE, tempdir = tempdir)
+pkg <- create_demo_project(open = FALSE, news = TRUE, dir = tempdir)
 # Use functions as if inside the newly created package project.
 # (Or go and actually run code inside the newly created package project!)
 usethis::with_project(pkg, {
