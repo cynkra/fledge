@@ -5,22 +5,19 @@
 #' @param name Name for DESCRIPTION and git.
 #' @param email Email for DESCRIPTION and git.
 #' @param date String of time for DESCRIPTION and git.
-#' @param tempdir Directory within which to create the mock package folder.
+#' @param dir Directory within which to create the mock package folder.
 #' @param news If TRUE, create a NEWS.md file.
 #'
 #' @return
 #' @export
 #'
 create_demo_project <- function(open = rlang::is_interactive(),
-                               pkg = "tea",
-                               name = "Kirill M\u00fcller",
-                               email = "mail@example.com",
-                               date = "2020-12-12",
-                               tempdir = withr::local_tempdir(
-                                 pattern = "fledge",
-                                 .local_envir = parent.frame(n = 2)
-                                 ),
-                               news = FALSE
+                                pkg = "tea",
+                                name = "Kirill M\u00fcller",
+                                email = "mail@example.com",
+                                date = "2020-12-12",
+                                dir = file.path(tempdir(check = TRUE), "fledge"),
+                                news = FALSE
                               ) {
 
   withr::local_options(usethis.quiet = TRUE)
