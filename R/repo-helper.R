@@ -8,7 +8,7 @@
 #' @param dir Directory within which to create the mock package folder.
 #' @param news If TRUE, create a NEWS.md file.
 #'
-#' @return
+#' @return The path to the newly created mock package.
 #' @export
 #'
 create_demo_project <- function(open = rlang::is_interactive(),

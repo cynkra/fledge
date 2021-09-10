@@ -30,7 +30,7 @@ create_demo_project(
 \item{news}{If TRUE, create a NEWS.md file.}
 }
 \value{
-
+The path to the newly created mock package.
 }
 \description{
 Create example repo for fledge demos
