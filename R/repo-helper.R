@@ -20,6 +20,8 @@ create_demo_project <- function(open = rlang::is_interactive(),
                                 news = FALSE
                               ) {
 
+  if (!dir.exists(dir)) dir.create(dir)
+
   withr::local_options(usethis.quiet = TRUE)
 
   set_usethis_desc(maintainer = maintainer, email = email, date = date)
