@@ -11,7 +11,7 @@
 #' @return
 #' @export
 #'
-create_fledge_mock_repo <- function(open = rlang::is_interactive(),
+create_demo_project <- function(open = rlang::is_interactive(),
                                pkg = "tea",
                                name = "Kirill M\u00fcller",
                                email = "mail@example.com",
