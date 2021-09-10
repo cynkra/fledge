@@ -42,7 +42,7 @@ usethis::use_r("cool-function", open = FALSE)
 gert::git_add("R/cool-function.R")
 gert::git_commit("- Add cool function.")
 # Bump version with fledge.
-bump_version()
+fledge::bump_version()
 })
 # Clean
 unlink("tempdir", recursive=TRUE)
