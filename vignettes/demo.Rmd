@@ -141,7 +141,7 @@ What's important is the content of the commit message.
 
 ```{r commit-cup, results='hide'}
 gert::git_add("R/cup.R")
-gert::git_commit("- New cup_of_tea() function makes it easy to drink a cup of tea.")
+gert::git_commit("- New cup_of_tea() function makes it easy to drink a cup of tee.")
 
 ```
 
