@@ -179,13 +179,13 @@ Let us update `NEWS.md`!
 
 We use `fledge::bump_version()` to assign a new dev version number to the package and also update `NEWS.md`.
 
-The current version number of our package is `r desc::desc_get_version(pkg)`.
+The current version number of our package is `r desc::desc_get_version()`.
 
 ```{r bump}
 fledge::bump_version()
 ```
 
-The new version number is `r desc::desc_get_version(pkg)`.
+The new version number is `r desc::desc_get_version()`.
 
 ### Review NEWS.md
 
