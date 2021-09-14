@@ -92,6 +92,6 @@ desc_author_email <- function() {
 default_datetime <- function() {
   sprintf(
     "%s 12:47:37Z",
-    desc::desc_get_field("Date")
+    desc::desc_get_field("Date", default = "2021-08-31")
   )
 }
