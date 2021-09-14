@@ -24,7 +24,7 @@ bump_version_impl <- function(which) {
 }
 
 get_main_branch <- function() {
-  if (in_example) {
+  if (in_example()) {
     return("main")
   }
 
