@@ -306,6 +306,8 @@ It seems we do not even need to amend the `NEWS.md` by hand this time as we made
 After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN.
 This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.
 
+
+A difference between publishing on CRAN and publishing on GitHub is that there's an external system controlling your publication on CRAN so your package might need some tweaks between the first release candidate and what version you end up publishing on CRAN.
 ### Bump version for release
 
 We wish to release this package as a patch and so we use `fledge::bump_version()` with the "patch" argument.
