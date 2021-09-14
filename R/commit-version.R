@@ -72,12 +72,13 @@ check_only_staged <- function(allowed_modifications) {
 }
 
 in_example <- function() {
-  in_pkgdown <- (Sys.getenv("IN_PKGDOWN") != "")
+  if (Sys.getenv("IN_PKGDOWN") != "") {
+    return(TRUE)
+  }
 
   is_test_repo <- (!is.na(desc::desc_get("context")))
-  non_interactive_example <- is_test_repo && !rlang::is_interactive()
+  is_test_repo && !rlang::is_interactive()
 
-  in_pkgdown || non_interactive_example
 }
 
 desc_author_name <- function() {
