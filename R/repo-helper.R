@@ -37,8 +37,9 @@ create_demo_project <- function(open = rlang::is_interactive(),
   gert::git_config_set("user.email", email)
   gert::git_add(".")
   gert::git_commit("First commit")
-  if ("master" %in% gert::git_branch_list()$name) {
-    gert::git_branch_move("master", "main")
+  current_branch <- gert::git_branch()
+  if (current_branch != "main") {
+    gert::git_branch_move(current_branch, "main")
   }
 
   if (news) {
