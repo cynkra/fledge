@@ -27,4 +27,5 @@ reference:
   - update_news
   - update_version
 - title: Helper for fledge demonstration
+  contents:
   - create_demo_project
