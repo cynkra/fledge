@@ -9,5 +9,8 @@ test_that("bump_version() works", {
       bump_version()
     }
   )
-  testthat::expect_snapshot_file(file.path(repo, "NEWS.md"))
+  testthat::expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    compare = compare_file_text
+  )
 })
