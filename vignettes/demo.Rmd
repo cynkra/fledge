@@ -296,7 +296,7 @@ Now that we have added bowl support to our package, it is time to bump the versi
 ```{r bump-two}
 fledge::bump_version()
 news <- readLines("NEWS.md")
-cat(news, sep = "\n")
+writeLines(news)
 ```
 
 It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
