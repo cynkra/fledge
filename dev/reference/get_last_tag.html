@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.5.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.5.9003</span>
       </span>
     </div>
 
@@ -142,8 +142,8 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The SHA of the commit representing the last tag.
-For annotated tags (as created by fledge), the SHA may be different
+    <p>A one-row tibble with columns <code>name</code>, <code>ref</code> and <code>commit</code>.
+For annotated tags (as created by fledge), <code>commit</code> may be different
 from the SHA of the commit that this tag points to.
 Use <code><a href='https://docs.ropensci.org/gert/reference/git_commit.html'>gert::git_log()</a></code> to find the actual commit.</p>
 
