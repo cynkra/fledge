@@ -13,8 +13,8 @@
 #'
 create_demo_project <- function(open = rlang::is_interactive(),
                                 name = "tea",
-                                maintainer = "Kirill M\u00fcller",
-                                email = "mail@example.com",
+                                maintainer = whoami::fullname(fallback = "Kirill M\u00fcller"),
+                                email = whoami::email_address(fallback = "mail@example.com"),
                                 date = "2020-12-12",
                                 dir = file.path(tempdir(check = TRUE), "fledge"),
                                 news = FALSE

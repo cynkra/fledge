@@ -7,8 +7,8 @@
 create_demo_project(
   open = rlang::is_interactive(),
   name = "tea",
-  maintainer = "Kirill Müller",
-  email = "mail@example.com",
+  maintainer = whoami::fullname(fallback = "Kirill Müller"),
+  email = whoami::email_address(fallback = "mail@example.com"),
   date = "2020-12-12",
   dir = file.path(tempdir(check = TRUE), "fledge"),
   news = FALSE

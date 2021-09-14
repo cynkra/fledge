@@ -30,6 +30,7 @@ Imports:
     rlang,
     tibble,
     usethis (>= 1.5.0),
+    whoami,
     withr
 Suggests: 
     covr,
