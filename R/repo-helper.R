@@ -16,11 +16,11 @@ create_demo_project <- function(open = rlang::is_interactive(),
                                 maintainer = whoami::fullname(fallback = "Kirill M\u00fcller"),
                                 email = whoami::email_address(fallback = "mail@example.com"),
                                 date = "2020-12-12",
-                                dir = file.path(tempdir(check = TRUE), "fledge"),
+                                dir = file.path(tempdir(), "fledge"),
                                 news = FALSE
                               ) {
 
-  if (!dir.exists(dir)) dir.create(dir)
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
   withr::local_options(usethis.quiet = TRUE)
 

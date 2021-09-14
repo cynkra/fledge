@@ -47,8 +47,8 @@ pkg <- usethis::create_package("tea")
 ```
 
 ```{r create-package-real, echo = FALSE}
-pkg_dir <- file.path(tempdir(check = TRUE), "fledge")
-dir.create(pkg_dir)
+pkg_dir <- file.path(tempdir(), "fledge")
+dir.create(pkg_dir, recursive = TRUE)
 pkg <- fledge::create_demo_project("tea", open = FALSE, dir = pkg_dir)
 ```
 

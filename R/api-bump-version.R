@@ -8,8 +8,8 @@
 #'
 #' @examples
 #' # Create temporary directory to hold a mock package.
-#' tempdir <- file.path(tempdir(check = TRUE), "fledge")
-#' dir.create(tempdir)
+#' tempdir <- file.path(tempdir(), "fledge")
+#' dir.create(tempdir, recursive = TRUE)
 #' # Create said mock package.
 #' # Set open to TRUE if you want to play in the mock package.
 #' pkg <- create_demo_project(open = FALSE, news = TRUE, dir = tempdir)
