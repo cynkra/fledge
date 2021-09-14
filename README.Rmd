@@ -40,6 +40,9 @@ Install from GitHub using
 devtools::install_github("cynkra/fledge")
 ```
 
+If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, 
+you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
+
 ## Usage
 
 Run {fledge} commands from your package directory for versioning as below.
