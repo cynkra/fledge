@@ -56,7 +56,7 @@ In an interactive RStudio session, a new window opens and you would work there.
 Users of other environments would change the working directory manually.
 For this demo, we manually set the active project.
 
-```{r, change-dir, include=FALSE}
+```{r, change-dir, echo=FALSE}
 knitr::opts_knit$set(root.dir = pkg)
 ```
 
