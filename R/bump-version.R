@@ -24,10 +24,6 @@ bump_version_impl <- function(which) {
 }
 
 get_main_branch <- function() {
-  if (in_example()) {
-    return("main")
-  }
-
   remote <- "origin"
   if (remote %in% gert::git_remote_list()$name) {
     get_main_branch_remote(remote)

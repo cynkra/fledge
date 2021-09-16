@@ -40,7 +40,10 @@ create_demo_project <- function(open = rlang::is_interactive(),
   current_branch <- gert::git_branch()
   if (current_branch != "main") {
     gert::git_branch_move(current_branch, "main")
+    current_branch <- gert::git_branch()
   }
+  # Setting the option as get_main_branch() will rely on it
+  gert::git_config_set("init.defaultbranch", "main")
 
   if (news) {
     usethis::with_project(
