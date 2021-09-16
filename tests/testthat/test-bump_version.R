@@ -6,7 +6,7 @@ test_that("bump_version() works", {
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.")
-      bump_version()
+      testthat::expect_snapshot(bump_version())
     }
   )
   testthat::expect_snapshot_file(
