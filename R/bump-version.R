@@ -39,5 +39,5 @@ get_main_branch_remote <- function(remote) {
 
 get_main_branch_config <- function() {
   config <- gert::git_config()
-  config$value[config$name == "init.defaultbranch"]
+  tail(config$value[config$name == "init.defaultbranch"], n = 1)
 }

@@ -43,7 +43,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
     current_branch <- gert::git_branch()
   }
   # Setting the option as get_main_branch() will rely on it
-  gert::git_config_set("init.defaultbranch", "main")
+  gert::git_config_set(name = "init.defaultbranch", value = "main")
 
   if (news) {
     usethis::with_project(
