@@ -223,6 +223,7 @@ After tweaking `NEWS.md`, it is important to use `fledge::finalize_version()` an
 
 Using `fledge::finalize_version()` instead of committing manually ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
 It should be called when `NEWS.md` is manually updated.
+Note that it should be called after `fledge::bump_version()`, an error is raised if another commit has been added after that.
 
 ```{r news-finalize}
 fledge::finalize_version()
