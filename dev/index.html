@@ -99,9 +99,13 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
-<p>Install from GitHub using</p>
+<p>Install from cynkra’s R-universe using:</p>
+<pre class="chroma">
+<span class="nf"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="o">(</span><span class="s">"fledge"</span>, repos <span class="o">=</span> <span class="s">"https://cynkra.r-universe.dev"</span><span class="o">)</span></pre>
+<p>Or install from GitHub using:</p>
 <pre class="chroma">
 <span class="nf">devtools</span><span class="nf">::</span><span class="nf"><a href="https://devtools.r-lib.org//reference/remote-reexports.html" class="external-link">install_github</a></span><span class="o">(</span><span class="s">"cynkra/fledge"</span><span class="o">)</span></pre>
+<p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>) available for all your interactive work, you might enjoy loading fledge in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -113,7 +117,7 @@
 <pre class="chroma">
 <span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="o">)</span>
 <span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/finalize_version.html">finalize_version</a></span><span class="o">(</span><span class="o">)</span></pre>
-<p>From now on, use bullet points (<a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link"><code>*</code></a> or <a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link"><code>-</code></a>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
+<p>From now on, use bullet points (<code>*</code> or <code>-</code>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
 </li>
 <li>
 <p>To assign a new <code>"dev"</code> version number to the R package and update <code>NEWS.md</code>, use</p>
