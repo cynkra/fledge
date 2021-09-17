@@ -86,6 +86,7 @@ For working in branches, it is recommended to turn off fast-forward merging:
 
 ```{r git-no-ff}
 gert::git_config_set("merge.ff", "false")
+# gert::git_config_global_set("merge.ff", "false") # to set globally
 ```
 
 An alternative is to use squash commits.
