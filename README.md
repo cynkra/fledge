@@ -20,10 +20,17 @@ Click on the image to show in a separate tab.
 
 ## Installation
 
-Install from GitHub using
+Install from cynkra’s R-universe using:
+
+<pre class='chroma'>
+<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span>, repos <span class='o'>=</span> <span class='s'>"https://cynkra.r-universe.dev"</span><span class='o'>)</span></pre>
+
+Or install from GitHub using:
 
 <pre class='chroma'>
 <span class='nf'>devtools</span><span class='nf'>::</span><span class='nf'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='o'>(</span><span class='s'>"cynkra/fledge"</span><span class='o'>)</span></pre>
+
+If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
 
 ## Usage
 
@@ -35,7 +42,7 @@ Run {fledge} commands from your package directory for versioning as below.
     <span class='nf'>fledge</span><span class='nf'>::</span><span class='nf'><a href='https://cynkra.github.io/fledge/reference/bump_version.html'>bump_version</a></span><span class='o'>(</span><span class='o'>)</span>
     <span class='nf'>fledge</span><span class='nf'>::</span><span class='nf'><a href='https://cynkra.github.io/fledge/reference/finalize_version.html'>finalize_version</a></span><span class='o'>(</span><span class='o'>)</span></pre>
 
-    From now on, use bullet points ([`*`](https://rdrr.io/r/base/Arithmetic.html) or [`-`](https://rdrr.io/r/base/Arithmetic.html)) in your commit or merge messages to indicate the messages that you want to include in NEWS.md
+    From now on, use bullet points (`*` or `-`) in your commit or merge messages to indicate the messages that you want to include in NEWS.md
 
 -   To assign a new `"dev"` version number to the R package and update `NEWS.md`, use
 
