@@ -310,6 +310,7 @@ This is where {fledge} simplifies the release process by making use of the all t
 
 
 A difference between publishing on CRAN and publishing on GitHub is that there's an external system controlling your publication on CRAN so your package might need some tweaks between the first release candidate and what version you end up publishing on CRAN.
+
 ### Bump version for release
 
 We wish to release this package as a patch and so we use `fledge::bump_version()` with the "patch" argument.
