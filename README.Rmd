@@ -34,10 +34,10 @@ Click on the image to show in a separate tab.
 
 ## Installation
 
-Install from Cynkra R-universe using:
+Install from cynkra's R-universe using:
 
 ```r
-install.packages('fledge', repo = 'https://cynkra.r-universe.dev')
+install.packages("fledge", repos = "https://cynkra.r-universe.dev")
 ```
 
 Or install from GitHub using:
