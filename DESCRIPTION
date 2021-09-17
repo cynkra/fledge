@@ -27,7 +27,7 @@ Imports:
     lifecycle,
     purrr (>= 0.3.2),
     rematch2,
-    rlang,
+    rlang (>= 0.4.11.9001),
     tibble,
     usethis (>= 1.5.0),
     whoami,
@@ -47,5 +47,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
-Remotes:
-    r-lib/gert
+Remotes: 
+    r-lib/gert,
+    r-lib/rlang
