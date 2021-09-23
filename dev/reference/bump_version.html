@@ -170,6 +170,52 @@ values are <code>"dev"</code> (default), <code>"patch"</code>, <code>"minor"</co
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create temporary directory to hold a mock package.</span></span>
+<span class='r-in'><span class='va'>tempdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"fledge"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='va'>tempdir</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Create said mock package.</span></span>
+<span class='r-in'><span class='co'># Set open to TRUE if you want to play in the mock package.</span></span>
+<span class='r-in'><span class='va'>pkg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_demo_project.html'>create_demo_project</a></span><span class='op'>(</span>open <span class='op'>=</span> <span class='cn'>FALSE</span>, news <span class='op'>=</span> <span class='cn'>TRUE</span>, dir <span class='op'>=</span> <span class='va'>tempdir</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Use functions as if inside the newly created package project.</span></span>
+<span class='r-in'><span class='co'># (Or go and actually run code inside the newly created package project!)</span></span>
+<span class='r-in'><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/proj_utils.html'>with_project</a></span><span class='op'>(</span><span class='va'>pkg</span>, <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># Add a new R file.</span></span>
+<span class='r-in'><span class='fu'>usethis</span><span class='fu'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/use_r.html'>use_r</a></span><span class='op'>(</span><span class='st'>"cool-function"</span>, open <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Pretend we added useful code inside it.</span></span>
+<span class='r-in'><span class='co'># Track the new R file with Git.</span></span>
+<span class='r-in'><span class='fu'>gert</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/gert/reference/git_commit.html'>git_add</a></span><span class='op'>(</span><span class='st'>"R/cool-function.R"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>gert</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/gert/reference/git_commit.html'>git_commit</a></span><span class='op'>(</span><span class='st'>"- Add cool function."</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Bump version with fledge.</span></span>
+<span class='r-in'><span class='fu'>fledge</span><span class='fu'>::</span><span class='fu'>bump_version</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Setting active project to <span style='color: #0000BB;'>'/tmp/Rtmp0Z5qBi/fledge/tea'</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>•</span> Edit <span style='color: #0000BB;'>'R/cool-function.R'</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>•</span> Call <span style='color: #555555;'>`use_test()`</span> to create a matching test file</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> → Scraping <span style='color: #00BB00;'>3</span> commit messages.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Found <span style='color: #00BB00;'>1</span> NEWS-worthy entries.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ── <span style='font-weight: bold;'>Updating NEWS</span> ──</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> → Adding new entries to <span style='color: #0000BB;'>NEWS.md</span>.</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to leave       this field out completely. It is not required.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ── <span style='font-weight: bold;'>Update Version</span> ──</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Package version bumped to <span style='color: #00BB00;'>0.0.0.9001</span>.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> → Adding header to <span style='color: #0000BB;'>NEWS.md</span>.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> → Committing changes.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ── <span style='font-weight: bold;'>Tagging Version</span> ──</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> → Creating tag <span style='color: #00BB00;'>v0.0.0.9001</span> with tag message derived from <span style='color: #0000BB;'>NEWS.md</span>.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>•</span> Edit <span style='color: #0000BB;'>'NEWS.md'</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>!</span> Call <span style='color: #262626; background-color: #DADADA;'>`fledge::finalize_version()`</span>.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Setting active project to <span style='color: #0000BB;'>'&lt;no active project&gt;'</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-in'><span class='co'># Clean</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='st'>"tempdir"</span>, recursive<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
