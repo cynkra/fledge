@@ -10,11 +10,13 @@ vignette: >
 ## Introduction
 
 This guide will demonstrate how to use {fledge}, using a mock R package as an example.
-We are going to call our package "{SuperFrob}".
+We are going to call our package "{tea}".
 We will develop it from scratch and also maintain a changelog as the development progresses.
 Finally, we will demonstrate how this changelog can eventually be converted to release notes when the package is submitted to CRAN.
 
-This guide shows mostly R code, and uses Bash shell code for Git commands.
+:::{.alert .alert-info}
+We are typing this demo as an R Markdown vignette therefore we will be using R tools for creating files, editing them, and interacting with git: in real life you can be using e.g. an IDE or the command line. The fledge package won't care!
+:::
 
 ```{r setup, include = FALSE}
 in_pkgdown <- identical(Sys.getenv("IN_PKGDOWN"), "true")
@@ -26,17 +28,11 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   error = !in_pkgdown
 )
-Sys.setenv(GIT_AUTHOR_DATE = "2020-12-12 12:47:37Z")
-Sys.setenv(GIT_AUTHOR_NAME = "Kirill Müller")
-Sys.setenv(GIT_AUTHOR_EMAIL = "krlmlr+r@mailbox.org")
-Sys.setenv(GIT_COMMITTER_DATE = "2020-12-12 12:47:37Z")
-Sys.setenv(GIT_COMMITTER_NAME = "Kirill Müller")
-Sys.setenv(GIT_COMMITTER_EMAIL = "krlmlr+r@mailbox.org")
 ```
 
 ## Set up the development environment
 
-Before we start development for {SuperFrob}, we set up the basic development environment required for any typical R package.
+Before we start development for {tea}, we set up the basic development environment required for any typical R package.
 
 ### Create a package
 
@@ -44,45 +40,24 @@ We will start by creating a new package.
 For this demo, the package is created in a temporary directory.
 A real project will live somewhere in your home directory.
 
-```{r tempdir}
-tempdir <- file.path(tempdir(), "fledge")
-dir.create(tempdir)
-```
-
 The `usethis::create_package()` function sets up a package project ready for development.
-The output shows the details of the package created.
 
 ```{r create-package, eval = FALSE}
-pkg <- usethis::create_package(file.path(tempdir, "SuperFrob"))
+pkg <- usethis::create_package("tea")
 ```
 
 ```{r create-package-real, echo = FALSE}
-pkg <- usethis::create_package(
-  file.path(tempdir, "SuperFrob"),
-  fields = list(Date = as.Date(Sys.getenv("GIT_COMMITTER_DATE")))
-)
+pkg_dir <- file.path(tempdir(), "fledge")
+dir.create(pkg_dir, recursive = TRUE)
+pkg <- fledge::create_demo_project("tea", open = FALSE, dir = pkg_dir)
 ```
 
-In an interactive RStudio session, a new window opens.
+In an interactive RStudio session, a new window opens and you would work there.
 Users of other environments would change the working directory manually.
 For this demo, we manually set the active project.
 
-```{r set-focus, include = FALSE}
-wd <- getwd()
-
-knitr::knit_hooks$set(
-  pkg = function(before, options, envir) {
-    if (before) {
-      wd <<- setwd(pkg)
-    } else {
-      setwd(wd)
-    }
-
-    invisible()
-  }
-)
-
-knitr::opts_chunk$set(pkg = TRUE)
+```{r, change-dir, echo=FALSE}
+knitr::opts_knit$set(root.dir = pkg)
 ```
 
 ```{r pkg-location}
@@ -95,33 +70,23 @@ The infrastructure files and directories that comprise a minimal R package are c
 fs::dir_tree()
 ```
 
-
 ### Create and configure a Git repository
 
-Next we set up this package for development and create a Git repository for the package.
-We use `git init` to get a predictable branch name.
+Next, one would set up this package for development and create a Git repository for the package.
+We achieved this with gert code.
 
-```{bash git}
-git init --initial-branch=main
-```
+You could use `usethis::use_git()` function that creates an initial commit, and the repository is in a clean state.
 
-In interactive mode, the `usethis::use_git()` function creates an initial commit, and the repository is in a clean state.
-In the demo this needs to be carried out manually.
-
-```{bash git-initial-commit}
-git add .
-git commit -m "Initial commit."
-```
-
-```{bash git-show-init}
-git log --numstat
-git status
+```{r git-show-init}
+gert::git_log()
+gert::git_status()
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
 
-```{bash git-no-ff}
-git config merge.ff false
+```{r git-no-ff}
+gert::git_config_set("merge.ff", "false")
+# gert::git_config_global_set("merge.ff", "false") # to set globally
 ```
 
 An alternative is to use squash commits.
@@ -143,58 +108,85 @@ cat(news, sep = "\n")
 
 This file needs to be tracked by Git:
 
-```{bash init-news-commit}
-git add .
-git status
-git commit -m "Initial NEWS.md ."
+```{r init-news-commit, results='hide'}
+gert::git_add("NEWS.md")
+gert::git_commit("Initial NEWS.md .")
 ```
+
+:::{.alert .alert-info}
+Note that we have done nothing fledge specific yet.
+:::
 
 ## The development phase
 
 ### Create an R file
 
 Now we start coding in the functionality for the package.
-We start by creating the new R file called `super.R` and adding frobnication code.
+We start by creating the new R file called `cup.R` and adding code (well only a comment).
 
-```{r use-super}
-usethis::use_r("super")
-writeLines("# frobnicate", "R/super.R")
+```{r use-cup}
+usethis::use_r("cup")
+writeLines("# cup", "R/cup.R")
 ```
 
 We commit this file to Git with a relevant message.
-Note the use of the bullet (-) before the commit message.
-This indicates that the message should be included in `NEWS.md` when it is updated.
 
-```{bash commit-super}
-git add .
-git commit -m "- Add support for frobmication."
+:::{.alert .alert-info}
+That is our first fledge specific step!
+Note the **use of the bullet (-) at the beginning of the commit message**.
+This indicates that the message should be included in `NEWS.md` when it is updated.
+:::
+
+It does not matter how and where you type the commit message (gert in R, RStudio Git window, command line, VSCode, etc.).
+What's important is the content of the commit message.
+
+```{r commit-cup, results='hide'}
+gert::git_add("R/cup.R")
+gert::git_commit("- New cup_of_tea() function makes it easy to drink a cup of tee.")
+
 ```
 
 ### Create a test
 
-The code in `super.R` warrants a test:
+The code in `cup.R` warrants a test (at least it would if it were actual code!):
 
-```{r use-super-test}
-usethis::use_test("super")
-cat(readLines("tests/testthat/test-super.R"), sep = "\n")
+```{r use-cup-test}
+usethis::use_test("cup")
+cat(readLines("tests/testthat/test-cup.R"), sep = "\n")
 ```
 
 In a real project we would substitute the testing code from the template by real tests.
-In this demo we commit straight away, again with a bulleted message.
+In this demo we commit straight away, **again with a bulleted message**.
 
-```{bash commit-super-test}
-git add .
-git status
-git commit -m "- Add tests for frobnication."
+```{r commit-cup-test, results='hide'}
+gert::git_add("DESCRIPTION")
+gert::git_add("tests/testthat.R")
+gert::git_add("tests/testthat/test-cup.R")
+gert::git_commit("- Add tests for cup of tea.")
 ```
 
 ### Update NEWS.md
 
+Let us look at the commit history until now.
+You might use any Git tool you want to consult it, we use gert.
+
+```{r commit-log}
+knitr::kable(gert::git_log())
+```
+
+We have two "bulletted" messages which for fledge means two NEWS-worthy messages.
+
+Let us update `NEWS.md`!
+
 We use `fledge::bump_version()` to assign a new dev version number to the package and also update `NEWS.md`.
+
+The current version number of our package is `r desc::desc_get_version()`.
 
 ```{r bump}
 fledge::bump_version()
 ```
+
+The new version number is `r desc::desc_get_version()`.
 
 ### Review NEWS.md
 
@@ -205,22 +197,33 @@ news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ```
 
-While reviewing we notice that there was a typo in one of the comments.
-Let's fix the typo:
+While reviewing we notice that there was a typo in one of the comments (congrats if you noticed right away that we typed "tee" instead of "tea"!).
+
+:::{.alert .alert-warning}
+The fledge package adds a comment about not editing `NEWS.md` by hand to `NEWS.md` but actually you can... if you do it right! Read on.
+:::
+
+Let's fix the typo, which you'd do by hand.
 
 ```{r news-tweak}
-news <- gsub("frobmication", "frobnication", news)
+news <- gsub("tee", "tea", news)
 cat(news, sep = "\n")
 writeLines(news, "NEWS.md")
 ```
 
 This does not affect the original commit message, only `NEWS.md`.
+([Editing commit messages](https://docs.github.com/en/github/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message#amending-older-or-multiple-commit-messages) is not something fledge supports).
 
 ### Finalize version
 
+
+:::{.alert .alert-warning}
 After tweaking `NEWS.md`, it is important to use `fledge::finalize_version()` and not to commit manually.
-This ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
+:::
+
+Using `fledge::finalize_version()` instead of committing manually ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
 It should be called when `NEWS.md` is manually updated.
+Note that it should be called after `fledge::bump_version()`, an error is raised if another commit has been added after that.
 
 ```{r news-finalize}
 fledge::finalize_version()
@@ -229,80 +232,95 @@ fledge::finalize_version()
 When done, we push to the *remote* (GitHub or another Git service) with tags using `fledge::finalize_version(push = TRUE)`, as advised.
 In this demo, no remote repository is set up, and the push process is not shown.
 
+Let's look at NEWS.md now:
+
+```{r news-second-review}
+news <- readLines("NEWS.md")
+cat(news, sep = "\n")
+```
+
+The version of the package is `r desc::desc_get_version()`.
+
+A tag has been created for the version which is good practice, and crucial when using fledge: for updating the changelog, fledge looks through all commit messages **since the latest tag**.
+
 ### Change code and commit
 
-{SuperFrob} with frobnication is tested, now we want to enhance with super-frob.
+{tea} with cup is tested, now we want to enhance with bowl.
 This requires changes to the code, and perhaps a new test.
-We create a branch and switch to this branch to implement this.
+We create a branch (whose name starts with a "f" for "feature") and switch to this branch to implement this.
 
-```{bash super-frob-branch}
-git checkout -b f-super-frob
+```{r bowl-branch}
+gert::git_branch_create("f-bowl", checkout = TRUE)
 ```
 
 On the branch, separate commits are used for the tests and the implementation.
 These commit messages do not need to be formatted specially, because {fledge} will ignore them anyway.
 
-```{r super-frob}
-usethis::use_test("frob")
+This time we write the tests first, test-driven development.
+
+```{r bowl}
+usethis::use_test("bowl")
+```
+
+```{r bowl-git, results='hide'}
+gert::git_add("tests/testthat/test-bowl.R")
+gert::git_commit("Add bowl tests.")
 ```
 
 
-```{bash super-frob-commit}
-git add .
-git status
-git commit -m "Add super-frob tests."
+```{r bowl-2}
+usethis::use_r("bowl")
+writeLines("# bowl of tea", "R/bowl.R")
 ```
 
-
-```{r super-frob-2}
-usethis::use_r("frob")
-writeLines("# super-frob", "R/frob.R")
-```
-
-
-```{bash super-frob-2-commit}
-git add .
-git status
-git commit -m "Add super-frob implementation."
+```{r bowl-2-git, results='hide'}
+gert::git_add("R/bowl.R")
+gert::git_commit("Add bowl implementation.")
 ```
 
 This branch can be pushed to the remote as usual.
 Only when merging we specify the message to be included in the changelog, again with a bullet.[^merge-ff]
+You might be used to doing the merges on a remote (e.g. GitHub pull requests) but here we demonstrate a local merge commit.
 
 [^merge-ff]: Note that we really need a merge commit here; the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
-```{bash super-frob-merge}
-git checkout main
-git merge f-super-frob --no-commit
-git status
-git commit -m "- Super-frobnication enabled."
+```{r bowl-merge, results='hide'}
+gert::git_branch_checkout("main")
+gert::git_merge("f-bowl", commit = FALSE)
+gert::git_commit("- New bowl_of_tea() function makes it easy to drink a bowl of tea.")
 ```
 
 The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...: use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
 
-Now that we have added super-frobnication support to our package, it is time to bump the version again.
+Now that we have added bowl support to our package, it is time to bump the version again.
 
 ```{r bump-two}
 fledge::bump_version()
 news <- readLines("NEWS.md")
-cat(news, sep = "\n")
+writeLines(news)
 ```
+
+It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
 
 ## Prepare for release
 
 After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN.
 This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.
 
+
+A difference between publishing on CRAN and publishing on GitHub is that there's an external system controlling your publication on CRAN so your package might need some tweaks between the first release candidate and what version you end up publishing on CRAN.
+
 ### Bump version for release
 
 We wish to release this package as a patch and so we use `fledge::bump_version()` with the "patch" argument.
+Other values for the arguments are "dev" (default), "minor" and "major".
 
 ```{r bump-patch}
 fledge::bump_version("patch")
 ```
 
-This updates the version of our package to `r desc::desc_get_version(usethis::proj_get())`.
+This updates the version of our package to `r desc::desc_get_version()`.
 
 ### Generate release notes
 
@@ -315,25 +333,11 @@ cat(news, sep = "\n")
 
 Some of the intermediate commit messages are not relevant in the release notes for this release.
 We need to edit `NEWS.md` to convert the changelog to meaningful release notes.
+E.g. in real life we might [re-organize bullets](https://style.tidyverse.org/news.html#organisation-3).
 
-```{r patch-news-edit}
-length(news) <- 5
-news[3:5] <- c(
-  "Initial CRAN release.",
-  "",
-  "Basic functionality: Super-frobnication."
-)
-cat(news, sep = "\n")
-writeLines(news, "NEWS.md")
-```
-
-Unlike with development versions, we commit the changes to `NEWS.md` manually:
-
-```{bash patch-news-write}
-git add .
-git status
-git commit -m "Update NEWS."
-```
+:::{.alert .alert-warning}
+Unlike with development versions, we commit the changes to `NEWS.md` manually, not with a fledge function.
+:::
 
 The package is now ready to be released to CRAN.
 I prefer `devtools::use_release_issue()` to create a checklist of things to do before release, and `devtools::submit_cran()` to submit.
@@ -341,7 +345,7 @@ The `devtools::release()` function is a more verbose alternative.
 
 ## After release
 
-Some time passed and our {SuperFrob} package was accepted on CRAN.
+Some time passed and our {tea} package was accepted on CRAN.
 At this stage, {fledge} can help to tag the released version and create a new version for development.
 
 ### Tag version
@@ -367,7 +371,15 @@ The `fledge::bump_version()` takes care of it.
 ```{r bump-dev}
 fledge::bump_version()
 news <- readLines("NEWS.md")
-cat(news, sep = "\n")
 ```
 
-Push to remote.
+Push to remote, add features with relevant commits (after mergining a branch or not), `bump_version()`, etc.
+Happy development, and happy smooth filling of the changelog!
+
+```{r, end, include=FALSE}
+knitr::opts_knit$set(root.dir = dirname(knitr::current_input(dir = TRUE)))
+```
+
+```{r end2, pkg=FALSE, eval=TRUE}
+unlink(pkg_dir, recursive = TRUE)
+```
