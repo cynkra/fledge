@@ -1,5 +1,5 @@
 test_that("bump_version() works", {
-  tempdir <- withr::local_tempdir(pattern = "fledge")
+  tempdir <- withr::local_tempdir(pattern = "fledge-bump")
   repo <- create_demo_project(open = FALSE, dir = tempdir, news = TRUE)
   usethis::with_project(
     path = repo, {

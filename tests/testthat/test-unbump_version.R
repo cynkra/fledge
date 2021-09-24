@@ -1,6 +1,6 @@
 test_that("unbump_version() works", {
   withr::local_envvar(list("FLEDGE_UNBUMP_TEST_COMMIT" = "42"))
-  tempdir <- withr::local_tempdir(pattern = "fledge")
+  tempdir <- withr::local_tempdir(pattern = "fledge-unbump")
   repo <- create_demo_project(open = FALSE, dir = tempdir, news = TRUE)
   usethis::with_project(
     path = repo, {
