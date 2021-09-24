@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 ```
 # fledge
 
+> Smoother change tracking and versioning for R packages.
+
 <!-- badges: start -->
 [![tic](https://github.com/cynkra/fledge/workflows/tic/badge.svg?branch=master)](https://github.com/cynkra/fledge/actions)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
@@ -21,10 +23,48 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/master/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=master)
 <!-- badges: end -->
 
-{fledge} has been designed to streamline the process of versioning R packages on _Git_, with the functionality to automatically update `NEWS.md` and `DESCRIPTION` with relevant information from recent commit messages.
-Numbers are cheap, why not use them?
+Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd)) more informative than ["bug fixes and performance improvements"](https://twitter.com/EmilyKager/status/1413628436984188933) to the users of your package?
 
-For details on usage and implementation, refer to `vignette("fledge")`.
+Ways to achieve that are:
+
+- Update NEWS.md right before release by reading through commit messages. Not necessarily fun!
+
+- Update the changelog in every commit e.g. in every PR. Now, if there are several feature PRs around that update the changelog, you'll have a few clicks to make to tackle conflicts. Easy enough, but potentially annoying.
+
+- Use fledge! fledge fills the `NEWS.md` for you based on informative commit messages, and increases the version number in `DESCRIPTION` (ADD REFERENCE ON WHY IT IS GOOD TO UPGRADE VERSION NUMBER). Using fledge is a discipline / a few habits that is worth learning!
+
+
+What you need to do in practice is:
+
+- Add a hyphen `-` or `*` at the beginning of important commit messages e.g. the squash commits that merge a Pull Request. These are the commit messages that'll be recorded in the changelog eventually! Exclude housekeeping parts of the message by typing them after a line `---`.
+
+```text
+
+- Add support for bla databases.
+
+```
+
+or 
+
+```text
+
+- Add suport for bla databases.
+
+---
+
+Also tweak the CI workflow accordingly. :sweat_smile:
+
+```
+
+For informative commit messages refer to the [Tidyverse style guide](https://style.tidyverse.org/news.html).
+
+- Run `fledge::bump_version()` regularly e.g. before every coffee break or at the end of the day.
+
+- Run `fledge::finalize_version()` if you add to edit NEWS.md manually e.g. if you made a typo or are not happy with a phrasing after thinking about it. Even if you edit a lot, what's been written in by fledge is still a good place-holder.
+
+- Babla at release. What functions. Point to vignette except things might change later.
+
+These habits are worth learning!
 
 ## Demo
 
@@ -32,7 +72,9 @@ For details on usage and implementation, refer to `vignette("fledge")`.
 
 Click on the image to show in a separate tab.
 
-## Installation
+## Installation & setup
+
+### Once per machine
 
 Install from cynkra's R-universe using:
 
@@ -48,6 +90,15 @@ devtools::install_github("cynkra/fledge")
 
 If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, 
 you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
+
+### Once per package
+
+* If your package...
+
+   * is brand-new, remember to run `fledge::bump_version()` regularly.
+   * has already undergone some development, not too late to jump on the train! Run `fledge::bump_version()` and then `fledge::tag_version()`.
+   
+* Add a mention of fledge usage in your contributing guide, as contributors might not know about it.
 
 ## Usage
 
