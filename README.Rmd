@@ -98,6 +98,8 @@ you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.
 
 ### Once per package
 
+* Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) _or_ to be using the same default branch name as your global/project `init.defaultbranch`.
+
 * If your package...
 
    * is brand-new, remember to run `fledge::bump_version()` regularly.
