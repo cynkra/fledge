@@ -188,6 +188,10 @@ fledge::bump_version()
 
 The new version number is `r desc::desc_get_version()`.
 
+:::{.alert .alert-info}
+If you run `fledge::bump_version()` too early by mistake (e.g. you wanted to do one more code edit), you can run `fledge::unbump_version()`!
+:::
+
 ### Review NEWS.md
 
 Let us see what `NEWS.md` looks like after that bump.
