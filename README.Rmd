@@ -58,7 +58,7 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 
 For informative commit messages refer to the [Tidyverse style guide](https://style.tidyverse.org/news.html).
 
-- Run `fledge::bump_version()` regularly e.g. before every coffee break or at the end of the day.
+- Run `fledge::bump_version()` regularly e.g. before every coffee break or at the end of the day. If you forgot to merge one PR run `fledge::unbump_version()`, merge the PR with an informative squash commit message, then run `fledge::bump_version()` and go drink that coffee!
 
 - Run `fledge::finalize_version()` if you add to edit NEWS.md manually e.g. if you made a typo or are not happy with a phrasing after thinking about it. Even if you edit a lot, what's been written in by fledge is still a good place-holder.
 
@@ -102,49 +102,3 @@ you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.
 
 ## Usage
 
-Run {fledge} commands from your package directory for versioning as below.
-
-* To configure your package for the first-time with {fledge}, use
-
-    ```r
-    fledge::bump_version()
-    fledge::finalize_version()
-    ```
-
-    From now on, use bullet points (`*` or `-`) in your commit or merge messages to indicate the messages that you want to include in NEWS.md
-
-* To assign a new `"dev"` version number to the R package and update `NEWS.md`, use
-
-    ```r
-    fledge::bump_version()
-    fledge::finalize_version()
-    ```
-
-* To assign a new version number to the R package before release to CRAN, use
-
-    ```r
-    fledge::bump_version("patch")
-    fledge::commit_version()
-    ```
-
-    Substitute `"patch"` by `"minor"` or `"major"` if applicable.
-
-* To tag a version when the package has been accepted to CRAN, use
-
-    ```r
-    fledge::tag_version()
-    ```
-    
-    Call 
-    
-    ```r
-    fledge::bump_version()
-    ```
-    
-    to immediately switch to a development version.
-
-* To undo the last version bump, use
-
-    ```r
-    fledge::unbump_version()
-    ```
