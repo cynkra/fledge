@@ -6,9 +6,17 @@
 #' @inheritParams update_version
 #' @export
 #'
+#' @seealso unbump_version
+#'
+#' @section Bumped too soon?:
+#'
+#' Have you just run `bump_version()`, then realized
+#' "oh shoot, I forgot to merge that PR"?
+#' Fear not, run `unbump_version()`, merge that PR, run `bump_version()`.
+#'
 #' @examples
 #' # Create temporary directory to hold a mock package.
-#' tempdir <- file.path(tempdir(), "fledge")
+#' tempdir <- file.path(tempdir(), "fledge", "bump")
 #' dir.create(tempdir, recursive = TRUE)
 #' # Create said mock package.
 #' # Set open to TRUE if you want to play in the mock package.
@@ -26,7 +34,7 @@
 #' fledge::bump_version()
 #' })
 #' # Clean
-#' unlink("tempdir", recursive=TRUE)
+#' unlink(tempdir, recursive = TRUE)
 bump_version <- function(which = "dev") {
   check_which(which)
   check_clean(c("DESCRIPTION", news_path))
