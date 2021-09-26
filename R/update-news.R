@@ -55,3 +55,8 @@ edit_news <- function() {
   local_options(usethis.quiet = TRUE)
   edit_file(news_path)
 }
+
+edit_cran_comments <- function() {
+  local_options(usethis.quiet = TRUE)
+  edit_file("cran-comments.md")
+}

@@ -54,7 +54,11 @@ pre_release_impl <- function(which, force) {
   cli_h1("1. Creating a release branch and getting ready")
 
   # bump version on main branch to version set by user
-  bump_version(which)
+  # Avoid `bump_version()` to avoid showing `NEWS.md` at this stage,
+  # because it changes as we jump between branches.
+  update_news()
+  update_version(which = which)
+  commit_version()
 
   # switch to release branch and update cran-comments
   release_branch <- create_release_branch(force)
@@ -76,6 +80,9 @@ pre_release_impl <- function(which, force) {
   cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   create_pull_request(release_branch, main_branch, remote_name, force)
 
+  edit_news()
+  edit_cran_comments()
+
   # user action items
   cli_h1("4. User Action Items")
   cli_div(theme = list(ul = list(color = "magenta")))
@@ -86,8 +93,6 @@ pre_release_impl <- function(which, force) {
   cli_ul("Convert {.file NEWS.md} from changelog format to release notes.")
   cli_ul("Run {.code fledge::release()}.")
   cli_end()
-
-  Sys.sleep(2)
 
   send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran(); urlchecker::url_update() })")
 
@@ -168,8 +173,7 @@ update_cran_comments <- function() {
       latest_rversion = rversions::r_release()[["version"]],
       cransplainer = cransplainer
     ),
-    ignore = TRUE,
-    open = TRUE
+    ignore = TRUE
   )
 
   gert::git_add(files = "cran-comments.md")
