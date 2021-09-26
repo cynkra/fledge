@@ -10,3 +10,22 @@ development:
 authors:
   Kirill Müller:
     href: https://krlmlr.info
+
+
+reference:
+- title: Main functions
+  contents:
+  - bump_version
+  - commit_version
+  - finalize_version
+  - unbump_version
+- title: Lower-level functions
+  contents:
+  - get_last_tag
+  - get_top_level_commits
+  - tag_version
+  - update_news
+  - update_version
+- title: Helper for fledge demonstration
+  contents:
+  - create_demo_project
