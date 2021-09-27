@@ -17,24 +17,8 @@ commit_version_impl <- function() {
     # For stable examples output (R Markdown etc.)
     # Default to DESCRIPTION fields
     if (in_example()) {
-      author_time <- parsedate::parse_iso_8601(
-        Sys.getenv("GIT_AUTHOR_DATE", default_datetime())
-      )
-
-      author <- gert::git_signature(
-        name = Sys.getenv("GIT_AUTHOR_NAME", desc_author_name()),
-        email = Sys.getenv("GIT_AUTHOR_EMAIL", desc_author_email()),
-        time = author_time
-      )
-      committer_time <- parsedate::parse_iso_8601(
-        Sys.getenv("GIT_COMMITTER_DATE", default_datetime())
-      )
-
-      committer <- gert::git_signature(
-        name = Sys.getenv("GIT_COMMITTER_NAME", desc_author_name()),
-        email = Sys.getenv("GIT_COMMITTER_EMAIL", desc_author_email()),
-        time = committer_time
-      )
+      author <- default_gert_author()
+      committer <- default_gert_committer()
     } else {
       author <- NULL
       committer <- NULL
@@ -93,5 +77,25 @@ default_datetime <- function() {
   sprintf(
     "%s 12:47:37Z",
     desc::desc_get_field("Date", default = "2021-08-31")
+  )
+}
+
+default_gert_author <- function() {
+  gert::git_signature(
+    name = Sys.getenv("GIT_AUTHOR_NAME", desc_author_name()),
+    email = Sys.getenv("GIT_AUTHOR_EMAIL", desc_author_email()),
+    time = parsedate::parse_iso_8601(
+      Sys.getenv("GIT_AUTHOR_DATE", default_datetime())
+    )
+  )
+}
+
+default_gert_committer <- function() {
+  gert::git_signature(
+    name = Sys.getenv("GIT_COMMITTER_NAME", desc_author_name()),
+    email = Sys.getenv("GIT_COMMITTER_EMAIL", desc_author_email()),
+    time = parsedate::parse_iso_8601(
+      Sys.getenv("GIT_COMMITTER_DATE", default_datetime())
+    )
   )
 }

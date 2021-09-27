@@ -33,7 +33,7 @@
       i Checking if commit messages match.
       v Safety checks complete.
       > Deleting tag v0.0.0.9001.
-      v Resetting to parent commit 42.
+      v Resetting to parent commit 9c984e647e750ed3e30cdcbc57295cb5104385e8.
     Code
       use_r("blop")
     Message <rlang_message>
@@ -47,7 +47,8 @@
         <chr>    <chr>  <lgl> 
       1 R/blop.R new    TRUE  
     Code
-      c <- gert::git_commit("* Add cool blop.")
+      c <- gert::git_commit("* Add cool blop.", author = default_gert_author(),
+      committer = default_gert_committer())
       bump_version()
     Message <cliMessage>
       > Scraping 4 commit messages.

@@ -36,7 +36,11 @@ create_demo_project <- function(open = rlang::is_interactive(),
   gert::git_config_set("user.name", maintainer)
   gert::git_config_set("user.email", email)
   gert::git_add(".")
-  gert::git_commit("First commit")
+  gert::git_commit(
+    "First commit",
+    author = default_gert_author(),
+    committer = default_gert_committer()
+  )
   current_branch <- gert::git_branch()
   if (current_branch != "main") {
     gert::git_branch_move(current_branch, "main")
@@ -50,7 +54,11 @@ create_demo_project <- function(open = rlang::is_interactive(),
       path = pkg, {
         rlang::with_interactive({usethis::use_news_md()}, value = FALSE)
         gert::git_add("NEWS.md")
-        gert::git_commit("Add NEWS.md to track changes.")
+        gert::git_commit(
+          "Add NEWS.md to track changes.",
+          author = default_gert_author(),
+          committer = default_gert_committer()
+        )
       }
     )
   }
