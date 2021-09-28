@@ -117,14 +117,15 @@
 <p>In an interactive RStudio session, a new window opens and you would work there. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_set</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [32m✔[39m Setting active project to [34m'/tmp/RtmpFpcv3m/fledge/tea'[39m</span></code></pre></div>
+<span class="co">## [32m✔[39m Setting active project to [34m'/tmp/Rtmpm64lC4/fledge/tea'[39m</span></code></pre></div>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## [01;34m.[0m</span>
 <span class="co">## ├── DESCRIPTION</span>
 <span class="co">## ├── NAMESPACE</span>
-<span class="co">## └── [01;34mR[0m</span></code></pre></div>
+<span class="co">## ├── [01;34mR[0m</span>
+<span class="co">## └── tea.Rproj</span></code></pre></div>
 </div>
 <div id="create-and-configure-a-git-repository" class="section level3">
 <h3 class="hasAnchor">
@@ -136,7 +137,7 @@
 <span class="co">## [90m# A tibble: 1 × 6[39m</span>
 <span class="co">##   commit              author          time                files merge message   </span>
 <span class="co">## [90m*[39m [3m[90m&lt;chr&gt;[39m[23m               [3m[90m&lt;chr&gt;[39m[23m           [3m[90m&lt;dttm&gt;[39m[23m              [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;lgl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m     </span>
-<span class="co">## [90m1[39m 460bcf171ee5667253… Jerry Johnson … 2021-09-26 [90m10:24:25[39m     2 FALSE [90m"[39mFirst co…</span>
+<span class="co">## [90m1[39m a494896ae9a8613dc7… Jerry Johnson … 2021-09-27 [90m12:47:37[39m     5 FALSE [90m"[39mFirst co…</span>
 <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_status</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## [90m# A tibble: 0 × 3[39m</span>
 <span class="co">## [90m# … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;[39m</span></code></pre></div>
@@ -238,38 +239,38 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">8aeea00b5248eed0fe36c8f1e9ef6f731de3f1f0</td>
+<td align="left">60259c00cb79d1a2aabcb6f2c2797637154ec897</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-09-26 10:24:26</td>
+<td align="left">2021-09-28 14:30:19</td>
 <td align="right">3</td>
 <td align="left">FALSE</td>
 <td align="left">- Add tests for cup of tea.</td>
 </tr>
 <tr class="even">
-<td align="left">8532ad3edb339b47c92d6561973821eb1c88f61d</td>
+<td align="left">66087278bb02eb8c739c155044b58842c912a9c0</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-09-26 10:24:26</td>
+<td align="left">2021-09-28 14:30:19</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">- New cup_of_tea() function makes it easy to drink a cup of tee.</td>
 </tr>
 <tr class="odd">
-<td align="left">419a836afb6aca3ac0f1d6f482dbd56d88db5777</td>
+<td align="left">a0c8cef71ede4bb2fb5120850b9ef38ec1f7428d</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-09-26 10:24:26</td>
+<td align="left">2021-09-28 14:30:18</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">Initial NEWS.md .</td>
 </tr>
 <tr class="even">
-<td align="left">460bcf171ee566725336bc452be55e0017daec2f</td>
+<td align="left">a494896ae9a8613dc7e3256b1c24daa79f53c90c</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-09-26 10:24:25</td>
-<td align="right">2</td>
+<td align="left">2021-09-27 12:47:37</td>
+<td align="right">5</td>
 <td align="left">FALSE</td>
 <td align="left">First commit</td>
 </tr>
@@ -303,6 +304,9 @@
 <span class="co">## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.</span>
 <span class="co">## NULL</span></code></pre></div>
 <p>The new version number is 0.0.0.9001.</p>
+<div class="alert alert-info">
+<p>If you run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> too early by mistake (e.g. you wanted to do one more code edit), you can run <code><a href="../reference/unbump_version.html">fledge::unbump_version()</a></code>! This should happen immediately after bumping. If you have pushed or edited code in the meantime, it’s too late – just continue and assign a new version when you are done with the edits.</p>
+</div>
 </div>
 <div id="review-news-md" class="section level3">
 <h3 class="hasAnchor">
