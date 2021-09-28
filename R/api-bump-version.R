@@ -6,13 +6,13 @@
 #' @inheritParams update_version
 #' @export
 #'
-#' @seealso unbump_version
+#' @seealso [unbump_version()]
 #'
 #' @section Bumped too soon?:
 #'
 #' Have you just run `bump_version()`, then realized
 #' "oh shoot, I forgot to merge that PR"?
-#' Fear not, run `unbump_version()`, merge that PR, run `bump_version()`.
+#' Fear not, run [unbump_version()], merge that PR, run `bump_version()`.
 #'
 #' @examples
 #' # Create temporary directory to hold a mock package.
