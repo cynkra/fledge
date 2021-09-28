@@ -19,7 +19,11 @@ unbump_version_impl <- function() {
 
   parent_commit_id <- gert::git_commit_info(last_commit$commit)$parent
 
-  message_id <- Sys.getenv("FLEDGE_UNBUMP_TEST_COMMIT", parent_commit_id)
+  message_id <- if (in_example()) {
+    42
+  } else {
+    parent_commit_id
+  }
   cli_alert_success("Resetting to parent commit {.field {message_id}}.")
   gert::git_reset_hard(parent_commit_id)
 
