@@ -1,6 +1,13 @@
 test_that("unbump_version() works", {
   tempdir <- withr::local_tempdir(pattern = "fledge-unbump")
-  repo <- create_demo_project(open = FALSE, dir = tempdir, news = TRUE)
+  rlang::local_interactive(value = FALSE)
+  repo <- create_demo_project(
+    open = FALSE,
+    dir = tempdir,
+    news = TRUE,
+    maintainer = "Jane Doe",
+    email = "mail@example.com"
+  )
   usethis::with_project(
     path = repo, {
       use_r("bla")

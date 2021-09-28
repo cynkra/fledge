@@ -15,7 +15,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
                                 name = "tea",
                                 maintainer = whoami::fullname(fallback = "Kirill M\u00fcller"),
                                 email = whoami::email_address(fallback = "mail@example.com"),
-                                date = "2020-12-12",
+                                date = "2021-09-27",
                                 dir = file.path(tempdir(), "fledge"),
                                 news = FALSE
                               ) {

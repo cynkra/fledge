@@ -6,7 +6,7 @@ test_that("bump_version() works", {
     path = repo, {
       use_r("bla")
       gert::git_add("R/bla.R")
-      gert::git_commit("* Add cool bla.")
+      gert::git_commit("* Add cool bla.", author = default_gert_author(), committer = default_gert_committer())
       testthat::expect_snapshot(bump_version())
     },
     quiet = TRUE
@@ -26,7 +26,7 @@ test_that("bump_version() works (CRAN rlang)", {
     path = repo, {
       use_r("bla")
       gert::git_add("R/bla.R")
-      gert::git_commit("* Add cool bla.")
+      gert::git_commit("* Add cool bla.", author = default_gert_author(), committer = default_gert_committer())
       expect_snapshot(bump_version())
     }
   )

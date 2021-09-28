@@ -9,7 +9,7 @@ create_demo_project(
   name = "tea",
   maintainer = whoami::fullname(fallback = "Kirill Müller"),
   email = whoami::email_address(fallback = "mail@example.com"),
-  date = "2020-12-12",
+  date = "2021-09-27",
   dir = file.path(tempdir(), "fledge"),
   news = FALSE
 )

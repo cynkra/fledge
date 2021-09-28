@@ -33,7 +33,7 @@
       i Checking if commit messages match.
       v Safety checks complete.
       > Deleting tag v0.0.0.9001.
-      v Resetting to parent commit 9c984e647e750ed3e30cdcbc57295cb5104385e8.
+      v Resetting to parent commit 5880457ac112ea6f87d61786c85de8db34db8c6c.
     Code
       use_r("blop")
     Message <rlang_message>

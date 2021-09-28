@@ -74,10 +74,7 @@ desc_author_email <- function() {
 }
 
 default_datetime <- function() {
-  sprintf(
-    "%s 12:47:37Z",
-    desc::desc_get_field("Date", default = "2021-08-31")
-  )
+  "2021-09-27 12:47:37Z"
 }
 
 default_gert_author <- function() {
