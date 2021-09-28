@@ -30,7 +30,7 @@
       i Checking if commit messages match.
       v Safety checks complete.
       > Deleting tag v0.0.0.9001.
-      v Resetting to parent commit 4c54d2309163cae85ad36e0f031ff0414c941c39.
+      v Resetting to parent commit 4c21f09bf056df7bbab3b591811ab36ee12940b4.
     Code
       use_r("blop")
       gert::git_add("R/blop.R")

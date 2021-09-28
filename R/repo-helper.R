@@ -28,6 +28,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
   pkg <- usethis::create_package(
     file.path(dir, name),
     fields = list(Date = as.Date(date)),
+    rstudio = TRUE,
     open = open
   )
 
@@ -78,7 +79,8 @@ set_usethis_desc <- function(maintainer, email, date) {
         role = c("aut", "cre"),
       ),
       Version = "0.0.0.9000",
-      context = "fledge-example"
+      context = "fledge-example",
+      RoxygenNote = "42"
     ),
     .local_envir = parent.frame(n = 2)
   )
