@@ -19,9 +19,6 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-    Message <rlang_message>
-      * Edit 'NEWS.md'
-    Message <cliMessage>
       ! Call `fledge::finalize_version()`.
     Output
       NULL

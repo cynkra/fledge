@@ -19,9 +19,6 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-    Message <rlang_message>
-      * Edit 'NEWS.md'
-    Message <cliMessage>
       ! Call `fledge::finalize_version()`.
     Output
       NULL
@@ -33,13 +30,9 @@
       i Checking if commit messages match.
       v Safety checks complete.
       > Deleting tag v0.0.0.9001.
-      v Resetting to parent commit 5880457ac112ea6f87d61786c85de8db34db8c6c.
+      v Resetting to parent commit 4c54d2309163cae85ad36e0f031ff0414c941c39.
     Code
       use_r("blop")
-    Message <rlang_message>
-      * Edit 'R/blop.R'
-      * Call `use_test()` to create a matching test file
-    Code
       gert::git_add("R/blop.R")
     Output
       # A tibble: 1 x 3
@@ -67,9 +60,6 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-    Message <rlang_message>
-      * Edit 'NEWS.md'
-    Message <cliMessage>
       ! Call `fledge::finalize_version()`.
     Output
       NULL

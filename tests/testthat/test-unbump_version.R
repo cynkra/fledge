@@ -10,6 +10,7 @@ test_that("unbump_version() works", {
   )
   usethis::with_project(
     path = repo, {
+      withr::local_options(usethis.quiet = TRUE)
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.", author = default_gert_author(), committer = default_gert_committer())
