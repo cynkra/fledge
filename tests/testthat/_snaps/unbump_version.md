@@ -1,11 +1,6 @@
 # unbump_version() works
 
     Code
-      print(fs::dir_ls(all = TRUE))
-    Output
-      .Rbuildignore .git          .gitignore    DESCRIPTION   NAMESPACE     
-      NEWS.md       R             tea.Rproj     
-    Code
       bump_version()
     Message <cliMessage>
       > Scraping 3 commit messages.
@@ -35,7 +30,7 @@
       i Checking if commit messages match.
       v Safety checks complete.
       > Deleting tag v0.0.0.9001.
-      v Resetting to parent commit 4c21f09bf056df7bbab3b591811ab36ee12940b4.
+      v Resetting to parent commit 42.
     Code
       use_r("blop")
       gert::git_add("R/blop.R")

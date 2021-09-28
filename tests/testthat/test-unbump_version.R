@@ -11,11 +11,11 @@ test_that("unbump_version() works", {
   usethis::with_project(
     path = repo, {
       withr::local_options(usethis.quiet = TRUE)
+      withr::local_envvar(FLEDGE_UNBUMP_TEST_COMMIT = "42")
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.", author = default_gert_author(), committer = default_gert_committer())
       testthat::expect_snapshot({
-  print(fs::dir_ls(all = TRUE))
         bump_version()
         unbump_version()
         use_r("blop")
