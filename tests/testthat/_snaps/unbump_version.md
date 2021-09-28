@@ -1,6 +1,42 @@
 # unbump_version() works
 
     Code
+      print(desc::desc())
+    Output
+      Package: tea
+      Title: What the Package Does (One Line, Title Case)
+      Version: 0.0.0.9000
+      Date: 2021-09-27
+      Authors@R (parsed):
+          * Jane Doe <mail@example.com> [aut, cre]
+      Description: What the package does (one paragraph).
+      License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+          license
+      Encoding: UTF-8
+      Roxygen: list(markdown = TRUE)
+      RoxygenNote: 42
+      context: fledge-example
+    Code
+      print(readLines("tea.Rproj"))
+    Output
+       [1] "Version: 1.0"                                         
+       [2] ""                                                     
+       [3] "RestoreWorkspace: No"                                 
+       [4] "SaveWorkspace: No"                                    
+       [5] "AlwaysSaveHistory: Default"                           
+       [6] ""                                                     
+       [7] "EnableCodeIndexing: Yes"                              
+       [8] "Encoding: UTF-8"                                      
+       [9] ""                                                     
+      [10] "AutoAppendNewline: Yes"                               
+      [11] "StripTrailingWhitespace: Yes"                         
+      [12] "LineEndingConversion: Posix"                          
+      [13] ""                                                     
+      [14] "BuildType: Package"                                   
+      [15] "PackageUseDevtools: Yes"                              
+      [16] "PackageInstallArgs: --no-multiarch --with-keep.source"
+      [17] "PackageRoxygenize: rd,collate,namespace"              
+    Code
       bump_version()
     Message <cliMessage>
       > Scraping 3 commit messages.
