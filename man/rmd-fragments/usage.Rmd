@@ -12,7 +12,9 @@ The following steps are required to set up {fledge} for first time use, with you
     fledge::bump_version()
     ```
 
-2. Call `finalize_version()` as given below to update `NEWS.md`
+2. Edit `NEWS.md` if required (typo fixes, rephrasing, grouping).    
+
+3. Call `finalize_version()` as given below to update `NEWS.md`
 
     ```
     fledge::finalize_version()
