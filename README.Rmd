@@ -23,53 +23,11 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/master/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=master)
 <!-- badges: end -->
 
-Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd)) more informative than ["bug fixes and performance improvements"](https://twitter.com/EmilyKager/status/1413628436984188933) to the users of your package?
-
-Ways to achieve that are:
-
-- Update NEWS.md right before release by reading through commit messages. Not necessarily fun!
-
-- Update the changelog in every commit e.g. in every PR. Now, if there are several feature PRs around that update the changelog, you'll have a few clicks to make to tackle conflicts. Easy enough, but potentially annoying.
-
-- Use fledge! fledge 
-    * fills the `NEWS.md` for you based on informative commit messages,
-    * increases the version number in `DESCRIPTION` (e.g. useful in bug reports with session information!),
-    * creates git tags (more coarse-grained history compared to top-level merges see [fledge tag list on GitHub](https://github.com/cynkra/fledge/tags)). 
-
-Using fledge is a discipline / a few habits that is worth learning!
-
-
-What you need to do in practice is:
-
-- Add a hyphen `-` or `*` at the beginning of important commit messages e.g. the squash commits that merge a Pull Request. These are the commit messages that'll be recorded in the changelog eventually! Exclude housekeeping parts of the message by typing them after a line `---`.
-
-```text
-
-- Add support for bla databases.
-
+```{r child="man/rmd-fragments/pitch.Rmd"} 
 ```
 
-or 
-
-```text
-
-- Add suport for bla databases.
-
----
-
-Also tweak the CI workflow accordingly. :sweat_smile:
-
+```{r child="man/rmd-fragments/summary.Rmd"} 
 ```
-
-For informative commit messages refer to the [Tidyverse style guide](https://style.tidyverse.org/news.html).
-
-- Run `fledge::bump_version()` regularly e.g. before every coffee break or at the end of the day or of the week. If you forgot to merge one PR run `fledge::unbump_version()`, merge the PR with an informative squash commit message, then run `fledge::bump_version()` and go drink that coffee!
-
-- Run `fledge::finalize_version()` if you add to edit NEWS.md manually e.g. if you made a typo or are not happy with a phrasing after thinking about it. Even if you edit a lot, what's been written in by fledge is still a good place-holder.
-
-- Babla at release. What functions. Point to vignette except things might change later.
-
-These habits are worth learning!
 
 ## Demo
 
@@ -79,65 +37,10 @@ Click on the image to show in a separate tab.
 
 ## Installation & setup
 
-### Once per machine
-
-Install from cynkra's R-universe using:
-
-```r
-install.packages("fledge", repos = "https://cynkra.r-universe.dev")
+```{r child="man/rmd-fragments/setup.Rmd"} 
 ```
 
-Or install from GitHub using:
+## How to get started?
 
-```r
-devtools::install_github("cynkra/fledge")
-```
-
-If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, 
-you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
-
-### Once per package
-
-* Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) _or_ to be using the same default branch name as your global/project `init.defaultbranch`.
-
-* If your package...
-
-   * is brand-new, remember to run `fledge::bump_version()` regularly.
-   * has already undergone some development, not too late to jump on the train! Run `fledge::bump_version()` and then `fledge::tag_version()`.
-   
-* Add a mention of fledge usage in your contributing guide, as contributors might not know about it.
-
-## Usage
-
-SUMMARIZE
-
-## FAQ
-
-### But what if I want to edit NEWS.md manually?
-
-You still can!
-
-* The best moment is between `bump_version()` and `finalize_version(push = TRUE)`.
-
-* You can actually edit at any time, but only between those two calls the text in the changelog will be captured in the tag message, which is better for the tag history.
-
-### What if a contributor wants to contribute a NEWS item?
-
-If someone opens a PR, with fledge the information about the changes should be entered in the squash commit message.
-Now you could still advise contributors to provide a summary in the change in the first comment of a PR. 
-
-### Does this mean "Fix #42" will appear in NEWS.md?
-
-If you want to fix an issue with a commit message you can
-
-* put "Fix #42" after a line with 3 hyphens.
-
-``` 
-- Adds support for coolness (#42, @contributor).
-
----
-
-Fix #42
-```
-
-* In a PR on e.g. GitHub you can link an issue to a PR by starting the first comment with "Fix 42" so the issue will be closed, the squash commit will be hyperlinked to the PR, but the commit message won't have that phrase. You should still add some acknowledgement in the actual commit message e.g. "- Adds support for coolness (#42, @contributor)".
+Check out the general vignette `vignette("fledge")`, and for the whole game, the demo vignette `vignette("fledge")`.
+Feel free to ask us questions!

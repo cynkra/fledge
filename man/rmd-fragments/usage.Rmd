@@ -1,0 +1,78 @@
+The following sections show how to combine these functions at different stages with any R package on GitHub.
+All {fledge} commands should be issued from the package directory of the target R package.
+
+### Initial Configuration
+
+{fledge} assumes that the target R package is version-controlled with Git in a dedicated repository.
+The following steps are required to set up {fledge} for first time use, with your package.
+
+1. Call `bump_version()` as given below to set the package version
+
+    ```
+    fledge::bump_version()
+    ```
+
+2. Call `finalize_version()` as given below to update `NEWS.md`
+
+    ```
+    fledge::finalize_version()
+    ```
+
+You are all set to switch to the development stage now.
+Ensure that you use bullet points (`*` or `-`) in your commit or merge messages to indicate the messages that you want to include in `NEWS.md`.
+
+
+### Development
+
+{fledge} aims to update `NEWS.md` and `DESCRIPTION` correctly whenever a new version is assigned.
+In order to do this, the following steps need to be included throughout the development workflow.
+
+1. In commit messages to master, mark everything that should go to `NEWS.md` with a bullet point (`-` or `*`).
+    This is applicable to single commits, merge commits, or squash commits from pull requests.
+    Do not edit `NEWS.md` manually.
+
+2. When you want to assign a version number to the current state of your R package e.g. at the end of the day or before a break, call
+
+    ```r
+    fledge::bump_version()
+    ```
+
+    The default argument for bump_version is "dev". So the dev part of the version number will be updated.
+    It is good practice to assign a new version number before switching focus to another project.
+
+3. Edit `NEWS.md` if required (typo fixes, rephrasing, grouping).
+
+4. Call `finalize_version()`: `fledge::finalize_version()`. This achieves the following:
+    - `NEWS.md` is now composed, based on the most recent commit messages.
+            To understand how `NEWS.md` is updated by fledge, see the section on `NEWS.md` implementation.
+    - A new version number is assigned automatically (this is modeled after `usethis::use_version()`).
+    - A tag matching the version number is assigned automatically, with the most recent `NEWS.md` messages included in the tag's message.
+
+### Releasing to CRAN
+
+When you want to release your package to CRAN, follow the steps below:
+
+1. Call bump_version() with the appropriate argument (`"patch"`, `"major"`, `"minor"`). e.g.,
+
+    ```r
+    fledge::bump_version("patch")
+    ```
+
+2. Edit `NEWS.md`, convert the "change log" to "release notes" -- a higher-level description of features and bug fixes (typo fixes, rephrasing, grouping).
+
+3. Call `commit_version()` as below
+
+    ```r
+    fledge::commit_version()
+    ```
+
+4. Make any necessary adjustments before releasing to CRAN depending on results of preparatory / incoming checks.
+
+5. Once the release/changes have been accepted by CRAN, use the following calls to tag the released version and to switch to a development version immediately.
+
+    ```
+    fledge::tag_version()
+    fledge::bump_version()
+    ```
+
+6. Return to development mode!
