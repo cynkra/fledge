@@ -14,7 +14,7 @@ For details on usage and implementation, refer to `vignette("fledge")`.
 
 ## Demo
 
-[![asciinema demo](https://github.com/cynkra/fledge/raw/master/readme/demo.gif)](https://asciinema.org/a/173876)
+[![asciinema demo](https://github.com/cynkra/fledge/raw/main/readme/demo.gif)](https://asciinema.org/a/173876)
 
 Click on the image to show in a separate tab.
 
