@@ -25,9 +25,17 @@ Calls the following functions:
 }
 }
 }
+\section{Bumped too soon?}{
+
+
+Have you just run \code{bump_version()}, then realized
+"oh shoot, I forgot to merge that PR"?
+Fear not, run \code{unbump_version()}, merge that PR, run \code{bump_version()}.
+}
+
 \examples{
 # Create temporary directory to hold a mock package.
-tempdir <- file.path(tempdir(), "fledge")
+tempdir <- file.path(tempdir(), "fledge", "bump")
 dir.create(tempdir, recursive = TRUE)
 # Create said mock package.
 # Set open to TRUE if you want to play in the mock package.
@@ -45,5 +53,8 @@ gert::git_commit("- Add cool function.")
 fledge::bump_version()
 })
 # Clean
-unlink("tempdir", recursive=TRUE)
+unlink(tempdir, recursive = TRUE)
+}
+\seealso{
+unbump_version
 }

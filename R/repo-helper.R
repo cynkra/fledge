@@ -15,7 +15,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
                                 name = "tea",
                                 maintainer = whoami::fullname(fallback = "Kirill M\u00fcller"),
                                 email = whoami::email_address(fallback = "mail@example.com"),
-                                date = "2020-12-12",
+                                date = "2021-09-27",
                                 dir = file.path(tempdir(), "fledge"),
                                 news = FALSE
                               ) {
@@ -28,15 +28,21 @@ create_demo_project <- function(open = rlang::is_interactive(),
   pkg <- usethis::create_package(
     file.path(dir, name),
     fields = list(Date = as.Date(date)),
+    rstudio = TRUE,
     open = open
   )
 
   withr::local_dir(new = pkg)
+  desc::desc_del("LazyData")
   gert::git_init()
   gert::git_config_set("user.name", maintainer)
   gert::git_config_set("user.email", email)
   gert::git_add(".")
-  gert::git_commit("First commit")
+  gert::git_commit(
+    "First commit",
+    author = default_gert_author(),
+    committer = default_gert_committer()
+  )
   current_branch <- gert::git_branch()
   if (current_branch != "main") {
     gert::git_branch_move(current_branch, "main")
@@ -50,7 +56,11 @@ create_demo_project <- function(open = rlang::is_interactive(),
       path = pkg, {
         rlang::with_interactive({usethis::use_news_md()}, value = FALSE)
         gert::git_add("NEWS.md")
-        gert::git_commit("Add NEWS.md to track changes.")
+        gert::git_commit(
+          "Add NEWS.md to track changes.",
+          author = default_gert_author(),
+          committer = default_gert_committer()
+        )
       }
     )
   }
@@ -70,7 +80,8 @@ set_usethis_desc <- function(maintainer, email, date) {
         role = c("aut", "cre"),
       ),
       Version = "0.0.0.9000",
-      context = "fledge-example"
+      context = "fledge-example",
+      RoxygenNote = "42"
     ),
     .local_envir = parent.frame(n = 2)
   )
