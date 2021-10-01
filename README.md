@@ -16,7 +16,7 @@ For details on usage and implementation, refer to `vignette("fledge")`.
 
 [![asciinema demo](https://github.com/cynkra/fledge/raw/main/readme/demo.gif)](https://asciinema.org/a/173876)
 
-Click on the image to show in a separate tab.
+Click on the image or link above to show in a separate tab.
 
 ## Installation
 
