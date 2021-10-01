@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![tic](https://github.com/cynkra/fledge/workflows/tic/badge.svg?branch=master)](https://github.com/cynkra/fledge/actions)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge)
-[![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/master/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=main)
 <!-- badges: end -->
 
 {fledge} has been designed to streamline the process of versioning R packages on _Git_, with the functionality to automatically update `NEWS.md` and `DESCRIPTION` with relevant information from recent commit messages.
