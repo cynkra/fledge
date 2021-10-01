@@ -1,3 +1,5 @@
+### Edge cases
+
 * If you **rebase after creating a tag**, you need to call `finalize_version()` to make sure the tag is moved to the mainline branch.
 
 * If you **pushed after calling `finalize_version()` (directly or indirectly)**, the tag may have been pushed as well. In this case, invoke
