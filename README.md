@@ -4,7 +4,7 @@
 
 <!-- badges: start -->
 
-[![tic](https://github.com/cynkra/fledge/workflows/tic/badge.svg?branch=master)](https://github.com/cynkra/fledge/actions) [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![CRAN status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge) [![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/master/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=master)
+[![rcc](https://github.com/cynkra/fledge/workflows/rcc/badge.svg)](https://github.com/cynkra/fledge/actions) [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![CRAN status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge) [![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=main)
 
 <!-- badges: end -->
 
@@ -14,9 +14,9 @@ For details on usage and implementation, refer to `vignette("fledge")`.
 
 ## Demo
 
-[![asciinema demo](https://github.com/cynkra/fledge/raw/master/readme/demo.gif)](https://asciinema.org/a/173876)
+[![asciinema demo](https://github.com/cynkra/fledge/raw/main/readme/demo.gif)](https://asciinema.org/a/173876)
 
-Click on the image to show in a separate tab.
+Click on the image above to show in a separate tab.
 
 ## Installation
 

@@ -1,0 +1,27 @@
+### Once per machine
+
+Install from cynkra's R-universe using:
+
+```r
+install.packages("fledge", repos = "https://cynkra.r-universe.dev")
+```
+
+Or install from GitHub using:
+
+```r
+devtools::install_github("cynkra/fledge")
+```
+
+If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, 
+you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
+
+### Once per package
+
+* Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) _or_ to be using the same default branch name as your global/project `init.defaultbranch`.
+
+* If your package...
+
+   * is brand-new, remember to run `fledge::bump_version()` regularly.
+   * has already undergone some development, it is not too late to jump on the train! Run `fledge::bump_version()` and then `fledge::finalize_version()`.
+   
+* Add a mention of fledge usage in your contributing guide, as contributors might not know about it. A comment is added to the top of `NEWS.md`, but it tends to be ignored occasionally.

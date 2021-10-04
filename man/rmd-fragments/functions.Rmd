@@ -1,0 +1,10 @@
+{fledge} consists of the following functions that enable versioning at different stages through the package development lifecycle.
+
+Function Name | Description|Stage Applicable
+--------------|----------------|------------
+`bump_version(which)`|Increments the package version based on argument. (Version format supported _major.minor.dev.patch_) |Configuration, Development, Release
+`finalize_version()`|Finalize the package version|Configuration, Development
+`commit_version()`|Commits `NEWS.md` and `DESCRIPTION` to Git.| Release
+`tag_version()`|Parses `NEWS.md` and creates/updates the tag for the most recent version.|Release
+`update_news()`|Update `NEWS.md` with messages from top level commits|Used by `bump_version()`
+`update_version()`|Update `NEWS.md` and `DESCRIPTION` with a new version|Used by `bump_version()`
