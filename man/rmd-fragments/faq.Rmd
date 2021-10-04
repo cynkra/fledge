@@ -1,4 +1,4 @@
-At least we think these questions could be asked. Feel free to also [ask us questions](https://github.com/cynkra/fledge/issues/130)!
+At least we think these questions could be asked. Feel free to also [ask us questions](https://github.com/cynkra/fledge/discussions)!
 
 ### But what if I want to edit NEWS.md manually?
 
