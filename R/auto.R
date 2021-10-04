@@ -68,10 +68,12 @@ pre_release_impl <- function(which, force) {
   # push main branch, bump to devel version and push again
   push_to_new(remote_name, force)
   switch_branch(main_branch)
+  push_head()
 
   cli_h1("2. Bumping main branch to dev version and updating NEWS")
   # manual implementation of bump_version(), it doesn't expose `force` yet
   bump_version_to_dev_with_force(force)
+  push_head()
 
   cli_h1("3. Opening Pull Request for release branch")
   # switch to release branch and init pre_release actions
@@ -247,6 +249,7 @@ release <- function() {
 }
 
 release_impl <- function() {
+  check_for_rc()
   check_only_modified(character())
 
   stopifnot(is_news_consistent())
@@ -258,6 +261,8 @@ release_impl <- function() {
   push_head()
   # FIXME: Copy code from devtools, silent release
   devtools::submit_cran()
+  tag <- tag_release_candidate()
+  push_tag(tag)
   auto_confirm()
 
   # Begin extension points
@@ -341,6 +346,8 @@ post_release <- function() {
 }
 
 post_release_impl <- function() {
+  cli_h2("Post-release actions")
+
   check_only_modified(c(".Rbuildignore", "CRAN-RELEASE"))
 
   check_post_release()
@@ -351,6 +358,8 @@ post_release_impl <- function() {
   tag <- tag_version(force = TRUE)
 
   push_tag(tag)
+
+  delete_release_candidate_tags()
 
   usethis::use_github_release()
 
@@ -402,7 +411,7 @@ check_post_release <- function() {
     abort(msg)
   }
 
-  repo_head_sha
+  return(invisible(repo_head_sha))
 }
 
 check_gh_scopes <- function() {
@@ -417,6 +426,22 @@ gh_scopes <- function() {
     return(character())
   }
   strsplit(out, ", *")[[1]]
+}
+
+check_for_rc <- function() {
+
+  # check if current commit is on a RC tag
+  sha_commit <- gert::git_commit_id()
+  sha_last_tag <- tail(gert::git_tag_list(), 1)$commit
+
+
+  if (sha_commit == sha_last_tag) {
+    if ("-rc" %in% tail(gert::git_tag_list(), 1)$name) {
+      stop("Running on a release candidate commit, terminating.")
+      cli_alert_warning("The branch must be at least one commit ahead of the
+                        last release candidate tag to initiate a new release.")
+    }
+  }
 }
 
 check_gitignore <- function(files) {
