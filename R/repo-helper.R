@@ -24,6 +24,11 @@ create_demo_project <- function(open = rlang::is_interactive(),
 
   withr::local_options(usethis.quiet = TRUE)
 
+  # https://github.com/r-lib/usethis/issues/1504
+  if (Sys.getenv("IN_PKGDOWN")) {
+    withr::local_options(cli.num_colors = 1)
+  }
+
   set_usethis_desc(maintainer = maintainer, email = email, date = date)
   pkg <- usethis::create_package(
     file.path(dir, name),
