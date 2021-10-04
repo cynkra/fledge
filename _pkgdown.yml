@@ -11,7 +11,7 @@ authors:
   Kirill Müller:
     href: https://krlmlr.info
 
-
+# Also update the table in man/rmd.fragments/functions.Rmd
 reference:
 - title: Main functions
   contents:
