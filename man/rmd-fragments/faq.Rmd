@@ -10,14 +10,14 @@ You still can!
 
 ### What if a contributor wants to contribute a NEWS item?
 
-If someone opens a PR, with fledge the information about the changes should be entered in the squash commit message.
-Now you could still advise contributors to provide a summary in the change in the first comment of a PR. 
+If someone opens a PR, with fledge the information about the changes should be entered in the message for the merge or squash commit.
+Now you could still advise contributors to provide a summary of the change as a comment to the PR. 
 
 ### Does this mean "Fix #42" will appear in NEWS.md?
 
 If you want to fix an issue with a commit message you can
 
-* put "Fix #42" after a line with 3 hyphens.
+* put "Fix #42" on a separate non-bulleted line or after a line with 3 hyphens.
 
 ``` 
 - Adds support for coolness (#42, @contributor).
@@ -27,4 +27,4 @@ If you want to fix an issue with a commit message you can
 Fix #42
 ```
 
-* In a PR on e.g. GitHub you can link an issue to a PR by starting the first comment with "Fix 42" so the issue will be closed, the squash commit will be hyperlinked to the PR, but the commit message won't have that phrase. You should still add some acknowledgement in the actual commit message e.g. "- Adds support for coolness (#42, @contributor)".
+* In a PR on e.g. GitHub you can link an issue to a PR by starting the first comment with "Fix 42" so the issue will be closed. The merge or squash commit will be hyperlinked to the PR, but the commit message won't have that phrase. You should still add an acknowledgement in the actual commit message e.g. "- Adds support for coolness (#42, @contributor)".

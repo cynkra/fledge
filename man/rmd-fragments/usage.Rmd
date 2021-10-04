@@ -22,6 +22,7 @@ The following steps are required to set up {fledge} for first time use, with you
 
 You are all set to switch to the development stage now.
 Ensure that you use bullet points (`*` or `-`) in your commit or merge messages to indicate the messages that you want to include in `NEWS.md`.
+Use `finalize_version(push = TRUE)` to push to the remote repository (e.g. GitHub) in one swoop.
 
 
 ### Development
@@ -29,7 +30,7 @@ Ensure that you use bullet points (`*` or `-`) in your commit or merge messages 
 {fledge} aims to update `NEWS.md` and `DESCRIPTION` correctly whenever a new version is assigned.
 In order to do this, the following steps need to be included throughout the development workflow.
 
-1. In commit messages to master, mark everything that should go to `NEWS.md` with a bullet point (`-` or `*`).
+1. In commit messages to your main branch (typically `main` or `master`), mark everything that should go to `NEWS.md` with a bullet point (`-` or `*`).
     This is applicable to single commits, merge commits, or squash commits from pull requests.
     Do not edit `NEWS.md` manually.
 
