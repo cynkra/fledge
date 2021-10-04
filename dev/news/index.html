@@ -101,6 +101,9 @@
     <li>
       <a href="../articles/demo.html">Using fledge</a>
     </li>
+    <li>
+      <a href="../articles/internals.html">Fledge internals</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -208,7 +211,7 @@
     <div id="fledge-002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.2">
 <a href="#fledge-002" class="anchor" aria-hidden="true"></a>fledge 0.0.2</h1>
-<ul><li>New “Get started” article (<a href='https://github.com/cynkra/fledge/issues/15'>#15</a>).</li>
+<ul><li>New âGet startedâ article (<a href='https://github.com/cynkra/fledge/issues/15'>#15</a>).</li>
 </ul></div>
     <div id="fledge-0019001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9001">
@@ -231,13 +234,13 @@
 <code><a href="../reference/update_version.html">update_version()</a></code>: bump version in <code>DESCRIPTION</code>, add header to <code>NEWS.md</code>
 </li>
 <li>Depending on the kind of update:
-<ul><li>If “dev”, <code><a href="../reference/finalize_version.html">finalize_version()</a></code>: commit <code>DESCRIPTION</code> and <code>NEWS.md</code>, create tag with message</li>
+<ul><li>If âdevâ, <code><a href="../reference/finalize_version.html">finalize_version()</a></code>: commit <code>DESCRIPTION</code> and <code>NEWS.md</code>, create tag with message</li>
 <li>Otherwise, <code><a href="../reference/commit_version.html">commit_version()</a></code>; the user needs to call <code><a href="../reference/tag_version.html">tag_version()</a></code> manually</li>
 </ul></li>
-</ol><p>If you haven’t committed since updating <code>NEWS.md</code> and <code>DESCRIPTION</code>, you can also edit <code>NEWS.md</code> and call <code><a href="../reference/tag_version.html">tag_version()</a></code> again. Both the commit and the tag will be updated.</p>
+</ol><p>If you havenât committed since updating <code>NEWS.md</code> and <code>DESCRIPTION</code>, you can also edit <code>NEWS.md</code> and call <code><a href="../reference/tag_version.html">tag_version()</a></code> again. Both the commit and the tag will be updated.</p>
 <p>Bumping can be undone with <code><a href="../reference/unbump_version.html">unbump_version()</a></code>.</p>
 <p>If the <code>DESCRIPTION</code> has a <code>"Date"</code> field, it is populated with the current date in <code><a href="../reference/update_version.html">update_version()</a></code>.</p>
-<p>An empty list of changes adds a “Same as previous version” bullet. This allows bumping to a dev version immediately after CRAN release.</p>
+<p>An empty list of changes adds a âSame as previous versionâ bullet. This allows bumping to a dev version immediately after CRAN release.</p>
 <p>Also includes helper functions <code><a href="../reference/get_last_tag.html">get_last_tag()</a></code> and <code><a href="../reference/get_top_level_commits.html">get_top_level_commits()</a></code>.</p>
 </div>
   </div>
@@ -253,11 +256,11 @@
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Patrick Schratz.</p></p>
+  <p><p>Developed by <a href="https://krlmlr.info" class="external-link">Kirill MÃ¼ller</a>, Patrick Schratz.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>

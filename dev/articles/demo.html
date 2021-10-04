@@ -56,6 +56,9 @@
 <li>
       <a href="../articles/demo.html">Using fledge</a>
     </li>
+    <li>
+      <a href="../articles/internals.html">Fledge internals</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -117,14 +120,14 @@
 <p>In an interactive RStudio session, a new window opens and you would work there. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_set</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [32m✔[39m Setting active project to [34m'/tmp/Rtmpm64lC4/fledge/tea'[39m</span></code></pre></div>
+<span class="co">## <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpBcV07H/fledge/tea'</span></span></code></pre></div>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [01;34m.[0m</span>
+<span class="co">## <span style="color: #0000BB; font-weight: bold;">.</span></span>
 <span class="co">## ├── DESCRIPTION</span>
 <span class="co">## ├── NAMESPACE</span>
-<span class="co">## ├── [01;34mR[0m</span>
+<span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">R</span></span>
 <span class="co">## └── tea.Rproj</span></code></pre></div>
 </div>
 <div id="create-and-configure-a-git-repository" class="section level3">
@@ -134,13 +137,13 @@
 <p>You could use <code><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">usethis::use_git()</a></code> function that creates an initial commit, and the repository is in a clean state.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_log</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [90m# A tibble: 1 × 6[39m</span>
+<span class="co">## <span style="color: #949494;"># A tibble: 1 × 6</span></span>
 <span class="co">##   commit              author          time                files merge message   </span>
-<span class="co">## [90m*[39m [3m[90m&lt;chr&gt;[39m[23m               [3m[90m&lt;chr&gt;[39m[23m           [3m[90m&lt;dttm&gt;[39m[23m              [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;lgl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m     </span>
-<span class="co">## [90m1[39m a494896ae9a8613dc7… Jerry Johnson … 2021-09-27 [90m12:47:37[39m     5 FALSE [90m"[39mFirst co…</span>
+<span class="co">## <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
+<span class="co">## <span style="color: #BCBCBC;">1</span> a494896ae9a8613dc7… Jerry Johnson … 2021-09-27 <span style="color: #949494;">12:47:37</span>     5 FALSE <span style="color: #949494;">"</span>First co…</span>
 <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_status</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [90m# A tibble: 0 × 3[39m</span>
-<span class="co">## [90m# … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;[39m</span></code></pre></div>
+<span class="co">## <span style="color: #949494;"># A tibble: 0 × 3</span></span>
+<span class="co">## <span style="color: #949494;"># … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</span></span></code></pre></div>
 <p>For working in branches, it is recommended to turn off fast-forward merging:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_config.html" class="external-link">git_config_set</a></span><span class="op">(</span><span class="st">"merge.ff"</span>, <span class="st">"false"</span><span class="op">)</span>
@@ -153,7 +156,7 @@
 <p>An initial NEWS file can be created with <code><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">usethis::use_news_md()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">use_news_md</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [32m✔[39m Writing [34m'NEWS.md'[39m</span></code></pre></div>
+<span class="co">## <span style="color: #00BB00;">✔</span> Writing <span style="color: #0000BB;">'NEWS.md'</span></span></code></pre></div>
 <p>Let’s take a look at the contents:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_path</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span><span class="op">)</span>
@@ -179,8 +182,8 @@
 <p>Now we start coding in the functionality for the package. We start by creating the new R file called <code>cup.R</code> and adding code (well only a comment).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"cup"</span><span class="op">)</span>
-<span class="co">## [31m•[39m Edit [34m'R/cup.R'[39m</span>
-<span class="co">## [31m•[39m Call [90m`use_test()`[39m to create a matching test file</span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'R/cup.R'</span></span>
+<span class="co">## <span style="color: #BB0000;">•</span> Call <span style="color: #555555;">`use_test()`</span> to create a matching test file</span>
 <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"# cup"</span>, <span class="st">"R/cup.R"</span><span class="op">)</span></code></pre></div>
 <p>We commit this file to Git with a relevant message.</p>
 <div class="alert alert-info">
@@ -197,12 +200,12 @@
 <p>The code in <code>cup.R</code> warrants a test (at least it would if it were actual code!):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"cup"</span><span class="op">)</span>
-<span class="co">## [32m✔[39m Adding [34m'testthat'[39m to [32mSuggests[39m field in DESCRIPTION</span>
-<span class="co">## [32m✔[39m Setting [32mConfig/testthat/edition[39m field in DESCRIPTION to [34m'3'[39m</span>
-<span class="co">## [32m✔[39m Creating [34m'tests/testthat/'[39m</span>
-<span class="co">## [32m✔[39m Writing [34m'tests/testthat.R'[39m</span>
-<span class="co">## [32m✔[39m Writing [34m'tests/testthat/test-cup.R'[39m</span>
-<span class="co">## [31m•[39m Edit [34m'tests/testthat/test-cup.R'[39m</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Adding <span style="color: #0000BB;">'testthat'</span> to <span style="color: #00BB00;">Suggests</span> field in DESCRIPTION</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Setting <span style="color: #00BB00;">Config/testthat/edition</span> field in DESCRIPTION to <span style="color: #0000BB;">'3'</span></span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Creating <span style="color: #0000BB;">'tests/testthat/'</span></span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Writing <span style="color: #0000BB;">'tests/testthat.R'</span></span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Writing <span style="color: #0000BB;">'tests/testthat/test-cup.R'</span></span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'tests/testthat/test-cup.R'</span></span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"tests/testthat/test-cup.R"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
 <span class="co">## test_that("multiplication works", {</span>
 <span class="co">##   expect_equal(2 * 2, 4)</span>
@@ -239,28 +242,28 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">60259c00cb79d1a2aabcb6f2c2797637154ec897</td>
+<td align="left">352e6565441fc448a36a238c3bfc8af720c61497</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-09-28 14:30:19</td>
+<td align="left">2021-10-04 13:56:12</td>
 <td align="right">3</td>
 <td align="left">FALSE</td>
 <td align="left">- Add tests for cup of tea.</td>
 </tr>
 <tr class="even">
-<td align="left">66087278bb02eb8c739c155044b58842c912a9c0</td>
+<td align="left">437d2a6ac242eb0220cea2eb4ae68afc05703371</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-09-28 14:30:19</td>
+<td align="left">2021-10-04 13:56:11</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">- New cup_of_tea() function makes it easy to drink a cup of tee.</td>
 </tr>
 <tr class="odd">
-<td align="left">a0c8cef71ede4bb2fb5120850b9ef38ec1f7428d</td>
+<td align="left">752efd31446d7d0c0aeb4208d780bedbb0cf1aa4</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-09-28 14:30:18</td>
+<td align="left">2021-10-04 13:56:11</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">Initial NEWS.md .</td>
@@ -282,26 +285,26 @@
 <p>The current version number of our package is 0.0.0.9000.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## → Scraping [32m[32m4[32m[39m commit messages.</span>
-<span class="co">## [32m✔[39m Found [32m[32m2[32m[39m NEWS-worthy entries.</span>
+<span class="co">## → Scraping <span style="color: #00BB00;">4</span> commit messages.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Found <span style="color: #00BB00;">2</span> NEWS-worthy entries.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdating NEWS[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Updating NEWS</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Adding new entries to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## → Adding new entries to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## Warning: 'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to</span>
 <span class="co">## leave this field out completely. It is not required.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdate Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Update Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## [32m✔[39m Package version bumped to [32m[32m0.0.0.9001[32m[39m.</span>
-<span class="co">## → Adding header to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Package version bumped to <span style="color: #00BB00;">0.0.0.9001</span>.</span>
+<span class="co">## → Adding header to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## → Committing changes.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Tagging Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Creating tag [32m[32mv0.0.0.9001[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span>
-<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
-<span class="co">## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.</span>
+<span class="co">## → Creating tag <span style="color: #00BB00;">v0.0.0.9001</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'NEWS.md'</span></span>
+<span class="co">## <span style="color: #BBBB00;">!</span> Call <span style="color: #262626; background-color: #DADADA;">`fledge::finalize_version()`</span>.</span>
 <span class="co">## NULL</span></code></pre></div>
 <p>The new version number is 0.0.0.9001.</p>
 <div class="alert alert-info">
@@ -360,10 +363,10 @@
 <span class="co">## → Resetting to previous commit.</span>
 <span class="co">## → Committing changes.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Tagging Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Deleting tag [32m[32mv0.0.0.9001[32m[39m.</span>
-<span class="co">## → Creating tag [32m[32mv0.0.0.9001[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span></code></pre></div>
+<span class="co">## → Deleting tag <span style="color: #00BB00;">v0.0.0.9001</span>.</span>
+<span class="co">## → Creating tag <span style="color: #00BB00;">v0.0.0.9001</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span></code></pre></div>
 <p>When done, we push to the <em>remote</em> (GitHub or another Git service) with tags using <code>fledge::finalize_version(push = TRUE)</code>, as advised. In this demo, no remote repository is set up, and the push process is not shown.</p>
 <p>Let’s look at NEWS.md now:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -393,15 +396,15 @@
 <p>This time we write the tests first, test-driven development.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"bowl"</span><span class="op">)</span>
-<span class="co">## [32m✔[39m Writing [34m'tests/testthat/test-bowl.R'[39m</span>
-<span class="co">## [31m•[39m Edit [34m'tests/testthat/test-bowl.R'[39m</span></code></pre></div>
+<span class="co">## <span style="color: #00BB00;">✔</span> Writing <span style="color: #0000BB;">'tests/testthat/test-bowl.R'</span></span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'tests/testthat/test-bowl.R'</span></span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_add</a></span><span class="op">(</span><span class="st">"tests/testthat/test-bowl.R"</span><span class="op">)</span>
 <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"Add bowl tests."</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"bowl"</span><span class="op">)</span>
-<span class="co">## [31m•[39m Edit [34m'R/bowl.R'[39m</span>
-<span class="co">## [31m•[39m Call [90m`use_test()`[39m to create a matching test file</span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'R/bowl.R'</span></span>
+<span class="co">## <span style="color: #BB0000;">•</span> Call <span style="color: #555555;">`use_test()`</span> to create a matching test file</span>
 <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"# bowl of tea"</span>, <span class="st">"R/bowl.R"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_add</a></span><span class="op">(</span><span class="st">"R/bowl.R"</span><span class="op">)</span>
@@ -416,24 +419,24 @@
 <p>Now that we have added bowl support to our package, it is time to bump the version again.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## → Scraping [32m[32m2[32m[39m commit messages.</span>
-<span class="co">## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.</span>
+<span class="co">## → Scraping <span style="color: #00BB00;">2</span> commit messages.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Found <span style="color: #00BB00;">1</span> NEWS-worthy entries.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdating NEWS[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Updating NEWS</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Adding new entries to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## → Adding new entries to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdate Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Update Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## [32m✔[39m Package version bumped to [32m[32m0.0.0.9002[32m[39m.</span>
-<span class="co">## → Adding header to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Package version bumped to <span style="color: #00BB00;">0.0.0.9002</span>.</span>
+<span class="co">## → Adding header to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## → Committing changes.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Tagging Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Creating tag [32m[32mv0.0.0.9002[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span>
-<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
-<span class="co">## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.</span>
+<span class="co">## → Creating tag <span style="color: #00BB00;">v0.0.0.9002</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'NEWS.md'</span></span>
+<span class="co">## <span style="color: #BBBB00;">!</span> Call <span style="color: #262626; background-color: #DADADA;">`fledge::finalize_version()`</span>.</span>
 <span class="co">## NULL</span>
 <span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">news</span><span class="op">)</span>
@@ -467,24 +470,24 @@
 <p>We wish to release this package as a patch and so we use <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> with the “patch” argument. Other values for the arguments are “dev” (default), “minor” and “major”.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span>
-<span class="co">## → Scraping [32m[32m1[32m[39m commit messages.</span>
-<span class="co">## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.</span>
+<span class="co">## → Scraping <span style="color: #00BB00;">1</span> commit messages.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Found <span style="color: #00BB00;">1</span> NEWS-worthy entries.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdating NEWS[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Updating NEWS</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Adding new entries to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## → Adding new entries to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdate Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Update Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## [32m✔[39m Package version bumped to [32m[32m0.0.1[32m[39m.</span>
-<span class="co">## → Adding header to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Package version bumped to <span style="color: #00BB00;">0.0.1</span>.</span>
+<span class="co">## → Adding header to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## → Committing changes.</span>
-<span class="co">## [36mℹ[39m Preparing package for release (CRAN or otherwise).</span>
-<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
-<span class="co">## [33m![39m Convert the change log in [34m[34mNEWS.md[34m[39m to release notes.</span>
+<span class="co">## <span style="color: #00BBBB;">ℹ</span> Preparing package for release (CRAN or otherwise).</span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'NEWS.md'</span></span>
+<span class="co">## <span style="color: #BBBB00;">!</span> Convert the change log in <span style="color: #0000BB;">NEWS.md</span> to release notes.</span>
 <span class="co">## </span>
-<span class="co">## [33m![39m After CRAN release, call [30m[47m[30m[47m`fledge::tag_version()`[47m[30m[49m[39m and</span>
-<span class="co">## [30m[47m[30m[47m`fledge::bump_version()`[47m[30m[49m[39m to re-enter development mode</span></code></pre></div>
+<span class="co">## <span style="color: #BBBB00;">!</span> After CRAN release, call <span style="color: #262626; background-color: #DADADA;">`fledge::tag_version()`</span> and</span>
+<span class="co">## <span style="color: #262626; background-color: #DADADA;">`fledge::bump_version()`</span> to re-enter development mode</span></code></pre></div>
 <p>This updates the version of our package to 0.0.1.</p>
 </div>
 <div id="generate-release-notes" class="section level3">
@@ -533,9 +536,9 @@
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Tagging Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Creating tag [32m[32mv0.0.1[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span></code></pre></div>
+<span class="co">## → Creating tag <span style="color: #00BB00;">v0.0.1</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span></code></pre></div>
 <p>It is advised to push to remote, with <code>git push --tags</code> from the command line, or your favorite Git client.</p>
 </div>
 <div id="create-github-release" class="section level3">
@@ -549,24 +552,24 @@
 <p>We will now make the package ready for future development. The <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> takes care of it.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## → Scraping [32m[32m1[32m[39m commit messages.</span>
-<span class="co">## [32m✔[39m Found [32m[32m1[32m[39m NEWS-worthy entries.</span>
+<span class="co">## → Scraping <span style="color: #00BB00;">1</span> commit messages.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Found <span style="color: #00BB00;">1</span> NEWS-worthy entries.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdating NEWS[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Updating NEWS</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Adding new entries to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## → Adding new entries to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mUpdate Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Update Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## [32m✔[39m Package version bumped to [32m[32m0.0.1.9000[32m[39m.</span>
-<span class="co">## → Adding header to [34m[34mNEWS.md[34m[39m.</span>
+<span class="co">## <span style="color: #00BB00;">✔</span> Package version bumped to <span style="color: #00BB00;">0.0.1.9000</span>.</span>
+<span class="co">## → Adding header to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="co">## → Committing changes.</span>
 <span class="co">## </span>
-<span class="co">## ── [1m[1mTagging Version[1m[22m ──</span>
+<span class="co">## ── <span style="font-weight: bold;">Tagging Version</span> ──</span>
 <span class="co">## </span>
-<span class="co">## → Creating tag [32m[32mv0.0.1.9000[32m[39m with tag message derived from [34m[34mNEWS.md[34m[39m.</span>
-<span class="co">## [31m•[39m Edit [34m'NEWS.md'[39m</span>
-<span class="co">## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version()`[47m[30m[49m[39m.</span>
+<span class="co">## → Creating tag <span style="color: #00BB00;">v0.0.1.9000</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span>
+<span class="co">## <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'NEWS.md'</span></span>
+<span class="co">## <span style="color: #BBBB00;">!</span> Call <span style="color: #262626; background-color: #DADADA;">`fledge::finalize_version()`</span>.</span>
 <span class="co">## NULL</span>
 <span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span></code></pre></div>
 <p>Push to remote, add features with relevant commits (after mergining a branch or not), <code><a href="../reference/bump_version.html">bump_version()</a></code>, etc. Happy development, and happy smooth filling of the changelog!</p>
@@ -594,12 +597,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://krlmlr.info" class="external-link external-link">Kirill Müller</a>, Patrick Schratz.</p>
+<p>Developed by <a href="https://krlmlr.info" class="external-link external-link">Kirill MÃ¼ller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
