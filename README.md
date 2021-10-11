@@ -89,4 +89,4 @@ If you are used to making workflow packages (e.g. [devtools](https://usethis.r-
 
 ## How to get started?
 
-Check out the general vignette `vignette("fledge")`, and for the whole game, the demo vignette `vignette("fledge")`. Feel free to [ask us questions](https://github.com/cynkra/fledge/discussions)!
+Check out the general vignette `vignette("fledge")`, and for the whole game, the demo vignette `vignette("demo")`. Feel free to [ask us questions](https://github.com/cynkra/fledge/discussions)!
