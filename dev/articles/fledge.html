@@ -135,11 +135,11 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 </ul>
 <p>These habits are worth learning!</p>
 <div id="installation-setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation-setup" class="anchor" aria-hidden="true"></a>Installation &amp; setup</h2>
+<h2>Installation &amp; setup<a class="anchor" aria-label="anchor" href="#installation-setup"></a>
+</h2>
 <div id="once-per-machine" class="section level3">
-<h3 class="hasAnchor">
-<a href="#once-per-machine" class="anchor" aria-hidden="true"></a>Once per machine</h3>
+<h3>Once per machine<a class="anchor" aria-label="anchor" href="#once-per-machine"></a>
+</h3>
 <p>Install from cynkra’s R-universe using:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"fledge"</span>, repos <span class="op">=</span> <span class="st">"https://cynkra.r-universe.dev"</span><span class="op">)</span></code></pre></div>
@@ -149,8 +149,8 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>) available for all your interactive work, you might enjoy loading fledge in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
 </div>
 <div id="once-per-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#once-per-package" class="anchor" aria-hidden="true"></a>Once per package</h3>
+<h3>Once per package<a class="anchor" aria-label="anchor" href="#once-per-package"></a>
+</h3>
 <ul>
 <li><p>Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) <em>or</em> to be using the same default branch name as your global/project <code>init.defaultbranch</code>.</p></li>
 <li>
@@ -165,8 +165,8 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 </div>
 </div>
 <div id="functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#functions" class="anchor" aria-hidden="true"></a>Functions</h2>
+<h2>Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
 <p>{fledge} consists of the following functions that enable versioning at different stages through the package development lifecycle.</p>
 <table style="width:100%;" class="table">
 <colgroup>
@@ -216,12 +216,12 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 </table>
 </div>
 <div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor" aria-hidden="true"></a>Usage</h2>
+<h2>Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <p>The following sections show how to combine these functions at different stages with any R package on GitHub. All {fledge} commands should be issued from the package directory of the target R package.</p>
 <div id="initial-configuration" class="section level3">
-<h3 class="hasAnchor">
-<a href="#initial-configuration" class="anchor" aria-hidden="true"></a>Initial Configuration</h3>
+<h3>Initial Configuration<a class="anchor" aria-label="anchor" href="#initial-configuration"></a>
+</h3>
 <p>{fledge} assumes that the target R package is version-controlled with Git in a dedicated repository. The following steps are required to set up {fledge} for first time use, with your package.</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -237,8 +237,8 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <p>You are all set to switch to the development stage now. Ensure that you use bullet points (<code>*</code> or <code>-</code>) in your commit or merge messages to indicate the messages that you want to include in <code>NEWS.md</code>. Use <code>finalize_version(push = TRUE)</code> to push to the remote repository (e.g. GitHub) in one swoop.</p>
 </div>
 <div id="development" class="section level3">
-<h3 class="hasAnchor">
-<a href="#development" class="anchor" aria-hidden="true"></a>Development</h3>
+<h3>Development<a class="anchor" aria-label="anchor" href="#development"></a>
+</h3>
 <p>{fledge} aims to update <code>NEWS.md</code> and <code>DESCRIPTION</code> correctly whenever a new version is assigned. In order to do this, the following steps need to be included throughout the development workflow.</p>
 <ol style="list-style-type: decimal">
 <li><p>In commit messages to your main branch (typically <code>main</code> or <code>master</code>), mark everything that should go to <code>NEWS.md</code> with a bullet point (<code>-</code> or <code>*</code>). This is applicable to single commits, merge commits, or squash commits from pull requests. Do not edit <code>NEWS.md</code> manually.</p></li>
@@ -261,8 +261,8 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 </ol>
 </div>
 <div id="releasing-to-cran" class="section level3">
-<h3 class="hasAnchor">
-<a href="#releasing-to-cran" class="anchor" aria-hidden="true"></a>Releasing to CRAN</h3>
+<h3>Releasing to CRAN<a class="anchor" aria-label="anchor" href="#releasing-to-cran"></a>
+</h3>
 <p>When you want to release your package to CRAN, follow the steps below:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -287,12 +287,12 @@ fledge::bump_version()</a></code></pre>
 </div>
 </div>
 <div id="faq-edge-cases" class="section level2">
-<h2 class="hasAnchor">
-<a href="#faq-edge-cases" class="anchor" aria-hidden="true"></a>FAQ &amp; edge cases</h2>
+<h2>FAQ &amp; edge cases<a class="anchor" aria-label="anchor" href="#faq-edge-cases"></a>
+</h2>
 <p>At least we think these questions could be asked. Feel free to also <a href="https://github.com/cynkra/fledge/discussions" class="external-link">ask us questions</a>!</p>
 <div id="but-what-if-i-want-to-edit-news-md-manually" class="section level3">
-<h3 class="hasAnchor">
-<a href="#but-what-if-i-want-to-edit-news-md-manually" class="anchor" aria-hidden="true"></a>But what if I want to edit NEWS.md manually?</h3>
+<h3>But what if I want to edit NEWS.md manually?<a class="anchor" aria-label="anchor" href="#but-what-if-i-want-to-edit-news-md-manually"></a>
+</h3>
 <p>You still can!</p>
 <ul>
 <li><p>The best moment is between <code><a href="../reference/bump_version.html">bump_version()</a></code> and <code>finalize_version(push = TRUE)</code>.</p></li>
@@ -300,13 +300,13 @@ fledge::bump_version()</a></code></pre>
 </ul>
 </div>
 <div id="what-if-a-contributor-wants-to-contribute-a-news-item" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-if-a-contributor-wants-to-contribute-a-news-item" class="anchor" aria-hidden="true"></a>What if a contributor wants to contribute a NEWS item?</h3>
+<h3>What if a contributor wants to contribute a NEWS item?<a class="anchor" aria-label="anchor" href="#what-if-a-contributor-wants-to-contribute-a-news-item"></a>
+</h3>
 <p>If someone opens a PR, with fledge the information about the changes should be entered in the message for the merge or squash commit. Now you could still advise contributors to provide a summary of the change as a comment to the PR.</p>
 </div>
 <div id="does-this-mean-fix-42-will-appear-in-news-md" class="section level3">
-<h3 class="hasAnchor">
-<a href="#does-this-mean-fix-42-will-appear-in-news-md" class="anchor" aria-hidden="true"></a>Does this mean “Fix #42” will appear in NEWS.md?</h3>
+<h3>Does this mean “Fix #42” will appear in NEWS.md?<a class="anchor" aria-label="anchor" href="#does-this-mean-fix-42-will-appear-in-news-md"></a>
+</h3>
 <p>If you want to fix an issue with a commit message you can</p>
 <ul>
 <li>put “Fix #42” on a separate non-bulleted line or after a line with 3 hyphens.</li>
@@ -321,8 +321,8 @@ Fix #42</code></pre>
 </ul>
 </div>
 <div id="edge-cases" class="section level3">
-<h3 class="hasAnchor">
-<a href="#edge-cases" class="anchor" aria-hidden="true"></a>Edge cases</h3>
+<h3>Edge cases<a class="anchor" aria-label="anchor" href="#edge-cases"></a>
+</h3>
 <ul>
 <li><p>If you <strong>rebase after creating a tag</strong>, you need to call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to make sure the tag is moved to the mainline branch.</p></li>
 <li><p>If you <strong>pushed</strong> via <code>finalize_version(push = TRUE)</code> or <code>git push</code>, the tag may have been pushed as well. In this case, invoke</p></li>

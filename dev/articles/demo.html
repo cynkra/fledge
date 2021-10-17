@@ -96,20 +96,20 @@
     
     
 <div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor" aria-hidden="true"></a>Introduction</h2>
+<h2>Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>This guide will demonstrate how to use {fledge}, using a mock R package as an example. We are going to call our package “{tea}”. We will develop it from scratch and also maintain a changelog as the development progresses. Finally, we will demonstrate how this changelog can eventually be converted to release notes when the package is submitted to CRAN.</p>
 <div class="alert alert-info">
 <p>We are typing this demo as an R Markdown vignette therefore we will be using R tools for creating files, editing them, and interacting with git: in real life you can be using e.g. an IDE or the command line. The fledge package won’t care!</p>
 </div>
 </div>
 <div id="set-up-the-development-environment" class="section level2">
-<h2 class="hasAnchor">
-<a href="#set-up-the-development-environment" class="anchor" aria-hidden="true"></a>Set up the development environment</h2>
+<h2>Set up the development environment<a class="anchor" aria-label="anchor" href="#set-up-the-development-environment"></a>
+</h2>
 <p>Before we start development for {tea}, we set up the basic development environment required for any typical R package.</p>
 <div id="create-a-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-a-package" class="anchor" aria-hidden="true"></a>Create a package</h3>
+<h3>Create a package<a class="anchor" aria-label="anchor" href="#create-a-package"></a>
+</h3>
 <p>We will start by creating a new package. For this demo, the package is created in a temporary directory. A real project will live somewhere in your home directory.</p>
 <p>The <code><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">usethis::create_package()</a></code> function sets up a package project ready for development.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -120,7 +120,7 @@
 <p>In an interactive RStudio session, a new window opens and you would work there. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_set</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/Rtmp8xCKuG/fledge/tea'</span></span></code></pre></div>
+<span class="co">## <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/Rtmp3yM2ez/fledge/tea'</span></span></code></pre></div>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="op">)</span>
@@ -131,8 +131,8 @@
 <span class="co">## └── tea.Rproj</span></code></pre></div>
 </div>
 <div id="create-and-configure-a-git-repository" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-and-configure-a-git-repository" class="anchor" aria-hidden="true"></a>Create and configure a Git repository</h3>
+<h3>Create and configure a Git repository<a class="anchor" aria-label="anchor" href="#create-and-configure-a-git-repository"></a>
+</h3>
 <p>Next, one would set up this package for development and create a Git repository for the package. We achieved this with gert code.</p>
 <p>You could use <code><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">usethis::use_git()</a></code> function that creates an initial commit, and the repository is in a clean state.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -151,8 +151,8 @@
 <p>An alternative is to use squash commits.</p>
 </div>
 <div id="create-initial-news-md-file" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-initial-news-md-file" class="anchor" aria-hidden="true"></a>Create initial NEWS.md file</h3>
+<h3>Create initial NEWS.md file<a class="anchor" aria-label="anchor" href="#create-initial-news-md-file"></a>
+</h3>
 <p>An initial NEWS file can be created with <code><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">usethis::use_news_md()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">use_news_md</a></span><span class="op">(</span><span class="op">)</span>
@@ -174,11 +174,11 @@
 </div>
 </div>
 <div id="the-development-phase" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-development-phase" class="anchor" aria-hidden="true"></a>The development phase</h2>
+<h2>The development phase<a class="anchor" aria-label="anchor" href="#the-development-phase"></a>
+</h2>
 <div id="create-an-r-file" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-an-r-file" class="anchor" aria-hidden="true"></a>Create an R file</h3>
+<h3>Create an R file<a class="anchor" aria-label="anchor" href="#create-an-r-file"></a>
+</h3>
 <p>Now we start coding in the functionality for the package. We start by creating the new R file called <code>cup.R</code> and adding code (well only a comment).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"cup"</span><span class="op">)</span>
@@ -195,8 +195,8 @@
 <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"- New cup_of_tea() function makes it easy to drink a cup of tee."</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="create-a-test" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-a-test" class="anchor" aria-hidden="true"></a>Create a test</h3>
+<h3>Create a test<a class="anchor" aria-label="anchor" href="#create-a-test"></a>
+</h3>
 <p>The code in <code>cup.R</code> warrants a test (at least it would if it were actual code!):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"cup"</span><span class="op">)</span>
@@ -218,8 +218,8 @@
 <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"- Add tests for cup of tea."</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="update-news-md" class="section level3">
-<h3 class="hasAnchor">
-<a href="#update-news-md" class="anchor" aria-hidden="true"></a>Update NEWS.md</h3>
+<h3>Update NEWS.md<a class="anchor" aria-label="anchor" href="#update-news-md"></a>
+</h3>
 <p>Let us look at the commit history until now. You might use any Git tool you want to consult it, we use gert.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_log</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -242,28 +242,28 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">7558fd8054face1eaa47c382cd83544e553447a1</td>
+<td align="left">0f403cdb13fd4727bc4e819c9205e9bd0713ff0d</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-10-11 07:01:41</td>
+<td align="left">2021-10-17 06:10:08</td>
 <td align="right">3</td>
 <td align="left">FALSE</td>
 <td align="left">- Add tests for cup of tea.</td>
 </tr>
 <tr class="even">
-<td align="left">6073a167bd2e60f2c16add535f2fc76ffc7ad89a</td>
+<td align="left">5bfccf83d89605f588895961ff4b12d8914acc9c</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-10-11 07:01:41</td>
+<td align="left">2021-10-17 06:10:08</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">- New cup_of_tea() function makes it easy to drink a cup of tee.</td>
 </tr>
 <tr class="odd">
-<td align="left">22997fb715c86d5daea6ae9ad04099b4e1a35648</td>
+<td align="left">684dc004574b0462b4f3e6c8c726ab12da90bf8f</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-10-11 07:01:40</td>
+<td align="left">2021-10-17 06:10:08</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">Initial NEWS.md .</td>
@@ -312,8 +312,8 @@
 </div>
 </div>
 <div id="review-news-md" class="section level3">
-<h3 class="hasAnchor">
-<a href="#review-news-md" class="anchor" aria-hidden="true"></a>Review NEWS.md</h3>
+<h3>Review NEWS.md<a class="anchor" aria-label="anchor" href="#review-news-md"></a>
+</h3>
 <p>Let us see what <code>NEWS.md</code> looks like after that bump.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
@@ -352,8 +352,8 @@
 <p>This does not affect the original commit message, only <code>NEWS.md</code>. (<a href="https://docs.github.com/en/github/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message#amending-older-or-multiple-commit-messages" class="external-link">Editing commit messages</a> is not something fledge supports).</p>
 </div>
 <div id="finalize-version" class="section level3">
-<h3 class="hasAnchor">
-<a href="#finalize-version" class="anchor" aria-hidden="true"></a>Finalize version</h3>
+<h3>Finalize version<a class="anchor" aria-label="anchor" href="#finalize-version"></a>
+</h3>
 <div class="alert alert-warning">
 <p>After tweaking <code>NEWS.md</code>, it is important to use <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code> and not to commit manually.</p>
 </div>
@@ -387,8 +387,8 @@
 <p>A tag has been created for the version which is good practice, and crucial when using fledge: for updating the changelog, fledge looks through all commit messages <strong>since the latest tag</strong>.</p>
 </div>
 <div id="change-code-and-commit" class="section level3">
-<h3 class="hasAnchor">
-<a href="#change-code-and-commit" class="anchor" aria-hidden="true"></a>Change code and commit</h3>
+<h3>Change code and commit<a class="anchor" aria-label="anchor" href="#change-code-and-commit"></a>
+</h3>
 <p>{tea} with cup is tested, now we want to enhance with bowl. This requires changes to the code, and perhaps a new test. We create a branch (whose name starts with a “f” for “feature”) and switch to this branch to implement this.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_branch.html" class="external-link">git_branch_create</a></span><span class="op">(</span><span class="st">"f-bowl"</span>, checkout <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -460,13 +460,13 @@
 </div>
 </div>
 <div id="prepare-for-release" class="section level2">
-<h2 class="hasAnchor">
-<a href="#prepare-for-release" class="anchor" aria-hidden="true"></a>Prepare for release</h2>
+<h2>Prepare for release<a class="anchor" aria-label="anchor" href="#prepare-for-release"></a>
+</h2>
 <p>After multiple cycles of development, review and testing, we decide that our package is ready for release to CRAN. This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.</p>
 <p>A difference between publishing on CRAN and publishing on GitHub is that there’s an external system controlling your publication on CRAN so your package might need some tweaks between the first release candidate and what version you end up publishing on CRAN.</p>
 <div id="bump-version-for-release" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bump-version-for-release" class="anchor" aria-hidden="true"></a>Bump version for release</h3>
+<h3>Bump version for release<a class="anchor" aria-label="anchor" href="#bump-version-for-release"></a>
+</h3>
 <p>We wish to release this package as a patch and so we use <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> with the “patch” argument. Other values for the arguments are “dev” (default), “minor” and “major”.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span>
@@ -491,8 +491,8 @@
 <p>This updates the version of our package to 0.0.1.</p>
 </div>
 <div id="generate-release-notes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#generate-release-notes" class="anchor" aria-hidden="true"></a>Generate release notes</h3>
+<h3>Generate release notes<a class="anchor" aria-label="anchor" href="#generate-release-notes"></a>
+</h3>
 <p>We review the <code>NEWS.md</code> that were generated by {fledge}:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
@@ -526,12 +526,12 @@
 </div>
 </div>
 <div id="after-release" class="section level2">
-<h2 class="hasAnchor">
-<a href="#after-release" class="anchor" aria-hidden="true"></a>After release</h2>
+<h2>After release<a class="anchor" aria-label="anchor" href="#after-release"></a>
+</h2>
 <p>Some time passed and our {tea} package was accepted on CRAN. At this stage, {fledge} can help to tag the released version and create a new version for development.</p>
 <div id="tag-version" class="section level3">
-<h3 class="hasAnchor">
-<a href="#tag-version" class="anchor" aria-hidden="true"></a>Tag version</h3>
+<h3>Tag version<a class="anchor" aria-label="anchor" href="#tag-version"></a>
+</h3>
 <p>It is now the time to tag the released version using the <code><a href="../reference/tag_version.html">fledge::tag_version()</a></code> function.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span>
@@ -542,13 +542,13 @@
 <p>It is advised to push to remote, with <code>git push --tags</code> from the command line, or your favorite Git client.</p>
 </div>
 <div id="create-github-release" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-github-release" class="anchor" aria-hidden="true"></a>Create GitHub release</h3>
+<h3>Create GitHub release<a class="anchor" aria-label="anchor" href="#create-github-release"></a>
+</h3>
 <p>If your package is hosted on GitHub, <code><a href="https://usethis.r-lib.org/reference/use_github_release.html" class="external-link">usethis::use_github_release()</a></code> creates a draft GitHub release from the contents already in <code>NEWS.md</code>. You need to submit the draft release from the GitHub release page.</p>
 </div>
 <div id="restart-development" class="section level3">
-<h3 class="hasAnchor">
-<a href="#restart-development" class="anchor" aria-hidden="true"></a>Restart development</h3>
+<h3>Restart development<a class="anchor" aria-label="anchor" href="#restart-development"></a>
+</h3>
 <p>We will now make the package ready for future development. The <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> takes care of it.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span>

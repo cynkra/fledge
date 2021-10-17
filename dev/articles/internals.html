@@ -98,12 +98,11 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://cynkra.github.io/fledge" class="external-link">fledge</a></span><span class="op">)</span></code></pre></div>
 <div id="implementation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#implementation" class="anchor" aria-hidden="true"></a>Implementation</h2>
+<h2>Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
+</h2>
 <p>The following sections explain how things actually work inside fledge.</p>
 <div id="updating-news-md" class="section level3">
-<h3 class="hasAnchor">
-<a href="#updating-news-md" class="anchor" aria-hidden="true"></a>Updating <code>NEWS.md</code>
+<h3>Updating <code>NEWS.md</code><a class="anchor" aria-label="anchor" href="#updating-news-md"></a>
 </h3>
 <p>New entries are added to <code>NEWS.md</code> from commit messages to commits in <code>master</code>.</p>
 <ul>
@@ -131,8 +130,8 @@ The fancy feature consists of the components:
 <p>When retrieving the current NEWS for defining the tag message, the entries between the first two first-level headers (starting with <code>#</code>) are returned. You can use second and third level headers and add as many empty lines as you want.</p>
 </div>
 <div id="collecting-news" class="section level3">
-<h3 class="hasAnchor">
-<a href="#collecting-news" class="anchor" aria-hidden="true"></a>Collecting NEWS</h3>
+<h3>Collecting NEWS<a class="anchor" aria-label="anchor" href="#collecting-news"></a>
+</h3>
 <p>The first function to call at any stage is always <code><a href="../reference/bump_version.html">bump_version()</a></code>. This does the following</p>
 <ol style="list-style-type: decimal">
 <li><p>Calls <code><a href="../reference/update_news.html">update_news()</a></code> to collect NEWS entries from top-level commits.</p></li>
@@ -140,8 +139,8 @@ The fancy feature consists of the components:
 </ol>
 </div>
 <div id="tagging-for-dev-vs--other-releases" class="section level3">
-<h3 class="hasAnchor">
-<a href="#tagging-for-dev-vs--other-releases" class="anchor" aria-hidden="true"></a>Tagging for “dev” vs. other releases</h3>
+<h3>Tagging for “dev” vs. other releases<a class="anchor" aria-label="anchor" href="#tagging-for-dev-vs--other-releases"></a>
+</h3>
 <p><code><a href="../reference/bump_version.html">bump_version()</a></code> continues depending on the release type:</p>
 <ul>
 <li>
