@@ -46,7 +46,7 @@ recent tag) and adds bullets from their body to NEWS.md."><meta name="robots" co
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/cynkra/fledge/">
+  <a href="https://github.com/cynkra/fledge/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -61,7 +61,7 @@ recent tag) and adds bullets from their body to NEWS.md."><meta name="robots" co
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Update NEWS.md with messages from top-level commits</h1>
-    <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/master/R/api-update-news.R"><code>R/api-update-news.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/master/R/api-update-news.R" class="external-link"><code>R/api-update-news.R</code></a></small>
     <div class="hidden name"><code>update_news.Rd</code></div>
     </div>
 
@@ -72,14 +72,16 @@ recent tag) and adds bullets from their body to <code>NEWS.md</code>.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">update_news</span><span class="op">(</span>messages <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>messages</th>
-      <td><p>A character vector of commit messages,
-e.g. as in the <code>message</code> column in the return value of <code><a href="get_top_level_commits.html">get_top_level_commits()</a></code>.
-The default uses the top level commits since the last tag as retrieved by <code><a href="get_last_tag.html">get_last_tag()</a></code>.</p></td>
-    </tr></table></div>
+    <h2>Arguments</h2>
+    
 
+<dl><dt>messages</dt><dd><p>A character vector of commit messages,
+e.g. as in the <code>message</code> column in the return value of <code><a href="get_top_level_commits.html">get_top_level_commits()</a></code>.
+The default uses the top level commits since the last tag as retrieved by <code><a href="get_last_tag.html">get_last_tag()</a></code>.</p></dd>
+</dl></div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
