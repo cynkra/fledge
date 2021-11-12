@@ -33,6 +33,7 @@ Imports:
     whoami,
     withr
 Suggests: 
+    mockery,
     covr,
     fansi,
     fs,

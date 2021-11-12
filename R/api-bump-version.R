@@ -37,6 +37,6 @@
 #' unlink(tempdir, recursive = TRUE)
 bump_version <- function(which = "dev") {
   check_which(which)
-  check_clean(c("DESCRIPTION", news_path))
+  check_clean(c("DESCRIPTION", news_path()))
   with_repo(bump_version_impl(which))
 }

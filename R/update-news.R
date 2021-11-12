@@ -32,7 +32,11 @@ news_path <- "NEWS.md"
 news_comment <- "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
 
 add_to_news <- function(news) {
-  enc::transform_lines_enc(news_path, make_prepend(news))
+  if (!file.exists(news_path())) {
+    file.create(news_path())
+  }
+
+  enc::transform_lines_enc(news_path(), make_prepend(news))
   invisible(news_path)
 }
 
@@ -40,10 +44,15 @@ make_prepend <- function(news) {
   force(news)
 
   function(x) {
-    if (x[[1]] == news_comment) {
-      x <- x[-1]
-      if (x[[1]] == "") {
+    # Not empty news file needs to be tweaked
+    if (length(x) > 0) {
+      # Remove fledge NEWS.md comment
+      if (x[[1]] == news_comment) {
         x <- x[-1]
+        # Remove empty line at the top
+        if (x[[1]] == "") {
+          x <- x[-1]
+        }
       }
     }
 
