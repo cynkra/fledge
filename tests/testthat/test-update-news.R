@@ -5,8 +5,7 @@ test_that("add_to_news works when news file still empty", {
   mockery::stub(
     where = add_to_news,
     what = "news_path",
-    how = temp_news,
-    depth = 3
+    how = temp_news
   )
   add_to_news("* Cool stuff!")
   expect_snapshot_file(temp_news)
@@ -19,8 +18,7 @@ test_that("add_to_news works when no news file yet", {
   mockery::stub(
     where = add_to_news,
     what = "news_path",
-    how = temp_news,
-    depth = 3
+    how = temp_news
   )
   add_to_news("* Cool stuff!")
   expect_snapshot_file(temp_news)
