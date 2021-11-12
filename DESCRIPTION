@@ -27,7 +27,7 @@ Imports:
     lifecycle,
     purrr (>= 0.3.2),
     rematch2,
-    rlang,
+    rlang (>= 0.4.12),
     tibble,
     usethis (>= 1.5.0),
     whoami,
