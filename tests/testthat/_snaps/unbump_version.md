@@ -9,11 +9,17 @@
       -- Updating NEWS --
       
       > Adding new entries to 'NEWS.md'.
+    Output
+      [1] "NEWS.md"
+    Message <cliMessage>
       
       -- Update Version --
       
       v Package version bumped to 0.0.0.9001.
       > Adding header to 'NEWS.md'.
+    Output
+      [1] "NEWS.md"
+    Message <cliMessage>
       > Committing changes.
       
       -- Tagging Version --
@@ -50,11 +56,17 @@
       -- Updating NEWS --
       
       > Adding new entries to 'NEWS.md'.
+    Output
+      [1] "NEWS.md"
+    Message <cliMessage>
       
       -- Update Version --
       
       v Package version bumped to 0.0.0.9001.
       > Adding header to 'NEWS.md'.
+    Output
+      [1] "NEWS.md"
+    Message <cliMessage>
       > Committing changes.
       
       -- Tagging Version --
