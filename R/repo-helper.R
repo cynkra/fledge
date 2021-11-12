@@ -115,6 +115,11 @@ with_demo_project <- function(code, dir = NULL, open = FALSE, news = TRUE) {
   if (is.null(dir)) {
     dir <- withr::local_tempdir(pattern = "fledge")
   }
+
+  if (!dir.exists(dir)) {
+    rlang::abort(message = c(x = sprintf("Can't find the directory `%s`.", dir)))
+  }
+
   repo <- create_demo_project(open = FALSE, dir = dir, news = TRUE)
   usethis::with_project(
     path = repo,
