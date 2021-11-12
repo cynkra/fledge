@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Get started with fledge</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/master/vignettes/fledge.Rmd" class="external-link"><code>vignettes/fledge.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/HEAD/vignettes/fledge.Rmd" class="external-link"><code>vignettes/fledge.Rmd</code></a></small>
       <div class="hidden name"><code>fledge.Rmd</code></div>
 
     </div>
@@ -226,12 +226,12 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <ol style="list-style-type: decimal">
 <li>
 <p>Call <code><a href="../reference/bump_version.html">bump_version()</a></code> as given below to set the package version</p>
-<pre><code><a href="../reference/bump_version.html">fledge::bump_version()</a></code></pre>
+<pre><code><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre>
 </li>
 <li><p>Edit <code>NEWS.md</code> if required (typo fixes, rephrasing, grouping).</p></li>
 <li>
 <p>Call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> as given below to update <code>NEWS.md</code></p>
-<pre><code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code></pre>
+<pre><code><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></code></pre>
 </li>
 </ol>
 <p>You are all set to switch to the development stage now. Ensure that you use bullet points (<code>*</code> or <code>-</code>) in your commit or merge messages to indicate the messages that you want to include in <code>NEWS.md</code>. Use <code>finalize_version(push = TRUE)</code> to push to the remote repository (e.g. GitHub) in one swoop.</p>
@@ -279,8 +279,8 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <li><p>Make any necessary adjustments before releasing to CRAN depending on results of preparatory / incoming checks.</p></li>
 <li>
 <p>Once the release/changes have been accepted by CRAN, use the following calls to tag the released version and to switch to a development version immediately.</p>
-<pre><code><a href="../reference/tag_version.html">fledge::tag_version()
-fledge::bump_version()</a></code></pre>
+<pre><code><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre>
 </li>
 <li><p>Return to development mode!</p></li>
 </ol>

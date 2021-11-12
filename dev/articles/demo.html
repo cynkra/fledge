@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Using fledge</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/master/vignettes/demo.Rmd" class="external-link"><code>vignettes/demo.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/HEAD/vignettes/demo.Rmd" class="external-link"><code>vignettes/demo.Rmd</code></a></small>
       <div class="hidden name"><code>demo.Rmd</code></div>
 
     </div>
@@ -114,13 +114,13 @@
 <p>The <code><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">usethis::create_package()</a></code> function sets up a package project ready for development.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">create_package</a></span><span class="op">(</span><span class="st">"tea"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Setting deferred event(s) on global environment.
-##   * Execute (and clear) with `withr::deferred_run()`.
-##   * Clear (without executing) with `withr::deferred_clear()`.</code></pre>
+<pre><code><span class="co">## Setting deferred event(s) on global environment.</span>
+<span class="co">##   * Execute (and clear) with `withr::deferred_run()`.</span>
+<span class="co">##   * Clear (without executing) with `withr::deferred_clear()`.</span></code></pre>
 <p>In an interactive RStudio session, a new window opens and you would work there. Users of other environments would change the working directory manually. For this demo, we manually set the active project.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">proj_set</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpzTnoDz/fledge/tea'</span></span></code></pre></div>
+<span class="co">## <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpHgAIIu/fledge/tea'</span></span></code></pre></div>
 <p>The infrastructure files and directories that comprise a minimal R package are created:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="op">)</span>
@@ -242,28 +242,28 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">6017a5684b70487778b09ad94701c41cb5d85283</td>
+<td align="left">3785bd88f94618d4ac35005e8682fcfcbabce242</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-10-25 02:46:28</td>
+<td align="left">2021-11-12 13:50:05</td>
 <td align="right">3</td>
 <td align="left">FALSE</td>
 <td align="left">- Add tests for cup of tea.</td>
 </tr>
 <tr class="even">
-<td align="left">ddc3d87ba89564a439539f57eccbe72b2dd2c84f</td>
+<td align="left">8c212f260802826ce4e7290fe93c865cfbd57c0e</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-10-25 02:46:28</td>
+<td align="left">2021-11-12 13:50:04</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">- New cup_of_tea() function makes it easy to drink a cup of tee.</td>
 </tr>
 <tr class="odd">
-<td align="left">3c6244eb2050945f97f88bda35c31a71b7ce08b7</td>
+<td align="left">76f31eb8b9f84ecaa7014b11770f235907f9e13a</td>
 <td align="left">Jerry Johnson <a href="mailto:jerry@gmail.com" class="email">jerry@gmail.com</a>
 </td>
-<td align="left">2021-10-25 02:46:28</td>
+<td align="left">2021-11-12 13:50:04</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="left">Initial NEWS.md .</td>
