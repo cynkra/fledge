@@ -22,7 +22,9 @@ test_that("unbump_version() works", {
         gert::git_add("R/blop.R")
         c <- gert::git_commit("* Add cool blop.", author = default_gert_author(), committer = default_gert_committer())
         bump_version()
-      })
+      },
+        variant = as.character(packageVersion("rlang"))
+      )
     },
     quiet = TRUE
   )

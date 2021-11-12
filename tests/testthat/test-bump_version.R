@@ -6,7 +6,7 @@ test_that("bump_version() works", {
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.")
-      expect_snapshot(bump_version())
+      expect_snapshot(bump_version(), variant = as.character(packageVersion("rlang")))
     }
   )
   expect_snapshot_file(
@@ -25,7 +25,7 @@ test_that("bump_version() errors informatively for forbidden notifications", {
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.")
       desc::desc_set_dep("bla")
-      expect_snapshot_error(bump_version())
+      expect_snapshot_error(bump_version(), variant = as.character(packageVersion("rlang")))
     }
   )
 })
@@ -40,7 +40,7 @@ test_that("bump_version() errors informatively for wrong branch", {
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.")
       gert::git_branch_create("bla")
-      expect_snapshot_error(bump_version())
+      expect_snapshot_error(bump_version(), variant = as.character(packageVersion("rlang")))
     }
   )
 })
