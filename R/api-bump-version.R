@@ -14,7 +14,7 @@
 #' "oh shoot, I forgot to merge that PR"?
 #' Fear not, run [unbump_version()], merge that PR, run `bump_version()`.
 #'
-#' @example man/examples/bump_version.R
+#' @example man/examples/bump-version.R
 bump_version <- function(which = "dev") {
   check_which(which)
   check_clean(c("DESCRIPTION", news_path))
