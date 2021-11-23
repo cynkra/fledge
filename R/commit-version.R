@@ -1,5 +1,5 @@
 commit_version_impl <- function() {
-  check_only_staged(c("DESCRIPTION", news_path))
+  check_only_staged(c("DESCRIPTION", news_path()))
 
   if (is_last_commit_bump()) {
     cli_alert("Resetting to previous commit.")
@@ -9,7 +9,7 @@ commit_version_impl <- function() {
     amending <- FALSE
   }
 
-  gert::git_add(c("DESCRIPTION", news_path))
+  gert::git_add(c("DESCRIPTION", news_path()))
 
   if (nrow(gert::git_status(staged = TRUE)) > 0) {
     cli_alert("Committing changes.")
