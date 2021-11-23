@@ -7,11 +7,6 @@ on:
     - "r-*"
     tags:
     - "v*"
-  pull_request:
-    branches:
-      - main
-      - master
-      - "r-*"
   schedule:
     - cron:  '20 0 * * *'
 
@@ -31,9 +26,6 @@ jobs:
       RGL_USE_NULL: true
       # Begin custom: env vars
       # End custom: env vars
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      isPush: ${{ github.event_name == 'push' }}
 
     steps:
       - uses: actions/checkout@v2
@@ -52,56 +44,13 @@ jobs:
           needs: website
 
       - name: Configure Git identity
-        if: github.event_name == 'push'
         run: |
           env | sort
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
         shell: bash
 
-      - name: Session info
+
+      - name: Build and deploy pkgdown site
         run: |
-          options(width = 100)
-          if (!requireNamespace("sessioninfo", quietly = TRUE)) install.packages("sessioninfo")
-          pkgs <- installed.packages()[, "Package"]
-          sessioninfo::session_info(pkgs, include_base = TRUE)
-        shell: Rscript {0}
-
-      # Begin custom: after install
-      # End custom: after install
-
-      - name: Install package
-        run: R CMD INSTALL . --with-keep.source --with-keep.parse.data
-
-      - name: Create website
-        if: contains(env.isPush, 'false')
-        run: |
-          pkgdown::build_site()
-        shell: Rscript {0}
-
-      - name: Create index file
-        if: contains(env.isPush, 'false')
-        run: |
-          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;URL=/dev/index.html" />  <script language="javascript"> window.location.replace('/dev/index.html')</script></head></html>' > ./docs/index.html
-      - name: Deploy to Netlify
-        if: contains(env.isPush, 'false')
-        id: netlify-deploy
-        uses: nwtgck/actions-netlify@v1.1
-        with:
-          publish-dir: './docs'
-          production-branch: master
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message:
-            'Deploy from GHA: ${{ github.event.pull_request.title || github.event.head_commit.message }} (${{ github.sha }})'
-          # these all default to 'true'
-          enable-pull-request-comment: false
-          enable-commit-comment: false
-          # enable-commit-status: true
-          #o verwrites-pull-request-comment: true
-        timeout-minutes: 1
-
-      - name: Check rate limits
-        if: always()
-        run: |
-          curl -s --header "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
-        shell: bash
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'

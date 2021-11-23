@@ -1,0 +1,48 @@
+on:
+  pull_request:
+    types: [labeled]
+
+name: pkgdown preview
+jobs:
+  pkgdown:
+    if: contains(github.event.pull_request.labels.*.name, 'needs-preview')
+    name: pkgdown preview
+    runs-on: macOS-latest
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+    steps:
+      - name: Get PR number
+        run: |
+          PR=$(jq --raw-output .pull_request.number "${GITHUB_EVENT_PATH}")
+          echo "::set-env name=PR::$PR"
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/pr-fetch@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - uses: r-lib/actions/setup-tinytex@v1
+
+      - uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          extra-packages: pkgdown
+          needs: website
+      - name: Document
+        run: Rscript -e 'roxygen2::roxygenise()'
+      - name: commit
+        run: |
+          git add man/\* NAMESPACE
+          git commit -m 'Document'
+      - uses: r-lib/actions/pr-push@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete label
+        if: always()
+        run: |
+          curl --request DELETE \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
