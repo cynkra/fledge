@@ -2,6 +2,7 @@
 #'
 #' Lists all commits from a range (default: top-level commits since the most
 #' recent tag) and adds bullets from their body to `NEWS.md`.
+#' Creates `NEWS.md` if necessary.
 #' @param messages A character vector of commit messages,
 #'   e.g. as in the `message` column in the return value of [get_top_level_commits()].
 #'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
