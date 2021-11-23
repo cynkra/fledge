@@ -43,7 +43,7 @@ get_current_news <- function() {
     n <- headers$line[[2]] - 1L
   }
 
-  current_news <- readLines(news_path, n)[-1]
+  current_news <- readLines(news_path(), n)[-1]
   current_news <- paste(current_news, collapse = "\n")
   gsub("^\n*(.*[^\n])\n*$", "\\1", current_news)
 }
