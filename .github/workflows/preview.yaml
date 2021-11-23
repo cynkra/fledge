@@ -13,9 +13,9 @@ jobs:
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
     steps:
     - name: Get PR number
-        run: |
-          PR=$(jq --raw-output .pull_request.number "${GITHUB_EVENT_PATH}")
-          echo "PR=$PR" >> $GITHUB_ENV
+      run: |
+        PR=$(jq --raw-output .pull_request.number "${GITHUB_EVENT_PATH}")
+        echo "PR=$PR" >> $GITHUB_ENV
       - uses: actions/checkout@v2
       - uses: r-lib/actions/pr-fetch@master
         with:
