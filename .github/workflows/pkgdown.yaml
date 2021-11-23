@@ -4,7 +4,7 @@ on:
     - master
     - main
     - "cran-*"
-    - "r-*"
+    #- "r-*"
     tags:
     - "v*"
   schedule:
