@@ -11,10 +11,6 @@ with_demo_project(open = FALSE, code = {
   gert::git_commit("- Add cool function.")
   # Bump version with fledge.
   fledge::bump_version()
-  # Edit `NEWS.md`, convert the "change log" to "release notes" --
-  # a higher-level description of features and bug fixes
-  # (typo fixes, rephrasing, grouping).
-  # ...
-  # Once done
-  fledge::finalize_version()
+  desc::desc_add_author(given = "Jane", family = "Doe", role = "ctb")
+  fledge::commit_version()
 })
