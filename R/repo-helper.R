@@ -91,3 +91,38 @@ set_usethis_desc <- function(maintainer, email, date) {
     .local_envir = parent.frame(n = 2)
   )
 }
+
+
+#' Run code in temporary project
+#'
+#' @inheritParams create_demo_project
+#' @param code Code to run with temporary active project
+#'
+#' @export
+#'
+#' @examples
+#' with_demo_project({
+#' # Add a new R file.
+#' usethis::use_r("cool-function", open = FALSE)
+#' # Pretend we added useful code inside it.
+#' # Track the new R file with Git.
+#' gert::git_add("R/cool-function.R")
+#' gert::git_commit("- Add cool function.")
+#' # Bump version with fledge.
+#' fledge::bump_version()
+#' })
+with_demo_project <- function(code, dir = NULL, open = FALSE, news = TRUE) {
+  if (is.null(dir)) {
+    dir <- withr::local_tempdir(pattern = "fledge")
+  }
+
+  if (!dir.exists(dir)) {
+    rlang::abort(message = c(x = sprintf("Can't find the directory `%s`.", dir)))
+  }
+
+  repo <- create_demo_project(open = FALSE, dir = dir, news = TRUE)
+  usethis::with_project(
+    path = repo,
+    code
+  )
+}

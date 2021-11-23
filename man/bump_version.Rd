@@ -30,7 +30,7 @@ Calls the following functions:
 
 Have you just run \code{bump_version()}, then realized
 "oh shoot, I forgot to merge that PR"?
-Fear not, run \code{unbump_version()}, merge that PR, run \code{bump_version()}.
+Fear not, run \code{\link[=unbump_version]{unbump_version()}}, merge that PR, run \code{bump_version()}.
 }
 
 \examples{
@@ -56,5 +56,5 @@ fledge::bump_version()
 unlink(tempdir, recursive = TRUE)
 }
 \seealso{
-unbump_version
+\code{\link[=unbump_version]{unbump_version()}}
 }
