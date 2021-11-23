@@ -16,10 +16,6 @@ jobs:
         run: |
           PR=$(jq --raw-output .pull_request.number "${GITHUB_EVENT_PATH}")
           echo "PR=$PR" >> $GITHUB_ENV
-      - name: Get PR number
-        run: |
-          PR=$(jq --raw-output .pull_request.number "${GITHUB_EVENT_PATH}")
-          echo "::set-env name=PR::$PR"
       - uses: actions/checkout@v2
       - uses: r-lib/actions/pr-fetch@master
         with:
