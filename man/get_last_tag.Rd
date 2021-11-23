@@ -30,6 +30,7 @@ with_demo_project(open = FALSE, code = {
   # Bump version with fledge.
   fledge::bump_version()
   fledge::finalize_version()
+  print(get_top_level_commits(since = NULL))
   print(fledge::get_last_tag())
 })
 }

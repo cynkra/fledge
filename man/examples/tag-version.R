@@ -11,7 +11,6 @@ with_demo_project(open = FALSE, code = {
   gert::git_commit("- Add cool function.")
   # Bump version with fledge.
   fledge::bump_version()
-  fledge::finalize_version()
-  print(get_top_level_commits(since = NULL))
+  fledge::tag_version()
   print(fledge::get_last_tag())
 })
