@@ -100,17 +100,8 @@ set_usethis_desc <- function(maintainer, email, date) {
 #'
 #' @export
 #'
-#' @examples
-#' with_demo_project({
-#' # Add a new R file.
-#' usethis::use_r("cool-function", open = FALSE)
-#' # Pretend we added useful code inside it.
-#' # Track the new R file with Git.
-#' gert::git_add("R/cool-function.R")
-#' gert::git_commit("- Add cool function.")
-#' # Bump version with fledge.
-#' fledge::bump_version()
-#' })
+#' @example man/examples/with_demo_project.R
+
 with_demo_project <- function(code, dir = NULL, open = FALSE, news = TRUE) {
   if (is.null(dir)) {
     dir <- withr::local_tempdir(pattern = "fledge")
