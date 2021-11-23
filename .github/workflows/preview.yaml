@@ -59,6 +59,7 @@ jobs:
       - name: Delete label
         if: success()
         run: |
+          pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           curl --request DELETE \
-          --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels/needs-preview \
+          --url https://api.github.com/repos/${{ github.repository }}/issues/$pull_number/labels/needs-preview \
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
