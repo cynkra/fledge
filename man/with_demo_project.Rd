@@ -18,6 +18,9 @@ with_demo_project(code, dir = NULL, open = FALSE, news = TRUE)
 \description{
 Run code in temporary project
 }
+\details{
+If you open the project you are responsible for deleting it.
+}
 \examples{
 with_demo_project({
   # Add a new R file.
