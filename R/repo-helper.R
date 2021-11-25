@@ -98,28 +98,21 @@ set_usethis_desc <- function(maintainer, email, date) {
 #' @inheritParams create_demo_project
 #' @param code Code to run with temporary active project
 #'
-#' @details If you open the project you are responsible for deleting it.
 #'
 #' @export
 #'
 #' @example man/examples/with_demo_project.R
 
-with_demo_project <- function(code, dir = NULL, open = FALSE, news = TRUE) {
+with_demo_project <- function(code, dir = NULL, news = TRUE) {
   if (is.null(dir)) {
-    if (!open) {
-      dir <- withr::local_tempdir(pattern = "fledge")
-    } else {
-      dir <- file.path(tempdir(), "fledge", as.character(Sys.time()))
-      dir.create(dir, recursive = TRUE)
-    }
-
+    dir <- withr::local_tempdir(pattern = "fledge")
   }
 
   if (!dir.exists(dir)) {
     rlang::abort(message = c(x = sprintf("Can't find the directory `%s`.", dir)))
   }
 
-  repo <- create_demo_project(open = open, dir = dir, news = TRUE)
+  repo <- create_demo_project(dir = dir, news = TRUE)
   usethis::with_project(
     path = repo,
     code

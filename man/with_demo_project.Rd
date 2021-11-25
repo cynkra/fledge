@@ -4,22 +4,17 @@
 \alias{with_demo_project}
 \title{Run code in temporary project}
 \usage{
-with_demo_project(code, dir = NULL, open = FALSE, news = TRUE)
+with_demo_project(code, dir = NULL, news = TRUE)
 }
 \arguments{
 \item{code}{Code to run with temporary active project}
 
 \item{dir}{Directory within which to create the mock package folder.}
 
-\item{open}{Whether to open the new project.}
-
 \item{news}{If TRUE, create a NEWS.md file.}
 }
 \description{
 Run code in temporary project
-}
-\details{
-If you open the project you are responsible for deleting it.
 }
 \examples{
 with_demo_project({
