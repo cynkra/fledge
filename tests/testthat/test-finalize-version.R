@@ -2,7 +2,7 @@
 test_that("finalize_version()", {
 
   with_demo_project({
-    create_remote()
+    remote_url <- create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
@@ -13,6 +13,6 @@ test_that("finalize_version()", {
       file.path(getwd(), "NEWS.md"),
       compare = compare_file_text
     )
-    expect_snapshot(show_tags(file.path(getwd(), "remote")))
+    expect_snapshot(show_tags(remote_url))
   })
 })
