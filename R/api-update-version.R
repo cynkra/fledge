@@ -2,6 +2,8 @@
 #'
 #' Bumps a version component and adds to `NEWS.md` and `DESCRIPTION`.
 #'
+#' @example man/examples/tag-version.R
+#'
 #' @export
 update_version <- function(which = "dev") {
   check_which(which)

@@ -7,6 +7,8 @@
 #'
 #' @return The created tag, invisibly.
 #'
+#' @example man/examples/tag-version.R
+#'
 #' @export
 tag_version <- function(force = FALSE) {
   tag <- tag_version_impl(force)

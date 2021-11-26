@@ -3,6 +3,8 @@
 #' Commits changes to `NEWS.md` and `DESCRIPTION`, amending a previous commit
 #' created by \pkg{fledge} if necessary.
 #'
+#' @example man/examples/commit-version.R
+#'
 #' @export
 commit_version <- function() {
   amending <- commit_version_impl()

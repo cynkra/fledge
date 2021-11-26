@@ -91,3 +91,30 @@ set_usethis_desc <- function(maintainer, email, date) {
     .local_envir = parent.frame(n = 2)
   )
 }
+
+
+#' Run code in temporary project
+#'
+#' @inheritParams create_demo_project
+#' @param code Code to run with temporary active project
+#'
+#'
+#' @export
+#'
+#' @example man/examples/with_demo_project.R
+
+with_demo_project <- function(code, dir = NULL, news = TRUE) {
+  if (is.null(dir)) {
+    dir <- withr::local_tempdir(pattern = "fledge")
+  }
+
+  if (!dir.exists(dir)) {
+    rlang::abort(message = c(x = sprintf("Can't find the directory `%s`.", dir)))
+  }
+
+  repo <- create_demo_project(dir = dir, news = TRUE)
+  usethis::with_project(
+    path = repo,
+    code
+  )
+}
