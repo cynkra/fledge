@@ -1,6 +1,7 @@
 test_that("bump_version() works", {
 
   with_demo_project({
+    create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")

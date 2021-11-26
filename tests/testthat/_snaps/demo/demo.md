@@ -99,7 +99,7 @@ We set up a local remote using a git repo we secretly created earlier.
 
 ```r
 # In real life this would be an actual URL not a filepath :-)
-remote_url <- file.path(pkg_dir, "remote")
+remote_url <- file.path(parent_dir, "remote")
 gert::git_remote_add(remote_url, name = "origin")
 gert::git_push(remote = "origin")
 ```
@@ -281,9 +281,9 @@ knitr::kable(gert::git_log())
 
 |commit                                   |author                                 |time                | files|merge |message                                                          |
 |:----------------------------------------|:--------------------------------------|:-------------------|-----:|:-----|:----------------------------------------------------------------|
-|8e9491f8b14a1b7c42f60f57f2da7455e1ad0065 |Maëlle Salmon <maelle.salmon@yahoo.se> |2021-11-26 15:34:58 |     3|FALSE |- Add tests for cup of tea.                                      |
-|a375e65e18cdc94c01ba4e87de9f60f7a9bec20c |Maëlle Salmon <maelle.salmon@yahoo.se> |2021-11-26 15:34:58 |     1|FALSE |- New cup_of_tea() function makes it easy to drink a cup of tee. |
-|1f380156c247b0553090bd82f759770e07c4d3cb |Maëlle Salmon <maelle.salmon@yahoo.se> |2021-11-26 15:34:58 |     1|FALSE |Initial NEWS.md .                                                |
+|2bca79c8a7f56e45f44820c0241d4fb40e08d04d |Maëlle Salmon <maelle.salmon@yahoo.se> |2021-11-26 15:58:46 |     3|FALSE |- Add tests for cup of tea.                                      |
+|8ae4b7fce3220f06a22c0b5e8d062ece977ce6c8 |Maëlle Salmon <maelle.salmon@yahoo.se> |2021-11-26 15:58:45 |     1|FALSE |- New cup_of_tea() function makes it easy to drink a cup of tee. |
+|8417079e70488df14da426c127913aa14efbf1a4 |Maëlle Salmon <maelle.salmon@yahoo.se> |2021-11-26 15:58:45 |     1|FALSE |Initial NEWS.md .                                                |
 |4e376b5d2cee0b6c3401986ab1682b03026fb397 |Maëlle Salmon <maelle.salmon@yahoo.se> |2021-09-27 14:47:37 |     5|FALSE |First commit                                                     |
 
 We have two "bulletted" messages which for fledge means two NEWS-worthy messages.
@@ -408,7 +408,7 @@ show_tags(remote_url)
 ## [90m# A tibble: 1 x 3[39m
 ##   name        ref                   commit                                  
 ## [90m*[39m [3m[90m<chr>[39m[23m       [3m[90m<chr>[39m[23m                 [3m[90m<chr>[39m[23m                                   
-## [90m1[39m v0.0.0.9001 refs/tags/v0.0.0.9001 e5d9eebc637e79f0f03d8b3e9eadca9ac15f19c6
+## [90m1[39m v0.0.0.9001 refs/tags/v0.0.0.9001 2af2524144d36ec8f1265d98a104e18fbdb67f2e
 ```
 
 Let's look at NEWS.md now:
@@ -643,7 +643,7 @@ show_tags(remote_url)
 ## [90m# A tibble: 1 x 3[39m
 ##   name        ref                   commit                                  
 ## [90m*[39m [3m[90m<chr>[39m[23m       [3m[90m<chr>[39m[23m                 [3m[90m<chr>[39m[23m                                   
-## [90m1[39m v0.0.0.9001 refs/tags/v0.0.0.9001 e5d9eebc637e79f0f03d8b3e9eadca9ac15f19c6
+## [90m1[39m v0.0.0.9001 refs/tags/v0.0.0.9001 2af2524144d36ec8f1265d98a104e18fbdb67f2e
 ```
 
 It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.
@@ -690,5 +690,5 @@ Happy development, and happy smooth filling of the changelog!
 
 
 ```r
-unlink(pkg_dir, recursive = TRUE)
+unlink(parent_dir, recursive = TRUE)
 ```
