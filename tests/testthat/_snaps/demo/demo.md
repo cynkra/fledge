@@ -94,6 +94,33 @@ We set up a local remote using a git repo we secretly created earlier.
 
 
 
+
+```r
+gert::git_remote_list()
+## # A tibble: 1 x 2
+##   name   url                          
+## * <chr>  <chr>                        
+## 1 origin ${TEMP}/fledge/remote
+gert::git_remote_info("origin")
+## $name
+## [1] "origin"
+## 
+## $url
+## [1] "${TEMP}/fledge/remote"
+## 
+## $push_url
+## NULL
+## 
+## $head
+## NULL
+## 
+## $fetch
+## [1] "+refs/heads/*:refs/remotes/origin/*"
+## 
+## $push
+## character(0)
+```
+
 We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
 

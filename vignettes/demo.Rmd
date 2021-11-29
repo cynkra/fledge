@@ -113,6 +113,11 @@ gert::git_remote_add(remote_url, name = "origin")
 gert::git_push(remote = "origin")
 ```
 
+```{r}
+gert::git_remote_list()
+gert::git_remote_info("origin")
+```
+
 We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
 
