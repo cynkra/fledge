@@ -103,6 +103,14 @@ In real life, you'd probably simply browse the GitHub interface for instance!
 
 
 ```r
+fs::dir_ls(remote_url)
+## ${TEMP}/fledge/remote/HEAD
+## ${TEMP}/fledge/remote/config
+## ${TEMP}/fledge/remote/description
+## ${TEMP}/fledge/remote/hooks
+## ${TEMP}/fledge/remote/info
+## ${TEMP}/fledge/remote/objects
+## ${TEMP}/fledge/remote/refs
 show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
