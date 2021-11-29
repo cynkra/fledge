@@ -46,9 +46,10 @@ For this demo, we manually set the active project.
 
 
 
+
+
 ```r
 usethis::proj_set()
-## [32mv[39m Setting active project to [34m'${TEMP}/fledge/tea'[39m
 ```
 
 The infrastructure files and directories that comprise a minimal R package are created:
@@ -56,10 +57,10 @@ The infrastructure files and directories that comprise a minimal R package are c
 
 ```r
 fs::dir_tree()
-## [01;34m.[0m
+## .
 ## +-- DESCRIPTION
 ## +-- NAMESPACE
-## +-- [01;34mR[0m
+## +-- R
 ## \-- tea.Rproj
 ```
 
@@ -77,8 +78,8 @@ nrow(gert::git_log())
 ## [1] 1
 # Anything staged?
 gert::git_status()
-## [90m# A tibble: 0 x 3[39m
-## [90m# ... with 3 variables: file <chr>, status <chr>, staged <lgl>[39m
+## # A tibble: 0 x 3
+## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
@@ -110,7 +111,7 @@ show_files <- function(remote_url) {
   })
 }
 show_files(remote_url)
-## [34;42mremote[0m
+## remote
 ## +-- DESCRIPTION
 ## +-- NAMESPACE
 ## \-- tea.Rproj
@@ -132,7 +133,7 @@ An initial NEWS file can be created with `usethis::use_news_md()`.
 
 ```r
 usethis::use_news_md()
-## [32mv[39m Writing [34m'NEWS.md'[39m
+## v Writing 'NEWS.md'
 ```
 
 Let's take a look at the contents:
@@ -158,7 +159,7 @@ gert::git_push(remote = "origin")
 
 ```r
 show_files(remote_url)
-## [34;42mremote[0m
+## remote
 ## +-- DESCRIPTION
 ## +-- NAMESPACE
 ## +-- NEWS.md
@@ -179,8 +180,8 @@ We start by creating the new R file called `cup.R` and adding code (well only a 
 
 ```r
 usethis::use_r("cup")
-## [31m*[39m Edit [34m'R/cup.R'[39m
-## [31m*[39m Call [90m`use_test()`[39m to create a matching test file
+## * Edit 'R/cup.R'
+## * Call `use_test()` to create a matching test file
 writeLines("# cup", "R/cup.R")
 ```
 
@@ -205,12 +206,12 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## [34;42mremote[0m
+## remote
 ## +-- DESCRIPTION
 ## +-- NAMESPACE
 ## +-- NEWS.md
-## +-- [01;34mR[0m
-## |   \-- [32mcup.R[0m
+## +-- R
+## |   \-- cup.R
 ## \-- tea.Rproj
 ```
 
@@ -221,12 +222,12 @@ The code in `cup.R` warrants a test (at least it would if it were actual code!):
 
 ```r
 usethis::use_test("cup")
-## [32mv[39m Adding [34m'testthat'[39m to [32mSuggests[39m field in DESCRIPTION
-## [32mv[39m Setting [32mConfig/testthat/edition[39m field in DESCRIPTION to [34m'3'[39m
-## [32mv[39m Creating [34m'tests/testthat/'[39m
-## [32mv[39m Writing [34m'tests/testthat.R'[39m
-## [32mv[39m Writing [34m'tests/testthat/test-cup.R'[39m
-## [31m*[39m Edit [34m'tests/testthat/test-cup.R'[39m
+## v Adding 'testthat' to Suggests field in DESCRIPTION
+## v Setting Config/testthat/edition field in DESCRIPTION to '3'
+## v Creating 'tests/testthat/'
+## v Writing 'tests/testthat.R'
+## v Writing 'tests/testthat/test-cup.R'
+## * Edit 'tests/testthat/test-cup.R'
 cat(readLines("tests/testthat/test-cup.R"), sep = "\n")
 ## test_that("multiplication works", {
 ##   expect_equal(2 * 2, 4)
@@ -248,17 +249,17 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## [34;42mremote[0m
+## remote
 ## +-- DESCRIPTION
 ## +-- NAMESPACE
 ## +-- NEWS.md
-## +-- [01;34mR[0m
-## |   \-- [32mcup.R[0m
+## +-- R
+## |   \-- cup.R
 ## +-- tea.Rproj
-## \-- [01;34mtests[0m
-##     +-- [01;34mtestthat[0m
-##     |   \-- [32mtest-cup.R[0m
-##     \-- [32mtestthat.R[0m
+## \-- tests
+##     +-- testthat
+##     |   \-- test-cup.R
+##     \-- testthat.R
 ```
 
 ### Update NEWS.md
@@ -292,26 +293,26 @@ The current version number of our package is 0.0.0.9000.
 
 ```r
 fledge::bump_version()
-## > Scraping [32m[32m4[32m[39m commit messages.
-## [32mv[39m Found [32m[32m2[32m[39m NEWS-worthy entries.
+## > Scraping 4 commit messages.
+## v Found 2 NEWS-worthy entries.
 ## 
-## -- [1m[1mUpdating NEWS[1m[22m --
+## -- Updating NEWS --
 ## 
-## > Adding new entries to [34m[34mNEWS.md[34m[39m.
+## > Adding new entries to 'NEWS.md'.
 ## Warning: 'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to
 ## leave this field out completely. It is not required.
 ## 
-## -- [1m[1mUpdate Version[1m[22m --
+## -- Update Version --
 ## 
-## [32mv[39m Package version bumped to [32m[32m0.0.0.9001[32m[39m.
-## > Adding header to [34m[34mNEWS.md[34m[39m.
+## v Package version bumped to 0.0.0.9001.
+## > Adding header to 'NEWS.md'.
 ## > Committing changes.
 ## 
-## -- [1m[1mTagging Version[1m[22m --
+## -- Tagging Version --
 ## 
-## > Creating tag [32mv0.0.0.9001[39m with tag message derived from [34mNEWS.md[39m.
-## [31m*[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version(push = TRUE)`[47m[30m[49m[39m.
+## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
+## * Edit 'NEWS.md'
+## ! Call `fledge::finalize_version(push = TRUE)`.
 ## NULL
 ```
 
@@ -387,23 +388,23 @@ Note that it should be called after `fledge::bump_version()`, an error is raised
 
 ```r
 show_tags(remote_url)
-## [90m# A tibble: 0 x 2[39m
-## [90m# ... with 2 variables: name <chr>, ref <chr>[39m
+## # A tibble: 0 x 2
+## # ... with 2 variables: name <chr>, ref <chr>
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
 ## 
-## -- [1m[1mTagging Version[1m[22m --
+## -- Tagging Version --
 ## 
-## > Deleting tag [32m[32mv0.0.0.9001[32m[39m.
-## > Creating tag [32mv0.0.0.9001[39m with tag message derived from [34mNEWS.md[39m.
-## > Force-pushing tag [32m[32mv0.0.0.9001[32m[39m.
-## > Pushing [32m[32mmain[32m[39m.
+## > Deleting tag v0.0.0.9001.
+## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
+## > Force-pushing tag v0.0.0.9001.
+## > Pushing main.
 show_tags(remote_url)
-## [90m# A tibble: 1 x 2[39m
+## # A tibble: 1 x 2
 ##   name        ref                  
-##   [3m[90m<chr>[39m[23m       [3m[90m<chr>[39m[23m                
-## [90m1[39m v0.0.0.9001 refs/tags/v0.0.0.9001
+##   <chr>       <chr>                
+## 1 v0.0.0.9001 refs/tags/v0.0.0.9001
 ```
 
 Let's look at NEWS.md now:
@@ -448,8 +449,8 @@ This time we write the tests first, test-driven development.
 
 ```r
 usethis::use_test("bowl")
-## [32mv[39m Writing [34m'tests/testthat/test-bowl.R'[39m
-## [31m*[39m Edit [34m'tests/testthat/test-bowl.R'[39m
+## v Writing 'tests/testthat/test-bowl.R'
+## * Edit 'tests/testthat/test-bowl.R'
 ```
 
 
@@ -462,8 +463,8 @@ gert::git_commit("Add bowl tests.")
 
 ```r
 usethis::use_r("bowl")
-## [31m*[39m Edit [34m'R/bowl.R'[39m
-## [31m*[39m Call [90m`use_test()`[39m to create a matching test file
+## * Edit 'R/bowl.R'
+## * Call `use_test()` to create a matching test file
 writeLines("# bowl of tea", "R/bowl.R")
 ```
 
@@ -495,24 +496,24 @@ Now that we have added bowl support to our package, it is time to bump the versi
 
 ```r
 fledge::bump_version()
-## > Scraping [32m[32m2[32m[39m commit messages.
-## [32mv[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
+## > Scraping 2 commit messages.
+## v Found 1 NEWS-worthy entries.
 ## 
-## -- [1m[1mUpdating NEWS[1m[22m --
+## -- Updating NEWS --
 ## 
-## > Adding new entries to [34m[34mNEWS.md[34m[39m.
+## > Adding new entries to 'NEWS.md'.
 ## 
-## -- [1m[1mUpdate Version[1m[22m --
+## -- Update Version --
 ## 
-## [32mv[39m Package version bumped to [32m[32m0.0.0.9002[32m[39m.
-## > Adding header to [34m[34mNEWS.md[34m[39m.
+## v Package version bumped to 0.0.0.9002.
+## > Adding header to 'NEWS.md'.
 ## > Committing changes.
 ## 
-## -- [1m[1mTagging Version[1m[22m --
+## -- Tagging Version --
 ## 
-## > Creating tag [32mv0.0.0.9002[39m with tag message derived from [34mNEWS.md[39m.
-## [31m*[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version(push = TRUE)`[47m[30m[49m[39m.
+## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+## * Edit 'NEWS.md'
+## ! Call `fledge::finalize_version(push = TRUE)`.
 ## NULL
 news <- readLines("NEWS.md")
 writeLines(news)
@@ -536,12 +537,12 @@ fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
 ## 
-## -- [1m[1mTagging Version[1m[22m --
+## -- Tagging Version --
 ## 
-## > Deleting tag [32m[32mv0.0.0.9002[32m[39m.
-## > Creating tag [32mv0.0.0.9002[39m with tag message derived from [34mNEWS.md[39m.
-## > Force-pushing tag [32m[32mv0.0.0.9002[32m[39m.
-## > Pushing [32m[32mmain[32m[39m.
+## > Deleting tag v0.0.0.9002.
+## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+## > Force-pushing tag v0.0.0.9002.
+## > Pushing main.
 ```
 
 It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
@@ -562,23 +563,23 @@ Other values for the arguments are "dev" (default), "minor" and "major".
 
 ```r
 fledge::bump_version("patch")
-## > Scraping [32m[32m1[32m[39m commit messages.
-## [32mv[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
+## > Scraping 1 commit messages.
+## v Found 1 NEWS-worthy entries.
 ## 
-## -- [1m[1mUpdating NEWS[1m[22m --
+## -- Updating NEWS --
 ## 
-## > Adding new entries to [34m[34mNEWS.md[34m[39m.
+## > Adding new entries to 'NEWS.md'.
 ## 
-## -- [1m[1mUpdate Version[1m[22m --
+## -- Update Version --
 ## 
-## [32mv[39m Package version bumped to [32m[32m0.0.1[32m[39m.
-## > Adding header to [34m[34mNEWS.md[34m[39m.
+## v Package version bumped to 0.0.1.
+## > Adding header to 'NEWS.md'.
 ## > Committing changes.
-## [36mi[39m Preparing package for release (CRAN or otherwise).
-## [31m*[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Convert the change log in [34m[34mNEWS.md[34m[39m to release notes.
-## [33m![39m After CRAN release, call [30m[47m[30m[47m`fledge::tag_version()`[47m[30m[49m[39m and
-## [30m[47m[30m[47m`fledge::bump_version()`[47m[30m[49m[39m to re-enter development mode
+## i Preparing package for release (CRAN or otherwise).
+## * Edit 'NEWS.md'
+## ! Convert the change log in 'NEWS.md' to release notes.
+## ! After CRAN release, call `fledge::tag_version()` and
+## `fledge::bump_version()` to re-enter development mode
 ```
 
 This updates the version of our package to 0.0.1.
@@ -639,15 +640,15 @@ It is now the time to tag the released version using the `fledge::tag_version()`
 ```r
 fledge::tag_version()
 ## 
-## -- [1m[1mTagging Version[1m[22m --
+## -- Tagging Version --
 ## 
-## > Creating tag [32mv0.0.1[39m with tag message derived from [34mNEWS.md[39m.
+## > Creating tag v0.0.1 with tag message derived from 'NEWS.md'.
 show_tags(remote_url)
-## [90m# A tibble: 2 x 2[39m
+## # A tibble: 2 x 2
 ##   name        ref                  
-##   [3m[90m<chr>[39m[23m       [3m[90m<chr>[39m[23m                
-## [90m1[39m v0.0.0.9001 refs/tags/v0.0.0.9001
-## [90m2[39m v0.0.0.9002 refs/tags/v0.0.0.9002
+##   <chr>       <chr>                
+## 1 v0.0.0.9001 refs/tags/v0.0.0.9001
+## 2 v0.0.0.9002 refs/tags/v0.0.0.9002
 ```
 
 It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.
@@ -665,24 +666,24 @@ The `fledge::bump_version()` takes care of it.
 
 ```r
 fledge::bump_version()
-## > Scraping [32m[32m1[32m[39m commit messages.
-## [32mv[39m Found [32m[32m1[32m[39m NEWS-worthy entries.
+## > Scraping 1 commit messages.
+## v Found 1 NEWS-worthy entries.
 ## 
-## -- [1m[1mUpdating NEWS[1m[22m --
+## -- Updating NEWS --
 ## 
-## > Adding new entries to [34m[34mNEWS.md[34m[39m.
+## > Adding new entries to 'NEWS.md'.
 ## 
-## -- [1m[1mUpdate Version[1m[22m --
+## -- Update Version --
 ## 
-## [32mv[39m Package version bumped to [32m[32m0.0.1.9000[32m[39m.
-## > Adding header to [34m[34mNEWS.md[34m[39m.
+## v Package version bumped to 0.0.1.9000.
+## > Adding header to 'NEWS.md'.
 ## > Committing changes.
 ## 
-## -- [1m[1mTagging Version[1m[22m --
+## -- Tagging Version --
 ## 
-## > Creating tag [32mv0.0.1.9000[39m with tag message derived from [34mNEWS.md[39m.
-## [31m*[39m Edit [34m'NEWS.md'[39m
-## [33m![39m Call [30m[47m[30m[47m`fledge::finalize_version(push = TRUE)`[47m[30m[49m[39m.
+## > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
+## * Edit 'NEWS.md'
+## ! Call `fledge::finalize_version(push = TRUE)`.
 ## NULL
 news <- readLines("NEWS.md")
 ```

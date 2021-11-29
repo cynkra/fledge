@@ -23,7 +23,7 @@ in_pkgdown <- identical(Sys.getenv("IN_PKGDOWN"), "true")
 if (in_pkgdown) {
   options(crayon.enabled = TRUE)
 }
-
+options(cli.num_colors = 1)
 knitr::opts_chunk$set(
   collapse = TRUE,
   error = !in_pkgdown
@@ -62,7 +62,14 @@ For this demo, we manually set the active project.
 knitr::opts_knit$set(root.dir = pkg)
 ```
 
-```{r pkg-location}
+```{r pkg-location, echo=FALSE}
+withr::with_options(
+  list("usethis.quiet" = TRUE), 
+  usethis::proj_set()
+)
+```
+
+```{r pkg-location2, eval=FALSE}
 usethis::proj_set()
 ```
 
