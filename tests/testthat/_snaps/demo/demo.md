@@ -96,12 +96,6 @@ In real life you might be using a function like `usethis::use_github()`.
 We set up a local remote using a git repo we secretly created earlier.
 
 
-```r
-# In real life this would be an actual URL not a filepath :-)
-remote_url <- file.path(parent_dir, "remote")
-gert::git_remote_add(remote_url, name = "origin")
-gert::git_push(remote = "origin")
-```
 
 We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
@@ -538,6 +532,16 @@ writeLines(news)
 ## # tea 0.0.0.9000
 ## 
 ## * Added a `NEWS.md` file to track changes to the package.
+fledge::finalize_version(push = TRUE)
+## > Resetting to previous commit.
+## > Committing changes.
+## 
+## -- [1m[1mTagging Version[1m[22m --
+## 
+## > Deleting tag [32m[32mv0.0.0.9002[32m[39m.
+## > Creating tag [32mv0.0.0.9002[39m with tag message derived from [34mNEWS.md[39m.
+## > Force-pushing tag [32m[32mv0.0.0.9002[32m[39m.
+## > Pushing [32m[32mmain[32m[39m.
 ```
 
 It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
@@ -638,12 +642,12 @@ fledge::tag_version()
 ## -- [1m[1mTagging Version[1m[22m --
 ## 
 ## > Creating tag [32mv0.0.1[39m with tag message derived from [34mNEWS.md[39m.
-gert::git_push(remote = "origin")
 show_tags(remote_url)
-## [90m# A tibble: 1 x 2[39m
+## [90m# A tibble: 2 x 2[39m
 ##   name        ref                  
 ##   [3m[90m<chr>[39m[23m       [3m[90m<chr>[39m[23m                
 ## [90m1[39m v0.0.0.9001 refs/tags/v0.0.0.9001
+## [90m2[39m v0.0.0.9002 refs/tags/v0.0.0.9002
 ```
 
 It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.

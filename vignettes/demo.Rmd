@@ -99,7 +99,7 @@ We also set up a git remote.
 In real life you might be using a function like `usethis::use_github()`.
 We set up a local remote using a git repo we secretly created earlier.
 
-```{r git-remote}
+```{r git-remote, echo=FALSE, message=FALSE}
 # In real life this would be an actual URL not a filepath :-)
 remote_url <- file.path(parent_dir, "remote")
 gert::git_remote_add(remote_url, name = "origin")
@@ -357,6 +357,7 @@ Now that we have added bowl support to our package, it is time to bump the versi
 fledge::bump_version()
 news <- readLines("NEWS.md")
 writeLines(news)
+fledge::finalize_version(push = TRUE)
 ```
 
 It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
@@ -412,7 +413,6 @@ It is now the time to tag the released version using the `fledge::tag_version()`
 
 ```{r tag}
 fledge::tag_version()
-gert::git_push(remote = "origin")
 show_tags(remote_url)
 ```
 
