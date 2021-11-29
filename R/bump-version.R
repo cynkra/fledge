@@ -53,5 +53,10 @@ get_main_branch_config <- function() {
     return(local$value)
   }
 
-  return(init$value[init$level == "global"])
+  global <- init[init$level == "global"]
+  if (length(global)) {
+    return(global$value)
+  }
+
+  return("main")
 }
