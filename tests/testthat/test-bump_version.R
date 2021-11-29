@@ -1,16 +1,20 @@
 test_that("bump_version() works", {
 
+  news_tempdir <- withr::local_tempdir(pattern = "news")
+
   with_demo_project({
     create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
     expect_snapshot(bump_version(), variant = rlang_version())
-    expect_snapshot_file(
-      file.path(getwd(), "NEWS.md"),
-      compare = compare_file_text
-    )
+    file.copy("NEWS.md", file.path(news_tempdir, "NEWS.md"))
   })
+
+  expect_snapshot_file(
+    file.path(news_tempdir, "NEWS.md"),
+    compare = compare_file_text
+  )
 })
 
 test_that("bump_version() errors informatively for forbidden notifications", {
