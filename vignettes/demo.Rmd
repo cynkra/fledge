@@ -76,7 +76,7 @@ usethis::proj_set()
 The infrastructure files and directories that comprise a minimal R package are created:
 
 ```{r dir-tree}
-fs::dir_tree()
+fs::dir_ls()
 ```
 
 ### Create and configure a Git repository
@@ -122,7 +122,7 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)  
-    fs::dir_tree("remote")
+    fs::dir_ls("remote")
   })
 }
 show_files(remote_url)

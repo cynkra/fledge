@@ -56,12 +56,8 @@ The infrastructure files and directories that comprise a minimal R package are c
 
 
 ```r
-fs::dir_tree()
-## .
-## +-- DESCRIPTION
-## +-- NAMESPACE
-## +-- R
-## \-- tea.Rproj
+fs::dir_ls()
+## DESCRIPTION NAMESPACE   R           tea.Rproj
 ```
 
 ### Create and configure a Git repository
@@ -115,14 +111,11 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)  
-    fs::dir_tree("remote")
+    fs::dir_ls("remote")
   })
 }
 show_files(remote_url)
-## remote
-## +-- DESCRIPTION
-## +-- NAMESPACE
-## \-- tea.Rproj
+## remote/DESCRIPTION remote/NAMESPACE   remote/tea.Rproj
 
 show_tags <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -167,11 +160,7 @@ gert::git_push(remote = "origin")
 
 ```r
 show_files(remote_url)
-## remote
-## +-- DESCRIPTION
-## +-- NAMESPACE
-## +-- NEWS.md
-## \-- tea.Rproj
+## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/tea.Rproj
 ```
 
 :::{.alert .alert-info}
@@ -214,13 +203,8 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## remote
-## +-- DESCRIPTION
-## +-- NAMESPACE
-## +-- NEWS.md
-## +-- R
-## |   \-- cup.R
-## \-- tea.Rproj
+## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/R           
+## remote/tea.Rproj
 ```
 
 ### Create a test
@@ -257,17 +241,8 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## remote
-## +-- DESCRIPTION
-## +-- NAMESPACE
-## +-- NEWS.md
-## +-- R
-## |   \-- cup.R
-## +-- tea.Rproj
-## \-- tests
-##     +-- testthat
-##     |   \-- test-cup.R
-##     \-- testthat.R
+## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/R           
+## remote/tea.Rproj   remote/tests
 ```
 
 ### Update NEWS.md
