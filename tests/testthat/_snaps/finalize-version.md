@@ -1,4 +1,4 @@
-# finalize_version()
+# finalize_version(push = TRUE)
 
     Code
       show_tags(remote_url)
