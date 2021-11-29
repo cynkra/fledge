@@ -2,11 +2,16 @@ test_that("bump_version() works", {
 
   news_tempdir <- withr::local_tempdir(pattern = "news")
 
+
   with_demo_project({
     create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
+    config <- gert::git_config()
+    expect_snapshot(config$value[config$name=="init.defaultbranch"])
+    expect_snapshot(get_main_branch())
+    expect_snapshot(gert::git_branch())
     expect_snapshot(bump_version(), variant = rlang_version())
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS.md"))
   })
