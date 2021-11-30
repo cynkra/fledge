@@ -123,7 +123,7 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)  
-    fs::dir_ls(tempdir_remote)
+    fs::dir_ls(tempdir_remote, recurse = TRUE)
   })
 }
 show_files(remote_url)

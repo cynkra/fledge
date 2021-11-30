@@ -114,11 +114,14 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)  
-    fs::dir_ls(tempdir_remote)
+    fs::dir_ls(tempdir_remote, recurse = TRUE)
   })
 }
 show_files(remote_url)
-## ${TEMP}/remotedc05587861cc/remote
+## ${TEMP}/remoteddb21cda8607/remote
+## ${TEMP}/remoteddb21cda8607/remote/DESCRIPTION
+## ${TEMP}/remoteddb21cda8607/remote/NAMESPACE
+## ${TEMP}/remoteddb21cda8607/remote/tea.Rproj
 
 show_tags <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -163,7 +166,11 @@ gert::git_push(remote = "origin")
 
 ```r
 show_files(remote_url)
-## ${TEMP}/remotedc05402afffe/remote
+## ${TEMP}/remoteddb25ce9cb06/remote
+## ${TEMP}/remoteddb25ce9cb06/remote/DESCRIPTION
+## ${TEMP}/remoteddb25ce9cb06/remote/NAMESPACE
+## ${TEMP}/remoteddb25ce9cb06/remote/NEWS.md
+## ${TEMP}/remoteddb25ce9cb06/remote/tea.Rproj
 ```
 
 :::{.alert .alert-info}
@@ -206,7 +213,13 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## ${TEMP}/remotedc051a6e7e61/remote
+## ${TEMP}/remoteddb244238228/remote
+## ${TEMP}/remoteddb244238228/remote/DESCRIPTION
+## ${TEMP}/remoteddb244238228/remote/NAMESPACE
+## ${TEMP}/remoteddb244238228/remote/NEWS.md
+## ${TEMP}/remoteddb244238228/remote/R
+## ${TEMP}/remoteddb244238228/remote/R/cup.R
+## ${TEMP}/remoteddb244238228/remote/tea.Rproj
 ```
 
 ### Create a test
@@ -243,7 +256,17 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## ${TEMP}/remotedc05195c56e3/remote
+## ${TEMP}/remoteddb23b029c48/remote
+## ${TEMP}/remoteddb23b029c48/remote/DESCRIPTION
+## ${TEMP}/remoteddb23b029c48/remote/NAMESPACE
+## ${TEMP}/remoteddb23b029c48/remote/NEWS.md
+## ${TEMP}/remoteddb23b029c48/remote/R
+## ${TEMP}/remoteddb23b029c48/remote/R/cup.R
+## ${TEMP}/remoteddb23b029c48/remote/tea.Rproj
+## ${TEMP}/remoteddb23b029c48/remote/tests
+## ${TEMP}/remoteddb23b029c48/remote/tests/testthat
+## ${TEMP}/remoteddb23b029c48/remote/tests/testthat/test-cup.R
+## ${TEMP}/remoteddb23b029c48/remote/tests/testthat.R
 ```
 
 ### Update NEWS.md
