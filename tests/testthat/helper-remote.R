@@ -16,3 +16,10 @@ show_tags <- function(remote_url) {
     gert::git_tag_list(repo = "remote")[,c("name", "ref")]
   })
 }
+show_files <- function(remote_url) {
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  withr::with_dir(tempdir_remote, {
+    gert::git_clone(remote_url)
+    fs::dir_ls("remote", recurse = TRUE)
+  })
+}
