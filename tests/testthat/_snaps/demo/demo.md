@@ -99,11 +99,11 @@ We set up a local remote using a git repo we secretly created earlier.
 
 
 ```r
-gert::git_remote_list()
-## # A tibble: 1 x 2
-##   name   url                          
-## * <chr>  <chr>                        
-## 1 origin ${TEMP}/fledge/remote
+gert::git_remote_list()$url
+## [1] "${TEMP}/fledge/remote"
+gert::git_status(remote_url)
+## # A tibble: 0 x 3
+## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
 gert::git_remote_info()
 ## $name
 ## [1] "origin"
