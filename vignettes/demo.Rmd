@@ -114,12 +114,6 @@ gert::git_remote_add(remote_url, name = "origin")
 gert::git_push(remote = "origin")
 ```
 
-```{r}
-gert::git_remote_list()$url
-gert::git_status(remote_url)
-gert::git_remote_info()
-```
-
 We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
 
@@ -129,7 +123,7 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)  
-    fs::dir_ls("remote")
+    fs::dir_ls(tempdir_remote)
   })
 }
 show_files(remote_url)

@@ -97,33 +97,6 @@ We set up a local remote using a git repo we secretly created earlier.
 ## [1] rwxrwxr-x
 ```
 
-
-```r
-gert::git_remote_list()$url
-## [1] "${TEMP}/fledge/remote"
-gert::git_status(remote_url)
-## # A tibble: 0 x 3
-## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
-gert::git_remote_info()
-## $name
-## [1] "origin"
-## 
-## $url
-## [1] "${TEMP}/fledge/remote"
-## 
-## $push_url
-## NULL
-## 
-## $head
-## NULL
-## 
-## $fetch
-## [1] "+refs/heads/*:refs/remotes/origin/*"
-## 
-## $push
-## character(0)
-```
-
 We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
 
@@ -141,11 +114,11 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)  
-    fs::dir_ls("remote")
+    fs::dir_ls(tempdir_remote)
   })
 }
 show_files(remote_url)
-## remote/DESCRIPTION remote/NAMESPACE   remote/tea.Rproj
+## ${TEMP}/remotedc05587861cc/remote
 
 show_tags <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -190,7 +163,7 @@ gert::git_push(remote = "origin")
 
 ```r
 show_files(remote_url)
-## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/tea.Rproj
+## ${TEMP}/remotedc05402afffe/remote
 ```
 
 :::{.alert .alert-info}
@@ -233,8 +206,7 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/R           
-## remote/tea.Rproj
+## ${TEMP}/remotedc051a6e7e61/remote
 ```
 
 ### Create a test
@@ -271,8 +243,7 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/R           
-## remote/tea.Rproj   remote/tests
+## ${TEMP}/remotedc05195c56e3/remote
 ```
 
 ### Update NEWS.md
