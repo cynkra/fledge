@@ -93,6 +93,9 @@ In real life you might be using a function like `usethis::use_github()`.
 We set up a local remote using a git repo we secretly created earlier.
 
 
+```
+## [1] rwxrwxr-x
+```
 
 
 ```r

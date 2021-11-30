@@ -109,6 +109,7 @@ We set up a local remote using a git repo we secretly created earlier.
 ```{r git-remote, echo=FALSE, message=FALSE}
 # In real life this would be an actual URL not a filepath :-)
 remote_url <- file.path(parent_dir, "remote")
+fs::file_info(remote_url)$permissions
 gert::git_remote_add(remote_url, name = "origin")
 gert::git_push(remote = "origin")
 ```
