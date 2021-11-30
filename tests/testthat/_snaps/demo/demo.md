@@ -104,7 +104,7 @@ gert::git_remote_list()
 ##   name   url                          
 ## * <chr>  <chr>                        
 ## 1 origin ${TEMP}/fledge/remote
-gert::git_remote_info("origin")
+gert::git_remote_info()
 ## $name
 ## [1] "origin"
 ## 

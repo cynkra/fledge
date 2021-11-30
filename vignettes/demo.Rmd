@@ -116,7 +116,7 @@ gert::git_push(remote = "origin")
 
 ```{r}
 gert::git_remote_list()
-gert::git_remote_info("origin")
+gert::git_remote_info()
 ```
 
 We create two functions to show the contents and tags of the remote.
