@@ -118,12 +118,12 @@ We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
 
 ```{r git-show}
-fs::dir_ls(remote_url)
 show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
-    gert::git_clone(remote_url)  
-    fs::dir_ls(tempdir_remote, recurse = TRUE)
+    repo <- gert::git_clone(remote_url)  
+    print(class(repo))
+    fs::dir_ls("remote", recurse = TRUE)
   })
 }
 show_files(remote_url)
