@@ -22,7 +22,7 @@
     Message <message>
       * Edit 'NEWS.md'
     Message <cliMessage>
-      ! Call `fledge::finalize_version()`.
+      ! Call `fledge::finalize_version(push = TRUE)`.
     Output
       NULL
 

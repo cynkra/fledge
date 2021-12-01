@@ -42,7 +42,10 @@ Suggests:
     parsedate,
     rmarkdown,
     rstudioapi,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    brio,
+    callr,
+    pkgload
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
