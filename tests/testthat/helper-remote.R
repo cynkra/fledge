@@ -20,6 +20,8 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)
+    print(gert::git_status(repo = "remote"))
+    print(gert::git_info(repo = "remote"))
     fs::dir_ls("remote", recurse = TRUE)
   })
 }
