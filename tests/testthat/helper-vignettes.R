@@ -1,3 +1,4 @@
+# from https://github.com/tidyverse/tibble/blob/eac1191b62b27663091deb1a5edc016c6a5b0c7c/R/galley.R
 render_galley_ext <- function(input_path, pkg, installed, output_dir, output_file) {
   # stopifnot(!installed)
   if (installed) {
