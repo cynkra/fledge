@@ -30,6 +30,7 @@ test_that("finalize_version(push = TRUE)", {
     gert::git_push()
     expect_snapshot(finalize_version(push = TRUE), variant = rlang_version())
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-push-true.md"))
+    expect_snapshot(gert::libgit2_config())
     expect_snapshot(show_tags(remote_url))
     expect_snapshot(show_files(remote_url))
   })

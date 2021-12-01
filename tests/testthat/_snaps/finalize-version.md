@@ -1,6 +1,33 @@
 # finalize_version(push = TRUE)
 
     Code
+      gert::libgit2_config()
+    Output
+      $version
+      [1] '1.1.0'
+      
+      $ssh
+      [1] TRUE
+      
+      $https
+      [1] TRUE
+      
+      $threads
+      [1] TRUE
+      
+      $config.global
+      [1] "/home/maelle/.gitconfig"
+      
+      $config.system
+      [1] ""
+      
+      $config.home
+      [1] "/home/maelle"
+      
+
+---
+
+    Code
       show_tags(remote_url)
     Output
       # A tibble: 1 x 2
@@ -16,7 +43,7 @@
       # A tibble: 0 x 3
       # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
       $path
-      [1] "/tmp/RtmpT9pKif/remote4e2a6bfc8b95/remote/"
+      [1] "/tmp/RtmpeSN0Tg/remote508a5b6fd6cc/remote/"
       
       $bare
       [1] FALSE
@@ -28,7 +55,7 @@
       [1] "main"
       
       $commit
-      [1] "a4a7072a34d082b5e8fcfca678bb3c8d143b89c0"
+      [1] "f2f8d990ec101b3e4e892c6f5de5c06396a67a2e"
       
       $remote
       [1] "origin"
