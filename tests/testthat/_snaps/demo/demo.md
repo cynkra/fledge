@@ -106,12 +106,11 @@ show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     repo <- gert::git_clone(remote_url)  
-    print(class(repo))
+    suppressMessages(gert::git_branch_checkout("main", force = TRUE, repo = "remote"))
     fs::dir_ls("remote", recurse = TRUE)
   })
 }
 show_files(remote_url)
-## [1] "character"
 ## remote/DESCRIPTION remote/NAMESPACE   remote/tea.Rproj
 
 show_tags <- function(remote_url) {
@@ -157,7 +156,6 @@ gert::git_push(remote = "origin")
 
 ```r
 show_files(remote_url)
-## [1] "character"
 ## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/tea.Rproj
 ```
 
@@ -201,7 +199,6 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## [1] "character"
 ## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/R           
 ## remote/R/cup.R     remote/tea.Rproj
 ```
@@ -240,7 +237,6 @@ gert::git_push()
 
 ```r
 show_files(remote_url)
-## [1] "character"
 ## remote/DESCRIPTION               remote/NAMESPACE                 
 ## remote/NEWS.md                   remote/R                         
 ## remote/R/cup.R                   remote/tea.Rproj                 
