@@ -93,9 +93,6 @@ In real life you might be using a function like `usethis::use_github()`.
 We set up a local remote using a git repo we secretly created earlier.
 
 
-```
-## [1] rwxrwxr-x
-```
 
 We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
