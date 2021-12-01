@@ -28,6 +28,13 @@
 ---
 
     Code
+      gert::user_is_configured()
+    Output
+      [1] TRUE
+
+---
+
+    Code
       show_tags(remote_url)
     Output
       # A tibble: 1 x 2
@@ -43,7 +50,7 @@
       # A tibble: 0 x 3
       # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
       $path
-      [1] "/tmp/RtmpeSN0Tg/remote508a5b6fd6cc/remote/"
+      [1] "/tmp/RtmpzT5pXg/remote537c2ea385e7/remote/"
       
       $bare
       [1] FALSE
@@ -55,7 +62,7 @@
       [1] "main"
       
       $commit
-      [1] "f2f8d990ec101b3e4e892c6f5de5c06396a67a2e"
+      [1] "53aa1431cc23a68528d1ef488131e64ae8b1797a"
       
       $remote
       [1] "origin"

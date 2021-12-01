@@ -17,6 +17,10 @@ show_tags <- function(remote_url) {
   })
 }
 show_files <- function(remote_url) {
+  if (!gert::user_is_configured()) {
+    usethis::use_git_config(user.name = "Jane Doe", user.email = "jane@example.com")
+  }
+
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)
