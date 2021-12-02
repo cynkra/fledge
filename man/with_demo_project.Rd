@@ -4,7 +4,7 @@
 \alias{with_demo_project}
 \title{Run code in temporary project}
 \usage{
-with_demo_project(code, dir = NULL, news = TRUE)
+with_demo_project(code, dir = NULL, news = TRUE, quiet = FALSE)
 }
 \arguments{
 \item{code}{Code to run with temporary active project}
@@ -12,6 +12,8 @@ with_demo_project(code, dir = NULL, news = TRUE)
 \item{dir}{Directory within which to create the mock package folder.}
 
 \item{news}{If TRUE, create a NEWS.md file.}
+
+\item{quiet}{Whether to show messages from usethis}
 }
 \description{
 Run code in temporary project

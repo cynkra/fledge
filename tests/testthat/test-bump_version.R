@@ -3,7 +3,7 @@ test_that("bump_version() works -- dev", {
   news_tempdir <- withr::local_tempdir(pattern = "news")
 
 
-  with_demo_project({
+  with_demo_project(quiet = TRUE, {
     create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
@@ -22,14 +22,13 @@ test_that("bump_version() works -- not dev", {
 
   news_tempdir <- withr::local_tempdir(pattern = "news")
 
-
-  with_demo_project({
+  with_demo_project(quiet = TRUE, {
     create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
     expect_snapshot(bump_version(which = "major"), variant = rlang_version())
-    file.copy("NEWS.md", file.path(news_tempdir, "NEWS.md"))
+    file.copy("NEWS.md", file.path(news_tempdir, "NEWS-nondev.md"))
   })
 
   expect_snapshot_file(
@@ -40,7 +39,7 @@ test_that("bump_version() works -- not dev", {
 
 test_that("bump_version() errors informatively for forbidden notifications", {
 
-  with_demo_project({
+  with_demo_project(quiet = TRUE, {
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.")
@@ -51,7 +50,7 @@ test_that("bump_version() errors informatively for forbidden notifications", {
 
 test_that("bump_version() errors informatively for wrong branch", {
 
-  with_demo_project({
+  with_demo_project(quiet = TRUE, {
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.")

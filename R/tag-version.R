@@ -5,24 +5,30 @@ tag_version_impl <- function(force) {
   desc <- desc::desc(file = "DESCRIPTION")
   version <- desc$get_version()
 
-  cli_h2("Tagging Version")
+  if (fledge_chatty()) cli_h2("Tagging Version")
 
   tag <- paste0("v", version)
   if (tag %in% gert::git_tag_list()$name) {
     if (!force) {
       if (gert::git_commit_info(tag)$id == gert::git_log(max = 1)$commit) {
-        cli_alert_info("Tag {.field {tag}} exists and points to the current commit.")
+        if (fledge_chatty()) {
+          cli_alert_info("Tag {.field {tag}} exists and points to the current commit.")
+        }
       } else {
         abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
       }
     } else {
-      cli_alert("Deleting tag {.field {tag}}.")
+      if (fledge_chatty()) cli_alert("Deleting tag {.field {tag}}.")
       gert::git_tag_delete(tag)
     }
   }
 
-  cli_alert("Creating tag {.field {tag}} with tag message derived from
-                    {.file NEWS.md}.", wrap = TRUE)
+  if (fledge_chatty()) {
+  cli_alert(
+  "Creating tag {.field {tag}} with tag message derived from {.file NEWS.md}.",
+    wrap = TRUE
+  )
+  }
   msg_header <- paste0(desc$get("Package"), " ", version)
   gert::git_tag_create(tag, message = paste0(msg_header, "\n\n", current_news))
 

@@ -39,7 +39,7 @@ create_repo <- function(repo) {
 
   gert::git_branch_checkout(main)
 
-  gert::git_merge("b1", commit = FALSE)
+  suppressMessages(gert::git_merge("b1", commit = FALSE))
   gert::git_commit(message = "- merge")
 
   e <- gert::git_log(max = 1)$commit

@@ -2,11 +2,11 @@ test_that("finalize_version(push = FALSE)", {
 
   news_tempdir <- withr::local_tempdir(pattern = "news")
 
-  with_demo_project({
+  with_demo_project(quiet = TRUE, {
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
-    bump_version()
+    shut_up_fledge(bump_version())
     expect_snapshot(finalize_version(push = FALSE), variant = rlang_version())
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-push-false.md"))
   })
@@ -21,12 +21,12 @@ test_that("finalize_version(push = TRUE)", {
 
   news_tempdir <- withr::local_tempdir(pattern = "news")
 
-  with_demo_project({
+  with_demo_project(quiet = TRUE, {
     remote_url <- create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
-    bump_version()
+    shut_up_fledge(bump_version())
     gert::git_push()
     expect_snapshot(finalize_version(push = TRUE), variant = rlang_version())
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-push-true.md"))

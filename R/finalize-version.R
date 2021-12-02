@@ -19,20 +19,19 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
     } else {
       command <- "fledge::finalize_version()"
     }
-
-    cli_alert_warning("Call {.code {command}}.")
+    if (fledge_chatty()) cli_alert_warning("Call {.code {command}}.")
     send_to_console(command)
   }
 }
 
 push_tag <- function(tag) {
-  cli_alert("Force-pushing tag {.field {tag}}.")
+  if (fledge_chatty()) cli_alert("Force-pushing tag {.field {tag}}.")
   gert::git_tag_push(tag, force = force)
 }
 
 push_head <- function() {
   head <- gert::git_branch()
-  cli_alert('Pushing {.field {head}}.')
+  if (fledge_chatty()) cli_alert('Pushing {.field {head}}.')
   gert::git_push()
 }
 

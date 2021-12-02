@@ -20,21 +20,6 @@
 
 ---
 
-    tag already exists
-
----
-
-    Code
-      tag_version(force = TRUE)
-    Message <cliMessage>
-      
-      -- Tagging Version --
-      
-      > Deleting tag v0.0.0.9000.
-      > Creating tag v0.0.0.9000 with tag message derived from 'NEWS.md'.
-
----
-
     Code
       get_last_tag()[, c("name", "ref")]
     Output
