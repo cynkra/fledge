@@ -8,7 +8,10 @@ test_that("bump_version() works -- dev", {
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
+    expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
     expect_snapshot(bump_version(), variant = rlang_version())
+    expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+    expect_equal(get_last_tag()$name, "v0.0.0.9001")
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS.md"))
   })
 
@@ -27,7 +30,9 @@ test_that("bump_version() works -- not dev", {
     use_r("bla")
     gert::git_add("R/bla.R")
     gert::git_commit("* Add cool bla.")
+    expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
     expect_snapshot(bump_version(which = "major"), variant = rlang_version())
+    expect_equal(as.character(desc::desc_get_version()), "1.0.0")
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-nondev.md"))
   })
 
