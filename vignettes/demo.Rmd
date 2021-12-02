@@ -424,7 +424,7 @@ fledge::tag_version()
 show_tags(remote_url)
 ```
 
-It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.
+It is advised to push to remote, with e.g. `gert::git_tag_push(<tag-name>)`.
 
 ### Create GitHub release
 
