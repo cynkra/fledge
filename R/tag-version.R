@@ -10,6 +10,7 @@ tag_version_impl <- function(force) {
   tag <- paste0("v", version)
 
   if (tag_already_exist(tag)) {
+
     if (!force) {
       if (gert::git_commit_info(tag)$id == gert::git_log(max = 1)$commit) {
         if (fledge_chatty()) {
