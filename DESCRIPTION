@@ -12,7 +12,12 @@ Authors@R:
              family = "Schratz",
              role = "aut",
              email = "patrick.schratz@gmail.com",
-             comment = c(ORCID = "0000-0003-0748-6624")))
+             comment = c(ORCID = "0000-0003-0748-6624")),
+      person(given = "Maëlle", 
+             family = "Salmon",
+             role = "ctb",
+             email = "msmaellesalmon@gmail.com",
+             comment = c(ORCID = "0000-0002-2815-0399")))
 Description: Streamlines the process of updating 'changelogs'
     ('NEWS.md')
     and versioning R packages developed in git repositories.
