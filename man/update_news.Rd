@@ -11,6 +11,9 @@ update_news(messages = NULL)
 e.g. as in the \code{message} column in the return value of \code{\link[=get_top_level_commits]{get_top_level_commits()}}.
 The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_tag]{get_last_tag()}}.}
 }
+\value{
+None
+}
 \description{
 Lists all commits from a range (default: top-level commits since the most
 recent tag) and adds bullets from their body to \code{NEWS.md}.

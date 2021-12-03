@@ -100,6 +100,7 @@ set_usethis_desc <- function(maintainer, email, date) {
 #' @param code Code to run with temporary active project
 #'
 #'
+#' @return None
 #' @export
 #'
 #' @example man/examples/with_demo_project.R

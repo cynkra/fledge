@@ -9,6 +9,8 @@ unbump_version()
 }
 \value{
 \code{NULL}, invisibly. This function is called for its side effects.
+
+None
 }
 \description{
 This undoes the effect of a \code{\link[=bump_version]{bump_version()}} call, with a safety check.

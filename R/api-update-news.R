@@ -9,6 +9,7 @@
 #'
 #' @example man/examples/tag-version.R
 #'
+#' @return None
 #' @export
 update_news <- function(messages = NULL) {
   if (is.null(messages)) {

@@ -4,6 +4,7 @@
 #'
 #' @example man/examples/tag-version.R
 #'
+#' @return None
 #' @export
 update_version <- function(which = "dev") {
   check_which(which)

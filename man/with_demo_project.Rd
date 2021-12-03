@@ -15,6 +15,9 @@ with_demo_project(code, dir = NULL, news = TRUE, quiet = FALSE)
 
 \item{quiet}{Whether to show messages from usethis}
 }
+\value{
+None
+}
 \description{
 Run code in temporary project
 }
