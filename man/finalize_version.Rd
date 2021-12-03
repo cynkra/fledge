@@ -10,6 +10,9 @@ finalize_version(push = FALSE)
 \arguments{
 \item{push}{If \code{TRUE}, push the created tag.}
 }
+\value{
+None
+}
 \description{
 Calls the following functions:
 

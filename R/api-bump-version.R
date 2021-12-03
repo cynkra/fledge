@@ -4,6 +4,7 @@
 #' Calls the following functions:
 #'
 #' @inheritParams update_version
+#' @return None
 #' @export
 #'
 #' @seealso [unbump_version()]
