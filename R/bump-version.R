@@ -25,7 +25,7 @@ bump_version_impl <- function(which) {
 
     cli_h2("Preparing package for CRAN release")
     edit_news()
-    cli_ul("Convert the changelog in {.file {news_path}} to release notes.")
+    cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
   }
 }
 
