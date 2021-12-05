@@ -44,7 +44,23 @@ get_commit_message <- function(version) {
 
 check_clean <- function(forbidden_modifications) {
   status <- gert::git_status()
-  stopifnot(!any(forbidden_modifications %in% status$file))
+  unexpected <- forbidden_modifications[forbidden_modifications %in% status$file]
+
+  if (length(unexpected) == 0){
+    return()
+  }
+
+  error_message <- sprintf(
+    "Unindexed change(s) in %s.",
+    toString(sprintf("`%s`", unexpected))
+  )
+  rlang::abort(
+    message = c(
+      x = error_message,
+      i = "Commit the change(s) before running any fledge function again."
+    )
+  )
+
 }
 
 check_only_modified <- function(allowed_modifications) {

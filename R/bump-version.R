@@ -3,7 +3,14 @@
 bump_version_impl <- function(which) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
-  stopifnot(gert::git_branch() == get_main_branch())
+  if (gert::git_branch() != get_main_branch()) {
+    rlang::abort(
+      c(
+        x = sprintf("Must be on the main branch (%s) for running fledge functions.", get_main_branch()),
+        i = sprintf("Currently on branch %s.", gert::git_branch())
+      )
+    )
+  }
   #' 1. [update_news()]
   update_news()
   #' 1. [update_version()], using the `which` argument
