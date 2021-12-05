@@ -1,5 +1,15 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.5.9004
+
+- Better error messages (#111, @maelle).
+- Update README (#139, @maelle).
+- Add pitch (#128, @maelle).
+- `unbump_version()` gains documentation, examples, and tests (#12, @maelle).
+- New `create_demo_project()` (#102, @maelle).
+- Reorganized `vignette("demo")`, added examples (#113, @maelle).
+
+
 # fledge 0.0.5.9003
 
 - `get_last_tag()` returns a tibble.
