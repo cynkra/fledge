@@ -18,17 +18,7 @@ Finally, we will demonstrate how this changelog can eventually be converted to r
 We are typing this demo as an R Markdown vignette therefore we will be using R tools for creating files, editing them, and interacting with git: in real life you can be using e.g. an IDE or the command line. The fledge package won't care!
 :::
 
-```{r setup, include = FALSE}
-in_pkgdown <- identical(Sys.getenv("IN_PKGDOWN"), "true")
-if (in_pkgdown) {
-  options(crayon.enabled = TRUE)
-}
-options(cli.num_colors = 1)
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  error = !in_pkgdown
-)
-```
+
 
 ## Set up the development environment
 
@@ -42,41 +32,32 @@ A real project will live somewhere in your home directory.
 
 The `usethis::create_package()` function sets up a package project ready for development.
 
-```{r create-package, eval = FALSE}
+
+```r
 pkg <- usethis::create_package("tea")
 ```
 
-```{r create-package-real, echo = FALSE, message=FALSE, warning=FALSE}
-parent_dir <- file.path(tempdir(), "fledge")
-dir.create(parent_dir, recursive = TRUE)
-dir.create(file.path(parent_dir, "remote"))
-gert::git_init(file.path(parent_dir, "remote"), bare = TRUE)
-pkg <- fledge::create_demo_project("tea", open = FALSE, dir = parent_dir)
-```
+
 
 In an interactive RStudio session, a new window opens and you would work there.
 Users of other environments would change the working directory manually.
 For this demo, we manually set the active project.
 
-```{r, change-dir, echo=FALSE}
-knitr::opts_knit$set(root.dir = pkg)
-```
 
-```{r pkg-location, echo=FALSE}
-withr::with_options(
-  list("usethis.quiet" = TRUE), 
-  usethis::proj_set()
-)
-```
 
-```{r pkg-location2, eval=FALSE}
+
+
+
+```r
 usethis::proj_set()
 ```
 
 The infrastructure files and directories that comprise a minimal R package are created:
 
-```{r dir-tree}
+
+```r
 fs::dir_ls()
+## DESCRIPTION NAMESPACE   R           tea.Rproj
 ```
 
 ### Create and configure a Git repository
@@ -86,16 +67,21 @@ We achieved this with gert code.
 
 You could use `usethis::use_git()` function that creates an initial commit, and the repository is in a clean state.
 
-```{r git-show-init}
+
+```r
 # Number of commits until now
 nrow(gert::git_log())
+## [1] 1
 # Anything staged?
 gert::git_status()
+## # A tibble: 0 x 3
+## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
 
-```{r git-no-ff}
+
+```r
 gert::git_config_set("merge.ff", "false")
 # gert::git_config_global_set("merge.ff", "false") # to set globally
 ```
@@ -106,17 +92,13 @@ We also set up a git remote.
 In real life you might be using a function like `usethis::use_github()`.
 We set up a local remote using a git repo we secretly created earlier.
 
-```{r git-remote, echo=FALSE, message=TRUE}
-# In real life this would be an actual URL not a filepath :-)
-remote_url <- file.path(parent_dir, "remote")
-gert::git_remote_add(remote_url, name = "origin")
-gert::git_push(remote = "origin")
-```
+
 
 We create two functions to show the contents and tags of the remote.
 In real life, you'd probably simply browse the GitHub interface for instance!
 
-```{r git-show}
+
+```r
 show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
@@ -126,6 +108,7 @@ show_files <- function(remote_url) {
   })
 }
 show_files(remote_url)
+## remote/DESCRIPTION remote/NAMESPACE   remote/tea.Rproj
 
 show_tags <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -141,27 +124,36 @@ show_tags <- function(remote_url) {
 
 An initial NEWS file can be created with `usethis::use_news_md()`.
 
-```{r init-news}
+
+```r
 usethis::use_news_md()
+## v Writing 'NEWS.md'
 ```
 
 Let's take a look at the contents:
 
-```{r init-news-review}
+
+```r
 news <- readLines(usethis::proj_path("NEWS.md"))
 cat(news, sep = "\n")
+## # tea 0.0.0.9000
+## 
+## * Added a `NEWS.md` file to track changes to the package.
 ```
 
 This file needs to be tracked by Git:
 
-```{r init-news-commit, results='hide'}
+
+```r
 gert::git_add("NEWS.md")
 gert::git_commit("Initial NEWS.md .")
 gert::git_push(remote = "origin")
 ```
 
-```{r news-remote}
+
+```r
 show_files(remote_url)
+## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/tea.Rproj
 ```
 
 :::{.alert .alert-info}
@@ -175,8 +167,11 @@ Note that we have done nothing fledge specific yet.
 Now we start coding in the functionality for the package.
 We start by creating the new R file called `cup.R` and adding code (well only a comment).
 
-```{r use-cup}
+
+```r
 usethis::use_r("cup")
+## * Edit 'R/cup.R'
+## * Call `use_test()` to create a matching test file
 writeLines("# cup", "R/cup.R")
 ```
 
@@ -191,29 +186,44 @@ This indicates that the message should be included in `NEWS.md` when it is updat
 It does not matter how and where you type the commit message (gert in R, RStudio Git window, command line, VSCode, etc.).
 What's important is the content of the commit message.
 
-```{r commit-cup, results='hide'}
+
+```r
 gert::git_add("R/cup.R")
 gert::git_commit("- New cup_of_tea() function makes it easy to drink a cup of tee.")
 gert::git_push()
 ```
 
-```{r cup-remote}
+
+```r
 show_files(remote_url)
+## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/R           
+## remote/R/cup.R     remote/tea.Rproj
 ```
 
 ### Create a test
 
 The code in `cup.R` warrants a test (at least it would if it were actual code!):
 
-```{r use-cup-test}
+
+```r
 usethis::use_test("cup")
+## v Adding 'testthat' to Suggests field in DESCRIPTION
+## v Setting Config/testthat/edition field in DESCRIPTION to '3'
+## v Creating 'tests/testthat/'
+## v Writing 'tests/testthat.R'
+## v Writing 'tests/testthat/test-cup.R'
+## * Edit 'tests/testthat/test-cup.R'
 cat(readLines("tests/testthat/test-cup.R"), sep = "\n")
+## test_that("multiplication works", {
+##   expect_equal(2 * 2, 4)
+## })
 ```
 
 In a real project we would substitute the testing code from the template by real tests.
 In this demo we commit straight away, **again with a bulleted message**.
 
-```{r commit-cup-test, results='hide'}
+
+```r
 gert::git_add("DESCRIPTION")
 gert::git_add("tests/testthat.R")
 gert::git_add("tests/testthat/test-cup.R")
@@ -221,8 +231,14 @@ gert::git_commit("- Add tests for cup of tea.")
 gert::git_push()
 ```
 
-```{r cup-test-remote}
+
+```r
 show_files(remote_url)
+## remote/DESCRIPTION               remote/NAMESPACE                 
+## remote/NEWS.md                   remote/R                         
+## remote/R/cup.R                   remote/tea.Rproj                 
+## remote/tests                     remote/tests/testthat            
+## remote/tests/testthat/test-cup.R remote/tests/testthat.R
 ```
 
 ### Update NEWS.md
@@ -230,10 +246,20 @@ show_files(remote_url)
 Let us look at the commit history until now.
 You might use any Git tool you want to consult it, we use gert.
 
-```{r commit-log}
+
+```r
 # Only show number of files, messages
 knitr::kable(gert::git_log()[-(1:3)])
 ```
+
+
+
+| files|merge |message                                                          |
+|-----:|:-----|:----------------------------------------------------------------|
+|     3|FALSE |- Add tests for cup of tea.                                      |
+|     1|FALSE |- New cup_of_tea() function makes it easy to drink a cup of tee. |
+|     1|FALSE |Initial NEWS.md .                                                |
+|     5|FALSE |First commit                                                     |
 
 We have two "bulletted" messages which for fledge means two NEWS-worthy messages.
 
@@ -241,13 +267,35 @@ Let us update `NEWS.md`!
 
 We use `fledge::bump_version()` to assign a new dev version number to the package and also update `NEWS.md`.
 
-The current version number of our package is `r desc::desc_get_version()`.
+The current version number of our package is 0.0.0.9000.
 
-```{r bump}
+
+```r
 fledge::bump_version()
+## > Scraping 4 commit messages.
+## v Found 2 NEWS-worthy entries.
+## 
+## -- Updating NEWS --
+## 
+## > Adding new entries to 'NEWS.md'.
+## Warning: 'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to
+## leave this field out completely. It is not required.
+## 
+## -- Update Version --
+## 
+## v Package version bumped to 0.0.0.9001.
+## > Adding header to 'NEWS.md'.
+## > Committing changes.
+## 
+## -- Tagging Version --
+## 
+## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
+## * Edit 'NEWS.md'
+## ! Call `fledge::finalize_version(push = TRUE)`.
+## NULL
 ```
 
-The new version number is `r desc::desc_get_version()`.
+The new version number is 0.0.0.9001.
 
 :::{.alert .alert-info}
 If you run `fledge::bump_version()` too early by mistake (e.g. you wanted to do one more code edit), you can run `fledge::unbump_version()`!
@@ -259,9 +307,21 @@ If you have pushed or edited code in the meantime, it's too late -- just continu
 
 Let us see what `NEWS.md` looks like after that bump.
 
-```{r news-review}
+
+```r
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
+## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+## 
+## # tea 0.0.0.9001
+## 
+## - Add tests for cup of tea.
+## - New cup_of_tea() function makes it easy to drink a cup of tee.
+## 
+## 
+## # tea 0.0.0.9000
+## 
+## * Added a `NEWS.md` file to track changes to the package.
 ```
 
 While reviewing we notice that there was a typo in one of the comments (congrats if you noticed right away that we typed "tee" instead of "tea"!).
@@ -272,9 +332,21 @@ The fledge package adds a comment about not editing `NEWS.md` by hand to `NEWS.m
 
 Let's fix the typo, which you'd do by hand.
 
-```{r news-tweak}
+
+```r
 news <- gsub("tee", "tea", news)
 cat(news, sep = "\n")
+## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+## 
+## # tea 0.0.0.9001
+## 
+## - Add tests for cup of tea.
+## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
+## 
+## # tea 0.0.0.9000
+## 
+## * Added a `NEWS.md` file to track changes to the package.
 writeLines(news, "NEWS.md")
 ```
 
@@ -292,20 +364,48 @@ Using `fledge::finalize_version()` instead of committing manually ensures that t
 It should be called when `NEWS.md` is manually updated.
 Note that it should be called after `fledge::bump_version()`, an error is raised if another commit has been added after that.
 
-```{r news-finalize}
+
+```r
 show_tags(remote_url)
+## # A tibble: 0 x 2
+## # ... with 2 variables: name <chr>, ref <chr>
 fledge::finalize_version(push = TRUE)
+## > Resetting to previous commit.
+## > Committing changes.
+## 
+## -- Tagging Version --
+## 
+## > Deleting tag v0.0.0.9001.
+## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
+## > Force-pushing tag v0.0.0.9001.
+## > Pushing main.
 show_tags(remote_url)
+## # A tibble: 1 x 2
+##   name        ref                  
+##   <chr>       <chr>                
+## 1 v0.0.0.9001 refs/tags/v0.0.0.9001
 ```
 
 Let's look at NEWS.md now:
 
-```{r news-second-review}
+
+```r
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
+## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+## 
+## # tea 0.0.0.9001
+## 
+## - Add tests for cup of tea.
+## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
+## 
+## # tea 0.0.0.9000
+## 
+## * Added a `NEWS.md` file to track changes to the package.
 ```
 
-The version of the package is `r desc::desc_get_version()`.
+The version of the package is 0.0.0.9001.
 
 A tag has been created for the version which is good practice, and crucial when using fledge: for updating the changelog, fledge looks through all commit messages **since the latest tag**.
 
@@ -315,7 +415,8 @@ A tag has been created for the version which is good practice, and crucial when 
 This requires changes to the code, and perhaps a new test.
 We create a branch (whose name starts with a "f" for "feature") and switch to this branch to implement this.
 
-```{r bowl-branch}
+
+```r
 gert::git_branch_create("f-bowl", checkout = TRUE)
 ```
 
@@ -324,22 +425,30 @@ These commit messages do not need to be formatted specially, because {fledge} wi
 
 This time we write the tests first, test-driven development.
 
-```{r bowl}
+
+```r
 usethis::use_test("bowl")
+## v Writing 'tests/testthat/test-bowl.R'
+## * Edit 'tests/testthat/test-bowl.R'
 ```
 
-```{r bowl-git, results='hide'}
+
+```r
 gert::git_add("tests/testthat/test-bowl.R")
 gert::git_commit("Add bowl tests.")
 ```
 
 
-```{r bowl-2}
+
+```r
 usethis::use_r("bowl")
+## * Edit 'R/bowl.R'
+## * Call `use_test()` to create a matching test file
 writeLines("# bowl of tea", "R/bowl.R")
 ```
 
-```{r bowl-2-git, results='hide'}
+
+```r
 gert::git_add("R/bowl.R")
 gert::git_commit("Add bowl implementation.")
 ```
@@ -351,9 +460,11 @@ You might be used to doing the merges on a remote (e.g. GitHub pull requests) bu
 [^merge-ff]: Note that we really need a merge commit here; the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
-```{r bowl-merge, results='hide'}
+
+```r
 gert::git_branch_checkout("main")
 gert::git_merge("f-bowl", commit = FALSE)
+## Merge was not committed due to merge conflict(s). Please fix and run git_commit() or git_merge_abort()
 gert::git_commit("- New bowl_of_tea() function makes it easy to drink a bowl of tea.")
 ```
 
@@ -361,11 +472,56 @@ The same strategy can be used when merging a pull/merge/... request on GitHub, G
 
 Now that we have added bowl support to our package, it is time to bump the version again.
 
-```{r bump-two}
+
+```r
 fledge::bump_version()
+## > Scraping 2 commit messages.
+## v Found 1 NEWS-worthy entries.
+## 
+## -- Updating NEWS --
+## 
+## > Adding new entries to 'NEWS.md'.
+## 
+## -- Update Version --
+## 
+## v Package version bumped to 0.0.0.9002.
+## > Adding header to 'NEWS.md'.
+## > Committing changes.
+## 
+## -- Tagging Version --
+## 
+## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+## * Edit 'NEWS.md'
+## ! Call `fledge::finalize_version(push = TRUE)`.
+## NULL
 news <- readLines("NEWS.md")
 writeLines(news)
+## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+## 
+## # tea 0.0.0.9002
+## 
+## - New bowl_of_tea() function makes it easy to drink a bowl of tea.
+## 
+## 
+## # tea 0.0.0.9001
+## 
+## - Add tests for cup of tea.
+## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
+## 
+## # tea 0.0.0.9000
+## 
+## * Added a `NEWS.md` file to track changes to the package.
 fledge::finalize_version(push = TRUE)
+## > Resetting to previous commit.
+## > Committing changes.
+## 
+## -- Tagging Version --
+## 
+## > Deleting tag v0.0.0.9002.
+## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+## > Force-pushing tag v0.0.0.9002.
+## > Pushing main.
 ```
 
 It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
@@ -383,19 +539,59 @@ A difference between publishing on CRAN and publishing on GitHub is that there's
 We wish to release this package as a patch and so we use `fledge::bump_version()` with the "patch" argument.
 Other values for the arguments are "dev" (default), "minor" and "major".
 
-```{r bump-patch}
+
+```r
 fledge::bump_version("patch")
+## > Scraping 1 commit messages.
+## v Found 1 NEWS-worthy entries.
+## 
+## -- Updating NEWS --
+## 
+## > Adding new entries to 'NEWS.md'.
+## 
+## -- Update Version --
+## 
+## v Package version bumped to 0.0.1.
+## > Adding header to 'NEWS.md'.
+## > Committing changes.
+## i Preparing package for release (CRAN or otherwise).
+## * Edit 'NEWS.md'
+## ! Convert the change log in 'NEWS.md' to release notes.
+## ! After CRAN release, call `fledge::tag_version()` and
+## `fledge::bump_version()` to re-enter development mode
 ```
 
-This updates the version of our package to `r desc::desc_get_version()`.
+This updates the version of our package to 0.0.1.
 
 ### Generate release notes
 
 We review the `NEWS.md` that were generated by {fledge}:
 
-```{r patch-news-review}
+
+```r
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
+## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+## 
+## # tea 0.0.1
+## 
+## - Same as previous version.
+## 
+## 
+## # tea 0.0.0.9002
+## 
+## - New bowl_of_tea() function makes it easy to drink a bowl of tea.
+## 
+## 
+## # tea 0.0.0.9001
+## 
+## - Add tests for cup of tea.
+## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
+## 
+## # tea 0.0.0.9000
+## 
+## * Added a `NEWS.md` file to track changes to the package.
 ```
 
 Some of the intermediate commit messages are not relevant in the release notes for this release.
@@ -419,9 +615,19 @@ At this stage, {fledge} can help to tag the released version and create a new ve
 
 It is now the time to tag the released version using the `fledge::tag_version()` function.
 
-```{r tag}
+
+```r
 fledge::tag_version()
+## 
+## -- Tagging Version --
+## 
+## > Creating tag v0.0.1 with tag message derived from 'NEWS.md'.
 show_tags(remote_url)
+## # A tibble: 2 x 2
+##   name        ref                  
+##   <chr>       <chr>                
+## 1 v0.0.0.9001 refs/tags/v0.0.0.9001
+## 2 v0.0.0.9002 refs/tags/v0.0.0.9002
 ```
 
 It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.
@@ -436,18 +642,37 @@ You need to submit the draft release from the GitHub release page.
 We will now make the package ready for future development.
 The `fledge::bump_version()` takes care of it.
 
-```{r bump-dev}
+
+```r
 fledge::bump_version()
+## > Scraping 1 commit messages.
+## v Found 1 NEWS-worthy entries.
+## 
+## -- Updating NEWS --
+## 
+## > Adding new entries to 'NEWS.md'.
+## 
+## -- Update Version --
+## 
+## v Package version bumped to 0.0.1.9000.
+## > Adding header to 'NEWS.md'.
+## > Committing changes.
+## 
+## -- Tagging Version --
+## 
+## > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
+## * Edit 'NEWS.md'
+## ! Call `fledge::finalize_version(push = TRUE)`.
+## NULL
 news <- readLines("NEWS.md")
 ```
 
 Push to remote, add features with relevant commits (after mergining a branch or not), `bump_version()`, etc.
 Happy development, and happy smooth filling of the changelog!
 
-```{r, end, include=FALSE}
-knitr::opts_knit$set(root.dir = dirname(knitr::current_input(dir = TRUE)))
-```
 
-```{r end2, pkg=FALSE, eval=TRUE}
+
+
+```r
 unlink(parent_dir, recursive = TRUE)
 ```
