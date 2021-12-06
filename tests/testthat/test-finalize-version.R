@@ -9,7 +9,7 @@ test_that("finalize_version(push = FALSE)", {
     shut_up_fledge(bump_version())
 
     news <- readLines("NEWS.md")
-    news <- gsub("Ad", "Add", news)
+    news <- sub("Ad cool", "Add cool", news)
     writeLines(news, "NEWS.md")
 
     expect_snapshot(finalize_version(push = FALSE), variant = rlang_version())
@@ -34,7 +34,7 @@ test_that("finalize_version(push = TRUE)", {
     shut_up_fledge(bump_version())
 
     news <- readLines("NEWS.md")
-    news <- gsub("Ad", "Add", news)
+    news <- sub("Ad cool", "Add cool", news)
     writeLines(news, "NEWS.md")
 
     expect_snapshot(finalize_version(push = TRUE), variant = rlang_version())
