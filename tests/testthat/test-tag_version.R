@@ -7,14 +7,14 @@ test_that("tag_version() works", {
     expect_snapshot(get_last_tag()[, c("name", "ref")])
 
     # Attempting tagging again without any new commit
-    shut_up_fledge(expect_silent(tag_version()))
+    expect_silent(shut_up_fledge(tag_version()))
 
     # Attempting tagging again
     # with a new commit but same version
     use_r("pof")
     gert::git_add("R/pof.R")
     gert::git_commit("* Add cool pof.")
-    expect_snapshot_error(tag_version(force = FALSE))
+    expect_snapshot_error(shut_up_fledge(tag_version(force = FALSE)))
 
     # Same, but forcing
     expect_snapshot(tag_version(force = TRUE))

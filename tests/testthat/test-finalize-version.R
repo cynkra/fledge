@@ -5,8 +5,13 @@ test_that("finalize_version(push = FALSE)", {
   with_demo_project(quiet = TRUE, {
     use_r("bla")
     gert::git_add("R/bla.R")
-    gert::git_commit("* Add cool bla.")
+    gert::git_commit("* Ad cool bla.")
     shut_up_fledge(bump_version())
+
+    news <- readLines("NEWS.md")
+    news <- gsub("Ad", "Add", news)
+    writeLines(news, "NEWS.md")
+
     expect_snapshot(finalize_version(push = FALSE), variant = rlang_version())
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-push-false.md"))
   })
@@ -25,9 +30,13 @@ test_that("finalize_version(push = TRUE)", {
     remote_url <- create_remote()
     use_r("bla")
     gert::git_add("R/bla.R")
-    gert::git_commit("* Add cool bla.")
+    gert::git_commit("* Ad cool bla.")
     shut_up_fledge(bump_version())
-    gert::git_push()
+
+    news <- readLines("NEWS.md")
+    news <- gsub("Ad", "Add", news)
+    writeLines(news, "NEWS.md")
+
     expect_snapshot(finalize_version(push = TRUE), variant = rlang_version())
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-push-true.md"))
     expect_snapshot(show_tags(remote_url))
