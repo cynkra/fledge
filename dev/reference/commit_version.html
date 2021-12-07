@@ -18,7 +18,7 @@ created by fledge if necessary."><meta name="robots" content="noindex"><!-- math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.5.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -70,16 +70,61 @@ created by fledge if necessary."><meta name="robots" content="noindex"><!-- math
 created by <span class="pkg">fledge</span> if necessary.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">commit_version</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">commit_version</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>Invisibly: <code>TRUE</code> if a previous commit for that version has been
 amended, <code>FALSE</code> if not.</p>
     </div>
-    </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create mock package in a temporary directory.</span></span>
+<span class="r-in"><span class="co"># Set open to TRUE if you want to play in the mock package.</span></span>
+<span class="r-in"><span class="fu"><a href="with_demo_project.html">with_demo_project</a></span><span class="op">(</span><span class="op">{</span></span>
+<span class="r-in">  <span class="co"># Use functions as if inside the newly created package project.</span></span>
+<span class="r-in">  <span class="co"># (Or go and actually run code inside the newly created package project!)</span></span>
+<span class="r-in">  <span class="co"># Add a new R file.</span></span>
+<span class="r-in">  <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"cool-function"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in">  <span class="co"># Pretend we added useful code inside it.</span></span>
+<span class="r-in">  <span class="co"># Track the new R file with Git.</span></span>
+<span class="r-in">  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_add</a></span><span class="op">(</span><span class="st">"R/cool-function.R"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"- Add cool function."</span><span class="op">)</span></span>
+<span class="r-in">  <span class="co"># Bump version with fledge.</span></span>
+<span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">desc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/desc/man/desc_add_author.html" class="external-link">desc_add_author</a></span><span class="op">(</span>given <span class="op">=</span> <span class="st">"Jane"</span>, family <span class="op">=</span> <span class="st">"Doe"</span>, role <span class="op">=</span> <span class="st">"ctb"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu">commit_version</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpJFvnRP/fledge373865d7a1be/tea'</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'R/cool-function.R'</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Call <span style="color: #555555;">`use_test()`</span> to create a matching test file</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Scraping <span style="color: #00BB00;">3</span> commit messages.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #00BB00;">1</span> NEWS-worthy entries.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Updating NEWS</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Adding new entries to <span style="color: #0000BB;">NEWS.md</span>.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to leave       this field out completely. It is not required.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Update Version</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Package version bumped to <span style="color: #00BB00;">0.0.0.9001</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Adding header to <span style="color: #0000BB;">NEWS.md</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Committing changes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Tagging Version</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Creating tag <span style="color: #00BB00;">v0.0.0.9001</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'NEWS.md'</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Call <span style="color: #262626; background-color: #DADADA;">`fledge::finalize_version()`</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Resetting to previous commit.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Committing changes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'&lt;no active project&gt;'</span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -92,7 +137,7 @@ amended, <code>FALSE</code> if not.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer></div>

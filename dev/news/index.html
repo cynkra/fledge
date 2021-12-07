@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.5.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -64,86 +64,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.5.9003" id="fledge-0059003">fledge 0.0.5.9003<a class="anchor" aria-label="anchor" href="#fledge-0059003"></a></h2>
-<ul><li>
-<code><a href="../reference/get_last_tag.html">get_last_tag()</a></code> returns a tibble.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.5.9002" id="fledge-0059002">fledge 0.0.5.9002<a class="anchor" aria-label="anchor" href="#fledge-0059002"></a></h2>
-<ul><li>Fix <code><a href="../reference/unbump_version.html">unbump_version()</a></code>.</li>
-<li>
-<code><a href="../reference/update_news.html">update_news()</a></code> uses a <code>NULL</code> default instead of a complex expression. The <code>range</code> argument is removed.</li>
-<li>
-<code><a href="../reference/get_last_tag.html">get_last_tag()</a></code> gains an explanation regarding annotated tags.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.5.9001" id="fledge-0059001">fledge 0.0.5.9001<a class="anchor" aria-label="anchor" href="#fledge-0059001"></a></h2>
-<ul><li>
-<code><a href="../reference/bump_version.html">bump_version()</a></code> fails if the current branch is not the main branch (<a href="https://github.com/cynkra/fledge/issues/78" class="external-link">#78</a>).</li>
-<li>Ignore empty commit messages.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.5.9000" id="fledge-0059000">fledge 0.0.5.9000<a class="anchor" aria-label="anchor" href="#fledge-0059000"></a></h2>
+<h2 class="page-header" data-toc-text="0.1.0.9000" id="fledge-0109000-2021-12-07">fledge 0.1.0.9000 (2021-12-07)<a class="anchor" aria-label="anchor" href="#fledge-0109000-2021-12-07"></a></h2>
 <ul><li>Same as previous version.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.5" id="fledge-005">fledge 0.0.5<a class="anchor" aria-label="anchor" href="#fledge-005"></a></h2>
-<ul><li>Use {gert} instead of {git2r} for interacting with Git (<a href="https://github.com/cynkra/fledge/issues/57" class="external-link">#57</a>).</li>
-<li>The API no longer accepts or returns git2r objects (<a href="https://github.com/cynkra/fledge/issues/77" class="external-link">#77</a>).</li>
-<li>
-<code><a href="../articles/demo.html">vignette("demo")</a></code> now shows the same results with each run (<a href="https://github.com/cynkra/fledge/issues/70" class="external-link">#70</a>).</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.4" id="fledge-004">fledge 0.0.4<a class="anchor" aria-label="anchor" href="#fledge-004"></a></h2>
-<div class="section level3">
-<h3 id="features-0-0-4">Features<a class="anchor" aria-label="anchor" href="#features-0-0-4"></a></h3>
-<ul><li>Prepend NEWS comment to discourage edits.</li>
-<li>Dates are added to NEWS headers if existing headers have them, or for a new NEWS file (<a href="https://github.com/cynkra/fledge/issues/29" class="external-link">#29</a>).</li>
-<li>
-<code><a href="../reference/finalize_version.html">finalize_version()</a></code> gains <code>push</code> argument which pushes the tag and the main branch, this considerably simplifies the workflow. It calls <code>edit_news()</code> and sends <code>finalize_version(push = TRUE)</code> to the RStudio or VS Code console.</li>
-<li>
-<code><a href="../reference/tag_version.html">tag_version()</a></code> returns name of created tag, invisibly.</li>
-<li>
-<code>tag_version(force = FALSE)</code> re-tags an existing tag if it points to the same commit.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="bug-fixes-0-0-4">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-4"></a></h3>
-<ul><li>
-<code><a href="../reference/bump_version.html">bump_version()</a></code> gives correct advice if no remote branch exists.</li>
-<li>
-<code><a href="../reference/bump_version.html">bump_version()</a></code> and <code><a href="../reference/get_top_level_commits.html">get_top_level_commits()</a></code> are more robust at enumerating the commits: traversing the first parent from which <code>since</code> can be reached, instead of the first parent. This ensures that NEWS are more meaningful and avoids the occasional enumeration of all NEWS items since the beginning.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="internal-0-0-4">Internal<a class="anchor" aria-label="anchor" href="#internal-0-0-4"></a></h3>
-<ul><li>Add Patrick Schratz (<a href="https://github.com/pat-s" class="external-link">@pat-s</a>) a contributor (<a href="https://github.com/cynkra/fledge/issues/50" class="external-link">#50</a>).</li>
-<li>Use GitHub Actions (<a href="https://github.com/cynkra/fledge/issues/49" class="external-link">#49</a>).</li>
-<li>Move from <code>ui_*</code> to {cli} (<a href="https://github.com/cynkra/fledge/issues/54" class="external-link">#54</a>)</li>
-<li>Import rlang.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.3" id="fledge-003">fledge 0.0.3<a class="anchor" aria-label="anchor" href="#fledge-003"></a></h2>
-<ul><li>Check that <code>DESCRIPTION</code> and <code>NEWS.md</code> are clean before bumping (<a href="https://github.com/cynkra/fledge/issues/10" class="external-link">#10</a>).</li>
-<li>Add demo vignette (<a href="https://github.com/cynkra/fledge/issues/19" class="external-link">#19</a>, <a href="https://github.com/kaslee" class="external-link">@kaslee</a>).</li>
-<li>Convert <code>"\r\n"</code> to <code>"\n"</code> in Git messages, these can occur when merging a PR on GitHub.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.2" id="fledge-002">fledge 0.0.2<a class="anchor" aria-label="anchor" href="#fledge-002"></a></h2>
-<ul><li>New “Get started” article (<a href="https://github.com/cynkra/fledge/issues/15" class="external-link">#15</a>).</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.1.9001" id="fledge-0019001">fledge 0.0.1.9001<a class="anchor" aria-label="anchor" href="#fledge-0019001"></a></h2>
-<ul><li>Test for manual tagging (<a href="https://github.com/cynkra/fledge/issues/6" class="external-link">#6</a>).</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.1.9000" id="fledge-0019000">fledge 0.0.1.9000<a class="anchor" aria-label="anchor" href="#fledge-0019000"></a></h2>
-<ul><li>Use {enc} for safe writing of files, preserving line endings (<a href="https://github.com/cynkra/fledge/issues/14" class="external-link">#14</a>).</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.1" id="fledge-001">fledge 0.0.1<a class="anchor" aria-label="anchor" href="#fledge-001"></a></h2>
+<h2 class="page-header" data-toc-text="0.1.0" id="fledge-010-2021-12-07">fledge 0.1.0 (2021-12-07)<a class="anchor" aria-label="anchor" href="#fledge-010-2021-12-07"></a></h2>
 <p>Change log management utility, initial release.</p>
 <p>The main entry point is <code><a href="../reference/bump_version.html">bump_version()</a></code>, which does the following:</p>
-<ol style="list-style-type: decimal"><li>
+<ol style="list-style-type: decimal"><li>Checks that <code>DESCRIPTION</code> and <code>NEWS.md</code> are clean before bumping, and that the current branch is the main branch.</li>
+<li>
 <code><a href="../reference/update_news.html">update_news()</a></code>: collects <code>NEWS</code> entries from top-level commits</li>
 <li>
 <code><a href="../reference/update_version.html">update_version()</a></code>: bump version in <code>DESCRIPTION</code>, add header to <code>NEWS.md</code>
@@ -152,11 +81,14 @@
 <ul><li>If “dev”, <code><a href="../reference/finalize_version.html">finalize_version()</a></code>: commit <code>DESCRIPTION</code> and <code>NEWS.md</code>, create tag with message</li>
 <li>Otherwise, <code><a href="../reference/commit_version.html">commit_version()</a></code>; the user needs to call <code><a href="../reference/tag_version.html">tag_version()</a></code> manually</li>
 </ul></li>
+<li>Suggests to push the changes if an upstream repository is configured.</li>
 </ol><p>If you haven’t committed since updating <code>NEWS.md</code> and <code>DESCRIPTION</code>, you can also edit <code>NEWS.md</code> and call <code><a href="../reference/tag_version.html">tag_version()</a></code> again. Both the commit and the tag will be updated.</p>
 <p>Bumping can be undone with <code><a href="../reference/unbump_version.html">unbump_version()</a></code>.</p>
-<p>If the <code>DESCRIPTION</code> has a <code>"Date"</code> field, it is populated with the current date in <code><a href="../reference/update_version.html">update_version()</a></code>.</p>
+<p>If the <code>DESCRIPTION</code> has a <code>"Date"</code> field, it is populated with the current date in <code><a href="../reference/update_version.html">update_version()</a></code>. Likewise, if <code>NEWS.md</code> contains dates in the headers, new versions also get a date.</p>
 <p>An empty list of changes adds a “Same as previous version” bullet. This allows bumping to a dev version immediately after CRAN release.</p>
 <p>Also includes helper functions <code><a href="../reference/get_last_tag.html">get_last_tag()</a></code> and <code><a href="../reference/get_top_level_commits.html">get_top_level_commits()</a></code>.</p>
+<p>Includes vignettes: “Get started”, “Using fledge”, and “Fledge internals”. Examples and tests are supported with a demo project, created via <code><a href="../reference/with_demo_project.html">with_demo_project()</a></code>.</p>
+<p>Thanks Patrick Schratz and Maëlle Salmon for your contributions!</p>
 </div>
   </div>
 
@@ -172,7 +104,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer></div>
