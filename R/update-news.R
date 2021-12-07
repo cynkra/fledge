@@ -10,7 +10,9 @@ update_news_impl <- function(messages) {
 }
 
 collect_news <- function(messages) {
-  if (fledge_chatty()) cli_alert("Scraping {.field {length(messages)}} commit messages.")
+  if (fledge_chatty()) {
+    cli_alert("Scraping {.field {length(messages)}} commit messages.")
+  }
 
   messages_lf <- gsub("\r\n", "\n", messages)
   messages_nonempty <- messages_lf[messages_lf != ""]

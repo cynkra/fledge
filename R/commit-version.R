@@ -2,7 +2,9 @@ commit_version_impl <- function() {
   check_only_staged(c("DESCRIPTION", news_path()))
 
   if (is_last_commit_bump()) {
-    if (fledge_chatty()) cli_alert("Resetting to previous commit.")
+    if (fledge_chatty()) {
+      cli_alert("Resetting to previous commit.")
+    }
     gert::git_reset_soft(gert::git_log(max = 2)[2, "commit"])
     amending <- TRUE
   } else {
@@ -12,7 +14,9 @@ commit_version_impl <- function() {
   gert::git_add(c("DESCRIPTION", news_path()))
 
   if (nrow(gert::git_status(staged = TRUE)) > 0) {
-    if (fledge_chatty()) cli_alert("Committing changes.")
+    if (fledge_chatty()) {
+      cli_alert("Committing changes.")
+    }
 
     # For stable examples output (R Markdown etc.)
     # Default to DESCRIPTION fields

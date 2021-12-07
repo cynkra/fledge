@@ -5,7 +5,9 @@ tag_version_impl <- function(force) {
   desc <- desc::desc(file = "DESCRIPTION")
   version <- desc$get_version()
 
-  if (fledge_chatty()) cli_h2("Tagging Version")
+  if (fledge_chatty()) {
+    cli_h2("Tagging Version")
+  }
 
   tag <- paste0("v", version)
 
@@ -24,7 +26,9 @@ tag_version_impl <- function(force) {
       abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
     }
 
-    if (fledge_chatty()) cli_alert("Deleting existing tag {.field {tag}}.")
+    if (fledge_chatty()) {
+      cli_alert("Deleting existing tag {.field {tag}}.")
+    }
     gert::git_tag_delete(tag)
   }
 
