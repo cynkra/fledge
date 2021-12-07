@@ -18,8 +18,7 @@ Authors@R:
              role = "ctb",
              email = "msmaellesalmon@gmail.com",
              comment = c(ORCID = "0000-0002-2815-0399")))
-Description: Streamlines the process of updating changelogs
-    (NEWS.md)
+Description: Streamlines the process of updating changelogs (NEWS.md)
     and versioning R packages developed in git repositories.
 License: GPL-3
 URL: https://cynkra.github.io/fledge/,

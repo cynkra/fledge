@@ -6,7 +6,7 @@
 
 <!-- badges: start -->
 
-[![rcc](https://github.com/cynkra/fledge/workflows/rcc/badge.svg)](https://github.com/cynkra/fledge/actions) [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing) [![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg)](https://app.codecov.io/gh/cynkra/fledge?branch=main)
+[![rcc](https://github.com/cynkra/fledge/workflows/rcc/badge.svg)](https://github.com/cynkra/fledge/actions) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg)](https://app.codecov.io/gh/cynkra/fledge?branch=main)
 
 <!-- badges: end -->
 
@@ -72,7 +72,7 @@ Install from cynkra’s R-universe using:
 Or install from GitHub using:
 
 <pre class='chroma'>
-<span class='nf'>devtools</span><span class='nf'>::</span><span class='nf'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='o'>(</span><span class='s'>"cynkra/fledge"</span><span class='o'>)</span></pre>
+<span class='nf'>devtools</span><span class='nf'>::</span><span class='nf'><a href='https://devtools.r-lib.org/reference/remote-reexports.html'>install_github</a></span><span class='o'>(</span><span class='s'>"cynkra/fledge"</span><span class='o'>)</span></pre>
 
 If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
 
