@@ -24,7 +24,7 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   }
 }
 
-push_tag <- function(tag) {
+push_tag <- function(tag, force) {
   if (fledge_chatty()) cli_alert("Force-pushing tag {.field {tag}}.")
   gert::git_tag_push(tag, force = force)
 }
