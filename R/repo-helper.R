@@ -8,21 +8,25 @@
 #' @param dir Directory within which to create the mock package folder.
 #' @param news If TRUE, create a NEWS.md file.
 #'
-#' @importFrom whoami fullname
-#' @importFrom whoami email_address
-#'
 #' @return The path to the newly created mock package.
 #' @export
 #'
 create_demo_project <- function(open = rlang::is_interactive(),
                                 name = "tea",
-                                maintainer = whoami::fullname(fallback = "Kirill M\u00fcller"),
-                                email = whoami::email_address(fallback = "mail@example.com"),
+                                maintainer = NULL,
+                                email = NULL,
                                 date = "2021-09-27",
                                 dir = file.path(tempdir(), "fledge"),
                                 news = FALSE
                               ) {
 
+  if (is.null(maintainer)) {
+    maintainer <- whoami::fullname(fallback = "Kirill M\u00fcller")
+  }
+
+  if (is.null(email)) {
+    email <- whoami::email_address(fallback = "mail@example.com")
+  }
   if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
   withr::local_options(usethis.quiet = TRUE)
