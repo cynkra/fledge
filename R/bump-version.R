@@ -40,7 +40,9 @@ get_main_branch <- function() {
   remote <- "origin"
   if (remote %in% gert::git_remote_list()$name) {
     remote_main <- get_main_branch_remote(remote)
-    if (length(remote_main)) return(remote_main)
+    if (length(remote_main)) {
+      return(remote_main)
+    }
   }
 
   get_main_branch_config()

@@ -31,7 +31,7 @@ push_tag <- function(tag, force) {
 
 push_head <- function() {
   head <- gert::git_branch()
-  if (fledge_chatty()) cli_alert('Pushing {.field {head}}.')
+  if (fledge_chatty()) cli_alert("Pushing {.field {head}}.")
   gert::git_push()
 }
 
