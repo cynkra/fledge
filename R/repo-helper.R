@@ -8,6 +8,9 @@
 #' @param dir Directory within which to create the mock package folder.
 #' @param news If TRUE, create a NEWS.md file.
 #'
+#' @importFrom whoami fullname
+#' @importFrom whoami email_address
+#'
 #' @return The path to the newly created mock package.
 #' @export
 #'
