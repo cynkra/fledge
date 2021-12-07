@@ -2,17 +2,14 @@ Package: fledge
 Title: Smoother change tracking and versioning for R packages
 Version: 0.0.5.9004
 Date: 2021-11-21
-Authors@R: 
-    c(person(given = "Kirill",
-             family = "M\u00fcller",
-             role = c("aut", "cre"),
-             email = "krlmlr+r@mailbox.org",
-             comment = c(ORCID = "0000-0002-1416-3412")),
-      person(given = "Patrick",
-             family = "Schratz",
-             role = "aut",
-             email = "patrick.schratz@gmail.com",
-             comment = c(ORCID = "0000-0003-0748-6624")))
+Authors@R: c(
+    person("Kirill", "Müller", , "krlmlr+r@mailbox.org", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-1416-3412")),
+    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-0748-6624")),
+    person("Maëlle", "Salmon", , "maelle.salmon@yahoo.se", role = "ctb",
+           comment = c(ORCID = "0000-0002-2815-0399"))
+  )
 Description: Streamlines the process of updating changelogs
     (NEWS.md)
     and versioning R packages developed in git repositories.
