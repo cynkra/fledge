@@ -1,5 +1,4 @@
 test_that("finalize_version(push = FALSE)", {
-
   news_tempdir <- withr::local_tempdir(pattern = "news")
 
   with_demo_project(quiet = TRUE, {
@@ -23,7 +22,6 @@ test_that("finalize_version(push = FALSE)", {
 })
 
 test_that("finalize_version(push = TRUE)", {
-
   news_tempdir <- withr::local_tempdir(pattern = "news")
 
   with_demo_project(quiet = TRUE, {

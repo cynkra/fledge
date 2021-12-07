@@ -19,7 +19,5 @@ test_that("tag_version() works", {
     # Same, but forcing
     expect_snapshot(tag_version(force = TRUE))
     expect_snapshot(get_last_tag()[, c("name", "ref")])
-
   })
-
 })

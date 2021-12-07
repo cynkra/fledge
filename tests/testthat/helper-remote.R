@@ -13,7 +13,7 @@ show_tags <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url)
-    gert::git_tag_list(repo = "remote")[,c("name", "ref")]
+    gert::git_tag_list(repo = "remote")[, c("name", "ref")]
   })
 }
 show_files <- function(remote_url) {
@@ -22,7 +22,7 @@ show_files <- function(remote_url) {
   }
 
   git_config <- gert::git_config_global()
-  if (! "init.defaultbranch" %in% git_config$name) {
+  if (!"init.defaultbranch" %in% git_config$name) {
     gert::git_config_global_set("init.defaultbranch", "main")
   }
 

@@ -17,9 +17,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
                                 email = NULL,
                                 date = "2021-09-27",
                                 dir = file.path(tempdir(), "fledge"),
-                                news = FALSE
-                              ) {
-
+                                news = FALSE) {
   if (is.null(maintainer)) {
     maintainer <- whoami::fullname(fallback = "Kirill M\u00fcller")
   }
@@ -65,8 +63,14 @@ create_demo_project <- function(open = rlang::is_interactive(),
 
   if (news) {
     usethis::with_project(
-      path = pkg, {
-        rlang::with_interactive({usethis::use_news_md()}, value = FALSE)
+      path = pkg,
+      {
+        rlang::with_interactive(
+          {
+            usethis::use_news_md()
+          },
+          value = FALSE
+        )
         gert::git_add("NEWS.md")
         gert::git_commit(
           "Add NEWS.md to track changes.",
@@ -84,7 +88,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
 set_usethis_desc <- function(maintainer, email, date) {
   withr::local_options(
     usethis.full_name = maintainer,
-    usethis.protocol  = "ssh",
+    usethis.protocol = "ssh",
     usethis.description = list(
       "Authors@R" = utils::person(
         maintainer,

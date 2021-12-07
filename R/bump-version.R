@@ -44,7 +44,6 @@ get_main_branch <- function() {
   }
 
   get_main_branch_config()
-
 }
 
 get_main_branch_remote <- function(remote) {
@@ -54,8 +53,8 @@ get_main_branch_remote <- function(remote) {
 
 get_main_branch_config <- function() {
   config <- gert::git_config()
-  init <- config[config$name == "init.defaultbranch",]
-  local <- init[init$level == "local",]
+  init <- config[config$name == "init.defaultbranch", ]
+  local <- init[init$level == "local", ]
 
   if (length(local)) {
     return(local$value)

@@ -46,7 +46,7 @@ check_clean <- function(forbidden_modifications) {
   status <- gert::git_status()
   unexpected <- forbidden_modifications[forbidden_modifications %in% status$file]
 
-  if (length(unexpected) == 0){
+  if (length(unexpected) == 0) {
     return()
   }
 
@@ -60,7 +60,6 @@ check_clean <- function(forbidden_modifications) {
       i = "Commit the change(s) before running any fledge function again."
     )
   )
-
 }
 
 check_only_staged <- function(allowed_modifications) {
@@ -78,7 +77,6 @@ in_example <- function() {
 
   is_test_repo <- (!is.na(desc::desc_get("context")))
   is_test_repo && !rlang::is_interactive()
-
 }
 
 desc_author_name <- function() {
