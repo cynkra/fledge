@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0
+
+- Same as previous version.
+
+
 # fledge 0.0.5.9005
 
 - `finalize_version()` force-pushes the tag if `push = TRUE` (#181).
