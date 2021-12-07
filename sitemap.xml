@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://cynkra.github.io/fledge/404.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/articles/demo.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/articles/fledge.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/articles/internals.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/authors.html</loc>
+  </url>
+  <url>
     <loc>https://cynkra.github.io/fledge/index.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/news/index.html</loc>
   </url>
   <url>
     <loc>https://cynkra.github.io/fledge/reference/bump_version.html</loc>
   </url>
   <url>
     <loc>https://cynkra.github.io/fledge/reference/commit_version.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/reference/create_demo_project.html</loc>
   </url>
   <url>
     <loc>https://cynkra.github.io/fledge/reference/finalize_version.html</loc>
@@ -17,6 +41,9 @@
   </url>
   <url>
     <loc>https://cynkra.github.io/fledge/reference/get_top_level_commits.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/reference/index.html</loc>
   </url>
   <url>
     <loc>https://cynkra.github.io/fledge/reference/tag_version.html</loc>
@@ -31,9 +58,6 @@
     <loc>https://cynkra.github.io/fledge/reference/update_version.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/articles/demo.html</loc>
-  </url>
-  <url>
-    <loc>https://cynkra.github.io/fledge/articles/fledge.html</loc>
+    <loc>https://cynkra.github.io/fledge/reference/with_demo_project.html</loc>
   </url>
 </urlset>

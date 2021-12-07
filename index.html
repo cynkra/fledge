@@ -5,15 +5,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wings for Your R Packages • fledge</title>
+<title>Smoother Change Tracking and Versioning for R Packages • fledge</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Wings for Your R Packages">
-<meta property="og:description" content="Streamlines the process of versioning R packages
-    and updating NEWS. Numbers are cheap, why not use them?">
+<script src="pkgdown.js"></script><meta property="og:title" content="Smoother Change Tracking and Versioning for R Packages">
+<meta property="og:description" content="Streamlines the process of updating changelogs (NEWS.md)
+    and versioning R packages developed in git repositories.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fledge</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -56,6 +56,9 @@
 <li>
       <a href="articles/demo.html">Using fledge</a>
     </li>
+    <li>
+      <a href="articles/internals.html">Fledge internals</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -64,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/cynkra/fledge/">
+  <a href="https://github.com/cynkra/fledge/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -81,67 +84,88 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="fledge" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#fledge" class="anchor"></a>fledge</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="fledge">fledge<a class="anchor" aria-label="anchor" href="#fledge"></a>
+</h1></div>
+<blockquote>
+<p>Smoother change tracking and versioning for R packages.</p>
+</blockquote>
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p>{fledge} has been designed to streamline the process of versioning R packages on <em>Git</em>, with the functionality to automatically update <code>NEWS.md</code> and <code>DESCRIPTION</code> with relevant information from recent commit messages. Numbers are cheap, why not use them?</p>
-<p>For details on usage and implementation, refer to <code><a href="articles/fledge.html">vignette("fledge")</a></code>.</p>
-<div id="demo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#demo" class="anchor"></a>Demo</h2>
-<p><a href="https://asciinema.org/a/173876" class="external-link"><img src="https://github.com/cynkra/fledge/raw/master/readme/demo.gif" alt="asciinema demo"></a></p>
-<p>Click on the image to show in a separate tab.</p>
-</div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install from GitHub using</p>
-<pre class="chroma">
-<span class="nf">devtools</span><span class="nf">::</span><span class="nf"><a href="https://devtools.r-lib.org//reference/remote-reexports.html" class="external-link">install_github</a></span><span class="o">(</span><span class="s">"cynkra/fledge"</span><span class="o">)</span></pre>
-</div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>Run {fledge} commands from your package directory for versioning as below.</p>
+<p>Do you want to provide a changelog (<a href="https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd" class="external-link">NEWS.md</a>) more informative than <a href="https://twitter.com/EmilyKager/status/1413628436984188933" class="external-link">“bug fixes and performance improvements”</a> to the users of your package?</p>
+<p>Ways to achieve that are:</p>
 <ul>
+<li><p>Update NEWS.md right before release by reading through commit messages. Not necessarily fun!</p></li>
+<li><p>Update the changelog in every commit e.g. in every PR. Now, if there are several feature PRs around that update the changelog, you’ll have a few clicks to make to tackle conflicts. Easy enough, but potentially annoying.</p></li>
 <li>
-<p>To configure your package for the first-time with {fledge}, use</p>
-<pre class="chroma">
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="o">)</span>
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/finalize_version.html">finalize_version</a></span><span class="o">(</span><span class="o">)</span></pre>
-<p>From now on, use bullet points (<a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link"><code>*</code></a> or <a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link"><code>-</code></a>) in your commit or merge messages to indicate the messages that you want to include in NEWS.md</p>
-</li>
-<li>
-<p>To assign a new <code>"dev"</code> version number to the R package and update <code>NEWS.md</code>, use</p>
-<pre class="chroma">
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="o">)</span>
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/finalize_version.html">finalize_version</a></span><span class="o">(</span><span class="o">)</span></pre>
-</li>
-<li>
-<p>To assign a new version number to the R package before release to CRAN, use</p>
-<pre class="chroma">
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="s">"patch"</span><span class="o">)</span>
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/commit_version.html">commit_version</a></span><span class="o">(</span><span class="o">)</span></pre>
-<p>Substitute <code>"patch"</code> by <code>"minor"</code> or <code>"major"</code> if applicable.</p>
-</li>
-<li>
-<p>To tag a version when the package has been accepted to CRAN, use</p>
-<pre class="chroma">
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/tag_version.html">tag_version</a></span><span class="o">(</span><span class="o">)</span></pre>
-<p>Call</p>
-<pre class="chroma">
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/bump_version.html">bump_version</a></span><span class="o">(</span><span class="o">)</span></pre>
-<p>to immediately switch to a development version.</p>
-</li>
-<li>
-<p>To undo the last version bump, use</p>
-<pre class="chroma">
-<span class="nf">fledge</span><span class="nf">::</span><span class="nf"><a href="https://cynkra.github.io/fledge/reference/unbump_version.html">unbump_version</a></span><span class="o">(</span><span class="o">)</span></pre>
+<p>Use fledge to</p>
+<ul>
+<li>fill the <code>NEWS.md</code> for you based on informative commit messages,</li>
+<li>increase the version number in <code>DESCRIPTION</code> (e.g. useful in bug reports with session information!),</li>
+<li>create git tags (more coarse-grained history compared to top-level merges see <a href="https://github.com/cynkra/fledge/tags" class="external-link">fledge tag list on GitHub</a>).</li>
+</ul>
 </li>
 </ul>
+<p>Using fledge is a discipline / a few habits that is worth learning!</p>
+<p>What you need to do in practice is:</p>
+<ul>
+<li>Add a hyphen <code>-</code> or <code>*</code> at the beginning of important commit messages e.g. the merge or squash commits that merge a Pull Request. These are the commit messages that’ll be recorded in the changelog eventually! Exclude housekeeping parts of the message by typing them after a line <code>---</code>.</li>
+</ul>
+<pre class="text"><code>- Add support for bla databases.</code></pre>
+<p>or</p>
+<pre class="text"><code>- Add support for bla databases.
+
+---
+
+Also tweak the CI workflow accordingly. :sweat_smile:</code></pre>
+<p>For informative commit messages refer to the <a href="https://style.tidyverse.org/news.html" class="external-link">Tidyverse style guide</a>.</p>
+<ul>
+<li><p>Run <a href="https://cynkra.github.io/fledge/reference/bump_version.html"><code>fledge::bump_version()</code></a> regularly e.g. before every coffee break or at the end of the day or of the week. If you forgot to merge one PR run <a href="https://cynkra.github.io/fledge/reference/unbump_version.html"><code>fledge::unbump_version()</code></a>, merge the PR with an informative squash commit message, then run <a href="https://cynkra.github.io/fledge/reference/bump_version.html"><code>fledge::bump_version()</code></a> and go drink that coffee!</p></li>
+<li><p>Run <a href="https://cynkra.github.io/fledge/reference/finalize_version.html"><code>fledge::finalize_version()</code></a> if you add to edit <code>NEWS.md</code> manually e.g. if you made a typo or are not happy with a phrasing after thinking about it. Even if you edit a lot, what’s been written in by fledge is still a good place-holder.</p></li>
+<li><p>Follow the recommended steps at release (see <code><a href="articles/fledge.html">vignette("fledge")</a></code> usage section).</p></li>
+</ul>
+<p>These habits are worth learning!</p>
+<div class="section level2">
+<h2 id="demo">Demo<a class="anchor" aria-label="anchor" href="#demo"></a>
+</h2>
+<p><a href="https://asciinema.org/a/173876" class="external-link"><img src="https://github.com/cynkra/fledge/raw/main/readme/demo.gif" alt="asciinema demo"></a></p>
+<p>Click on the image above to show in a separate tab.</p>
+</div>
+<div class="section level2">
+<h2 id="installation--setup">Installation &amp; setup<a class="anchor" aria-label="anchor" href="#installation--setup"></a>
+</h2>
+<div class="section level3">
+<h3 id="once-per-machine">Once per machine<a class="anchor" aria-label="anchor" href="#once-per-machine"></a>
+</h3>
+<p>Install from cynkra’s R-universe using:</p>
+<pre class="chroma">
+<span class="nf"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="o">(</span><span class="s">"fledge"</span>, repos <span class="o">=</span> <span class="s">"https://cynkra.r-universe.dev"</span><span class="o">)</span></pre>
+<p>Or install from GitHub using:</p>
+<pre class="chroma">
+<span class="nf">devtools</span><span class="nf">::</span><span class="nf"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="o">(</span><span class="s">"cynkra/fledge"</span><span class="o">)</span></pre>
+<p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>) available for all your interactive work, you might enjoy loading fledge in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="once-per-package">Once per package<a class="anchor" aria-label="anchor" href="#once-per-package"></a>
+</h3>
+<ul>
+<li><p>Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) <em>or</em> to be using the same default branch name as your global/project <code>init.defaultbranch</code>.</p></li>
+<li>
+<p>If your package…</p>
+<ul>
+<li>is brand-new, remember to run <a href="https://cynkra.github.io/fledge/reference/bump_version.html"><code>fledge::bump_version()</code></a> regularly.</li>
+<li>has already undergone some development, it is not too late to jump on the train! Run <a href="https://cynkra.github.io/fledge/reference/bump_version.html"><code>fledge::bump_version()</code></a> and then <a href="https://cynkra.github.io/fledge/reference/finalize_version.html"><code>fledge::finalize_version()</code></a>.</li>
+</ul>
+</li>
+<li><p>Add a mention of fledge usage in your contributing guide, as contributors might not know about it. A comment is added to the top of <code>NEWS.md</code>, but it tends to be ignored occasionally.</p></li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="how-to-get-started">How to get started?<a class="anchor" aria-label="anchor" href="#how-to-get-started"></a>
+</h2>
+<p>Check out the general vignette <code><a href="articles/fledge.html">vignette("fledge")</a></code>, and for the whole game, the demo vignette <code><a href="articles/demo.html">vignette("demo")</a></code>. Feel free to <a href="https://github.com/cynkra/fledge/discussions" class="external-link">ask us questions</a>!</p>
 </div>
 </div>
   </div>
@@ -150,37 +174,42 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/cynkra/fledge/">https://​github.com/​cynkra/​fledge/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/cynkra/fledge/issues">https://​github.com/​cynkra/​fledge/​issues</a>
-</li>
+<li><a href="https://github.com/cynkra/fledge/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/cynkra/fledge/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
 
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing fledge</a></li>
+</ul>
+</div>
 
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://krlmlr.info">Kirill Müller</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Patrick Schratz <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-0748-6624" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://krlmlr.info" class="external-link">Kirill Müller</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Patrick Schratz <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-0748-6624" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/cynkra/fledge/actions" class="external-link"><img src="https://github.com/cynkra/fledge/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
-<li><a href="https://cran.r-project.org/package=fledge" class="external-link"><img src="https://www.r-pkg.org/badges/version/fledge" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/cynkra/fledge?branch=master" class="external-link"><img src="https://codecov.io/gh/cynkra/fledge/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/cynkra/fledge/actions" class="external-link"><img src="https://github.com/cynkra/fledge/workflows/rcc/badge.svg" alt="rcc"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://app.codecov.io/gh/cynkra/fledge?branch=main" class="external-link"><img src="https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
@@ -190,12 +219,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="http://krlmlr.info" class="external-link">Kirill Müller</a>, Patrick Schratz.</p>
+<p>Developed by <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>

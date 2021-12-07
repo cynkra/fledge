@@ -1,10 +1,11 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1.9000
-pkgdown_sha: d0a93b68f9eaf951ba27c5ec74175acfdbe8b2de
+pkgdown: 2.0.1
+pkgdown_sha: ~
 articles:
   demo: demo.html
   fledge: fledge.html
-last_built: 2021-03-11T09:41Z
+  internals: internals.html
+last_built: 2021-12-07T15:40Z
 urls:
   reference: https://cynkra.github.io/fledge/reference
   article: https://cynkra.github.io/fledge/articles
