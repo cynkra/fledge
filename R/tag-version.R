@@ -16,7 +16,7 @@ tag_version_impl <- function(force) {
       if (fledge_chatty()) {
         cli_alert_info("Tag {.field {tag}} exists and points to the current commit.")
       }
-      return()
+      return(invisible(tag))
     }
 
     # Tagging would fail
