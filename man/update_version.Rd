@@ -10,6 +10,9 @@ update_version(which = "dev")
 \item{which}{Component of the version number to update. Supported
 values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
 }
+\value{
+None
+}
 \description{
 Bumps a version component and adds to \code{NEWS.md} and \code{DESCRIPTION}.
 }

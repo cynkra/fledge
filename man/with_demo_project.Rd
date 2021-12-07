@@ -13,6 +13,9 @@ with_demo_project(code, dir = NULL, news = TRUE)
 
 \item{news}{If TRUE, create a NEWS.md file.}
 }
+\value{
+None
+}
 \description{
 Run code in temporary project
 }

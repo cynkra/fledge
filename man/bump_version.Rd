@@ -11,6 +11,9 @@ bump_version(which = "dev")
 \item{which}{Component of the version number to update. Supported
 values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
 }
+\value{
+None
+}
 \description{
 Calls the following functions:
 

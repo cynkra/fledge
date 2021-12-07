@@ -12,6 +12,8 @@ tag_version(force = FALSE)
 }
 \value{
 The created tag, invisibly.
+
+None
 }
 \description{
 Parses \code{NEWS.md} and creates/updates the tag for the most recent version.
