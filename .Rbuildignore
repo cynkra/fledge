@@ -7,3 +7,4 @@
 ^\.ccache$
 ^\.github$
 ^codecov\.yml$
+^cran-comments\.md$
