@@ -13,13 +13,18 @@
 #'
 create_demo_project <- function(open = rlang::is_interactive(),
                                 name = "tea",
-                                maintainer = whoami::fullname(fallback = "Kirill M\u00fcller"),
-                                email = whoami::email_address(fallback = "mail@example.com"),
+                                maintainer = NULL,
+                                email = NULL,
                                 date = "2021-09-27",
                                 dir = file.path(tempdir(), "fledge"),
-                                news = FALSE
-                              ) {
+                                news = FALSE) {
+  if (is.null(maintainer)) {
+    maintainer <- whoami::fullname(fallback = "Kirill M\u00fcller")
+  }
 
+  if (is.null(email)) {
+    email <- whoami::email_address(fallback = "mail@example.com")
+  }
   if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
   withr::local_options(usethis.quiet = TRUE)
@@ -58,8 +63,14 @@ create_demo_project <- function(open = rlang::is_interactive(),
 
   if (news) {
     usethis::with_project(
-      path = pkg, {
-        rlang::with_interactive({usethis::use_news_md()}, value = FALSE)
+      path = pkg,
+      {
+        rlang::with_interactive(
+          {
+            usethis::use_news_md()
+          },
+          value = FALSE
+        )
         gert::git_add("NEWS.md")
         gert::git_commit(
           "Add NEWS.md to track changes.",
@@ -77,7 +88,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
 set_usethis_desc <- function(maintainer, email, date) {
   withr::local_options(
     usethis.full_name = maintainer,
-    usethis.protocol  = "ssh",
+    usethis.protocol = "ssh",
     usethis.description = list(
       "Authors@R" = utils::person(
         maintainer,
@@ -96,6 +107,7 @@ set_usethis_desc <- function(maintainer, email, date) {
 #' Run code in temporary project
 #'
 #' @inheritParams create_demo_project
+#' @param quiet Whether to show messages from usethis
 #' @param code Code to run with temporary active project
 #'
 #'
@@ -104,7 +116,7 @@ set_usethis_desc <- function(maintainer, email, date) {
 #'
 #' @example man/examples/with_demo_project.R
 
-with_demo_project <- function(code, dir = NULL, news = TRUE) {
+with_demo_project <- function(code, dir = NULL, news = TRUE, quiet = FALSE) {
   if (is.null(dir)) {
     dir <- withr::local_tempdir(pattern = "fledge")
   }
@@ -116,6 +128,7 @@ with_demo_project <- function(code, dir = NULL, news = TRUE) {
   repo <- create_demo_project(dir = dir, news = TRUE)
   usethis::with_project(
     path = repo,
+    quiet = quiet,
     code
   )
 }

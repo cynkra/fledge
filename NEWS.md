@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.5.9005
+
+- `finalize_version()` force-pushes the tag if `push = TRUE` (#181).
+- More tests (#168, #5).
+- `tag_version(force = FALSE)` succeeds if tag points to latest commit (#167).
+- New `fledge.quiet` option (#117).
+- Document working with a remote in demo vignette (#164, @maelle).
+- New `with_demo_project()` to support examples for all functions (#162, @maelle).
+- Fix corner case with empty `NEWS.md` (#150, @maelle).
+
+
 # fledge 0.0.5.9004
 
 - Better error messages (#111, @maelle).

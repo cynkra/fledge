@@ -23,9 +23,15 @@ bump_version_impl <- function(which) {
     #'     - Otherwise, [commit_version()].
     commit_version()
 
-    cli_h2("Preparing package for CRAN release")
+    if (fledge_chatty()) {
+      cli_h2("Preparing package for CRAN release")
+    }
+
     edit_news()
-    cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+
+    if (fledge_chatty()) {
+      cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+    }
   }
 }
 
@@ -43,11 +49,12 @@ get_main_branch <- function() {
   remote <- "origin"
   if (remote %in% gert::git_remote_list()$name) {
     remote_main <- get_main_branch_remote(remote)
-    if (length(remote_main)) return(remote_main)
+    if (length(remote_main)) {
+      return(remote_main)
+    }
   }
 
   get_main_branch_config()
-
 }
 
 get_main_branch_remote <- function(remote) {
@@ -57,8 +64,8 @@ get_main_branch_remote <- function(remote) {
 
 get_main_branch_config <- function() {
   config <- gert::git_config()
-  init <- config[config$name == "init.defaultbranch",]
-  local <- init[init$level == "local",]
+  init <- config[config$name == "init.defaultbranch", ]
+  local <- init[init$level == "local", ]
 
   if (length(local)) {
     return(local$value)

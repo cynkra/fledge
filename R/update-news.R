@@ -1,13 +1,18 @@
 update_news_impl <- function(messages) {
   news <- collect_news(messages)
 
-  cli_h2("Updating NEWS")
-  cli_alert("Adding new entries to {.file {news_path()}}.")
+  if (fledge_chatty()) {
+    cli_h2("Updating NEWS")
+    cli_alert("Adding new entries to {.file {news_path()}}.")
+  }
+
   add_to_news(news)
 }
 
 collect_news <- function(messages) {
-  cli_alert("Scraping {.field {length(messages)}} commit messages.")
+  if (fledge_chatty()) {
+    cli_alert("Scraping {.field {length(messages)}} commit messages.")
+  }
 
   messages_lf <- gsub("\r\n", "\n", messages)
   messages_nonempty <- messages_lf[messages_lf != ""]
@@ -24,7 +29,10 @@ collect_news <- function(messages) {
     }
   }
 
-  cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
+  if (fledge_chatty()) {
+    cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
+  }
+
   paste0(paste(message_items, collapse = "\n"), "\n\n")
 }
 
