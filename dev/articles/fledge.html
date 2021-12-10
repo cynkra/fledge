@@ -140,12 +140,15 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <div class="section level3">
 <h3 id="once-per-machine">Once per machine<a class="anchor" aria-label="anchor" href="#once-per-machine"></a>
 </h3>
-<p>Install from cynkra’s R-universe using:</p>
+<p>Install from CRAN using:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"fledge"</span>, repos <span class="op">=</span> <span class="st">"https://cynkra.r-universe.dev"</span><span class="op">)</span></code></pre></div>
-<p>Or install from GitHub using:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"fledge"</span><span class="op">)</span></code></pre></div>
+<p>Install from cynkra’s R-universe (development version) using:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cynkra/fledge"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"fledge"</span>, repos <span class="op">=</span> <span class="st">"https://cynkra.r-universe.dev"</span><span class="op">)</span></code></pre></div>
+<p>Or install from GitHub (development version as well) using:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cynkra/fledge"</span><span class="op">)</span></code></pre></div>
 <p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>) available for all your interactive work, you might enjoy loading fledge in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
 </div>
 <div class="section level3">
@@ -244,7 +247,7 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <li><p>In commit messages to your main branch (typically <code>main</code> or <code>master</code>), mark everything that should go to <code>NEWS.md</code> with a bullet point (<code>-</code> or <code>*</code>). This is applicable to single commits, merge commits, or squash commits from pull requests. Do not edit <code>NEWS.md</code> manually.</p></li>
 <li>
 <p>When you want to assign a version number to the current state of your R package e.g. at the end of the day or before a break, call</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The default argument for bump_version is “dev”. So the dev part of the version number will be updated. It is good practice to assign a new version number before switching focus to another project.</p>
 </li>
@@ -267,13 +270,13 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <ol style="list-style-type: decimal">
 <li>
 <p>Call bump_version() with the appropriate argument (<code>"patch"</code>, <code>"major"</code>, <code>"minor"</code>). e.g.,</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Edit <code>NEWS.md</code>, convert the “change log” to “release notes” – a higher-level description of features and bug fixes (typo fixes, rephrasing, grouping).</p></li>
 <li>
 <p>Call <code><a href="../reference/commit_version.html">commit_version()</a></code> as below</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/commit_version.html">commit_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Make any necessary adjustments before releasing to CRAN depending on results of preparatory / incoming checks.</p></li>
@@ -327,7 +330,7 @@ Fix #42</code></pre>
 <li><p>If you <strong>rebase after creating a tag</strong>, you need to call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to make sure the tag is moved to the mainline branch.</p></li>
 <li><p>If you <strong>pushed</strong> via <code>finalize_version(push = TRUE)</code> or <code>git push</code>, the tag may have been pushed as well. In this case, invoke</p></li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">git</span> push origin :vx.y.z.9www</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">git</span> push origin :vx.y.z.9www</span></code></pre></div>
 <p>(where <code>x.y.z.9www</code> is the new version) to delete the newly created remote tag. This is the reason why {fledge} only tags <code>"dev"</code> releases automatically. Other releases always must be tagged manually with <code><a href="../reference/tag_version.html">tag_version()</a></code>.</p>
 </div>
 </div>

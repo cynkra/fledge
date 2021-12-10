@@ -139,12 +139,15 @@ Also tweak the CI workflow accordingly. :sweat_smile:</code></pre>
 <div class="section level3">
 <h3 id="once-per-machine">Once per machine<a class="anchor" aria-label="anchor" href="#once-per-machine"></a>
 </h3>
-<p>Install from cynkra’s R-universe using:</p>
+<p>Install from CRAN using:</p>
+<pre class="chroma">
+<span class="nf"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="o">(</span><span class="s">"fledge"</span><span class="o">)</span></pre>
+<p>Install from cynkra’s R-universe (development version) using:</p>
 <pre class="chroma">
 <span class="nf"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="o">(</span><span class="s">"fledge"</span>, repos <span class="o">=</span> <span class="s">"https://cynkra.r-universe.dev"</span><span class="o">)</span></pre>
-<p>Or install from GitHub using:</p>
+<p>Or install from GitHub (development version as well) using:</p>
 <pre class="chroma">
-<span class="nf">devtools</span><span class="nf">::</span><span class="nf"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="o">(</span><span class="s">"cynkra/fledge"</span><span class="o">)</span></pre>
+<span class="nf">remotes</span><span class="nf">::</span><span class="nf"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="o">(</span><span class="s">"cynkra/fledge"</span><span class="o">)</span></pre>
 <p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>) available for all your interactive work, you might enjoy loading fledge in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
 </div>
 <div class="section level3">
@@ -211,6 +214,7 @@ Also tweak the CI workflow accordingly. :sweat_smile:</code></pre>
 <ul class="list-unstyled">
 <li><a href="https://github.com/cynkra/fledge/actions" class="external-link"><img src="https://github.com/cynkra/fledge/workflows/rcc/badge.svg" alt="rcc"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://cran.r-project.org/package=fledge" class="external-link"><img src="https://www.r-pkg.org/badges/version/fledge" alt="CRAN status"></a></li>
 <li><a href="https://app.codecov.io/gh/cynkra/fledge?branch=main" class="external-link"><img src="https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
