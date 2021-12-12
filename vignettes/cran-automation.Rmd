@@ -28,7 +28,7 @@ This runner is run every 2h (?) on the branch and calls `fledge::unleash()` ever
 The following list describes the conditions which need to be fulfilled for each state:
 
 - `pre_release()`: 
-  - No `CRAN-release` file exists.
+  - No `CRAN-SUBMISSION` file exists.
   - The package version number has a four component scheme.
   - There is no `cran-comments.md` file.
 - `release()`:

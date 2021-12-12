@@ -47,8 +47,8 @@ pre_release_impl <- function(which, force) {
   remote_name <- get_remote_name(main_branch)
 
   # Commit ignored files as early as possible
-  usethis::use_git_ignore("CRAN-RELEASE")
-  usethis::use_build_ignore("CRAN-RELEASE")
+  usethis::use_git_ignore("CRAN-SUBMISSION")
+  usethis::use_build_ignore("CRAN-SUBMISSION")
   commit_ignore_files()
 
   cli_h1("1. Creating a release branch and getting ready")
@@ -341,7 +341,7 @@ post_release <- function() {
 }
 
 post_release_impl <- function() {
-  check_only_modified(c(".Rbuildignore", "CRAN-RELEASE"))
+  check_only_modified(c(".Rbuildignore", "CRAN-SUBMISSION"))
 
   check_post_release()
 
@@ -377,16 +377,16 @@ check_post_release <- function() {
   # FIXME: Distinguish between public and private repo?
   check_gh_scopes()
 
-  cli_alert("Checking contents of {.file CRAN-RELEASE}.")
-  if (!file.exists("CRAN-RELEASE")) {
-    abort("File `CRAN-RELEASE` not found. Recreate with `devtools:::flag_release()`.")
+  cli_alert("Checking contents of {.file CRAN-SUBMISSION}.")
+  if (!file.exists("CRAN-SUBMISSION")) {
+    abort("File `CRAN-SUBMISSION` not found. Recreate with `devtools:::flag_release()`.")
   }
 
-  release <- paste(readLines("CRAN-RELEASE"), collapse = "\n")
+  release <- paste(readLines("CRAN-SUBMISSION"), collapse = "\n")
   rx <- "^.*[(]commit ([0-9a-f]+)[)].*$"
   commit <- grepl(rx, release)
   if (!commit) {
-    abort("Unexpected format of `CRAN-RELEASE` file. Recreate with `devtools:::flag_release()`.")
+    abort("Unexpected format of `CRAN-SUBMISSION` file. Recreate with `devtools:::flag_release()`.")
   }
   sha <- gsub(rx, "\\1", release)
 
@@ -394,7 +394,7 @@ check_post_release <- function() {
   repo_head_sha <- gert::git_log(max = 1)$commit
   if (!grepl(sha_rx, repo_head_sha)) {
     msg <- paste0(
-      "Commit recorded in `CRAN-RELEASE` file (", sha, ") ",
+      "Commit recorded in `CRAN-SUBMISSION` file (", sha, ") ",
       "different from HEAD (", repo_head_sha, "). ",
       "Reset to the correct commit or overwrite with `devtools:::flag_release()`."
     )
