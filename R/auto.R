@@ -383,12 +383,12 @@ check_post_release <- function() {
   }
 
   release <- paste(readLines("CRAN-SUBMISSION"), collapse = "\n")
-  rx <- "^.*[(]commit ([0-9a-f]+)[)].*$"
+  rx <- "^.*[(]sha: ([0-9a-f]+)[)].*$"
   commit <- grepl(rx, release)
-  if (!commit) {
+  if (!any(commit)) {
     abort("Unexpected format of `CRAN-SUBMISSION` file. Recreate with `devtools:::flag_release()`.")
   }
-  sha <- gsub(rx, "\\1", release)
+  sha <- gsub(rx, "\\1", release[commit])
 
   sha_rx <- paste0("^", sha)
   repo_head_sha <- gert::git_log(max = 1)$commit
