@@ -7,7 +7,7 @@
       v Found 1 NEWS-worthy entries.
       -- Updating NEWS --
       > Adding new entries to 'NEWS.md'.
-      -- Update Version --
+      -- Updating Version --
       v Package version bumped to 0.0.0.9001.
       > Adding header to 'NEWS.md'.
       > Committing changes.
@@ -42,7 +42,7 @@
       v Found 2 NEWS-worthy entries.
       -- Updating NEWS --
       > Adding new entries to 'NEWS.md'.
-      -- Update Version --
+      -- Updating Version --
       v Package version bumped to 0.0.0.9001.
       > Adding header to 'NEWS.md'.
       > Committing changes.

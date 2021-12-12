@@ -7,7 +7,7 @@
       v Found 1 NEWS-worthy entries.
       -- Updating NEWS --
       > Adding new entries to 'NEWS.md'.
-      -- Update Version --
+      -- Updating Version --
       v Package version bumped to 0.0.0.9001.
       > Adding header to 'NEWS.md'.
       > Committing changes.
@@ -26,14 +26,12 @@
       v Found 1 NEWS-worthy entries.
       -- Updating NEWS --
       > Adding new entries to 'NEWS.md'.
-      -- Update Version --
+      -- Updating Version --
       v Package version bumped to 1.0.0.
       > Adding header to 'NEWS.md'.
       > Committing changes.
-      i Preparing package for release (CRAN or otherwise).
-      ! Convert the change log in 'NEWS.md' to release notes.
-      ! After CRAN release, call `fledge::tag_version()` and
-      `fledge::bump_version()` to re-enter development mode
+      -- Preparing package for CRAN release --
+      * Convert the change log in 'NEWS.md' to release notes.
 
 # bump_version() errors informatively for forbidden notifications
 
