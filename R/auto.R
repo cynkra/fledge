@@ -94,7 +94,7 @@ pre_release_impl <- function(which, force) {
   cli_ul("Run {.code fledge::release()}.")
   cli_end()
 
-  send_to_console("checks <- callr::r_bg(function() { devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran(); urlchecker::url_update() })")
+  send_to_console("urlchecker <- urlchecker::url_update(); bg::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
 
   # Begin extension points
   # End extension points
