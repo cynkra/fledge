@@ -382,8 +382,8 @@ check_post_release <- function() {
     abort("File `CRAN-SUBMISSION` not found. Recreate with `devtools:::flag_release()`.")
   }
 
-  release <- paste(readLines("CRAN-SUBMISSION"), collapse = "\n")
-  rx <- "^.*[(]sha: ([0-9a-f]+)[)].*$"
+  release <- readLines("CRAN-SUBMISSION")
+  rx <- "^SHA: ([0-9a-f]+)$"
   commit <- grepl(rx, release)
   if (!any(commit)) {
     abort("Unexpected format of `CRAN-SUBMISSION` file. Recreate with `devtools:::flag_release()`.")
