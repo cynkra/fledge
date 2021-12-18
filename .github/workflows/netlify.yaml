@@ -1,22 +1,11 @@
 on:
-  push:
-    branches:
-    - master
-    - main
-    - "docs*"
-    - "cran-*"
-    - "r-*"
-    tags:
-    - "v*"
   pull_request:
     branches:
       - main
       - master
       - "r-*"
-  schedule:
-    - cron:  '20 0 * * *'
 
-name: pkgdown
+name: netlify
 
 jobs:
   pkgdown:
@@ -52,14 +41,6 @@ jobs:
           extra-packages: pkgdown
           needs: website
 
-      - name: Configure Git identity
-        if: github.event_name == 'push'
-        run: |
-          env | sort
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-        shell: bash
-
       - name: Session info
         run: |
           options(width = 100)
@@ -75,18 +56,15 @@ jobs:
         run: R CMD INSTALL . --with-keep.source --with-keep.parse.data
 
       - name: Create website
-        if: contains(env.isPush, 'false')
         run: |
           pkgdown::build_site()
         shell: Rscript {0}
 
       - name: Create index file
-        if: contains(env.isPush, 'false')
         run: |
           echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;URL=/dev/index.html" />  <script language="javascript"> window.location.replace('/dev/index.html')</script></head></html>' > ./docs/index.html
 
       - name: Deploy to Netlify
-        if: contains(env.isPush, 'false')
         id: netlify-deploy
         uses: nwtgck/actions-netlify@v1.1
         with:
@@ -101,12 +79,6 @@ jobs:
           # enable-commit-status: true
           #o verwrites-pull-request-comment: true
         timeout-minutes: 1
-
-      - name: Deploy to branch
-        if: contains(env.isPush, 'true')
-        run: |
-          pkgdown::deploy_to_branch(new_process = FALSE)
-        shell: Rscript {0}
 
       - name: Check rate limits
         if: always()
