@@ -82,7 +82,7 @@
 
       
 
-      </header><script src="fledge_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Get started with fledge</h1>
@@ -330,7 +330,7 @@ Fix #42</code></pre>
 <li><p>If you <strong>rebase after creating a tag</strong>, you need to call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to make sure the tag is moved to the mainline branch.</p></li>
 <li><p>If you <strong>pushed</strong> via <code>finalize_version(push = TRUE)</code> or <code>git push</code>, the tag may have been pushed as well. In this case, invoke</p></li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">git</span> push origin :vx.y.z.9www</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin :vx.y.z.9www</span></code></pre></div>
 <p>(where <code>x.y.z.9www</code> is the new version) to delete the newly created remote tag. This is the reason why {fledge} only tags <code>"dev"</code> releases automatically. Other releases always must be tagged manually with <code><a href="../reference/tag_version.html">tag_version()</a></code>.</p>
 </div>
 </div>
@@ -353,7 +353,7 @@ Fix #42</code></pre>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
       </footer>
