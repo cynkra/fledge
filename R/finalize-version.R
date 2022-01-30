@@ -9,7 +9,7 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   tag <- tag_version(force)
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
-    push_tag(tag)
+    push_tag(tag, force = TRUE)
     push_head()
   } else if (suggest_finalize) {
     edit_news()
@@ -19,20 +19,25 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
     } else {
       command <- "fledge::finalize_version()"
     }
-
-    cli_alert_warning("Call {.code {command}}.")
+    if (fledge_chatty()) {
+      cli_alert_warning("Call {.code {command}}.")
+    }
     send_to_console(command)
   }
 }
 
-push_tag <- function(tag) {
-  cli_alert("Force-pushing tag {.field {tag}}.")
+push_tag <- function(tag, force) {
+  if (fledge_chatty()) {
+    cli_alert("Force-pushing tag {.field {tag}}.")
+  }
   gert::git_tag_push(tag, force = force)
 }
 
 push_head <- function() {
   head <- gert::git_branch()
-  cli_alert('Pushing {.field {head}}.')
+  if (fledge_chatty()) {
+    cli_alert("Pushing {.field {head}}.")
+  }
   gert::git_push()
 }
 

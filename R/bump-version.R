@@ -3,7 +3,14 @@
 bump_version_impl <- function(which) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
-  stopifnot(gert::git_branch() == get_main_branch())
+  if (gert::git_branch() != get_main_branch()) {
+    rlang::abort(
+      c(
+        x = sprintf("Must be on the main branch (%s) for running fledge functions.", get_main_branch()),
+        i = sprintf("Currently on branch %s.", gert::git_branch())
+      )
+    )
+  }
   #' 1. [update_news()]
   update_news()
   #' 1. [update_version()], using the `which` argument
@@ -15,21 +22,30 @@ bump_version_impl <- function(which) {
   } else {
     #'     - Otherwise, [commit_version()].
     commit_version()
-    cli_alert_info("Preparing package for release (CRAN or otherwise).")
+    if (fledge_chatty()) {
+      cli_alert_info("Preparing package for release (CRAN or otherwise).")
+    }
+
     edit_news()
-    cli_alert_warning("Convert the change log in {.file {news_path}} to release notes.")
-    cli_alert_warning("After CRAN release, call {.fun fledge::tag_version} and
+
+    if (fledge_chatty()) {
+      cli_alert_warning("Convert the change log in {.file {news_path()}} to release notes.")
+      cli_alert_warning("After CRAN release, call {.fun fledge::tag_version} and
            {.fun fledge::bump_version} to re-enter development mode")
+    }
   }
 }
 
 get_main_branch <- function() {
   remote <- "origin"
   if (remote %in% gert::git_remote_list()$name) {
-    get_main_branch_remote(remote)
-  } else {
-    get_main_branch_config()
+    remote_main <- get_main_branch_remote(remote)
+    if (length(remote_main)) {
+      return(remote_main)
+    }
   }
+
+  get_main_branch_config()
 }
 
 get_main_branch_remote <- function(remote) {
@@ -39,5 +55,13 @@ get_main_branch_remote <- function(remote) {
 
 get_main_branch_config <- function() {
   config <- gert::git_config()
-  config$value[config$name == "init.defaultbranch"]
+  init <- config[config$name == "init.defaultbranch", ]
+  local <- init[init$level == "local", ]
+
+  if (length(local)) {
+    return(local$value)
+  }
+
+  global <- init[init$level == "global"]
+  return(global$value)
 }

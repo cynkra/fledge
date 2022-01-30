@@ -1,43 +1,44 @@
 Package: fledge
-Title: Wings for Your R Packages
-Version: 0.0.5.9001
-Date: 2021-03-29
-Authors@R: 
-    c(person(given = "Kirill",
-             family = "M\u00fcller",
-             role = c("aut", "cre"),
-             email = "krlmlr+r@mailbox.org",
-             comment = c(ORCID = "0000-0002-1416-3412")),
-      person(given = "Patrick",
-             family = "Schratz",
-             role = "aut",
-             email = "patrick.schratz@gmail.com",
-             comment = c(ORCID = "0000-0003-0748-6624")))
-Description: Streamlines the process of versioning R packages and updating
-    NEWS. Numbers are cheap, why not use them?
+Title: Smoother Change Tracking and Versioning for R Packages
+Version: 0.1.0.9000
+Date: 2021-12-07
+Authors@R: c(
+    person("Kirill", "Müller", , "krlmlr+r@mailbox.org", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0002-1416-3412")),
+    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-0748-6624")),
+    person("Maëlle", "Salmon", , "msmaellesalmon@gmail.com", role = "ctb",
+           comment = c(ORCID = "0000-0002-2815-0399"))
+  )
+Description: Streamlines the process of updating changelogs (NEWS.md) and
+    versioning R packages developed in git repositories.
 License: GPL-3
-URL: http://cynkra.github.io/fledge, https://github.com/cynkra/fledge
+URL: https://cynkra.github.io/fledge/, https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
     cli,
     desc (>= 1.2.0),
     enc,
-    gert (>= 1.0.0),
-    lifecycle,
+    gert (>= 1.4.0),
     purrr (>= 0.3.2),
     rematch2,
-    rlang,
+    rlang (>= 0.4.12),
     tibble,
     usethis (>= 1.5.0),
+    whoami,
     withr
 Suggests: 
+    brio,
+    callr,
     callr,
     covr,
     fansi,
     fs,
     galley (>= 0.0.0.9002),
     knitr,
+    mockery,
     parsedate,
+    pkgload,
     rmarkdown,
     rstudioapi,
     testthat (>= 3.0.0)
@@ -48,4 +49,4 @@ Remotes:
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

@@ -1,0 +1,13 @@
+### Edge cases
+
+* If you **rebase after creating a tag**, you need to call `finalize_version()` to make sure the tag is moved to the mainline branch.
+
+* If you **pushed** via `finalize_version(push = TRUE)` or `git push`, the tag may have been pushed as well. In this case, invoke
+
+```sh
+git push origin :vx.y.z.9www
+```
+
+(where `x.y.z.9www` is the new version) to delete the newly created remote tag.
+This is the reason why {fledge} only tags `"dev"` releases automatically.
+Other releases always must be tagged manually with `tag_version()`.
