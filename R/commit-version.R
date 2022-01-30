@@ -1,18 +1,22 @@
 commit_version_impl <- function() {
-  check_only_staged(c("DESCRIPTION", news_path))
+  check_only_staged(c("DESCRIPTION", news_path()))
 
   if (is_last_commit_bump()) {
-    cli_alert("Resetting to previous commit.")
+    if (fledge_chatty()) {
+      cli_alert("Resetting to previous commit.")
+    }
     gert::git_reset_soft(gert::git_log(max = 2)[2, "commit"])
     amending <- TRUE
   } else {
     amending <- FALSE
   }
 
-  gert::git_add(c("DESCRIPTION", news_path))
+  gert::git_add(c("DESCRIPTION", news_path()))
 
   if (nrow(gert::git_status(staged = TRUE)) > 0) {
-    cli_alert("Committing changes.")
+    if (fledge_chatty()) {
+      cli_alert("Committing changes.")
+    }
 
     # For stable examples output (R Markdown etc.)
     # Default to DESCRIPTION fields
@@ -46,7 +50,7 @@ check_clean <- function(forbidden_modifications) {
   status <- gert::git_status()
   unexpected <- forbidden_modifications[forbidden_modifications %in% status$file]
 
-  if (length(unexpected) == 0){
+  if (length(unexpected) == 0) {
     return()
   }
 
@@ -60,7 +64,6 @@ check_clean <- function(forbidden_modifications) {
       i = "Commit the change(s) before running any fledge function again."
     )
   )
-
 }
 
 check_only_staged <- function(allowed_modifications) {
@@ -78,7 +81,6 @@ in_example <- function() {
 
   is_test_repo <- (!is.na(desc::desc_get("context")))
   is_test_repo && !rlang::is_interactive()
-
 }
 
 desc_author_name <- function() {

@@ -10,11 +10,13 @@ update_version_impl <- function(which) {
 
   new_version <- desc$get_version()
 
-  cli_h2("Update Version")
+  if (fledge_chatty()) {
+    cli_h2("Update Version")
 
-  cli_alert_success("Package version bumped to {.field {new_version}}.")
+    cli_alert_success("Package version bumped to {.field {new_version}}.")
 
-  cli_alert("Adding header to {.file {news_path}}.")
+    cli_alert("Adding header to {.file {news_path()}}.")
+  }
 
   header <- paste0(
     "# ", desc$get("Package"), " ", new_version,
@@ -38,7 +40,7 @@ date_in_news_headers <- function() {
 }
 
 get_news_headers <- function() {
-  news <- readLines(news_path)
+  news <- readLines(news_path())
   rx <- "^# +(?<package>[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]) +(?<version>[0-9][0-9.-]*) *(?<extra>.*)$"
   out <- rematch2::re_match(news, rx)
   out <- tibble::add_column(out, line = seq_len(nrow(out)), .before = 1)

@@ -23,7 +23,7 @@ in_pkgdown <- identical(Sys.getenv("IN_PKGDOWN"), "true")
 if (in_pkgdown) {
   options(crayon.enabled = TRUE)
 }
-
+options(cli.num_colors = 1)
 knitr::opts_chunk$set(
   collapse = TRUE,
   error = !in_pkgdown
@@ -46,10 +46,12 @@ The `usethis::create_package()` function sets up a package project ready for dev
 pkg <- usethis::create_package("tea")
 ```
 
-```{r create-package-real, echo = FALSE}
-pkg_dir <- file.path(tempdir(), "fledge")
-dir.create(pkg_dir, recursive = TRUE)
-pkg <- fledge::create_demo_project("tea", open = FALSE, dir = pkg_dir)
+```{r create-package-real, echo = FALSE, message=FALSE, warning=FALSE}
+parent_dir <- file.path(tempdir(), "fledge")
+dir.create(parent_dir, recursive = TRUE)
+dir.create(file.path(parent_dir, "remote"))
+gert::git_init(file.path(parent_dir, "remote"), bare = TRUE)
+pkg <- fledge::create_demo_project("tea", open = FALSE, dir = parent_dir)
 ```
 
 In an interactive RStudio session, a new window opens and you would work there.
@@ -60,14 +62,21 @@ For this demo, we manually set the active project.
 knitr::opts_knit$set(root.dir = pkg)
 ```
 
-```{r pkg-location}
+```{r pkg-location, echo=FALSE}
+withr::with_options(
+  list("usethis.quiet" = TRUE), 
+  usethis::proj_set()
+)
+```
+
+```{r pkg-location2, eval=FALSE}
 usethis::proj_set()
 ```
 
 The infrastructure files and directories that comprise a minimal R package are created:
 
 ```{r dir-tree}
-fs::dir_tree()
+fs::dir_ls()
 ```
 
 ### Create and configure a Git repository
@@ -78,7 +87,9 @@ We achieved this with gert code.
 You could use `usethis::use_git()` function that creates an initial commit, and the repository is in a clean state.
 
 ```{r git-show-init}
-gert::git_log()
+# Number of commits until now
+nrow(gert::git_log())
+# Anything staged?
 gert::git_status()
 ```
 
@@ -90,6 +101,41 @@ gert::git_config_set("merge.ff", "false")
 ```
 
 An alternative is to use squash commits.
+
+We also set up a git remote.
+In real life you might be using a function like `usethis::use_github()`.
+We set up a local remote using a git repo we secretly created earlier.
+
+```{r git-remote, echo=FALSE, message=TRUE}
+# In real life this would be an actual URL not a filepath :-)
+remote_url <- file.path(parent_dir, "remote")
+gert::git_remote_add(remote_url, name = "origin")
+gert::git_push(remote = "origin")
+```
+
+We create two functions to show the contents and tags of the remote.
+In real life, you'd probably simply browse the GitHub interface for instance!
+
+```{r git-show}
+show_files <- function(remote_url) {
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  withr::with_dir(tempdir_remote, {
+    repo <- gert::git_clone(remote_url)  
+    suppressMessages(gert::git_branch_checkout("main", force = TRUE, repo = "remote"))
+    fs::dir_ls("remote", recurse = TRUE)
+  })
+}
+show_files(remote_url)
+
+show_tags <- function(remote_url) {
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  withr::with_dir(tempdir_remote, {
+    gert::git_clone(remote_url)  
+    # Only show name and ref
+    gert::git_tag_list(repo = "remote")[, c("name", "ref")]
+  })
+}
+```
 
 ### Create initial NEWS.md file
 
@@ -111,6 +157,11 @@ This file needs to be tracked by Git:
 ```{r init-news-commit, results='hide'}
 gert::git_add("NEWS.md")
 gert::git_commit("Initial NEWS.md .")
+gert::git_push(remote = "origin")
+```
+
+```{r news-remote}
+show_files(remote_url)
 ```
 
 :::{.alert .alert-info}
@@ -143,7 +194,11 @@ What's important is the content of the commit message.
 ```{r commit-cup, results='hide'}
 gert::git_add("R/cup.R")
 gert::git_commit("- New cup_of_tea() function makes it easy to drink a cup of tee.")
+gert::git_push()
+```
 
+```{r cup-remote}
+show_files(remote_url)
 ```
 
 ### Create a test
@@ -163,6 +218,11 @@ gert::git_add("DESCRIPTION")
 gert::git_add("tests/testthat.R")
 gert::git_add("tests/testthat/test-cup.R")
 gert::git_commit("- Add tests for cup of tea.")
+gert::git_push()
+```
+
+```{r cup-test-remote}
+show_files(remote_url)
 ```
 
 ### Update NEWS.md
@@ -171,7 +231,8 @@ Let us look at the commit history until now.
 You might use any Git tool you want to consult it, we use gert.
 
 ```{r commit-log}
-knitr::kable(gert::git_log())
+# Only show number of files, messages
+knitr::kable(gert::git_log()[-(1:3)])
 ```
 
 We have two "bulletted" messages which for fledge means two NEWS-worthy messages.
@@ -232,11 +293,10 @@ It should be called when `NEWS.md` is manually updated.
 Note that it should be called after `fledge::bump_version()`, an error is raised if another commit has been added after that.
 
 ```{r news-finalize}
-fledge::finalize_version()
+show_tags(remote_url)
+fledge::finalize_version(push = TRUE)
+show_tags(remote_url)
 ```
-
-When done, we push to the *remote* (GitHub or another Git service) with tags using `fledge::finalize_version(push = TRUE)`, as advised.
-In this demo, no remote repository is set up, and the push process is not shown.
 
 Let's look at NEWS.md now:
 
@@ -305,6 +365,7 @@ Now that we have added bowl support to our package, it is time to bump the versi
 fledge::bump_version()
 news <- readLines("NEWS.md")
 writeLines(news)
+fledge::finalize_version(push = TRUE)
 ```
 
 It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
@@ -360,6 +421,7 @@ It is now the time to tag the released version using the `fledge::tag_version()`
 
 ```{r tag}
 fledge::tag_version()
+show_tags(remote_url)
 ```
 
 It is advised to push to remote, with `git push --tags` from the command line, or your favorite Git client.
@@ -387,5 +449,5 @@ knitr::opts_knit$set(root.dir = dirname(knitr::current_input(dir = TRUE)))
 ```
 
 ```{r end2, pkg=FALSE, eval=TRUE}
-unlink(pkg_dir, recursive = TRUE)
+unlink(parent_dir, recursive = TRUE)
 ```

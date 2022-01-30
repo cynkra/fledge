@@ -29,3 +29,4 @@ reference:
 - title: Helper for fledge demonstration
   contents:
   - create_demo_project
+  - with_demo_project

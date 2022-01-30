@@ -1,15 +1,21 @@
 ### Once per machine
 
-Install from cynkra's R-universe using:
+Install from CRAN using:
+
+```r
+install.packages("fledge")
+```
+
+Install from cynkra's R-universe (development version) using:
 
 ```r
 install.packages("fledge", repos = "https://cynkra.r-universe.dev")
 ```
 
-Or install from GitHub using:
+Or install from GitHub (development version as well) using:
 
 ```r
-devtools::install_github("cynkra/fledge")
+remotes::install_github("cynkra/fledge")
 ```
 
 If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, 

@@ -12,15 +12,16 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 # fledge
 
 > Smoother change tracking and versioning for R packages.
 
 <!-- badges: start -->
 [![rcc](https://github.com/cynkra/fledge/workflows/rcc/badge.svg)](https://github.com/cynkra/fledge/actions)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge)
-[![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg)](https://codecov.io/gh/cynkra/fledge?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg)](https://app.codecov.io/gh/cynkra/fledge?branch=main)
 <!-- badges: end -->
 
 ```{r child="man/rmd-fragments/pitch.Rmd"} 

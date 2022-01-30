@@ -9,20 +9,22 @@ test_that("unbump_version() works", {
     email = "mail@example.com"
   )
   usethis::with_project(
-    path = repo, {
+    path = repo,
+    {
       withr::local_options(usethis.quiet = TRUE)
       withr::local_envvar(FLEDGE_UNBUMP_TEST_COMMIT = "42")
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.", author = default_gert_author(), committer = default_gert_committer())
-      testthat::expect_snapshot({
-        bump_version()
-        unbump_version()
-        use_r("blop")
-        gert::git_add("R/blop.R")
-        c <- gert::git_commit("* Add cool blop.", author = default_gert_author(), committer = default_gert_committer())
-        bump_version()
-      },
+      testthat::expect_snapshot(
+        {
+          bump_version()
+          unbump_version()
+          use_r("blop")
+          gert::git_add("R/blop.R")
+          c <- gert::git_commit("* Add cool blop.", author = default_gert_author(), committer = default_gert_committer())
+          bump_version()
+        },
         variant = rlang_version()
       )
     },

@@ -1,20 +1,27 @@
 Package: fledge
-Title: Smoother change tracking and versioning for R packages
-Version: 0.0.5.9004
-Date: 2021-11-21
-Authors@R: c(
-    person("Kirill", "Müller", , "krlmlr+r@mailbox.org", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-1416-3412")),
-    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = "aut",
-           comment = c(ORCID = "0000-0003-0748-6624")),
-    person("Maëlle", "Salmon", , "maelle.salmon@yahoo.se", role = "ctb",
-           comment = c(ORCID = "0000-0002-2815-0399"))
-  )
-Description: Streamlines the process of updating changelogs
-    (NEWS.md)
+Title: Smoother Change Tracking and Versioning for R Packages
+Version: 0.1.0.9000
+Date: 2021-12-07
+Authors@R: 
+    c(person(given = "Kirill",
+             family = "M\u00fcller",
+             role = c("aut", "cre", "cph"),
+             email = "krlmlr+r@mailbox.org",
+             comment = c(ORCID = "0000-0002-1416-3412")),
+      person(given = "Patrick",
+             family = "Schratz",
+             role = "aut",
+             email = "patrick.schratz@gmail.com",
+             comment = c(ORCID = "0000-0003-0748-6624")),
+      person(given = "Maëlle", 
+             family = "Salmon",
+             role = "ctb",
+             email = "msmaellesalmon@gmail.com",
+             comment = c(ORCID = "0000-0002-2815-0399")))
+Description: Streamlines the process of updating changelogs (NEWS.md)
     and versioning R packages developed in git repositories.
 License: GPL-3
-URL: http://cynkra.github.io/fledge,
+URL: https://cynkra.github.io/fledge/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
@@ -22,7 +29,6 @@ Imports:
     desc (>= 1.2.0),
     enc,
     gert (>= 1.4.0),
-    lifecycle,
     purrr (>= 0.3.2),
     rematch2,
     rlang (>= 0.4.12),
@@ -31,6 +37,7 @@ Imports:
     whoami,
     withr
 Suggests: 
+    mockery,
     covr,
     fansi,
     fs,
@@ -38,7 +45,10 @@ Suggests:
     parsedate,
     rmarkdown,
     rstudioapi,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    brio,
+    callr,
+    pkgload
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
