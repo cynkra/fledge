@@ -2,7 +2,7 @@
 title: "Using fledge"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{demo}
+  %\VignetteIndexEntry{Using fledge}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -556,6 +556,7 @@ fledge::bump_version("patch")
 ## i Preparing package for release (CRAN or otherwise).
 ## * Edit 'NEWS.md'
 ## ! Convert the change log in 'NEWS.md' to release notes.
+## 
 ## ! After CRAN release, call `fledge::tag_version()` and
 ## `fledge::bump_version()` to re-enter development mode
 ```
