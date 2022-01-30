@@ -1,15 +1,36 @@
-url: https://cynkra.github.io/fledge
+url: https://fledge.cynkra.com
 
 template:
-  params:
-    bootswatch: flatly # https://bootswatch.com/flatly/
+  package: cynkratemplate
+
+destination: docs
 
 development:
   mode: auto
 
+navbar:
+  structure:
+    left: [news, articles]
+    right: [reference, projects, consulting, github]
+  components:
+    home: ~
+    reference:
+      text: REFERENCE
+      href: reference/index.html
+    projects:
+      text: PROJECTS
+      href: https://www.cynkra.com/projects.html
+    consulting:
+      text: CONSULTING
+      href: https://www.cynkra.com/consulting.html
+
 authors:
   Kirill Müller:
     href: https://krlmlr.info
+  Patrick Schratz:
+    href: https://pat-s.me
+  Maëlle Salmon:
+    href: https://masalmon.eu
 
 # Also update the table in man/rmd.fragments/functions.Rmd
 reference:

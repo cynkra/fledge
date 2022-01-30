@@ -2,7 +2,7 @@
 title: "Get started with fledge"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{fledge}
+  %\VignetteIndexEntry{Get started with fledge}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
