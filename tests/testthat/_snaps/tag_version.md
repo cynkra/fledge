@@ -2,7 +2,7 @@
 
     Code
       tag_version()
-    Message <cliMessage>
+    Message
       
       -- Tagging Version --
       
@@ -26,7 +26,7 @@
 
     Code
       tag_version(force = TRUE)
-    Message <cliMessage>
+    Message
       
       -- Tagging Version --
       

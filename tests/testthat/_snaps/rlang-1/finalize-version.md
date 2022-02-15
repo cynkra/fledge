@@ -2,7 +2,7 @@
 
     Code
       finalize_version(push = FALSE)
-    Message <cliMessage>
+    Message
       > Resetting to previous commit.
       > Committing changes.
       
@@ -15,7 +15,7 @@
 
     Code
       finalize_version(push = TRUE)
-    Message <cliMessage>
+    Message
       > Resetting to previous commit.
       > Committing changes.
       

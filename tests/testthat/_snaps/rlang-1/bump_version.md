@@ -2,7 +2,7 @@
 
     Code
       bump_version()
-    Message <cliMessage>
+    Message
       > Scraping 3 commit messages.
       v Found 1 NEWS-worthy entries.
       
@@ -27,7 +27,7 @@
 
     Code
       bump_version(which = "major")
-    Message <cliMessage>
+    Message
       > Scraping 3 commit messages.
       v Found 1 NEWS-worthy entries.
       
