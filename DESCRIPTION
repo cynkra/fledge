@@ -25,6 +25,7 @@ URL: https://cynkra.github.io/fledge/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
+    callr,
     cli,
     clipr,
     desc (>= 1.2.0),
@@ -35,27 +36,28 @@ Imports:
     gh,
     glue,
     httr,
+    processx,
     purrr (>= 0.3.2),
     rematch2,
     rlang (>= 0.4.12),
     rversions,
     tibble,
     usethis (>= 2.1.5),
+    vctrs,
     whoami,
     withr
 Suggests: 
-    mockery,
+    brio,
     covr,
     fansi,
     fs,
     knitr,
+    mockery,
     parsedate,
+    pkgload,
     rmarkdown,
     rstudioapi,
-    testthat (>= 3.0.0),
-    brio,
-    callr,
-    pkgload
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
