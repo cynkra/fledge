@@ -18,16 +18,14 @@ test_that("unbump_version() works", {
       use_r("bla")
       gert::git_add("R/bla.R")
       gert::git_commit("* Add cool bla.", author = default_gert_author(), committer = default_gert_committer())
-      testthat::expect_snapshot(
-        {
-          bump_version()
-          unbump_version()
-          use_r("blop")
-          gert::git_add("R/blop.R")
-          c <- gert::git_commit("* Add cool blop.", author = default_gert_author(), committer = default_gert_committer())
-          bump_version()
-        }
-      )
+      testthat::expect_snapshot(variant = snapshot_variant("testthat"), {
+        bump_version()
+        unbump_version()
+        use_r("blop")
+        gert::git_add("R/blop.R")
+        c <- gert::git_commit("* Add cool blop.", author = default_gert_author(), committer = default_gert_committer())
+        bump_version()
+      })
     },
     quiet = TRUE
   )
