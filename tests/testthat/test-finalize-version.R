@@ -13,7 +13,7 @@ test_that("finalize_version(push = FALSE)", {
     news <- sub("Ad cool", "Add cool", news)
     writeLines(news, "NEWS.md")
 
-    expect_snapshot(finalize_version(push = FALSE))
+    expect_snapshot(finalize_version(push = FALSE), variant = snapshot_variant("testthat"))
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-push-false.md"))
   })
 
@@ -39,10 +39,12 @@ test_that("finalize_version(push = TRUE)", {
     news <- sub("Ad cool", "Add cool", news)
     writeLines(news, "NEWS.md")
 
-    expect_snapshot(finalize_version(push = TRUE))
+    expect_snapshot(variant = snapshot_variant("testthat"), {
+      finalize_version(push = TRUE)
+      show_tags(remote_url)
+      show_files(remote_url)
+    })
     file.copy("NEWS.md", file.path(news_tempdir, "NEWS-push-true.md"))
-    expect_snapshot(show_tags(remote_url))
-    expect_snapshot(show_files(remote_url))
   })
 
   expect_snapshot_file(

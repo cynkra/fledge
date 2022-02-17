@@ -25,9 +25,6 @@
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
       > Force-pushing tag v0.0.0.9001.
       > Pushing main.
-
----
-
     Code
       show_tags(remote_url)
     Output
@@ -35,9 +32,6 @@
         name        ref                  
         <chr>       <chr>                
       1 v0.0.0.9001 refs/tags/v0.0.0.9001
-
----
-
     Code
       show_files(remote_url)
     Output
