@@ -436,16 +436,8 @@ is_ignored <- function(path) {
 }
 
 create_pull_request <- function(release_branch, main_branch, remote_name, force) {
-  if (force) {
-    # Remove cached config so that pr_url() always checks
-    # if we happened to overwrite the branch
-    config_url <- glue("branch.{release_branch}.pr-url")
-    gert::git_config_set(config_url, NULL)
-
-    create <- is.null(usethis:::pr_url())
-  } else {
-    create <- TRUE
-  }
+  # FIXME: Use gh::gh() to determine if we need to create the pull request
+  create <- TRUE
 
   if (create) {
     info <- github_info(remote = remote_name)
@@ -466,6 +458,8 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       body = body
     )
   }
+
+  # FIXME: Use response from gh() call to open URL
   usethis::pr_view()
 }
 
