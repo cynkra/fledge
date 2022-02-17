@@ -36,14 +36,12 @@ Imports:
     gh,
     glue,
     httr,
-    processx,
     purrr (>= 0.3.2),
     rematch2,
     rlang (>= 0.4.12),
     rversions,
     tibble,
     usethis (>= 2.1.5),
-    vctrs,
     whoami,
     withr
 Suggests: 

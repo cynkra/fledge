@@ -3,10 +3,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @import callr
-#' @import processx
 #' @import rlang
-#' @import vctrs
 ## usethis namespace: end
 NULL
 #'
@@ -17,7 +14,7 @@ new_bg <- function(x) {
   stopifnot(is.list(x))
   stopifnot(vapply(x, inherits, what = "process", logical(1)))
 
-  new_list_of(x, class = "bg")
+  vctrs::new_list_of(x, class = "bg")
 }
 
 print.bg <- function(x, ...) {
@@ -104,7 +101,7 @@ bg_r <- function(...) {
   quos <- enquos(...)
   squashed <- lapply(quos, quo_squash, warn = TRUE)
   funs <- lapply(squashed, new_function, args = list())
-  processes <- lapply(funs, r_bg)
+  processes <- lapply(funs, callr::r_bg)
   new_bg(processes)
 }
 
