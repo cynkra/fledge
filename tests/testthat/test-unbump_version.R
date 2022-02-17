@@ -1,4 +1,6 @@
 test_that("unbump_version() works", {
+  skip_if_not_installed("rlang", "1.0.1")
+
   tempdir <- withr::local_tempdir(pattern = "fledge-unbump")
   rlang::local_interactive(value = FALSE)
   repo <- create_demo_project(
@@ -24,8 +26,7 @@ test_that("unbump_version() works", {
           gert::git_add("R/blop.R")
           c <- gert::git_commit("* Add cool blop.", author = default_gert_author(), committer = default_gert_committer())
           bump_version()
-        },
-        variant = rlang_version()
+        }
       )
     },
     quiet = TRUE
