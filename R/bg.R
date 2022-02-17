@@ -24,7 +24,7 @@ print.bg <- function(x, ...) {
   bg_livelog(x)
 }
 
-bg_livelog <- function(x, handle = NULL) {
+bg_livelog <- function(x) {
   names <- names2(x)
 
   spinner <- c("-", "/", "|", "\\")
@@ -107,8 +107,4 @@ bg_r <- function(...) {
   processes <- lapply(funs, r_bg)
   new_bg(processes)
 }
-
-bg_env <- new.env(parent = emptyenv())
-
-ids::adjective_animal(style = "kebab")
 
