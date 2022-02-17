@@ -55,7 +55,8 @@ Suggests:
     pkgload,
     rmarkdown,
     rstudioapi,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vctrs
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
