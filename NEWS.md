@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9001 (2022-02-22)
+
+- New `pre_release()`, `release()` and `post_release()` for semi-automatic CRAN releases (#27, #28).
+- Separate snapshot tests for dev version of testthat.
+
+
 # fledge 0.1.0.9000 (2021-12-07)
 
 - Same as previous version.
