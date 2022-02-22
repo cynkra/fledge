@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fledge internals • fledge</title>
+<title>Automate CRAN releases • fledge</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Fledge internals">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Automate CRAN releases">
 <meta property="og:description" content="fledge">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -88,69 +88,93 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Fledge internals</h1>
+      <h1 data-toc-skip>Automate CRAN releases</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/HEAD/vignettes/internals.Rmd" class="external-link"><code>vignettes/internals.Rmd</code></a></small>
-      <div class="hidden name"><code>internals.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/HEAD/vignettes/cran-automation.Rmd" class="external-link"><code>vignettes/cran-automation.Rmd</code></a></small>
+      <div class="hidden name"><code>cran-automation.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cynkra.github.io/fledge/">fledge</a></span><span class="op">)</span></code></pre></div>
 <div class="section level2">
-<h2 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h2>
-<p>The following sections explain how things actually work inside fledge.</p>
-<div class="section level3">
-<h3 id="updating-news-md">Updating <code>NEWS.md</code><a class="anchor" aria-label="anchor" href="#updating-news-md"></a>
-</h3>
-<p>New entries are added to <code>NEWS.md</code> from commit messages to commits in <code>master</code>.</p>
+<p>{fledge} is able to automate a CRAN release, both locally and via continuous integration (CI). The only difference between the local and the CI approach is that the user has to call <code>fledge::unleash()</code> (or its child functions) manually after each step.</p>
+<p>In the following we describe the workflow via the CI approach. If a CI build is triggered by a tag (i.e. a release was made), a specific runner in the build matrix is being run which calls <code>fledge::unleash()</code>. This runner is run every 2h (?) on the branch and calls <code>fledge::unleash()</code> every time.</p>
+</div>
+<div class="section level2">
+<h2 id="execution-conditions">Execution Conditions<a class="anchor" aria-label="anchor" href="#execution-conditions"></a>
+</h2>
+<p>The following list describes the conditions which need to be fulfilled for each state:</p>
 <ul>
-<li><p>Only top-level commits are considered (roughly equivalent to <code>git log --first-parent</code>.) The messages from these commits are parsed. Only lines that start with a star <code>*</code> or a dash <code>-</code> are included.</p></li>
 <li>
-<p>If a line starts with three dashes, then everything past that line is excluded. Example: the following commit message</p>
-<pre><code>Merge f-fancy-feature to master, closes #5678
-
-- Added fancy feature (#5678).
-
-- Fixed bug as a side effect (#9012).
-
----
-
-The fancy feature consists of the components:
-
-- foo
-- bar
-- baz</code></pre>
-<p>will be added as below to <code>NEWS.md</code>:</p>
-<pre><code>- Added fancy feature (#5678).
-- Fixed bug as a side effect (#9012).</code></pre>
+<code><a href="../reference/release.html">pre_release()</a></code>:
+<ul>
+<li>No <code>CRAN-SUBMISSION</code> file exists.</li>
+<li>The package version number has a four component scheme.</li>
+<li>There is no <code>cran-comments.md</code> file.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/release.html">release()</a></code>:
+<ul>
+<li>Three component package version.</li>
+<li>A <code>cran-comments.md</code> file exists.</li>
+<li>The local package version is smaller than the one on CRAN.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/release.html">post_release()</a></code>:
+<ul>
+<li>The local version is equal to the CRAN version.</li>
+<li>All boxes in <code>cran-comments.md</code> are checked.</li>
+</ul>
 </li>
 </ul>
-<p>When retrieving the current NEWS for defining the tag message, the entries between the first two first-level headers (starting with <code>#</code>) are returned. You can use second and third level headers and add as many empty lines as you want.</p>
-</div>
-<div class="section level3">
-<h3 id="collecting-news">Collecting NEWS<a class="anchor" aria-label="anchor" href="#collecting-news"></a>
-</h3>
-<p>The first function to call at any stage is always <code><a href="../reference/bump_version.html">bump_version()</a></code>. This does the following</p>
-<ol style="list-style-type: decimal">
-<li><p>Calls <code><a href="../reference/update_news.html">update_news()</a></code> to collect NEWS entries from top-level commits.</p></li>
-<li><p>Calls <code><a href="../reference/update_version.html">update_version()</a></code> to increment the version in <code>DESCRIPTION</code> and add a header to <code>NEWS.md</code>.</p></li>
-</ol>
-</div>
-<div class="section level3">
-<h3 id="tagging-for-dev-vs--other-releases">Tagging for “dev” vs. other releases<a class="anchor" aria-label="anchor" href="#tagging-for-dev-vs--other-releases"></a>
-</h3>
-<p><code><a href="../reference/bump_version.html">bump_version()</a></code> continues depending on the release type:</p>
+<p>Possible improvements: - Let the user forward specific CRAN mails so fledge can check the required boxes itself. Currently users needs to check the boxes in <code>cran-comments.md</code> themselves. - Make strict NEWS checking optional - The branch creation should be optional (TRUE by default).</p>
+<p><code>unleash()</code> wraps</p>
 <ul>
-<li>
-<code>"dev"</code> releases: Calls <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to commit <code>DESCRIPTION</code> and <code>NEWS.md</code>. Also creates a tag with a message. You can always edit <code>NEWS.md</code> and call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> again. Both the commit and the tag will be updated.</li>
-<li>Other releases: Calls <code><a href="../reference/commit_version.html">commit_version()</a></code> to commit <code>DESCRIPTION</code> and <code>NEWS.md</code> without tagging. In this stage, you can edit <code>NEWS.md</code> and commit as much as you like. The tag is created only after you use <code><a href="../reference/tag_version.html">tag_version()</a></code> manually.</li>
+<li><code><a href="../reference/release.html">fledge::pre_release()</a></code></li>
+<li><code><a href="../reference/release.html">fledge::release()</a></code></li>
+<li><code><a href="../reference/release.html">fledge::post_release()</a></code></li>
 </ul>
 </div>
+<div class="section level2">
+<h2 id="execution-actions">Execution Actions<a class="anchor" aria-label="anchor" href="#execution-actions"></a>
+</h2>
+<p>The following list describes the actions of each state function:</p>
+<ul>
+<li>
+<code><a href="../reference/release.html">pre_release()</a></code>
+<ul>
+<li>Creates <code>cran-comments.md</code> from template.</li>
+<li>Creates a branch named <code>r-release&lt;version&gt;</code>.</li>
+<li>Check recent changes to CRAN policies via <code>eddelbuettel/crp@master</code>.</li>
+<li>Calls <code><a href="https://devtools.r-lib.org/reference/check_win.html" class="external-link">devtools::check_win_devel()</a></code>.</li>
+<li>Calls <code>rhub::check_for_cran()</code>.</li>
+<li>Calls <code><a href="https://rdrr.io/pkg/foghorn/man/cran_details.html" class="external-link">foghorn::cran_details()</a></code>.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/release.html">release()</a></code>
+<ul>
+<li>Calls <code><a href="https://devtools.r-lib.org/reference/submit_cran.html" class="external-link">devtools::submit_cran()</a></code>.</li>
+<li>Calls <code>fledge:::confirm_submission()</code>.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/release.html">post_release()</a></code>
+<ul>
+<li>Calls <code><a href="../reference/tag_version.html">fledge::tag_version()</a></code>.</li>
+<li>Calls <code>git push --tags</code>.</li>
+<li>Calls <code><a href="https://usethis.r-lib.org/reference/use_github_release.html" class="external-link">usethis::use_github_release()</a></code>.</li>
+<li>Calls <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> to switch to dev version again.</li>
+</ul>
+</li>
+</ul>
+<p>After <code><a href="../reference/release.html">post_release()</a></code>, the Pull Request should be merged and the branch deleted.</p>
 </div>
   </div>
 

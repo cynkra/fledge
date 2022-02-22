@@ -24,7 +24,7 @@ Force-pushes the created tag to the "origin" remote, if push = TRUE.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9001</span>
       </span>
     </div>
 
@@ -42,6 +42,9 @@ Force-pushes the created tag to the "origin" remote, if push = TRUE.
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/cran-automation.html">Automate CRAN releases</a>
+    </li>
+    <li>
       <a href="../articles/demo.html">Using fledge</a>
     </li>
     <li>
@@ -113,7 +116,7 @@ amended a commit.</p></li>
 <span class="r-in">  <span class="co"># Once done</span></span>
 <span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu">finalize_version</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpCAInRa/fledge1c273f3ecc46/tea'</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpSe58UG/fledge1c8b4b74d85c/tea'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'R/cool-function.R'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Call <span style="color: #555555;">`use_test()`</span> to create a matching test file</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Scraping <span style="color: #00BB00;">3</span> commit messages.</span>
@@ -124,7 +127,7 @@ amended a commit.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Adding new entries to <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to leave       this field out completely. It is not required.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Update Version</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Updating Version</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Package version bumped to <span style="color: #00BB00;">0.0.0.9001</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Adding header to <span style="color: #0000BB;">NEWS.md</span>.</span>
@@ -133,7 +136,6 @@ amended a commit.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Tagging Version</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Creating tag <span style="color: #00BB00;">v0.0.0.9001</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'NEWS.md'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Call `fledge::finalize_version()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Resetting to previous commit.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Committing changes.</span>

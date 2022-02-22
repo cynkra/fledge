@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9001</span>
       </span>
     </div>
 
@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/cran-automation.html">Automate CRAN releases</a>
+    </li>
+    <li>
       <a href="../articles/demo.html">Using fledge</a>
     </li>
     <li>
@@ -298,7 +301,7 @@
 <span class="co">## Warning: 'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to</span>
 <span class="co">## leave this field out completely. It is not required.</span>
 <span class="co">## </span>
-<span class="co">## ── Update Version ──</span>
+<span class="co">## ── Updating Version ──</span>
 <span class="co">## </span>
 <span class="co">## ✔ Package version bumped to 0.0.0.9001.</span>
 <span class="co">## → Adding header to 'NEWS.md'.</span>
@@ -307,7 +310,6 @@
 <span class="co">## ── Tagging Version ──</span>
 <span class="co">## </span>
 <span class="co">## → Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.</span>
-<span class="co">## • Edit 'NEWS.md'</span>
 <span class="co">## ! Call `fledge::finalize_version(push = TRUE)`.</span>
 <span class="co">## NULL</span></code></pre></div>
 <p>The new version number is 0.0.0.9001.</p>
@@ -439,7 +441,7 @@
 <span class="co">## </span>
 <span class="co">## → Adding new entries to 'NEWS.md'.</span>
 <span class="co">## </span>
-<span class="co">## ── Update Version ──</span>
+<span class="co">## ── Updating Version ──</span>
 <span class="co">## </span>
 <span class="co">## ✔ Package version bumped to 0.0.0.9002.</span>
 <span class="co">## → Adding header to 'NEWS.md'.</span>
@@ -448,7 +450,6 @@
 <span class="co">## ── Tagging Version ──</span>
 <span class="co">## </span>
 <span class="co">## → Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.</span>
-<span class="co">## • Edit 'NEWS.md'</span>
 <span class="co">## ! Call `fledge::finalize_version(push = TRUE)`.</span>
 <span class="co">## NULL</span>
 <span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span>
@@ -499,17 +500,15 @@
 <span class="co">## </span>
 <span class="co">## → Adding new entries to 'NEWS.md'.</span>
 <span class="co">## </span>
-<span class="co">## ── Update Version ──</span>
+<span class="co">## ── Updating Version ──</span>
 <span class="co">## </span>
 <span class="co">## ✔ Package version bumped to 0.0.1.</span>
 <span class="co">## → Adding header to 'NEWS.md'.</span>
 <span class="co">## → Committing changes.</span>
-<span class="co">## ℹ Preparing package for release (CRAN or otherwise).</span>
-<span class="co">## • Edit 'NEWS.md'</span>
-<span class="co">## ! Convert the change log in 'NEWS.md' to release notes.</span>
 <span class="co">## </span>
-<span class="co">## ! After CRAN release, call `fledge::tag_version()` and</span>
-<span class="co">## `fledge::bump_version()` to re-enter development mode</span></code></pre></div>
+<span class="co">## ── Preparing package for CRAN release ──</span>
+<span class="co">## </span>
+<span class="co">## • Convert the change log in 'NEWS.md' to release notes.</span></code></pre></div>
 <p>This updates the version of our package to 0.0.1.</p>
 </div>
 <div class="section level3">
@@ -544,7 +543,7 @@
 <div class="alert alert-warning">
 <p>Unlike with development versions, we commit the changes to <code>NEWS.md</code> manually, not with a fledge function.</p>
 </div>
-<p>The package is now ready to be released to CRAN. I prefer <code>devtools::use_release_issue()</code> to create a checklist of things to do before release, and <code>devtools::submit_cran()</code> to submit. The <code>devtools::release()</code> function is a more verbose alternative.</p>
+<p>The package is now ready to be released to CRAN. I prefer <code>devtools::use_release_issue()</code> to create a checklist of things to do before release, and <code><a href="https://devtools.r-lib.org/reference/submit_cran.html" class="external-link">devtools::submit_cran()</a></code> to submit. The <code><a href="https://devtools.r-lib.org/reference/release.html" class="external-link">devtools::release()</a></code> function is a more verbose alternative.</p>
 </div>
 </div>
 <div class="section level2">
@@ -587,7 +586,7 @@
 <span class="co">## </span>
 <span class="co">## → Adding new entries to 'NEWS.md'.</span>
 <span class="co">## </span>
-<span class="co">## ── Update Version ──</span>
+<span class="co">## ── Updating Version ──</span>
 <span class="co">## </span>
 <span class="co">## ✔ Package version bumped to 0.0.1.9000.</span>
 <span class="co">## → Adding header to 'NEWS.md'.</span>
@@ -596,7 +595,6 @@
 <span class="co">## ── Tagging Version ──</span>
 <span class="co">## </span>
 <span class="co">## → Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.</span>
-<span class="co">## • Edit 'NEWS.md'</span>
 <span class="co">## ! Call `fledge::finalize_version(push = TRUE)`.</span>
 <span class="co">## NULL</span>
 <span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"NEWS.md"</span><span class="op">)</span></code></pre></div>

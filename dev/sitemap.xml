@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://cynkra.github.io/fledge/articles/cran-automation.html</loc>
+  </url>
+  <url>
     <loc>https://cynkra.github.io/fledge/articles/demo.html</loc>
   </url>
   <url>
@@ -41,6 +44,9 @@
   </url>
   <url>
     <loc>https://cynkra.github.io/fledge/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://cynkra.github.io/fledge/reference/release.html</loc>
   </url>
   <url>
     <loc>https://cynkra.github.io/fledge/reference/tag_version.html</loc>

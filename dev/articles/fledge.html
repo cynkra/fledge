@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9001</span>
       </span>
     </div>
 
@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/cran-automation.html">Automate CRAN releases</a>
+    </li>
+    <li>
       <a href="../articles/demo.html">Using fledge</a>
     </li>
     <li>
@@ -148,7 +151,7 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"fledge"</span>, repos <span class="op">=</span> <span class="st">"https://cynkra.r-universe.dev"</span><span class="op">)</span></code></pre></div>
 <p>Or install from GitHub (development version as well) using:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cynkra/fledge"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"cynkra/fledge"</span><span class="op">)</span></code></pre></div>
 <p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>) available for all your interactive work, you might enjoy loading fledge in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
 </div>
 <div class="section level3">
