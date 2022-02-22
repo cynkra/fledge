@@ -19,6 +19,7 @@ reference:
   - commit_version
   - finalize_version
   - unbump_version
+  - release
 - title: Lower-level functions
   contents:
   - get_last_tag

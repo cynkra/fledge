@@ -22,18 +22,27 @@ bump_version_impl <- function(which) {
   } else {
     #'     - Otherwise, [commit_version()].
     commit_version()
+
     if (fledge_chatty()) {
-      cli_alert_info("Preparing package for release (CRAN or otherwise).")
+      cli_h2("Preparing package for CRAN release")
     }
 
     edit_news()
 
     if (fledge_chatty()) {
-      cli_alert_warning("Convert the change log in {.file {news_path()}} to release notes.")
-      cli_alert_warning("After CRAN release, call {.fun fledge::tag_version} and
-           {.fun fledge::bump_version} to re-enter development mode")
+      cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
     }
   }
+}
+
+bump_version_to_dev_with_force <- function(force) {
+  update_news()
+  update_version()
+
+  force <- commit_version() || force
+  tag <- tag_version(force)
+  push_tag(tag)
+  push_head()
 }
 
 get_main_branch <- function() {

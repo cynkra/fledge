@@ -281,7 +281,7 @@ fledge::bump_version()
 ## Warning: 'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to
 ## leave this field out completely. It is not required.
 ## 
-## -- Update Version --
+## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.0.9001.
 ## > Adding header to 'NEWS.md'.
@@ -290,7 +290,6 @@ fledge::bump_version()
 ## -- Tagging Version --
 ## 
 ## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-## * Edit 'NEWS.md'
 ## ! Call `fledge::finalize_version(push = TRUE)`.
 ## NULL
 ```
@@ -482,7 +481,7 @@ fledge::bump_version()
 ## 
 ## > Adding new entries to 'NEWS.md'.
 ## 
-## -- Update Version --
+## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.0.9002.
 ## > Adding header to 'NEWS.md'.
@@ -491,7 +490,6 @@ fledge::bump_version()
 ## -- Tagging Version --
 ## 
 ## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
-## * Edit 'NEWS.md'
 ## ! Call `fledge::finalize_version(push = TRUE)`.
 ## NULL
 news <- readLines("NEWS.md")
@@ -548,17 +546,15 @@ fledge::bump_version("patch")
 ## 
 ## > Adding new entries to 'NEWS.md'.
 ## 
-## -- Update Version --
+## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.1.
 ## > Adding header to 'NEWS.md'.
 ## > Committing changes.
-## i Preparing package for release (CRAN or otherwise).
-## * Edit 'NEWS.md'
-## ! Convert the change log in 'NEWS.md' to release notes.
 ## 
-## ! After CRAN release, call `fledge::tag_version()` and
-## `fledge::bump_version()` to re-enter development mode
+## -- Preparing package for CRAN release --
+## 
+## * Convert the change log in 'NEWS.md' to release notes.
 ```
 
 This updates the version of our package to 0.0.1.
@@ -652,7 +648,7 @@ fledge::bump_version()
 ## 
 ## > Adding new entries to 'NEWS.md'.
 ## 
-## -- Update Version --
+## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.1.9000.
 ## > Adding header to 'NEWS.md'.
@@ -661,7 +657,6 @@ fledge::bump_version()
 ## -- Tagging Version --
 ## 
 ## > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
-## * Edit 'NEWS.md'
 ## ! Call `fledge::finalize_version(push = TRUE)`.
 ## NULL
 news <- readLines("NEWS.md")
