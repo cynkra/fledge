@@ -10,7 +10,7 @@
       
       > Adding new entries to 'NEWS.md'.
       
-      -- Update Version --
+      -- Updating Version --
       
       v Package version bumped to 0.0.0.9001.
       > Adding header to 'NEWS.md'.
@@ -51,7 +51,7 @@
       
       > Adding new entries to 'NEWS.md'.
       
-      -- Update Version --
+      -- Updating Version --
       
       v Package version bumped to 0.0.0.9001.
       > Adding header to 'NEWS.md'.
