@@ -9,7 +9,7 @@ install.packages("fledge")
 Install from cynkra's R-universe (development version) using:
 
 ```r
-install.packages("fledge", repos = "https://cynkra.r-universe.dev")
+install.packages("fledge", repos = c("https://cynkra.r-universe.dev", "https://cloud-project.org"))
 ```
 
 Or install from GitHub (development version as well) using:
