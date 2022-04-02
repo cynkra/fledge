@@ -371,31 +371,9 @@ check_post_release <- function() {
   # FIXME: Distinguish between public and private repo?
   check_gh_scopes()
 
-  cli_alert("Checking contents of {.file CRAN-SUBMISSION}.")
-  if (!file.exists("CRAN-SUBMISSION")) {
-    abort("File `CRAN-SUBMISSION` not found. Recreate with `devtools:::flag_release()`.")
-  }
-
-  release <- readLines("CRAN-SUBMISSION")
-  rx <- "^SHA: ([0-9a-f]+)$"
-  commit <- grepl(rx, release)
-  if (!any(commit)) {
-    abort("Unexpected format of `CRAN-SUBMISSION` file. Recreate with `devtools:::flag_release()`.")
-  }
-  sha <- gsub(rx, "\\1", release[commit])
-
-  sha_rx <- paste0("^", sha)
+  # FIXME: release() should (force-)create and (force-)push a tag vx.y.z-rc
+  # This can be taken as a reference for the new tag.
   repo_head_sha <- gert::git_log(max = 1)$commit
-  if (!grepl(sha_rx, repo_head_sha)) {
-    msg <- paste0(
-      "Commit recorded in `CRAN-SUBMISSION` file (", sha, ") ",
-      "different from HEAD (", repo_head_sha, "). ",
-      "Reset to the correct commit or overwrite with `devtools:::flag_release()`."
-    )
-
-    abort(msg)
-  }
-
   repo_head_sha
 }
 
