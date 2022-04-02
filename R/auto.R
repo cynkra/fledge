@@ -256,8 +256,7 @@ release_impl <- function() {
   # End extension points
 
   push_head()
-  # FIXME: Copy code from devtools, silent release
-  devtools::submit_cran()
+  submit_cran()
   auto_confirm()
 
   # Begin extension points
