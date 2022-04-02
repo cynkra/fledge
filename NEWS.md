@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9002 (2022-04-02)
+
+- `release()` no longer asks for confirmation.
+- Inline `devtools::submit_cran()` minus the confirmation messages.
+
+
 # fledge 0.1.0.9001 (2022-02-22)
 
 - New `pre_release()`, `release()` and `post_release()` for semi-automatic CRAN releases (#27, #28).
