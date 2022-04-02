@@ -251,6 +251,10 @@ release_impl <- function() {
   # End extension points
 
   push_head()
+
+  tag <- tag_version(force = TRUE)
+  push_tag(tag)
+
   submit_cran()
   auto_confirm()
 
@@ -335,16 +339,12 @@ post_release <- function() {
 }
 
 post_release_impl <- function() {
-  check_only_modified(c(".Rbuildignore", "CRAN-SUBMISSION"))
+  check_only_modified(c(".Rbuildignore"))
 
   check_post_release()
 
   # Begin extension points
   # End extension points
-
-  tag <- tag_version(force = TRUE)
-
-  push_tag(tag)
 
   usethis::use_github_release()
 
