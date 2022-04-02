@@ -46,11 +46,6 @@ pre_release_impl <- function(which, force) {
   main_branch <- get_branch_name()
   remote_name <- get_remote_name(main_branch)
 
-  # Commit ignored files as early as possible
-  usethis::use_git_ignore("CRAN-SUBMISSION")
-  usethis::use_build_ignore("CRAN-SUBMISSION")
-  commit_ignore_files()
-
   cli_h1("1. Creating a release branch and getting ready")
 
   # bump version on main branch to version set by user
@@ -460,14 +455,4 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 
   # FIXME: Use response from gh() call to open URL
   usethis::pr_view()
-}
-
-commit_ignore_files <- function() {
-  gert::git_add(files = c(".gitignore", ".Rbuildignore"))
-
-
-  if (nrow(gert::git_status(staged = TRUE)) > 0) {
-    cli_alert("Committing {.file .gitignore} and {.file .Rbuildignore}.")
-    gert::git_commit(message = "Update `.gitignore` and/or `.Rbuildignore`")
-  }
 }
