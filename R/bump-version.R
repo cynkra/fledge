@@ -3,14 +3,7 @@
 bump_version_impl <- function(which) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
-  if (gert::git_branch() != get_main_branch()) {
-    rlang::abort(
-      c(
-        x = sprintf("Must be on the main branch (%s) for running fledge functions.", get_main_branch()),
-        i = sprintf("Currently on branch %s.", gert::git_branch())
-      )
-    )
-  }
+  check_main_branch()
   #' 1. [update_news()]
   update_news()
   #' 1. [update_version()], using the `which` argument
@@ -43,6 +36,17 @@ bump_version_to_dev_with_force <- function(force) {
   tag <- tag_version(force)
   push_tag(tag)
   push_head()
+}
+
+check_main_branch <- function() {
+  if (gert::git_branch() != get_main_branch()) {
+    rlang::abort(
+      c(
+        x = sprintf("Must be on the main branch (%s) for running fledge functions.", get_main_branch()),
+        i = sprintf("Currently on branch %s.", gert::git_branch())
+      )
+    )
+  }
 }
 
 get_main_branch <- function() {
