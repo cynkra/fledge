@@ -52,6 +52,7 @@ Suggests:
     knitr,
     mockery,
     parsedate,
+    pkgbuild,
     pkgload,
     rmarkdown,
     rstudioapi,
