@@ -1,6 +1,10 @@
-github_info <- function(remote = "origin") {
+github_slug <- function(remote = "origin") {
   remote_url <- get_remote_url(remote)
-  repo <- extract_repo(remote_url)
+  extract_repo(remote_url)
+}
+
+github_info <- function(remote = "origin") {
+  repo <- github_slug(remote)
   get_repo_data(repo)
 }
 

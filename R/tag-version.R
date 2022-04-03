@@ -1,18 +1,15 @@
 tag_version_impl <- function(force) {
   check_only_staged(character())
 
-  current_news <- get_current_news()
-  desc <- desc::desc(file = "DESCRIPTION")
-  version <- desc$get_version()
-
   if (fledge_chatty()) {
     cli_h2("Tagging Version")
   }
 
-  tag <- paste0("v", version)
+  tag_info <- get_tag_info()
+
+  tag <- tag_info$name
 
   if (tag_already_exist(tag)) {
-
     # Tagging would do nothing as the tag points to the current commit
     if (gert::git_commit_info(tag)$id == gert::git_log(max = 1)$commit) {
       if (fledge_chatty()) {
@@ -39,10 +36,23 @@ tag_version_impl <- function(force) {
     )
   }
 
-  msg_header <- paste0(desc$get("Package"), " ", version)
-  gert::git_tag_create(tag, message = paste0(msg_header, "\n\n", current_news))
+  gert::git_tag_create(tag, message = paste0(tag_info$header, "\n\n", tag_info$body))
 
   invisible(tag)
+}
+
+get_tag_info <- function() {
+  desc <- desc::desc(file = "DESCRIPTION")
+  version <- desc$get_version()
+  name <- paste0("v", version)
+  header <- paste0(desc$get("Package"), " ", version)
+  body <- sub("^[^\n]+\n\n", "", get_current_news())
+
+  list(
+    name = name,
+    header = header,
+    body = body
+  )
 }
 
 get_current_news <- function() {

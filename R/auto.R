@@ -17,6 +17,7 @@
 #' @name release
 #' @export
 pre_release <- function(which = "patch", force = FALSE) {
+  check_main_branch()
   check_only_modified(character())
 
   check_gitignore("cran-comments.md")
