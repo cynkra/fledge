@@ -347,7 +347,7 @@ post_release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  usethis::use_github_release()
+  create_github_release()
 
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()
@@ -357,6 +357,31 @@ post_release_impl <- function() {
 
   # Begin extension points
   # End extension points
+}
+
+create_github_release <- function() {
+  cli_alert("Creating GitHub release.")
+
+  slug <- github_slug()
+  tag <- get_tag_info()
+
+  out <- gh::gh(
+    glue("POST /repos/{slug}/releases"),
+    tag_name = tag$name,
+    name = tag$header,
+    body = tag$body,
+    draft = TRUE
+  )
+
+  url <- out$html_url
+
+  cli_alert("Opening release URL {.url {url}}.")
+  utils::browseURL(url)
+
+  edit_url <- gsub("/tag/", "/edit/", url)
+
+  cli_alert("Opening release edit URL {.url {edit_url}}.")
+  utils::browseURL(edit_url)
 }
 
 merge_branch <- function(other_branch) {
