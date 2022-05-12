@@ -32,35 +32,36 @@ Remove timeouts which were used to mitigate the racing issue but are
 obsolete now.
 
 Reviewed-by: Z
-Refs: #123",
+Refs: #123
+---
+
+Also tweak the CI workflow accordingly. :sweat_smile:",
 
     # Custom type
     "upkeep: update rlang usage."
   )
 }
 
-sort_of_commit <- function(commit, ...) {
-  file <- digest::sha1(commit)
+sort_of_commit <- function(commit_message, repo) {
+  file <- digest::sha1(commit_message)
   file.create(file)
   gert::git_add(file)
-  gert::git_commit(commit, ...)
+  gert::git_commit(commit_message, repo = repo)
 }
 
-create_cc_repo <- function(repo, commits = cc_examples()) {
+create_cc_repo <- function(repo, commit_messages = cc_examples()) {
   tryCatch(
     gert::git_init(repo),
     error = function(e) {
       skip("Can't init repository")
     }
   )
-
-  withr::local_dir(repo)
-
-    gert::git_config_set("user.name", "Test")
-  gert::git_config_set("user.email", "my@test.user")
+  gert::git_config_set("user.name", "Test", repo = repo)
+  gert::git_config_set("user.email", "my@test.user", repo = repo)
 
   purrr::walk(
-    commits,
-    sort_of_commit
+    commit_messages,
+    sort_of_commit,
+    repo
   )
 }

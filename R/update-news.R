@@ -9,18 +9,36 @@ update_news_impl <- function(messages) {
   add_to_news(news)
 }
 
+remove_housekeeping <- function(message) {
+  strsplit(message, "\n---", fixed = TRUE)[[1]]
+}
+
+extract_newsworthy_items <- function(message) {
+  if (is_conventional_commit(message)) {
+    return(message)
+  }
+
+  # There can be several bullets per message!
+  message_lines <- strsplit(message, "\n", fixed = TRUE)
+  purrr::map(message_lines, purrr::keep, ~ grepl("^[*-]", .))
+}
+
+is_conventional_commit <- function(message) {
+  grepl(".*:", message)
+}
+
 collect_news <- function(messages) {
   if (fledge_chatty()) {
     cli_alert("Scraping {.field {length(messages)}} commit messages.")
   }
 
-  messages_lf <- gsub("\r\n", "\n", messages)
-  messages_nonempty <- messages_lf[messages_lf != ""]
-  messages_before_triple_dash <- map_chr(strsplit(messages_nonempty, "\n---", fixed = TRUE), 1)
-  message_lines <- strsplit(messages_before_triple_dash, "\n", fixed = TRUE)
-  message_bullets <- map(message_lines, keep, ~ grepl("^[*-]", .))
+  message_items <- messages %>%
+    gsub("\r\n", "\n", .) %>%
+    purrr::discard(~ . == "") %>%
+    purrr::map_chr(remove_housekeeping) %>%
+    purrr::map(extract_newsworthy_items) %>%
+    unlist()
 
-  message_items <- unlist(message_bullets)
   if (length(message_items) == 0) {
     if (length(range) <= 1) {
       message_items <- "- Same as previous version."

@@ -4,4 +4,5 @@
 #' @import cli
 #' @import usethis
 #' @importFrom tibble add_column
+#' @importFrom magrittr `%>%`
 NULL
