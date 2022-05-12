@@ -1,5 +1,6 @@
 test_that("finalize_version(push = FALSE)", {
   skip_if_not_installed("rlang", "1.0.1")
+  skip_if_not_installed("testthat", "3.1.2")
 
   with_demo_project(quiet = TRUE, {
     use_r("bla")
@@ -19,6 +20,7 @@ test_that("finalize_version(push = FALSE)", {
 
 test_that("finalize_version(push = TRUE)", {
   skip_if_not_installed("rlang", "1.0.1")
+  skip_if_not_installed("testthat", "3.1.2")
 
   with_demo_project(quiet = TRUE, {
     remote_url <- create_remote()
