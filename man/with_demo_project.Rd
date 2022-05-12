@@ -2,9 +2,17 @@
 % Please edit documentation in R/repo-helper.R
 \name{with_demo_project}
 \alias{with_demo_project}
+\alias{local_demo_project}
 \title{Run code in temporary project}
 \usage{
 with_demo_project(code, dir = NULL, news = TRUE, quiet = FALSE)
+
+local_demo_project(
+  dir = NULL,
+  news = TRUE,
+  quiet = FALSE,
+  .local_envir = parent.frame()
+)
 }
 \arguments{
 \item{code}{Code to run with temporary active project}
@@ -14,9 +22,14 @@ with_demo_project(code, dir = NULL, news = TRUE, quiet = FALSE)
 \item{news}{If TRUE, create a NEWS.md file.}
 
 \item{quiet}{Whether to show messages from usethis}
+
+\item{.local_envir}{The environment to use for scoping. Defaults to current
+execution environment.}
 }
 \value{
-None
+\code{with_demo_project()} returns the result of evaluating \code{code}.
+
+\code{local_demo_project()} is called for its side effect and returns \code{NULL}, invisibly.
 }
 \description{
 Run code in temporary project
