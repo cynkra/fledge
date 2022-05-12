@@ -37,5 +37,8 @@ Remove timeouts which were used to mitigate the racing issue but are
 obsolete now.
 
 Reviewed-by: Z
-Refs: #123"
+Refs: #123",
+
+  # Custom type
+  "upkeep: update rlang usage."
 )
