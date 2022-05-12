@@ -42,7 +42,7 @@ remove_housekeeping <- function(message) {
 
 extract_newsworthy_items <- function(message) {
   if (is_conventional_commit(message)) {
-    return(message)
+    return(parse_conventional_commit(message))
   }
 
   # There can be several bullets per message!
@@ -52,6 +52,17 @@ extract_newsworthy_items <- function(message) {
 
 is_conventional_commit <- function(message) {
   grepl(".*:", message)
+}
+
+parse_conventional_commit <- function(message) {
+  header <- sub(":.*", "", message)
+  rest <- sub(sprintf("%s:", header), "", message)
+  # TODO: parse body, trailer.
+
+  c(
+    sprintf("## %s", header),
+    rest
+  )
 }
 
 news_path <- function() {
