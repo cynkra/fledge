@@ -6,3 +6,5 @@
 #' @importFrom tibble add_column
 #' @importFrom magrittr `%>%`
 NULL
+
+globalVariables(".")

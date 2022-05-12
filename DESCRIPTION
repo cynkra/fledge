@@ -48,6 +48,7 @@ Imports:
 Suggests: 
     brio,
     covr,
+    digest,
     fansi,
     fs,
     knitr,
