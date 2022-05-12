@@ -13,7 +13,7 @@ collect_news <- function(messages) {
   if (fledge_chatty()) {
     cli_alert("Scraping {.field {length(messages)}} commit messages.")
   }
-browser()
+
   message_items <- messages %>%
     gsub("\r\n", "\n", .) %>%
     purrr::discard(~ . == "") %>%

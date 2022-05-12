@@ -3,5 +3,5 @@ test_that("Can parse conventional commits", {
   withr::local_dir(repo)
   create_cc_repo(repo)
   messages <- get_top_level_commits_impl(since = NULL)$message
-  collect_news(messages)
+  expect_snapshot(collect_news(messages))
 })
