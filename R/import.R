@@ -7,4 +7,4 @@
 #' @importFrom magrittr `%>%`
 NULL
 
-globalVariables(".")
+utils::globalVariables(".")
