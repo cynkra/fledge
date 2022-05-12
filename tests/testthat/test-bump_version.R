@@ -1,7 +1,6 @@
 test_that("bump_version() works -- dev", {
   skip_if_not_installed("rlang", "1.0.1")
-
-  news_tempdir <- withr::local_tempdir(pattern = "news")
+  skip_if_not_installed("testthat", "3.1.2")
 
   with_demo_project(quiet = TRUE, {
     create_remote()
@@ -12,19 +11,13 @@ test_that("bump_version() works -- dev", {
     expect_snapshot(bump_version(), variant = snapshot_variant("testthat"))
     expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
     expect_equal(get_last_tag()$name, "v0.0.0.9001")
-    file.copy("NEWS.md", file.path(news_tempdir, "NEWS.md"))
+    expect_snapshot_file("NEWS.md", compare = compare_file_text)
   })
-
-  expect_snapshot_file(
-    file.path(news_tempdir, "NEWS.md"),
-    compare = compare_file_text
-  )
 })
 
 test_that("bump_version() works -- not dev", {
   skip_if_not_installed("rlang", "1.0.1")
-
-  news_tempdir <- withr::local_tempdir(pattern = "news")
+  skip_if_not_installed("testthat", "3.1.2")
 
   with_demo_project(quiet = TRUE, {
     create_remote()
@@ -34,13 +27,8 @@ test_that("bump_version() works -- not dev", {
     expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
     expect_snapshot(bump_version(which = "major"), variant = snapshot_variant("testthat"))
     expect_equal(as.character(desc::desc_get_version()), "1.0.0")
-    file.copy("NEWS.md", file.path(news_tempdir, "NEWS-nondev.md"))
+    expect_snapshot_file("NEWS.md", "NEWS-nondev.md", compare = compare_file_text)
   })
-
-  expect_snapshot_file(
-    file.path(news_tempdir, "NEWS-nondev.md"),
-    compare = compare_file_text
-  )
 })
 
 test_that("bump_version() errors informatively for forbidden notifications", {
