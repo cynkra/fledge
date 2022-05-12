@@ -36,6 +36,7 @@ Imports:
     gh,
     glue,
     httr,
+    magrittr,
     purrr (>= 0.3.2),
     rematch2,
     rlang (>= 0.4.12),
@@ -47,6 +48,7 @@ Imports:
 Suggests: 
     brio,
     covr,
+    digest,
     fansi,
     fs,
     knitr,
@@ -64,3 +66,4 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
+Config/testthat/parallel: true
