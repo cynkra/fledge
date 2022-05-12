@@ -9,29 +9,11 @@ update_news_impl <- function(messages) {
   add_to_news(news)
 }
 
-remove_housekeeping <- function(message) {
-  strsplit(message, "\n---", fixed = TRUE)[[1]]
-}
-
-extract_newsworthy_items <- function(message) {
-  if (is_conventional_commit(message)) {
-    return(message)
-  }
-
-  # There can be several bullets per message!
-  message_lines <- strsplit(message, "\n", fixed = TRUE)
-  purrr::map(message_lines, purrr::keep, ~ grepl("^[*-]", .))
-}
-
-is_conventional_commit <- function(message) {
-  grepl(".*:", message)
-}
-
 collect_news <- function(messages) {
   if (fledge_chatty()) {
     cli_alert("Scraping {.field {length(messages)}} commit messages.")
   }
-
+browser()
   message_items <- messages %>%
     gsub("\r\n", "\n", .) %>%
     purrr::discard(~ . == "") %>%
@@ -52,6 +34,24 @@ collect_news <- function(messages) {
   }
 
   paste0(paste(message_items, collapse = "\n"), "\n\n")
+}
+
+remove_housekeeping <- function(message) {
+  strsplit(message, "\n---", fixed = TRUE)[[1]][1]
+}
+
+extract_newsworthy_items <- function(message) {
+  if (is_conventional_commit(message)) {
+    return(message)
+  }
+
+  # There can be several bullets per message!
+  message_lines <- strsplit(message, "\n", fixed = TRUE)
+  purrr::map(message_lines, purrr::keep, ~ grepl("^[*-]", .))
+}
+
+is_conventional_commit <- function(message) {
+  grepl(".*:", message)
 }
 
 news_path <- function() {
