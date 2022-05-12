@@ -25,10 +25,9 @@ runs:
     - name: Show cache
       if: ${{ steps.check.outputs.scope }}
       run: |
-        if [ -d "~/.cache/R/R.cache" ]; then
-          ls -l ~/.cache/R/R.cache
-          ls -l ~/.cache/R/R.cache/styler
-        fi
+        mkdir -p ~/.cache/R/R.cache/styler
+        ls -l ~/.cache/R/R.cache
+        ls -l ~/.cache/R/R.cache/styler
         gdu -s --inodes ~/.cache/R/R.cache/styler/* || du -s --inodes ~/.cache/R/R.cache/styler/*
       shell: bash
 
