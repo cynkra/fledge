@@ -4,7 +4,28 @@
       bump_version()
     Message
       > Scraping 3 commit messages.
+    Output
+      Called from: collect_news(messages)
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#17: message_items <- messages %>% gsub("\r\n", "\n", .) %>% purrr::discard(~. == 
+          "") %>% purrr::map_chr(remove_housekeeping) %>% purrr::map(extract_newsworthy_items) %>% 
+          unlist()
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#24: if (length(message_items) == 0) {
+          if (length(range) <= 1) {
+              message_items <- "- Same as previous version."
+          }
+          else {
+              message_items <- "- Internal changes only."
+          }
+      }
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#32: if (fledge_chatty()) {
+          cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
+      }
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#33: cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
+    Message
       v Found 1 NEWS-worthy entries.
+    Output
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#36: paste0(paste(message_items, collapse = "\n"), "\n\n")
+    Message
       
       -- Updating NEWS --
       
@@ -45,7 +66,28 @@
       bump_version()
     Message
       > Scraping 4 commit messages.
+    Output
+      Called from: collect_news(messages)
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#17: message_items <- messages %>% gsub("\r\n", "\n", .) %>% purrr::discard(~. == 
+          "") %>% purrr::map_chr(remove_housekeeping) %>% purrr::map(extract_newsworthy_items) %>% 
+          unlist()
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#24: if (length(message_items) == 0) {
+          if (length(range) <= 1) {
+              message_items <- "- Same as previous version."
+          }
+          else {
+              message_items <- "- Internal changes only."
+          }
+      }
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#32: if (fledge_chatty()) {
+          cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
+      }
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#33: cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
+    Message
       v Found 2 NEWS-worthy entries.
+    Output
+      debug at /home/runner/work/fledge/fledge/R/update-news.R#36: paste0(paste(message_items, collapse = "\n"), "\n\n")
+    Message
       
       -- Updating NEWS --
       
