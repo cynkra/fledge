@@ -22,7 +22,7 @@ collect_news <- function(messages) {
 
   message_items <- unlist(message_bullets)
   if (length(message_items) == 0) {
-    if (length(range) <= 1) {
+    if (length(messages) == 0) {
       message_items <- "- Same as previous version."
     } else {
       message_items <- "- Internal changes only."

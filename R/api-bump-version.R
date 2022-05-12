@@ -4,6 +4,7 @@
 #' Calls the following functions:
 #'
 #' @inheritParams update_version
+#' @param force Whether to force a version bump when there was no commit since the last tag.
 #' @return None
 #' @export
 #'

@@ -1,9 +1,11 @@
 #' @rdname bump_version
 #' @usage NULL
-bump_version_impl <- function(which) {
+bump_version_impl <- function(which, force) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
   check_main_branch()
+  #' 1. Check there were changes since the last version.
+  check_changes(force = force)
   #' 1. [update_news()]
   update_news()
   #' 1. [update_version()], using the `which` argument
@@ -77,4 +79,12 @@ get_main_branch_config <- function() {
 
   global <- init[init$level == "global"]
   return(global$value)
+}
+
+check_changes <- function(force) {
+  if (length(default_commit_range()) == 0) {
+    if (!force) {
+      rlang::abort("No change since last version. Use `force = TRUE` to force a version bump.")
+    }
+  }
 }
