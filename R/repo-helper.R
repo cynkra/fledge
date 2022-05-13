@@ -107,18 +107,28 @@ set_usethis_desc <- function(maintainer, email, date) {
 #' Run code in temporary project
 #'
 #' @inheritParams create_demo_project
+#' @inheritParams usethis::with_project
 #' @param quiet Whether to show messages from usethis
-#' @param code Code to run with temporary active project
 #'
-#'
-#' @return None
+#' @return `with_demo_project()` returns the result of evaluating `code`.
 #' @export
 #'
 #' @example man/examples/with_demo_project.R
 
 with_demo_project <- function(code, dir = NULL, news = TRUE, quiet = FALSE) {
+  local_demo_project(dir = dir, news = news, quiet = quiet)
+
+  force(code)
+
+  invisible()
+}
+
+#' @return `local_demo_project()` is called for its side effect and returns `NULL`, invisibly.
+#' @rdname with_demo_project
+#' @export
+local_demo_project <- function(dir = NULL, news = TRUE, quiet = FALSE, .local_envir = parent.frame()) {
   if (is.null(dir)) {
-    dir <- withr::local_tempdir(pattern = "fledge")
+    dir <- withr::local_tempdir(pattern = "fledge", .local_envir = .local_envir)
   }
 
   if (!dir.exists(dir)) {
@@ -126,9 +136,11 @@ with_demo_project <- function(code, dir = NULL, news = TRUE, quiet = FALSE) {
   }
 
   repo <- create_demo_project(dir = dir, news = TRUE)
-  usethis::with_project(
+  usethis::local_project(
     path = repo,
     quiet = quiet,
-    code
+    .local_envir = .local_envir
   )
+
+  invisible()
 }
