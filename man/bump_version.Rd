@@ -24,7 +24,7 @@ Calls the following functions:
 
 \enumerate{
 \item Verify that the current branch is the main branch.
-\item Check there were changes since the last version.
+\item Check there were changes since the last version.no_change()
 \item \code{\link[=update_news]{update_news()}}
 \item \code{\link[=update_version]{update_version()}}, using the \code{which} argument
 \item Depending on the \code{which} argument:

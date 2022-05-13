@@ -13,6 +13,13 @@ test_that("bump_version() works -- dev", {
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
   expect_equal(get_last_tag()$name, "v0.0.0.9001")
   expect_snapshot_file("NEWS.md", compare = compare_file_text)
+
+  ## no changes
+  expect_snapshot_error(bump_version(no_change_behavior = "fail"), variant = snapshot_variant("testthat"))
+  expect_snapshot(bump_version(no_change_behavior = "noop"), variant = snapshot_variant("testthat"))
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+  expect_snapshot(bump_version(no_change_behavior = "bump"), variant = snapshot_variant("testthat"))
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9002")
 })
 
 test_that("bump_version() works -- not dev", {

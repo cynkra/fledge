@@ -4,18 +4,23 @@ bump_version_impl <- function(which, no_change_behavior) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
   check_main_branch()
-  #' 1. Check there were changes since the last version.
-  no_change <- no_change()
-  if (no_change) {
+  #' 1. Check there were changes since the last version.no_change()
+  if (no_change()) {
     if (no_change_behavior == "fail") {
-      rlang::abort("No change since last version. Use `force = TRUE` to force a version bump.")
+      rlang::abort(
+        message= c(
+          x = "No change since last version." ,
+          i = 'Use `no_change_behavior = "bump"` to force a version bump, or
+          `no_change_behavior = "noop"` to do nothing.'
+        )
+      )
     }
     if (no_change_behavior == "noop") {
       return()
     }
   }
   #' 1. [update_news()]
-  update_news()
+  update_news(get_top_level_commits(since = get_last_tag()$commit)$message)
   #' 1. [update_version()], using the `which` argument
   update_version(which = which)
   #' 1. Depending on the `which` argument:
@@ -89,6 +94,6 @@ get_main_branch_config <- function() {
   return(global$value)
 }
 
-no_change <- function(force) {
-  length(default_commit_range()) == 0
+no_change <- function() {
+  nrow(default_commit_range()) == 1
 }
