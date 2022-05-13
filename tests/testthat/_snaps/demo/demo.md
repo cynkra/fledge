@@ -571,7 +571,7 @@ cat(news, sep = "\n")
 ## 
 ## # tea 0.0.1
 ## 
-## - Same as previous version.
+## - Internal changes only.
 ## 
 ## 
 ## # tea 0.0.0.9002

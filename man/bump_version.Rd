@@ -5,11 +5,16 @@
 \alias{bump_version_impl}
 \title{Bump package version}
 \usage{
-bump_version(which = "dev")
+bump_version(which = "dev", no_change_behavior = c("bump", "noop", "fail"))
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported
 values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+
+\item{no_change_behavior}{What to do if there was no change since the last
+version: \code{"bump"} for bump the version;
+\code{"noop"} for do nothing;
+\code{"fail"} for erroring.}
 }
 \value{
 None
@@ -19,6 +24,7 @@ Calls the following functions:
 
 \enumerate{
 \item Verify that the current branch is the main branch.
+\item Check there were changes since the last version.
 \item \code{\link[=update_news]{update_news()}}
 \item \code{\link[=update_version]{update_version()}}, using the \code{which} argument
 \item Depending on the \code{which} argument:
