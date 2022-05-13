@@ -72,7 +72,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">with_demo_project</span><span class="op">(</span><span class="va">code</span>, dir <span class="op">=</span> <span class="cn">NULL</span>, news <span class="op">=</span> <span class="cn">TRUE</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">with_demo_project</span><span class="op">(</span><span class="va">code</span>, dir <span class="op">=</span> <span class="cn">NULL</span>, news <span class="op">=</span> <span class="cn">TRUE</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="fu">local_demo_project</span><span class="op">(</span>
+  dir <span class="op">=</span> <span class="cn">NULL</span>,
+  news <span class="op">=</span> <span class="cn">TRUE</span>,
+  quiet <span class="op">=</span> <span class="cn">FALSE</span>,
+  .local_envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,10 +92,14 @@
 <dd><p>If TRUE, create a NEWS.md file.</p></dd>
 <dt>quiet</dt>
 <dd><p>Whether to show messages from usethis</p></dd>
+<dt>.local_envir</dt>
+<dd><p>The environment to use for scoping. Defaults to current
+execution environment.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>None</p>
+    <p><code>with_demo_project()</code> returns the result of evaluating <code>code</code>.
+<code>local_demo_project()</code> is called for its side effect and returns <code>NULL</code>, invisibly.</p>
     </div>
 
     <div id="ref-examples">
@@ -103,7 +114,7 @@
 <span class="r-in">  <span class="co"># Bump version with fledge.</span></span>
 <span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpCGOUQ4/fledge1c404f2e93dc/tea'</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpZPM9y1/fledge1c40516e15b8/tea'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'R/cool-function.R'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Call <span style="color: #555555;">`use_test()`</span> to create a matching test file</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Scraping <span style="color: #00BB00;">3</span> commit messages.</span>
@@ -125,7 +136,6 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Creating tag <span style="color: #00BB00;">v0.0.0.9001</span> with tag message derived from <span style="color: #0000BB;">NEWS.md</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Call `fledge::finalize_version()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'&lt;no active project&gt;'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 </code></pre></div>
     </div>
   </div>
