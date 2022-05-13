@@ -6,17 +6,13 @@
 #' @param messages A character vector of commit messages,
 #'   e.g. as in the `message` column in the return value of [get_top_level_commits()].
 #'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
-#' @param commit_range A subset of `gert::git_log()`.
-#'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
-#'
 #' @example man/examples/tag-version.R
 #'
 #' @return None
 #' @export
-update_news <- function(messages = NULL, commit_range = NULL) {
+update_news <- function(messages = NULL) {
   if (is.null(messages)) {
-    commit_range <- commit_range %||% default_commit_range()
-    messages <- commit_range$message
+    messages <- default_commit_range()$message
   }
 
   with_repo(update_news_impl(messages))

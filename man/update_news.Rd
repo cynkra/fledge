@@ -4,14 +4,11 @@
 \alias{update_news}
 \title{Update NEWS.md with messages from top-level commits}
 \usage{
-update_news(messages = NULL, commit_range = NULL)
+update_news(messages = NULL)
 }
 \arguments{
 \item{messages}{A character vector of commit messages,
 e.g. as in the \code{message} column in the return value of \code{\link[=get_top_level_commits]{get_top_level_commits()}}.
-The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_tag]{get_last_tag()}}.}
-
-\item{commit_range}{A subset of \code{gert::git_log()}.
 The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_tag]{get_last_tag()}}.}
 }
 \value{
