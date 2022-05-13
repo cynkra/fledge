@@ -20,7 +20,7 @@ bump_version_impl <- function(which, no_change_behavior) {
     }
   }
   #' 1. [update_news()]
-  update_news(get_top_level_commits(since = get_last_tag()$commit)$message)
+  update_news()
   #' 1. [update_version()], using the `which` argument
   update_version(which = which)
   #' 1. Depending on the `which` argument:
