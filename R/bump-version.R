@@ -8,8 +8,8 @@ bump_version_impl <- function(which, no_change_behavior) {
   if (no_change()) {
     if (no_change_behavior == "fail") {
       rlang::abort(
-        message= c(
-          x = "No change since last version." ,
+        message = c(
+          x = "No change since last version.",
           i = 'Use `no_change_behavior = "bump"` to force a version bump, or
           `no_change_behavior = "noop"` to do nothing.'
         )
