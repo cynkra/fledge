@@ -1,9 +1,10 @@
 on:
   pull_request:
     branches:
-      - main
-      - master
-      - "r-*"
+      - "**netlify**"
+      #- main
+      #- master
+      #- "r-*"
 
 name: netlify
 

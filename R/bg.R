@@ -104,4 +104,3 @@ bg_r <- function(...) {
   processes <- lapply(funs, callr::r_bg)
   new_bg(processes)
 }
-
