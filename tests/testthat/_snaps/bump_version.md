@@ -95,3 +95,7 @@
     x Must be on the main branch (main) for running fledge functions.
     i Currently on branch bla.
 
+# bump_version() errors well for wrong arguments
+
+    `no_change_behavior` must be one of "bump", "noop", or "fail", not "blabla".
+

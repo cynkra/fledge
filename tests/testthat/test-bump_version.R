@@ -64,3 +64,10 @@ test_that("bump_version() errors informatively for wrong branch", {
   gert::git_branch_create("bla")
   expect_snapshot_error(bump_version())
 })
+
+
+test_that("bump_version() errors well for wrong arguments", {
+  skip_if_not_installed("rlang", "1.0.1")
+
+  expect_snapshot_error(bump_version(no_change_behavior = "blabla"))
+})
