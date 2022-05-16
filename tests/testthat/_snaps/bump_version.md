@@ -33,6 +33,8 @@
 
     Code
       bump_version(no_change_behavior = "noop")
+    Message
+      i No change since last version.
     Output
       NULL
 

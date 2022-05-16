@@ -16,6 +16,7 @@ bump_version_impl <- function(which, no_change_behavior) {
       )
     }
     if (no_change_behavior == "noop") {
+      cli::cli_alert_info("No change since last version.")
       return()
     }
   }
@@ -95,5 +96,6 @@ get_main_branch_config <- function() {
 }
 
 no_change <- function() {
-  nrow(default_commit_range()) == 1
+  # At most, one commit from the latest bump_version() run
+  nrow(default_commit_range()) <= 1
 }
