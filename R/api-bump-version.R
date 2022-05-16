@@ -23,7 +23,7 @@
 bump_version <- function(which = "dev", no_change_behavior = c("bump", "noop", "fail")) {
   check_which(which)
 
-  no_change_behavior <- match.arg(no_change_behavior, choices = c("bump", "noop", "fail"))
+  no_change_behavior <- arg_match(no_change_behavior)
 
   check_clean(c("DESCRIPTION", news_path))
   with_repo(bump_version_impl(which = which, no_change_behavior = no_change_behavior))

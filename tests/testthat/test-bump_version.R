@@ -22,9 +22,7 @@ test_that("bump_version() works -- dev", {
   expect_snapshot(bump_version(no_change_behavior = "bump"), variant = snapshot_variant("testthat"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9002")
   expect_equal(get_last_tag()$name, "v0.0.0.9002")
-  file.copy("NEWS.md", "NEWS2.md")
-
-  expect_snapshot_file("NEWS2.md", compare = compare_file_text)
+  expect_snapshot_file("NEWS.md", "NEWS2.md", compare = compare_file_text)
 })
 
 test_that("bump_version() works -- not dev", {

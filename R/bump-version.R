@@ -4,7 +4,7 @@ bump_version_impl <- function(which, no_change_behavior) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
   check_main_branch()
-  #' 1. Check there were changes since the last version.no_change()
+  #' 1. Check if there were changes since the last version.
   if (no_change()) {
     if (no_change_behavior == "fail") {
       rlang::abort(
