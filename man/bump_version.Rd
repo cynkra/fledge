@@ -11,6 +11,9 @@ bump_version(
 )
 }
 \arguments{
+\item{which}{Component of the version number to update. Supported
+values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+
 \item{no_change_behavior}{What to do if there was no change since the last
 version: \code{"bump"} for bump the version;
 \code{"noop"} for do nothing;

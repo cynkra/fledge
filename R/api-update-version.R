@@ -2,6 +2,8 @@
 #'
 #' Bumps a version component and adds to `NEWS.md` and `DESCRIPTION`.
 #'
+#' @param which Component of the version number to update. Supported
+#'   values are `"dev"` (default), `"patch"`, `"minor"` and `"major"`.
 #' @example man/examples/tag-version.R
 #'
 #' @return None

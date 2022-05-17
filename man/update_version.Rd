@@ -6,6 +6,10 @@
 \usage{
 update_version(which = c("dev", "patch", "minor", "major"))
 }
+\arguments{
+\item{which}{Component of the version number to update. Supported
+values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+}
 \value{
 None
 }
