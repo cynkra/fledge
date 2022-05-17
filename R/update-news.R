@@ -66,6 +66,7 @@ parse_conventional_commit <- function(message) {
   header <- regmatches(message, type_matches)
 
   type <- sub("(\\(.*\\))?!?:[[:space:]]$", "", header)
+  type <- translate_type(type)
 
   breaking <- if (grepl("!:", header)) "Breaking change: " else ""
 
@@ -130,6 +131,14 @@ edit_news <- function() {
 edit_cran_comments <- function() {
   local_options(usethis.quiet = TRUE)
   edit_file("cran-comments.md")
+}
+
+translate_type <- function(type) {
+  if (type %in% conventional_commit_types()) {
+    names(conventional_commit_types())[conventional_commit_types() == type]
+  } else {
+    type
+  }
 }
 
 conventional_commit_types <- function() {

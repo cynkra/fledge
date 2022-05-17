@@ -4,7 +4,7 @@
 
 update rlang usage.
 
-## fix
+## Bug fix
 
 prevent racing of requests
 
@@ -16,33 +16,33 @@ obsolete now.
 
 Reviewed-by: Z
 Refs: #123
-## feat
+## Feature
 
 ### lang
 
 add Polish language
 
-## docs
+## Documentation
 
 correct spelling of CHANGELOG
 
-## chore
+## Chore
 
 Breaking change: drop support for Node 6
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 
-## feat
+## Feature
 
 ### api
 
 Breaking change: send an email to the customer when a product is shipped
 
-## feat
+## Feature
 
 Breaking change: send an email to the customer when a product is shipped
 
-## feat
+## Feature
 
 allow provided config object to extend other configs
 
