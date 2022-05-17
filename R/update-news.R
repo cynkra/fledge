@@ -64,13 +64,23 @@ is_conventional_commit <- function(message) {
 parse_conventional_commit <- function(message) {
   type_matches <- regexpr(conventional_commit_header_pattern(), message)
   header <- regmatches(message, type_matches)
-  type <- sub(":[[:space:]]$", "", header)
-  rest <- sub(header, "", message, fixed = TRUE)
+
+  type <- sub("(\\(.*\\))?!?:[[:space:]]$", "", header)
+
+  breaking <- if (grepl("!:", header)) "Breaking change: " else ""
+
+  scope <- regmatches(header, regexpr("(\\(.*\\))", header))
+  scope <- gsub("[\\(\\)]", "", scope)
+  scope_header <- if (length(scope) == 0) NULL else c(sprintf("### %s", scope), "")
+
+  description <- sub(header, "", message, fixed = TRUE)
   # TODO: parse body, trailer.
 
   c(
     sprintf("## %s", type),
-    rest
+    "",
+    scope_header,
+    sprintf("%s%s", breaking, description)
   )
 }
 
@@ -120,4 +130,19 @@ edit_news <- function() {
 edit_cran_comments <- function() {
   local_options(usethis.quiet = TRUE)
   edit_file("cran-comments.md")
+}
+
+conventional_commit_types <- function() {
+  c(
+    "Bug fix" = "fix",
+    "Feature" = "feat",
+    "Build system, external dependencies" = "build",
+    "Chore" = "chore",
+    "Continuous integration" = "ci",
+    "Documentation" = "docs",
+    "Code style" = "style",
+    "Refactoring" = "refactor",
+    "Performance" = "perf",
+    "Testing" = "test"
+  )
 }
