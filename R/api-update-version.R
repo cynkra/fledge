@@ -11,4 +11,3 @@ update_version <- function(which = c("dev", "patch", "minor", "major")) {
   update_version_impl(which)
   invisible(NULL)
 }
-
