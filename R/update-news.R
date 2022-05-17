@@ -50,17 +50,26 @@ extract_newsworthy_items <- function(message) {
   purrr::map(message_lines, purrr::keep, ~ grepl("^[*-]", .))
 }
 
+conventional_commit_header_pattern <- function() {
+  # Type is a noun
+  # There can be a scope
+  # Compulsory space after the colon
+  "^[A-Za-z]*(\\(.*\\))?!?:[[:space:]]"
+}
+
 is_conventional_commit <- function(message) {
-  grepl(".*:", message)
+  grepl(conventional_commit_header_pattern(), message)
 }
 
 parse_conventional_commit <- function(message) {
-  header <- sub(":.*", "", message)
-  rest <- sub(sprintf("%s:", header), "", message)
+  type_matches <- regexpr(conventional_commit_header_pattern(), message)
+  header <- regmatches(message, type_matches)
+  type <- sub(":[[:space:]]$", "", header)
+  rest <- sub(header, "", message, fixed = TRUE)
   # TODO: parse body, trailer.
 
   c(
-    sprintf("## %s", header),
+    sprintf("## %s", type),
     rest
   )
 }
