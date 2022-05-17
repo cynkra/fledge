@@ -5,12 +5,12 @@
 \alias{bump_version_impl}
 \title{Bump package version}
 \usage{
-bump_version(which = "dev", no_change_behavior = c("bump", "noop", "fail"))
+bump_version(
+  which = c("dev", "patch", "minor", "major"),
+  no_change_behavior = c("bump", "noop", "fail")
+)
 }
 \arguments{
-\item{which}{Component of the version number to update. Supported
-values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
-
 \item{no_change_behavior}{What to do if there was no change since the last
 version: \code{"bump"} for bump the version;
 \code{"noop"} for do nothing;

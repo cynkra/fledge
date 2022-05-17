@@ -4,11 +4,7 @@
 \alias{update_version}
 \title{Update NEWS.md and DESCRIPTION with a new version}
 \usage{
-update_version(which = "dev")
-}
-\arguments{
-\item{which}{Component of the version number to update. Supported
-values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+update_version(which = c("dev", "patch", "minor", "major"))
 }
 \value{
 None
