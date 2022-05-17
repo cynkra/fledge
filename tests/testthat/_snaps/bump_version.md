@@ -4,7 +4,7 @@
       bump_version()
     Message
       > Scraping 3 commit messages.
-      v Found 1 NEWS-worthy entries.
+      v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
       
@@ -69,7 +69,7 @@
       bump_version(which = "major")
     Message
       > Scraping 3 commit messages.
-      v Found 1 NEWS-worthy entries.
+      v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
       

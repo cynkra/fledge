@@ -31,7 +31,9 @@ collect_news <- function(messages) {
     }
   } else {
     if (fledge_chatty()) {
-      cli_alert_success("Found {.field {length(newsworthy_items)}} NEWS-worthy entries.")
+      no <- length(newsworthy_items)
+      entry_word <- if (no == 1) "entry" else "entries"
+      cli_alert_success(sprintf("Found %s NEWS-worthy %s.", no, entry_word))
     }
   }
 
