@@ -23,6 +23,46 @@
     Output
       NULL
 
+---
+
+    x No change since last version.
+    i Use `no_change_behavior = "bump"` to force a version bump, or
+              `no_change_behavior = "noop"` to do nothing.
+
+---
+
+    Code
+      bump_version(no_change_behavior = "noop")
+    Message
+      i No change since last version.
+    Output
+      NULL
+
+---
+
+    Code
+      bump_version(no_change_behavior = "bump")
+    Message
+      > Scraping 1 commit messages.
+      v Found 1 NEWS-worthy entries.
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.0.9002.
+      > Adding header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+      ! Call `fledge::finalize_version(push = TRUE)`.
+    Output
+      NULL
+
 # bump_version() works -- not dev
 
     Code
@@ -54,4 +94,8 @@
 
     x Must be on the main branch (main) for running fledge functions.
     i Currently on branch bla.
+
+# bump_version() errors well for wrong arguments
+
+    `no_change_behavior` must be one of "bump", "noop", or "fail", not "blabla".
 

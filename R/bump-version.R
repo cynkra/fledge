@@ -1,9 +1,25 @@
 #' @rdname bump_version
 #' @usage NULL
-bump_version_impl <- function(which) {
+bump_version_impl <- function(which, no_change_behavior) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
   check_main_branch()
+  #' 1. Check if there were changes since the last version.
+  if (no_change()) {
+    if (no_change_behavior == "fail") {
+      rlang::abort(
+        message = c(
+          x = "No change since last version.",
+          i = 'Use `no_change_behavior = "bump"` to force a version bump, or
+          `no_change_behavior = "noop"` to do nothing.'
+        )
+      )
+    }
+    if (no_change_behavior == "noop") {
+      cli::cli_alert_info("No change since last version.")
+      return()
+    }
+  }
   #' 1. [update_news()]
   update_news()
   #' 1. [update_version()], using the `which` argument
@@ -77,4 +93,9 @@ get_main_branch_config <- function() {
 
   global <- init[init$level == "global"]
   return(global$value)
+}
+
+no_change <- function() {
+  # At most, one commit from the latest bump_version() run
+  nrow(default_commit_range()) <= 1
 }

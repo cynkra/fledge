@@ -13,6 +13,16 @@ test_that("bump_version() works -- dev", {
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
   expect_equal(get_last_tag()$name, "v0.0.0.9001")
   expect_snapshot_file("NEWS.md", compare = compare_file_text)
+
+  ## no changes
+  expect_snapshot_error(bump_version(no_change_behavior = "fail"), variant = snapshot_variant("testthat"))
+  expect_snapshot(bump_version(no_change_behavior = "noop"), variant = snapshot_variant("testthat"))
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+  expect_equal(get_last_tag()$name, "v0.0.0.9001")
+  expect_snapshot(bump_version(no_change_behavior = "bump"), variant = snapshot_variant("testthat"))
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9002")
+  expect_equal(get_last_tag()$name, "v0.0.0.9002")
+  expect_snapshot_file("NEWS.md", "NEWS2.md", compare = compare_file_text)
 })
 
 test_that("bump_version() works -- not dev", {
@@ -53,4 +63,11 @@ test_that("bump_version() errors informatively for wrong branch", {
   gert::git_commit("* Add cool bla.")
   gert::git_branch_create("bla")
   expect_snapshot_error(bump_version())
+})
+
+
+test_that("bump_version() errors well for wrong arguments", {
+  skip_if_not_installed("rlang", "1.0.1")
+
+  expect_snapshot_error(bump_version(no_change_behavior = "blabla"))
 })

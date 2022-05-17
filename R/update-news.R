@@ -14,26 +14,26 @@ collect_news <- function(messages) {
     cli_alert("Scraping {.field {length(messages)}} commit messages.")
   }
 
-  message_items <- messages %>%
+  newsworthy_items <- messages %>%
     gsub("\r\n", "\n", .) %>%
     purrr::discard(~ . == "") %>%
     purrr::map_chr(remove_housekeeping) %>%
     purrr::map(extract_newsworthy_items) %>%
     unlist()
 
-  if (length(message_items) == 0) {
-    if (length(range) <= 1) {
-      message_items <- "- Same as previous version."
+  if (length(newsworthy_items) == 0) {
+    if (length(messages) <= 1) {
+      newsworthy_items <- "- Same as previous version."
     } else {
-      message_items <- "- Internal changes only."
+      newsworthy_items <- "- Internal changes only."
     }
   }
 
   if (fledge_chatty()) {
-    cli_alert_success("Found {.field {length(message_items)}} NEWS-worthy entries.")
+    cli_alert_success("Found {.field {length(newsworthy_items)}} NEWS-worthy entries.")
   }
 
-  paste0(paste(message_items, collapse = "\n"), "\n\n")
+  paste0(paste(newsworthy_items, collapse = "\n"), "\n\n")
 }
 
 remove_housekeeping <- function(message) {
