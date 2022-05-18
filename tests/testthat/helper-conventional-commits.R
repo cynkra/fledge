@@ -38,7 +38,11 @@ Refs: #123
 Also tweak the CI workflow accordingly. :sweat_smile:",
 
     # Custom type
-    "upkeep: update rlang usage."
+    "upkeep: update rlang usage.",
+
+    # NOT conventional commit
+    "upkeep:update",
+    "use cool::blop()"
   )
 }
 
