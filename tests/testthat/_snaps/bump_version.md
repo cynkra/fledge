@@ -4,7 +4,7 @@
       bump_version()
     Message
       > Scraping 3 commit messages.
-      v Found 1 NEWS-worthy entries.
+      v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
       
@@ -44,7 +44,7 @@
       bump_version(no_change_behavior = "bump")
     Message
       > Scraping 1 commit messages.
-      v Found 1 NEWS-worthy entries.
+      i Same as previous version.
       
       -- Updating NEWS --
       
@@ -69,7 +69,7 @@
       bump_version(which = "major")
     Message
       > Scraping 3 commit messages.
-      v Found 1 NEWS-worthy entries.
+      v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
       
@@ -98,4 +98,8 @@
 # bump_version() errors well for wrong arguments
 
     `no_change_behavior` must be one of "bump", "noop", or "fail", not "blabla".
+
+---
+
+    `which` must be one of "dev", "patch", "minor", or "major", not "blabla".
 

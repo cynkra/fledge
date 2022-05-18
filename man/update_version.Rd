@@ -4,7 +4,7 @@
 \alias{update_version}
 \title{Update NEWS.md and DESCRIPTION with a new version}
 \usage{
-update_version(which = "dev")
+update_version(which = c("dev", "patch", "minor", "major"))
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported

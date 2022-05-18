@@ -70,4 +70,5 @@ test_that("bump_version() errors well for wrong arguments", {
   skip_if_not_installed("rlang", "1.0.1")
 
   expect_snapshot_error(bump_version(no_change_behavior = "blabla"))
+  expect_snapshot_error(bump_version(which = "blabla"))
 })

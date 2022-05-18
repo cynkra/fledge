@@ -24,13 +24,17 @@ collect_news <- function(messages) {
   if (length(newsworthy_items) == 0) {
     if (length(messages) <= 1) {
       newsworthy_items <- "- Same as previous version."
+      if (fledge_chatty()) cli_alert_info("Same as previous version.")
     } else {
       newsworthy_items <- "- Internal changes only."
+      if (fledge_chatty()) cli_alert_info("Internal changes only.")
     }
-  }
-
-  if (fledge_chatty()) {
-    cli_alert_success("Found {.field {length(newsworthy_items)}} NEWS-worthy entries.")
+  } else {
+    if (fledge_chatty()) {
+      no <- length(newsworthy_items)
+      entry_word <- if (no == 1) "entry" else "entries"
+      cli_alert_success(sprintf("Found %s NEWS-worthy %s.", no, entry_word))
+    }
   }
 
   paste0(paste(newsworthy_items, collapse = "\n"), "\n\n")

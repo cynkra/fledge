@@ -5,7 +5,10 @@
 \alias{bump_version_impl}
 \title{Bump package version}
 \usage{
-bump_version(which = "dev", no_change_behavior = c("bump", "noop", "fail"))
+bump_version(
+  which = c("dev", "patch", "minor", "major"),
+  no_change_behavior = c("bump", "noop", "fail")
+)
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported

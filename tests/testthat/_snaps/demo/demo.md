@@ -475,7 +475,7 @@ Now that we have added bowl support to our package, it is time to bump the versi
 ```r
 fledge::bump_version()
 ## > Scraping 2 commit messages.
-## v Found 1 NEWS-worthy entries.
+## v Found 1 NEWS-worthy entry.
 ## 
 ## -- Updating NEWS --
 ## 
@@ -540,7 +540,7 @@ Other values for the arguments are "dev" (default), "minor" and "major".
 ```r
 fledge::bump_version("patch")
 ## > Scraping 1 commit messages.
-## v Found 1 NEWS-worthy entries.
+## i Same as previous version.
 ## 
 ## -- Updating NEWS --
 ## 
@@ -642,7 +642,7 @@ The `fledge::bump_version()` takes care of it.
 ```r
 fledge::bump_version()
 ## > Scraping 1 commit messages.
-## v Found 1 NEWS-worthy entries.
+## i Same as previous version.
 ## 
 ## -- Updating NEWS --
 ## 
