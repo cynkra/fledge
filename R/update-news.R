@@ -45,6 +45,17 @@ remove_housekeeping <- function(message) {
 }
 
 extract_newsworthy_items <- function(message) {
+
+  if (is_merge_commit(message)) {
+    title <- harvest_pr_title(message)
+
+    if (is_conventional_commit(title)) {
+      return(parse_conventional_commit(title))
+    } else {
+      return(sprintf("- %s", title))
+    }
+  }
+
   if (is_conventional_commit(message)) {
     return(parse_conventional_commit(message))
   }
@@ -124,4 +135,16 @@ edit_news <- function() {
 edit_cran_comments <- function() {
   local_options(usethis.quiet = TRUE)
   edit_file("cran-comments.md")
+}
+
+is_merge_commit <- function(message) {
+  grepl("^Merge pull request #[0-9]* from", message)
+}
+
+harvest_pr_title <- function(message) {
+  pr_number <- regmatches(message, regexpr("#[0-9]*", message))
+  pr_number <- sub("#", "", pr_number)
+  slug <- github_slug()
+  pr_info <- gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+  pr_info$title
 }

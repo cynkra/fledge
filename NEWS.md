@@ -1,5 +1,42 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+## fix
+Fix conventional commit regex (#329)
+
+
+## feat
+improve bump_version() (error) messages (#328)
+
+Co-authored-by: maelle <maelle@users.noreply.github.com>
+## feat
+Improve bump_version() behavior in the absence of changes (#323)
+
+Co-authored-by: Kirill Müller <krlmlr@users.noreply.github.com>
+Co-authored-by: maelle <maelle@users.noreply.github.com>
+## chore
+Turn Netlify builds off for now
+## chore
+Enable auto-style on GitHub Actions
+## feat
+New `local_test_project()` (#318)
+
+
+- Simplify test
+- Parallel tests
+## feat
+Extract conventional commit messages for the changelog
+## CHORE
+Remove testthat specialization for snapshots
+- Snapshot updates for R-CMD-check-dev ({"package":"testthat"})
+- typo fix
+- Snapshot updates for rcc-smoke (null)
+- Snapshot updates for R-CMD-check-dev ({"package":"testthat"})
+- Create and open draft release directly, without using `usethis::use_github_release()`.
+- Extract functions
+- Create tag as part of `release()`.
+- Fix `post_release()`, still need to tag released version.
+
+
 # fledge 0.1.0.9002 (2022-04-02)
 
 - `release()` no longer asks for confirmation.
