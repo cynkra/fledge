@@ -78,6 +78,7 @@ parse_conventional_commit <- function(message) {
   # TODO: parse body, trailer.
 
   c(
+    "",
     sprintf("## %s", type),
     "",
     scope_header,
@@ -143,8 +144,8 @@ translate_type <- function(type) {
 
 conventional_commit_types <- function() {
   c(
-    "Bug fix" = "fix",
-    "Feature" = "feat",
+    "Bug fixes" = "fix",
+    "Features" = "feat",
     "Build system, external dependencies" = "build",
     "Chore" = "chore",
     "Continuous integration" = "ci",

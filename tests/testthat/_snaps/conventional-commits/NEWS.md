@@ -1,10 +1,12 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+
 ## upkeep
 
 update rlang usage.
 
-## Bug fix
+
+## Bug fixes
 
 prevent racing of requests
 
@@ -16,15 +18,18 @@ obsolete now.
 
 Reviewed-by: Z
 Refs: #123
-## Feature
+
+## Features
 
 ### lang
 
 add Polish language
 
+
 ## Documentation
 
 correct spelling of CHANGELOG
+
 
 ## Chore
 
@@ -32,17 +37,20 @@ Breaking change: drop support for Node 6
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 
-## Feature
+
+## Features
 
 ### api
 
 Breaking change: send an email to the customer when a product is shipped
 
-## Feature
+
+## Features
 
 Breaking change: send an email to the customer when a product is shipped
 
-## Feature
+
+## Features
 
 allow provided config object to extend other configs
 
