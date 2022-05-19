@@ -6,6 +6,7 @@
 update rlang usage.
 
 
+
 ## Bug fixes
 
 prevent racing of requests
@@ -19,6 +20,7 @@ obsolete now.
 Reviewed-by: Z
 Refs: #123
 
+
 ## Features
 
 ### lang
@@ -26,14 +28,23 @@ Refs: #123
 add Polish language
 
 
+
 ## Documentation
 
 correct spelling of CHANGELOG
 
 
+
 ## Chore
 
 Breaking change: drop support for Node 6
+
+BREAKING CHANGE: use JavaScript features not available in Node 6.
+
+
+## Breaking changes
+
+drop support for Node 6
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 
@@ -45,9 +56,21 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 Breaking change: send an email to the customer when a product is shipped
 
 
+## Breaking changes
+
+### api
+
+send an email to the customer when a product is shipped
+
+
 ## Features
 
 Breaking change: send an email to the customer when a product is shipped
+
+
+## Breaking changes
+
+send an email to the customer when a product is shipped
 
 
 ## Features
@@ -55,6 +78,7 @@ Breaking change: send an email to the customer when a product is shipped
 allow provided config object to extend other configs
 
   BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+
 
 
 

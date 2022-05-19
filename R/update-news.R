@@ -72,13 +72,24 @@ parse_conventional_commit <- function(message) {
   type <- sub("(\\(.*\\))?!?:[[:space:]]$", "", header)
   type <- translate_type(type)
 
-  breaking <- if (grepl("!:", header)) "Breaking change: " else ""
-
   scope <- regmatches(header, regexpr("(\\(.*\\))", header))
   scope <- gsub("[\\(\\)]", "", scope)
   scope_header <- if (length(scope) == 0) NULL else c(sprintf("### %s", scope), "")
 
   description <- sub(header, "", message, fixed = TRUE)
+
+  breaking <- grepl("!:", header)
+  breaking_prefix <- if (breaking) {
+    "Breaking change: "
+  }
+  else {
+    ""
+  }
+  breaking_section <- if (breaking) {
+    c("", "## Breaking changes", "", scope_header, description)
+  } else {
+    ""
+  }
   # TODO: parse body, trailer.
 
   c(
@@ -86,7 +97,8 @@ parse_conventional_commit <- function(message) {
     sprintf("## %s", type),
     "",
     scope_header,
-    sprintf("%s%s", breaking, description)
+    sprintf("%s%s", breaking_prefix, description),
+    breaking_section
   )
 }
 
