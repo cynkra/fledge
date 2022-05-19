@@ -81,8 +81,7 @@ parse_conventional_commit <- function(message) {
   breaking <- grepl("!:", header)
   breaking_prefix <- if (breaking) {
     "Breaking change: "
-  }
-  else {
+  } else {
     ""
   }
   breaking_section <- if (breaking) {
