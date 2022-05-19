@@ -45,7 +45,6 @@ remove_housekeeping <- function(message) {
 }
 
 extract_newsworthy_items <- function(message) {
-
   if (is_merge_commit(message)) {
     title <- harvest_pr_title(message)
 
