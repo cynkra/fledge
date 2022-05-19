@@ -1,5 +1,5 @@
 create_news <- function(pkg) {
-  #withr::local_dir(pkg)
+  # withr::local_dir(pkg)
   if (!file.exists(news_path())) {
     cli::cli_alert_info("Created the NEWS.md file")
     file.create(news_path())
@@ -54,5 +54,5 @@ extract_version_number <- function(string) {
 
 is_dev_version_number <- function(version_number) {
   # 4 components hence 3 periods
-  length( gregexpr("\\.", version_number)[[1]]) == 3
+  length(gregexpr("\\.", version_number)[[1]]) == 3
 }
