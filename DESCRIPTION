@@ -28,6 +28,7 @@ Imports:
     callr,
     cli,
     clipr,
+    commonmark,
     desc (>= 1.2.0),
     devtools,
     enc,
@@ -44,7 +45,8 @@ Imports:
     tibble,
     usethis (>= 2.1.5),
     whoami,
-    withr
+    withr,
+    xml2
 Suggests: 
     brio,
     covr,
