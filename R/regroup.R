@@ -48,7 +48,7 @@ create_news <- function(pkg) {
   )
   purrr::walk(dev_sections, xml2::xml_remove)
 
-  # remove the sections
+  # remove the sections (tinkr can't write the XML back if we keep them)
   sections <- xml2::xml_find_all(xml, "//md:document/*[name()='section']", news$ns)
   purrr::walk(
     xml2::xml_children(sections),
