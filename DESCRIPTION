@@ -43,6 +43,7 @@ Imports:
     rlang (>= 0.4.12),
     rversions,
     tibble,
+    tinkr (>= 0.0.0.9002),
     usethis (>= 2.1.5),
     whoami,
     withr,
@@ -71,3 +72,5 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: true
+Remotes:  
+    ropensci/tinkr
