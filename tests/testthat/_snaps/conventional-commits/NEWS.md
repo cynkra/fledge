@@ -1,9 +1,14 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+
 ## upkeep
+
 update rlang usage.
 
-## fix
+
+
+## Bug fixes
+
 prevent racing of requests
 
 Introduce a request id and a reference to latest request. Dismiss
@@ -14,27 +19,66 @@ obsolete now.
 
 Reviewed-by: Z
 Refs: #123
-## feat(lang)
+
+
+## Features
+
+### lang
+
 add Polish language
 
-## docs
+
+
+## Documentation
+
 correct spelling of CHANGELOG
 
-## chore!
+
+
+## Chore
+
+Breaking change: drop support for Node 6
+
+BREAKING CHANGE: use JavaScript features not available in Node 6.
+
+
+## Breaking changes
+
 drop support for Node 6
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 
-## feat(api)!
+
+## Features
+
+### api
+
+Breaking change: send an email to the customer when a product is shipped
+
+
+## Breaking changes
+
+### api
+
 send an email to the customer when a product is shipped
 
-## feat!
+
+## Features
+
+Breaking change: send an email to the customer when a product is shipped
+
+
+## Breaking changes
+
 send an email to the customer when a product is shipped
 
-## feat
+
+## Features
+
 allow provided config object to extend other configs
 
   BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+
 
 
 
