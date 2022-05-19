@@ -23,7 +23,9 @@ create_news <- function(pkg) {
   sections <- xml2::xml_find_all(xml, ".//section", news$ns)
   # this assumes there are not dev versions dating from before the last not dev version
   is_dev <- purrr::map_lgl(sections, function(x) {
-    xml2::xml_attr(x, "version") %>% extract_version_number() %>% is_dev_version_number()
+    xml2::xml_attr(x, "version") %>%
+      extract_version_number() %>%
+      is_dev_version_number()
   })
   # merge them
   # TODO: regroup sub-headers
