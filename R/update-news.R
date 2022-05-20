@@ -196,9 +196,10 @@ harvest_pr_data <- function(message) {
   pr_info <- if (!has_internet()) {
     NULL
   } else {
-    tryCatch({
-      gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
-    },
+    tryCatch(
+      {
+        gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+      },
       error = function(e) {
         print(e)
         cli::cli_alert_warning(sprintf("Could not get title for PR #%s", pr_number))
