@@ -48,7 +48,7 @@ extract_newsworthy_items <- function(message) {
   if (is_merge_commit(message)) {
     pr_data <- harvest_pr_data(message)
     pr_number <- pr_data$pr_number
-    title <- pr_data$title %||% sprintf("https://github.com/%s/pull/%s", github_slug(), pr_number)
+    title <- pr_data$title %||% sprintf("PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
 
     if (is_conventional_commit(title)) {
       return(parse_conventional_commit(title))
