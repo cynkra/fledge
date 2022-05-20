@@ -45,6 +45,18 @@ remove_housekeeping <- function(message) {
 }
 
 extract_newsworthy_items <- function(message) {
+  if (is_merge_commit(message)) {
+    pr_data <- harvest_pr_data(message)
+    pr_number <- pr_data$pr_number
+    title <- pr_data$title %||% sprintf("https://github.com/%s/pull/%s", pr_number(), pr_num)
+
+    if (is_conventional_commit(title)) {
+      return(parse_conventional_commit(title))
+    } else {
+      return(sprintf("- %s", title))
+    }
+  }
+
   if (is_conventional_commit(message)) {
     return(parse_conventional_commit(message))
   }
@@ -170,4 +182,40 @@ conventional_commit_types <- function() {
     "Performance" = "perf",
     "Testing" = "test"
   )
+}
+
+is_merge_commit <- function(message) {
+  grepl("^Merge pull request #([0-9]*) from", message)
+}
+
+harvest_pr_data <- function(message) {
+  pr_number <- regmatches(message, regexpr("#[0-9]*", message))
+  pr_number <- sub("#", "", pr_number)
+  slug <- github_slug()
+
+  pr_info <- if (!has_internet()) {
+    NULL
+  } else {
+    tryCatch({
+      gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+    },
+      error = function(e) {
+        print(e)
+        cli::cli_alert_warning(sprintf("Could not get title for PR #%s", pr_number))
+        return(NULL)
+      }
+    )
+  }
+
+  tibble::tibble(
+    title = pr_info$title,
+    pr_number = pr_number
+  )
+}
+
+has_internet <- function() {
+  if (nzchar(Sys.getenv("NO_INTERNET_TEST_FLEDGE"))) {
+    return(FALSE)
+  }
+  curl::has_internet()
 }

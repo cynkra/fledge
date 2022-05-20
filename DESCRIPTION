@@ -28,6 +28,7 @@ Imports:
     callr,
     cli,
     clipr,
+    curl,
     desc (>= 1.2.0),
     devtools,
     enc,
