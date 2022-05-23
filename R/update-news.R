@@ -213,7 +213,6 @@ is_merge_commit <- function(message) {
 }
 
 harvest_pr_data <- function(message) {
-  check_gh_pat()
 
   pr_number <- regmatches(message, regexpr("#[0-9]*", message))
   pr_number <- sub("#", "", pr_number)
@@ -226,6 +225,7 @@ harvest_pr_data <- function(message) {
     cli::cli_alert_warning(sprintf("%s (no internet connection)", failure_message))
     NULL
   } else {
+    check_gh_pat()
     tryCatch(
       {
         gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
