@@ -54,7 +54,6 @@ Suggests:
     fs,
     httptest,
     knitr,
-    mockery,
     parsedate,
     pkgbuild,
     pkgload,
