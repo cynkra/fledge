@@ -48,11 +48,13 @@ test_that("Can parse PR merge commits - internet error", {
 })
 
 test_that("Can parse PR merge commits - PAT error", {
+  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_NO_PAT" = "blop")
   expect_snapshot_error(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
 })
 
 test_that("Can parse PR merge commits - other error", {
+  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   bla <- function(...) stop("bla")
   mockery::stub(harvest_pr_data, "gh::gh", bla)
