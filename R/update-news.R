@@ -273,6 +273,7 @@ regroup_news <- function(news_items) {
     return(treat_type_items(news_items, header = FALSE))
   }
 
+  # Repeat breaking changes in a distinct section
   breaking <- news_items[news_items$breaking, ]
   breaking$type <- "Breaking changes"
   news_items <- rbind(news_items, breaking)
