@@ -315,6 +315,7 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tee.
 ## 
 ## 
@@ -340,6 +341,7 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
 ## 
@@ -396,6 +398,7 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
 ## 
@@ -504,6 +507,7 @@ writeLines(news)
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
 ## 
@@ -582,6 +586,7 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
 ## 

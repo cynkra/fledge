@@ -405,7 +405,12 @@ check_post_release <- function() {
 
 check_gh_scopes <- function() {
   if (!("repo" %in% gh_scopes())) {
-    abort('Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.')
+    abort(
+      message = c(
+        x = 'Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.',
+        i = 'See for instance https://usethis.r-lib.org/reference/github-token.html'
+      )
+    )
   }
 }
 

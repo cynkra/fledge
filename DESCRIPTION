@@ -48,9 +48,11 @@ Imports:
 Suggests: 
     brio,
     covr,
+    curl,
     digest,
     fansi,
     fs,
+    httptest,
     knitr,
     mockery,
     parsedate,

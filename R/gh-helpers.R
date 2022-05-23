@@ -1,4 +1,7 @@
 github_slug <- function(remote = "origin") {
+  if (nzchar(Sys.getenv("FLEDGE_TEST_GITHUB_SLUG"))) {
+    return(Sys.getenv("FLEDGE_TEST_GITHUB_SLUG"))
+  }
   remote_url <- get_remote_url(remote)
   extract_repo(remote_url)
 }
