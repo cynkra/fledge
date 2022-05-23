@@ -28,7 +28,6 @@ Imports:
     callr,
     cli,
     clipr,
-    curl,
     desc (>= 1.2.0),
     devtools,
     enc,
@@ -49,6 +48,7 @@ Imports:
 Suggests: 
     brio,
     covr,
+    curl,
     digest,
     fansi,
     fs,

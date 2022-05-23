@@ -245,6 +245,11 @@ harvest_pr_data <- function(message) {
 }
 
 has_internet <- function() {
+  # impossible as fledge imports httr that imports curl :-)
+  if (!rlang::is_installed("curl")) {
+    return(FALSE)
+  }
+
   if (nzchar(Sys.getenv("NO_INTERNET_TEST_FLEDGE"))) {
     return(FALSE)
   }
