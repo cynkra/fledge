@@ -42,6 +42,7 @@ test_that("Can parse PR merge commits", {
 })
 
 test_that("Can parse PR merge commits - internet error", {
+  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   withr::local_envvar("NO_INTERNET_TEST_FLEDGE" = "blop")
   expect_snapshot(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
