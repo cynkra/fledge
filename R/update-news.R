@@ -68,8 +68,8 @@ parse_bullet_commit <- function(message) {
   bullets <- trimws(sub(bullet_pattern(), "", bullets))
 
   meta <- parse_squash_info(message)
-  if (!is.null(meta)) {
-    bullets <- trimws(sub(sprintf("\\(%s\\)", meta[length(meta)]), "", bullets))
+  if (!is.null(meta["pr"])) {
+    bullets <- trimws(sub(sprintf("\\(%s\\)", meta["pr"]), "", bullets))
   }
 
   description <- if (!is.null(meta)) {
@@ -160,7 +160,7 @@ parse_squash_info <- function(description) {
   # If there are co-authors, this is a merge commit so use its syntax
   pr <- rematch2::re_match(description_lines[1], "(#[0-9]*)")$.match
   if (!is.na(pr)) {
-    meta <- c(meta, pr)
+    meta <- c(meta, "pr" = pr)
   }
 
   meta
@@ -171,8 +171,8 @@ add_squash_info <- function(description) {
   description_lines <- strsplit(description, "\n")[[1]]
 
   meta <- parse_squash_info(description)
-  if (!is.null(meta)) {
-    description_lines[1] <- trimws(sub(sprintf("\\(%s\\)", meta[length(meta)]), "", description_lines[1]))
+  if (!is.null(meta["pr"])) {
+    description_lines[1] <- trimws(sub(sprintf("\\(%s\\)", meta["pr"]), "", description_lines[1]))
   }
 
   description <- trimws(paste(description_lines[!grepl(author_pattern(), description_lines)], collapse = "\n"))
