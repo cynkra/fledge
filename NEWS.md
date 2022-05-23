@@ -8,27 +8,29 @@
 
 ## Features 
 
-- harvest PR title from merge commit messages (#343) (@krlmlr, @maelle)
+- harvest PR attribution from merge commits
 
-- Improve parsing of conventional commit messages (#332)
+- harvest PR title from merge commit messages (@krlmlr, @maelle, #343)
 
-- improve bump_version() (error) messages (#328) (@maelle)
+- Improve parsing of conventional commit messages
 
-- Improve bump_version() behavior in the absence of changes (#323) (@krlmlr, @maelle)
+- improve bump_version() (error) messages (@maelle, #328)
+
+- Improve bump_version() behavior in the absence of changes (@krlmlr, @maelle, #323)
 
 - New `local_test_project()` (#318)
 
-- Extract conventional commit messages for the changelog (#314)
+- Extract conventional commit messages for the changelog
 
 
 
 ## Chore 
 
-- Turn Netlify builds off for now (#326)
+- Turn Netlify builds off for now
 
-- Enable auto-style on GitHub Actions (#317)
+- Enable auto-style on GitHub Actions
 
-- Remove testthat specialization for snapshots (#309)
+- Remove testthat specialization for snapshots
 
 
 

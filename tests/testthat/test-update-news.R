@@ -33,6 +33,12 @@ test_that("Can parse conventional commits", {
   expect_snapshot_file("NEWS.md")
 })
 
+test_that("Can parse Co-authored-by", {
+  expect_snapshot(extract_newsworthy_items("- blop\n-blip\n\nCo-authored-by: Person (<person@users.noreply.github.com>)"))
+  expect_snapshot(extract_newsworthy_items("- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)"))
+  expect_snapshot(extract_newsworthy_items("feat: blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)"))
+})
+
 test_that("Can parse PR merge commits", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   httptest::with_mock_dir("pr", {
