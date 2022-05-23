@@ -213,7 +213,6 @@ is_merge_commit <- function(message) {
 }
 
 harvest_pr_data <- function(message) {
-
   pr_number <- regmatches(message, regexpr("#[0-9]*", message))
   pr_number <- sub("#", "", pr_number)
 
