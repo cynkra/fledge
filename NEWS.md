@@ -1,71 +1,55 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+## Bug fixes 
 
-## Features
+ - Fix conventional commit regex (#329)
 
-Improve parsing of conventional commit messages
+## Chore 
 
+ - Turn Netlify builds off for now
 
-## Bug fixes
+- Enable auto-style on GitHub Actions
 
-Fix conventional commit regex (#329)
+- Remove testthat specialization for snapshots
 
+## Features 
 
+ - Improve parsing of conventional commit messages
 
-
-## Features
-
-improve bump_version() (error) messages (#328)
+- improve bump_version() (error) messages (#328)
 
 Co-authored-by: maelle <maelle@users.noreply.github.com>
 
-
-## Features
-
-Improve bump_version() behavior in the absence of changes (#323)
+- Improve bump_version() behavior in the absence of changes (#323)
 
 Co-authored-by: Kirill Müller <krlmlr@users.noreply.github.com>
 Co-authored-by: maelle <maelle@users.noreply.github.com>
 
+- New `local_test_project()` (#318)
 
-## Chore
+- Extract conventional commit messages for the changelog
 
-Turn Netlify builds off for now
+## Uncategorized 
 
+ - Simplify test (#310)
 
-## Chore
+- Parallel tests (#312)
 
-Enable auto-style on GitHub Actions
+- Snapshot updates for R-CMD-check-dev ({"package":"testthat"}) (#271)
 
+- typo fix (#306)
 
-## Features
+- Snapshot updates for rcc-smoke (null) (#272)
 
-New `local_test_project()` (#318)
+- Snapshot updates for R-CMD-check-dev ({"package":"testthat"}) (#256)
 
-
-
-- Simplify test
-- Parallel tests
-
-## Features
-
-Extract conventional commit messages for the changelog
-
-
-## CHORE
-
-Remove testthat specialization for snapshots
-
-- Snapshot updates for R-CMD-check-dev ({"package":"testthat"})
-- typo fix
-- Snapshot updates for rcc-smoke (null)
-- Snapshot updates for R-CMD-check-dev ({"package":"testthat"})
 - Create and open draft release directly, without using `usethis::use_github_release()`.
-- Extract functions
+
+- Extract functions (#257)
+
 - Create tag as part of `release()`.
+
 - Fix `post_release()`, still need to tag released version.
-
-
 # fledge 0.1.0.9002 (2022-04-02)
 
 - `release()` no longer asks for confirmation.

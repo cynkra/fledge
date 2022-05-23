@@ -2,8 +2,9 @@
 
 # tea 0.0.0.9001
 
-* Add cool blop.
-* Add cool bla.
+- Add cool blop.
+
+- Add cool bla.
 
 
 # tea 0.0.0.9000

@@ -2,7 +2,7 @@
 
 # tea 0.0.0.9001
 
-* Add cool bla.
+- Add cool bla.
 
 
 # tea 0.0.0.9000

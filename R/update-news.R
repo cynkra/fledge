@@ -1,15 +1,17 @@
 update_news_impl <- function(messages) {
-  news <- collect_news(messages)
+  news_items <- collect_news(messages)
+  news_lines <- regroup_news(news_items)
 
   if (fledge_chatty()) {
     cli_h2("Updating NEWS")
     cli_alert("Adding new entries to {.file {news_path()}}.")
   }
 
-  add_to_news(news)
+  add_to_news(news_lines)
 }
 
 collect_news <- function(messages) {
+
   if (fledge_chatty()) {
     cli_alert("Scraping {.field {length(messages)}} commit messages.")
   }
@@ -19,25 +21,26 @@ collect_news <- function(messages) {
     purrr::discard(~ . == "") %>%
     purrr::map_chr(remove_housekeeping) %>%
     purrr::map(extract_newsworthy_items) %>%
-    unlist()
+    purrr::keep(~ nrow(.) > 0) %>%
+    bind_rows()
 
-  if (length(newsworthy_items) == 0) {
+  if (is.null(newsworthy_items)) {
     if (length(messages) <= 1) {
-      newsworthy_items <- "- Same as previous version."
+      newsworthy_items <- parse_regular_commit("Same as previous version.")
       if (fledge_chatty()) cli_alert_info("Same as previous version.")
     } else {
-      newsworthy_items <- "- Internal changes only."
+      newsworthy_items <- parse_regular_commit("Internal changes only.")
       if (fledge_chatty()) cli_alert_info("Internal changes only.")
     }
   } else {
     if (fledge_chatty()) {
-      no <- length(newsworthy_items)
+      no <- nrow(newsworthy_items)
       entry_word <- if (no == 1) "entry" else "entries"
       cli_alert_success(sprintf("Found %s NEWS-worthy %s.", no, entry_word))
     }
   }
 
-  paste0(paste(newsworthy_items, collapse = "\n"), "\n\n")
+  newsworthy_items
 }
 
 remove_housekeeping <- function(message) {
@@ -45,6 +48,7 @@ remove_housekeeping <- function(message) {
 }
 
 extract_newsworthy_items <- function(message) {
+  # Merge messages
   if (is_merge_commit(message)) {
     pr_data <- harvest_pr_data(message)
     pr_number <- pr_data$pr_number
@@ -53,17 +57,38 @@ extract_newsworthy_items <- function(message) {
     if (is_conventional_commit(title)) {
       return(parse_conventional_commit(title))
     } else {
-      return(sprintf("- %s", title))
+      description <- sprintf("%s (#%s)", title, pr_number)
+      return(parse_regular_commit(description))
     }
   }
 
+  # Conventional commits messages
   if (is_conventional_commit(message)) {
     return(parse_conventional_commit(message))
   }
 
+  # Bullets messages
   # There can be several bullets per message!
   message_lines <- strsplit(message, "\n", fixed = TRUE)
-  purrr::map(message_lines, purrr::keep, ~ grepl("^[*-]", .))
+  items <- purrr::map(message_lines, purrr::keep, ~ is_bullet_message(.))
+  bind_rows(purrr::map(items, parse_regular_commit))
+}
+
+parse_regular_commit <- function(message) {
+  tibble::tibble(
+    description = trimws(sub(bullet_pattern(), "", message)),
+    type = default_type(),
+    breaking = FALSE,
+    scope = NA
+  )
+}
+
+bullet_pattern <- function() {
+  "^[*-]"
+}
+
+is_bullet_message <- function(message) {
+  grepl(bullet_pattern(), message)
 }
 
 conventional_commit_header_pattern <- function() {
@@ -85,8 +110,11 @@ parse_conventional_commit <- function(message) {
   type <- translate_type(type)
 
   scope <- regmatches(header, regexpr("(\\(.*\\))", header))
-  scope <- gsub("[\\(\\)]", "", scope)
-  scope_header <- if (length(scope) == 0) NULL else c(sprintf("### %s", scope), "")
+  scope <- if(length(scope) > 0) {
+    gsub("[\\(\\)]", "", scope)
+  } else {
+    NA
+  }
 
   description <- sub(header, "", message, fixed = TRUE)
 
@@ -96,20 +124,11 @@ parse_conventional_commit <- function(message) {
   } else {
     ""
   }
-  breaking_section <- if (breaking) {
-    c("", "## Breaking changes", "", scope_header, description)
-  } else {
-    ""
-  }
-  # TODO: parse body, trailer.
-
-  c(
-    "",
-    sprintf("## %s", type),
-    "",
-    scope_header,
-    sprintf("%s%s", breaking_prefix, description),
-    breaking_section
+  tibble::tibble(
+    description = trimws(sprintf("%s%s", breaking_prefix, description)),
+    type = type,
+    breaking = breaking,
+    scope = scope
   )
 }
 
@@ -162,8 +181,10 @@ edit_cran_comments <- function() {
 }
 
 translate_type <- function(type) {
-  if (type %in% conventional_commit_types()) {
-    names(conventional_commit_types())[conventional_commit_types() == type]
+  standard <- names(conventional_commit_types())[conventional_commit_types() == tolower(type)]
+
+  if (length(standard) > 0) {
+    standard
   } else {
     type
   }
@@ -191,9 +212,13 @@ is_merge_commit <- function(message) {
 harvest_pr_data <- function(message) {
   pr_number <- regmatches(message, regexpr("#[0-9]*", message))
   pr_number <- sub("#", "", pr_number)
+
   slug <- github_slug()
 
+  failure_message <- sprintf("Could not get title for PR #%s", pr_number)
+
   pr_info <- if (!has_internet()) {
+    cli::cli_alert_warning(sprintf("%s (no internet connection)", failure_message))
     NULL
   } else {
     tryCatch(
@@ -202,7 +227,7 @@ harvest_pr_data <- function(message) {
       },
       error = function(e) {
         print(e)
-        cli::cli_alert_warning(sprintf("Could not get title for PR #%s", pr_number))
+        cli::cli_alert_warning(failure_message)
         return(NULL)
       }
     )
@@ -219,4 +244,75 @@ has_internet <- function() {
     return(FALSE)
   }
   curl::has_internet()
+}
+
+check_gh_pat <- function() {
+  if (!nzchar(gh::gh_token())) {
+    abort(
+      message = c(
+        x = "Can't find a GitHub Personal Access Token (PAT).",
+        i = 'See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html'
+      )
+    )
+  }
+}
+
+default_type <- function() {
+  "Uncategorized"
+}
+
+regroup_news <- function(news_items) {
+
+  ## Only uncategorized?
+  if (isTRUE(all.equal(unique(news_items$type), default_type()))) {
+    return(treat_type_items(news_items, header = FALSE))
+  }
+
+  breaking <- news_items[news_items$breaking, ]
+  breaking$type <- "Breaking changes"
+  news_items <- rbind(news_items, breaking)
+
+  news_types <- split(news_items, news_items$type)
+
+  # Order
+  types <- names(news_types)
+  present_types <- unique(news_items$type)
+  standard_types <- c(names(conventional_commit_types()), "Breaking changes", default_type())
+  custom_types <- present_types[!(present_types %in% standard_types)]
+  types <- factor(types, levels = c(names(conventional_commit_types()), "Breaking changes", custom_types, default_type()))
+  order <- order(types)
+  news_types <- news_types[order]
+
+  glue::glue_collapse(purrr::map_chr(news_types, treat_type_items), sep = "\n\n")
+
+}
+
+treat_type_items <- function(df, header = TRUE) {
+  items <- split(df, seq_len(nrow(df))) %>%
+    purrr::map(add_hyphen) %>%
+    purrr::map_chr(add_scope) %>%
+    glue::glue_collapse(sep = "\n\n")
+
+  if (!header) {
+    sprintf("%s\n\n", items)
+  } else {
+    type <- df$type[1]
+    sprintf("## %s \n\n%s\n\n", type, items)
+  }
+}
+
+add_scope <- function(row) {
+  if (is.na(row$scope)) {
+    row$description
+  } else {
+    sprintf("### %s \n\n%s", row$scope, row$description)
+  }
+}
+add_hyphen <- function(row) {
+  row$description <- sprintf("- %s", row$description)
+  row
+}
+
+bind_rows <- function(df_list) {
+  do.call(rbind, df_list)
 }
