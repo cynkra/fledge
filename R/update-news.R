@@ -11,7 +11,6 @@ update_news_impl <- function(messages) {
 }
 
 collect_news <- function(messages) {
-
   if (fledge_chatty()) {
     cli_alert("Scraping {.field {length(messages)}} commit messages.")
   }
@@ -110,7 +109,7 @@ parse_conventional_commit <- function(message) {
   type <- translate_type(type)
 
   scope <- regmatches(header, regexpr("(\\(.*\\))", header))
-  scope <- if(length(scope) > 0) {
+  scope <- if (length(scope) > 0) {
     gsub("[\\(\\)]", "", scope)
   } else {
     NA
@@ -284,7 +283,6 @@ regroup_news <- function(news_items) {
   news_types <- news_types[order]
 
   glue::glue_collapse(purrr::map_chr(news_types, treat_type_items), sep = "\n\n")
-
 }
 
 treat_type_items <- function(df, header = TRUE) {
