@@ -68,6 +68,9 @@ parse_bullet_commit <- function(message) {
   bullets <- trimws(sub(bullet_pattern(), "", bullets))
 
   meta <- parse_squash_info(message)
+  if (!is.null(meta)) {
+    bullets <- trimws(sub(sprintf("\\(%s\\)", meta[length(meta)]), "", bullets))
+  }
 
   description <- if (!is.null(meta)) {
     sprintf("%s (%s)", bullets, toString(meta))
