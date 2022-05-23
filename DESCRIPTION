@@ -52,6 +52,7 @@ Suggests:
     digest,
     fansi,
     fs,
+    httptest,
     knitr,
     mockery,
     parsedate,

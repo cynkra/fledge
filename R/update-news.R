@@ -51,7 +51,11 @@ extract_newsworthy_items <- function(message) {
   if (is_merge_commit(message)) {
     pr_data <- harvest_pr_data(message)
     pr_number <- pr_data$pr_number
-    title <- pr_data$title %||% sprintf("PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
+    title <- if (is.na(pr_data$title)) {
+      sprintf("PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
+    } else {
+      pr_data$title
+    }
 
     if (is_conventional_commit(title)) {
       return(parse_conventional_commit(title))
@@ -209,6 +213,8 @@ is_merge_commit <- function(message) {
 }
 
 harvest_pr_data <- function(message) {
+  check_gh_pat()
+
   pr_number <- regmatches(message, regexpr("#[0-9]*", message))
   pr_number <- sub("#", "", pr_number)
 
@@ -233,7 +239,7 @@ harvest_pr_data <- function(message) {
   }
 
   tibble::tibble(
-    title = pr_info$title,
+    title = pr_info$title %||% NA,
     pr_number = pr_number
   )
 }
@@ -246,7 +252,7 @@ has_internet <- function() {
 }
 
 check_gh_pat <- function() {
-  if (!nzchar(gh::gh_token())) {
+  if (!nzchar(gh::gh_token()) || nzchar(Sys.getenv("FLEDGE_TEST_NO_PAT"))) {
     abort(
       message = c(
         x = "Can't find a GitHub Personal Access Token (PAT).",
