@@ -164,7 +164,6 @@ parse_squash_info <- function(description) {
   }
 
   meta
-
 }
 
 add_squash_info <- function(description) {
