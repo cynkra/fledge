@@ -155,8 +155,7 @@ parse_squash_info <- function(description) {
   authors <- sub("^<", "", authors)
   authors <- sub("@.*", "", authors)
 
-  meta <- NULL
-  meta <- c(meta, sprintf("@%s", authors))
+  meta <- sprintf("@%s", authors)
 
   # If there are co-authors, this is a merge commit so use its syntax
   pr <- rematch2::re_match(description_lines[1], "(#[0-9]*)")$.match
