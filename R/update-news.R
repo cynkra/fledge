@@ -92,7 +92,7 @@ is_conventional_commit <- function(message) {
   grepl(conventional_commit_header_pattern(), message)
 }
 
-parse_conventional_commit <- function(message) {
+parse_conventional_commit <- function(message, pr = NULL) {
   type_matches <- regexpr(conventional_commit_header_pattern(), message)
   header <- regmatches(message, type_matches)
 
@@ -107,6 +107,25 @@ parse_conventional_commit <- function(message) {
   }
 
   description <- sub(header, "", message, fixed = TRUE)
+  description_lines <- strsplit(description, "\n")[[1]]
+  author_lines <- description_lines[grepl("^Co-authored-by:", description_lines)]
+  authors <- rematch2::re_match(author_lines, "<.*@users.noreply.github.com>")$.match
+  authors <- sub("^<", "", authors)
+  authors <- sub("@.*", "", authors)
+
+  description <- trimws(paste(description_lines[!(description_lines %in% author_lines)], collapse = "\n"))
+
+  meta <- NULL
+  if (length(authors) > 0) {
+    meta <- c(meta, sprintf("@%s", authors))
+  }
+  if (!is.null(pr)) {
+    meta <- c(meta, sprintf("#%s", pr))
+  }
+
+  if (!is.null(meta)) {
+    description <- sprintf("%s (%s)", description, toString(meta))
+  }
 
   breaking <- grepl("!:", header)
   breaking_prefix <- if (breaking) {
@@ -132,7 +151,7 @@ parse_merge_commit <- function(message) {
   }
 
   if (is_conventional_commit(title)) {
-    return(parse_conventional_commit(title))
+    return(parse_conventional_commit(title, pr = pr_number))
   } else {
     description <- sprintf("%s (#%s)", title, pr_number)
     return(parse_bullet_commit(description))
