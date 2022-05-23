@@ -2,19 +2,13 @@
 
 ## Bug fixes 
 
- - Fix conventional commit regex (#329)
+- Fix conventional commit regex (#329)
 
-## Chore 
 
- - Turn Netlify builds off for now
-
-- Enable auto-style on GitHub Actions
-
-- Remove testthat specialization for snapshots
 
 ## Features 
 
- - Improve parsing of conventional commit messages
+- Improve parsing of conventional commit messages
 
 - improve bump_version() (error) messages (#328)
 
@@ -29,9 +23,21 @@ Co-authored-by: maelle <maelle@users.noreply.github.com>
 
 - Extract conventional commit messages for the changelog
 
+
+
+## Chore 
+
+- Turn Netlify builds off for now
+
+- Enable auto-style on GitHub Actions
+
+- Remove testthat specialization for snapshots
+
+
+
 ## Uncategorized 
 
- - Simplify test (#310)
+- Simplify test (#310)
 
 - Parallel tests (#312)
 
@@ -50,6 +56,8 @@ Co-authored-by: maelle <maelle@users.noreply.github.com>
 - Create tag as part of `release()`.
 
 - Fix `post_release()`, still need to tag released version.
+
+
 # fledge 0.1.0.9002 (2022-04-02)
 
 - `release()` no longer asks for confirmation.
