@@ -38,6 +38,31 @@
     Output
       NULL
 
+---
+
+    Code
+      bump_version(no_change_behavior = "bump")
+    Message
+      > Scraping 1 commit messages.
+      i Same as previous version.
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.0.9002.
+      > Adding header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+      ! Call `fledge::finalize_version(push = TRUE)`.
+    Output
+      NULL
+
 # bump_version() works -- not dev
 
     Code
