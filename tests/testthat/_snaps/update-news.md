@@ -40,6 +40,6 @@
     Output
       # A tibble: 1 x 2
         title pr_number
-        <lgl> <chr>    
-      1 NA    332      
+        <chr> <chr>    
+      1 <NA>  332      
 

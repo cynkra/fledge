@@ -20,15 +20,15 @@ collect_news <- function(messages) {
     purrr::discard(~ . == "") %>%
     purrr::map_chr(remove_housekeeping) %>%
     purrr::map(extract_newsworthy_items) %>%
-    purrr::keep(~ nrow(.) > 0) %>%
+    purrr::keep(~ !is.null(.)) %>%
     bind_rows()
 
   if (is.null(newsworthy_items)) {
     if (length(messages) <= 1) {
-      newsworthy_items <- parse_regular_commit("Same as previous version.")
+      newsworthy_items <- parse_bullet_commit("Same as previous version.")
       if (fledge_chatty()) cli_alert_info("Same as previous version.")
     } else {
-      newsworthy_items <- parse_regular_commit("Internal changes only.")
+      newsworthy_items <- parse_bullet_commit("Internal changes only.")
       if (fledge_chatty()) cli_alert_info("Internal changes only.")
     }
   } else {
@@ -49,20 +49,7 @@ remove_housekeeping <- function(message) {
 extract_newsworthy_items <- function(message) {
   # Merge messages
   if (is_merge_commit(message)) {
-    pr_data <- harvest_pr_data(message)
-    pr_number <- pr_data$pr_number
-    title <- if (is.na(pr_data$title)) {
-      sprintf("PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
-    } else {
-      pr_data$title
-    }
-
-    if (is_conventional_commit(title)) {
-      return(parse_conventional_commit(title))
-    } else {
-      description <- sprintf("%s (#%s)", title, pr_number)
-      return(parse_regular_commit(description))
-    }
+    return(parse_merge_commit(message))
   }
 
   # Conventional commits messages
@@ -72,12 +59,12 @@ extract_newsworthy_items <- function(message) {
 
   # Bullets messages
   # There can be several bullets per message!
-  message_lines <- strsplit(message, "\n", fixed = TRUE)
-  items <- purrr::map(message_lines, purrr::keep, ~ is_bullet_message(.))
-  bind_rows(purrr::map(items, parse_regular_commit))
+  message_lines <- strsplit(message, "\n", fixed = TRUE)[[1]]
+  items <- purrr::keep(message_lines, is_bullet_message)
+  bind_rows(purrr::map(items, parse_bullet_commit))
 }
 
-parse_regular_commit <- function(message) {
+parse_bullet_commit <- function(message) {
   tibble::tibble(
     description = trimws(sub(bullet_pattern(), "", message)),
     type = default_type(),
@@ -133,6 +120,23 @@ parse_conventional_commit <- function(message) {
     breaking = breaking,
     scope = scope
   )
+}
+
+parse_merge_commit <- function(message) {
+  pr_data <- harvest_pr_data(message)
+  pr_number <- pr_data$pr_number
+  title <- if (is.na(pr_data$title)) {
+    sprintf("PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
+  } else {
+    pr_data$title
+  }
+
+  if (is_conventional_commit(title)) {
+    return(parse_conventional_commit(title))
+  } else {
+    description <- sprintf("%s (#%s)", title, pr_number)
+    return(parse_bullet_commit(description))
+  }
 }
 
 news_path <- function() {
