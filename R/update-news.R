@@ -105,7 +105,7 @@ is_conventional_commit <- function(message) {
   grepl(conventional_commit_header_pattern(), message)
 }
 
-parse_conventional_commit <- function(message, pr = NULL) {
+parse_conventional_commit <- function(message) {
   type_matches <- regexpr(conventional_commit_header_pattern(), message)
   header <- regmatches(message, type_matches)
 
@@ -146,7 +146,7 @@ parse_squash_info <- function(description) {
   description_lines <- strsplit(description, "\n")[[1]]
   author_lines <- description_lines[grepl(author_pattern(), description_lines)]
   authors <- rematch2::re_match(author_lines, "<.*@users.noreply.github.com>")$.match
-  authors <- na.omit(authors)
+  authors <- stats::na.omit(authors)
 
   if (length(author_lines) == 0 || length(authors) == 0) {
     return(NULL)
