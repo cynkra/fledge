@@ -1,3 +1,37 @@
+# Can parse Co-authored-by
+
+    Code
+      extract_newsworthy_items(
+        "- blop\n-blip\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
+    Output
+      # A tibble: 2 x 4
+        description    type          breaking scope
+        <chr>          <chr>         <lgl>    <lgl>
+      1 blop (@person) Uncategorized FALSE    NA   
+      2 blip (@person) Uncategorized FALSE    NA   
+
+---
+
+    Code
+      extract_newsworthy_items(
+        "- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)")
+    Output
+      # A tibble: 1 x 4
+        description                type          breaking scope
+        <chr>                      <chr>         <lgl>    <lgl>
+      1 blop (@person, @else, #42) Uncategorized FALSE    NA   
+
+---
+
+    Code
+      extract_newsworthy_items(
+        "feat: blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
+    Output
+      # A tibble: 1 x 4
+        description         type     breaking scope
+        <chr>               <chr>    <lgl>    <lgl>
+      1 blop (@person, #42) Features FALSE    NA   
+
 # Can parse PR merge commits
 
     Code

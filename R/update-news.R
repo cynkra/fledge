@@ -23,12 +23,12 @@ collect_news <- function(messages) {
     purrr::keep(~ !is.null(.)) %>%
     bind_rows()
 
-  if (is.null(newsworthy_items)) {
+  if (nrow(newsworthy_items) == 0) {
     if (length(messages) <= 1) {
-      newsworthy_items <- parse_bullet_commit("Same as previous version.")
+      newsworthy_items <- parse_bullet_commit("- Same as previous version.")
       if (fledge_chatty()) cli_alert_info("Same as previous version.")
     } else {
-      newsworthy_items <- parse_bullet_commit("Internal changes only.")
+      newsworthy_items <- parse_bullet_commit("- Internal changes only.")
       if (fledge_chatty()) cli_alert_info("Internal changes only.")
     }
   } else {
@@ -59,14 +59,27 @@ extract_newsworthy_items <- function(message) {
 
   # Bullets messages
   # There can be several bullets per message!
-  message_lines <- strsplit(message, "\n", fixed = TRUE)[[1]]
-  items <- purrr::keep(message_lines, is_bullet_message)
-  bind_rows(purrr::map(items, parse_bullet_commit))
+  parse_bullet_commit(message)
 }
 
 parse_bullet_commit <- function(message) {
+  message_lines <- strsplit(message, "\n", fixed = TRUE)[[1]]
+  bullets <- purrr::keep(message_lines, is_bullet_message)
+  bullets <- trimws(sub(bullet_pattern(), "", bullets))
+
+  meta <- parse_squash_info(message)
+  if (!is.null(meta["pr"])) {
+    bullets <- trimws(sub(sprintf("\\(%s\\)", meta["pr"]), "", bullets))
+  }
+
+  description <- if (!is.null(meta)) {
+    sprintf("%s (%s)", bullets, toString(meta))
+  } else {
+    bullets
+  }
+
   tibble::tibble(
-    description = trimws(sub(bullet_pattern(), "", message)),
+    description = description,
     type = default_type(),
     breaking = FALSE,
     scope = NA
@@ -106,7 +119,10 @@ parse_conventional_commit <- function(message) {
     NA
   }
 
+
   description <- sub(header, "", message, fixed = TRUE)
+
+  description <- add_squash_info(description)
 
   breaking <- grepl("!:", header)
   breaking_prefix <- if (breaking) {
@@ -122,11 +138,57 @@ parse_conventional_commit <- function(message) {
   )
 }
 
+author_pattern <- function() {
+  "^Co-authored-by:"
+}
+
+parse_squash_info <- function(description) {
+  description_lines <- strsplit(description, "\n")[[1]]
+  author_lines <- description_lines[grepl(author_pattern(), description_lines)]
+  authors <- rematch2::re_match(author_lines, "<.*@users.noreply.github.com>")$.match
+  authors <- stats::na.omit(authors)
+
+  if (length(author_lines) == 0 || length(authors) == 0) {
+    return(NULL)
+  }
+
+  authors <- sub("^<", "", authors)
+  authors <- sub("@.*", "", authors)
+
+  meta <- sprintf("@%s", authors)
+
+  # If there are co-authors, this is a merge commit so use its syntax
+  pr <- rematch2::re_match(description_lines[1], "(#[0-9]*)")$.match
+  if (!is.na(pr)) {
+    meta <- c(meta, "pr" = pr)
+  }
+
+  meta
+}
+
+add_squash_info <- function(description) {
+  description_lines <- strsplit(description, "\n")[[1]]
+
+  meta <- parse_squash_info(description)
+  if (!is.null(meta["pr"])) {
+    description_lines[1] <- trimws(sub(sprintf("\\(%s\\)", meta["pr"]), "", description_lines[1]))
+  }
+
+  description <- trimws(paste(description_lines[!grepl(author_pattern(), description_lines)], collapse = "\n"))
+
+  if (!is.null(meta)) {
+    sprintf("%s (%s)", description, toString(meta))
+  } else {
+    description
+  }
+}
+
 parse_merge_commit <- function(message) {
   pr_data <- harvest_pr_data(message)
   pr_number <- pr_data$pr_number
+
   title <- if (is.na(pr_data$title)) {
-    sprintf("PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
+    sprintf("- PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
   } else {
     pr_data$title
   }
