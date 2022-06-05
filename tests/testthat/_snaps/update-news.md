@@ -41,9 +41,10 @@
       No encoding supplied: defaulting to UTF-8.
     Output
       # A tibble: 1 x 4
-        description                                     type     breaking scope
-        <chr>                                           <chr>    <lgl>    <lgl>
-      1 Improve parsing of conventional commit messages Features FALSE    NA   
+        description                                             type     break~1 scope
+        <chr>                                                   <chr>    <lgl>   <lgl>
+      1 Improve parsing of conventional commit messages (#332). Features FALSE   NA   
+      # ... with abbreviated variable name 1: breaking
 
 # Can parse PR merge commits - internet error
 
@@ -54,9 +55,10 @@
       ! Could not get title for PR #332 (no internet connection)
     Output
       # A tibble: 1 x 4
-        description                                               type  breaking scope
-        <chr>                                                     <chr> <lgl>    <lgl>
-      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#~ Unca~ FALSE    NA   
+        description                                                type  break~1 scope
+        <chr>                                                      <chr> <lgl>   <lgl>
+      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#3~ Unca~ FALSE   NA   
+      # ... with abbreviated variable name 1: breaking
 
 # Can parse PR merge commits - PAT error
 

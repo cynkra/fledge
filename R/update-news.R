@@ -193,10 +193,11 @@ parse_merge_commit <- function(message) {
     pr_data$title
   }
 
+  description <- sprintf("%s (#%s).", title, pr_number)
+
   if (is_conventional_commit(title)) {
-    return(parse_conventional_commit(title))
+    return(parse_conventional_commit(description))
   } else {
-    description <- sprintf("%s (#%s)", title, pr_number)
     return(parse_bullet_commit(description))
   }
 }
