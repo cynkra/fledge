@@ -41,9 +41,9 @@
       No encoding supplied: defaulting to UTF-8.
     Output
       # A tibble: 1 x 4
-        description                                     type     breaking scope
-        <chr>                                           <chr>    <lgl>    <lgl>
-      1 Improve parsing of conventional commit messages Features FALSE    NA   
+        description                                             type    breaking scope
+        <chr>                                                   <chr>   <lgl>    <lgl>
+      1 Improve parsing of conventional commit messages (#332). Featur~ FALSE    NA   
 
 # Can parse PR merge commits - internet error
 
