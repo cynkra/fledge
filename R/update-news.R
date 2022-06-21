@@ -339,7 +339,6 @@ default_type <- function() {
 }
 
 regroup_news <- function(news_items) {
-
   ## Only uncategorized?
   if (isTRUE(all.equal(unique(news_items$type), default_type()))) {
     return(treat_type_items(news_items, header = FALSE))
