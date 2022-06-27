@@ -34,29 +34,25 @@
 
 # Can parse PR merge commits
 
-    Code
-      extract_newsworthy_items(
-        "Merge pull request #332 from cynkra/conventional-parsing")
-    Message
-      No encoding supplied: defaulting to UTF-8.
-    Output
-      # A tibble: 1 x 4
-        description                                             type    breaking scope
-        <chr>                                                   <chr>   <lgl>    <lgl>
-      1 Improve parsing of conventional commit messages (#332). Featur~ FALSE    NA   
+    [
+      {
+        "description": "Improve parsing of conventional commit messages (#332).",
+        "type": "Features",
+        "breaking": false,
+        "scope": "NA"
+      }
+    ] 
 
 # Can parse PR merge commits - external contributor
 
-    Code
-      extract_newsworthy_items(
-        "Merge pull request #18 from someone/conventional-parsing")
-    Message
-      No encoding supplied: defaulting to UTF-8.
-    Output
-      # A tibble: 1 x 4
-        description                                               type  breaking scope
-        <chr>                                                     <chr> <lgl>    <lgl>
-      1 Improve parsing of conventional commit messages (@someon~ Feat~ FALSE    NA   
+    [
+      {
+        "description": "Improve parsing of conventional commit messages (@someone, #18).",
+        "type": "Features",
+        "breaking": false,
+        "scope": "NA"
+      }
+    ] 
 
 # Can parse PR merge commits - internet error
 
