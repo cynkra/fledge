@@ -192,8 +192,13 @@ parse_merge_commit <- function(message) {
   } else {
     pr_data$title
   }
+  ctb <- if (is.na(pr_data$external_ctb)) {
+    ""
+  } else {
+    sprintf("@%s, ", pr_data$external_ctb)
+  }
 
-  description <- sprintf("%s (#%s).", title, pr_number)
+  description <- sprintf("%s (%s#%s).", title, ctb, pr_number)
 
   if (is_conventional_commit(title)) {
     return(parse_conventional_commit(description))
@@ -305,9 +310,21 @@ harvest_pr_data <- function(message) {
     )
   }
 
+  pr_sender <- pr_info$head$repo$owner$login
+
+
+  external_ctb <- NA_character_
+  if (!is.null(pr_sender)) {
+    repo_owner <- sub("/.*", "", github_slug(get_remote_name()))
+    if (pr_sender != repo_owner) {
+      external_ctb <- pr_sender
+    }
+  }
+
   tibble::tibble(
     title = pr_info$title %||% NA_character_,
-    pr_number = pr_number
+    pr_number = pr_number,
+    external_ctb = external_ctb
   )
 }
 

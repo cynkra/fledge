@@ -45,6 +45,19 @@
         <chr>                                                   <chr>   <lgl>    <lgl>
       1 Improve parsing of conventional commit messages (#332). Featur~ FALSE    NA   
 
+# Can parse PR merge commits - external contributor
+
+    Code
+      extract_newsworthy_items(
+        "Merge pull request #18 from someone/conventional-parsing")
+    Message
+      No encoding supplied: defaulting to UTF-8.
+    Output
+      # A tibble: 1 x 4
+        description                                               type  breaking scope
+        <chr>                                                     <chr> <lgl>    <lgl>
+      1 Improve parsing of conventional commit messages (@someon~ Feat~ FALSE    NA   
+
 # Can parse PR merge commits - internet error
 
     Code
@@ -72,8 +85,8 @@
     Message
       ! Could not get title for PR #332
     Output
-      # A tibble: 1 x 2
-        title pr_number
-        <chr> <chr>    
-      1 <NA>  332      
+      # A tibble: 1 x 3
+        title pr_number external_ctb
+        <chr> <chr>     <chr>       
+      1 <NA>  332       <NA>        
 

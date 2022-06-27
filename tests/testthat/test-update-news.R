@@ -47,6 +47,14 @@ test_that("Can parse PR merge commits", {
   })
 })
 
+test_that("Can parse PR merge commits - external contributor", {
+  withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
+  httptest::with_mock_dir("pr", {
+    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
+    expect_snapshot(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
+  })
+})
+
 test_that("Can parse PR merge commits - internet error", {
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")

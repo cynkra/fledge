@@ -100,7 +100,7 @@ get_branch_name <- function() {
   gert::git_branch()
 }
 
-get_remote_name <- function(branch) {
+get_remote_name <- function(branch = get_main_branch()) {
   branch_info <- gert::git_branch_list()
   # branch_info$name is unique: remote branches are prefixed with their remote name.
   branch_info$upstream[branch_info$name == branch]
