@@ -323,7 +323,7 @@ harvest_pr_data <- function(message) {
   tibble::tibble(
     title = pr_info$title %||% NA_character_,
     pr_number = pr_number,
-    external_ctb = external_ctb
+    external_ctb = external_ctb,
   )
 }
 
