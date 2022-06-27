@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-## Bug fixes 
+## Bug fixes
 
 - prevent racing of requests
 
@@ -13,9 +13,7 @@ obsolete now.
 Reviewed-by: Z
 Refs: #123
 
-
-
-## Features 
+## Features
 
 ### lang 
 
@@ -31,23 +29,17 @@ Refs: #123
 
   BREAKING CHANGE: `extends` key in config file is now used for extending other config files
 
-
-
-## Chore 
+## Chore
 
 - Breaking change: drop support for Node 6
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 
-
-
-## Documentation 
+## Documentation
 
 - correct spelling of CHANGELOG
 
-
-
-## Breaking changes 
+## Breaking changes
 
 - Breaking change: drop support for Node 6
 
@@ -59,9 +51,7 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 
 - Breaking change: send an email to the customer when a product is shipped
 
-
-
-## upkeep 
+## upkeep
 
 - update rlang usage.
 

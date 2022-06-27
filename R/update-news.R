@@ -341,7 +341,7 @@ default_type <- function() {
 regroup_news <- function(news_items) {
   ## Only uncategorized?
   if (isTRUE(all.equal(unique(news_items$type), default_type()))) {
-    return(treat_type_items(news_items, header = FALSE))
+    return(sprintf("%s\n\n", treat_type_items(news_items, header = FALSE)))
   }
 
   # Repeat breaking changes in a distinct section
@@ -360,7 +360,11 @@ regroup_news <- function(news_items) {
   order <- order(types)
   news_types <- news_types[order]
 
-  glue::glue_collapse(purrr::map_chr(news_types, treat_type_items), sep = "\n\n")
+  # Collapse and ensure the whole section is followed by an empty line
+  glue::glue_collapse(
+    c(purrr::map_chr(news_types, treat_type_items), ""),
+    sep = "\n\n"
+  )
 }
 
 treat_type_items <- function(df, header = TRUE) {
@@ -370,10 +374,10 @@ treat_type_items <- function(df, header = TRUE) {
     glue::glue_collapse(sep = "\n\n")
 
   if (!header) {
-    sprintf("%s\n\n", items)
+    sprintf("%s", items)
   } else {
     type <- df$type[1]
-    sprintf("## %s \n\n%s\n\n", type, items)
+    sprintf("## %s\n\n%s", type, items)
   }
 }
 
