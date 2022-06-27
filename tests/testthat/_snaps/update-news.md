@@ -38,9 +38,10 @@
       {
         "description": "Improve parsing of conventional commit messages (#332).",
         "type": "Features",
-        "breaking": false
+        "breaking": false,
+        "scope": "NA"
       }
-    ]
+    ] 
 
 # Can parse PR merge commits - external contributor
 
