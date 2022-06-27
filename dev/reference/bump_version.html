@@ -98,9 +98,18 @@ Otherwise, commit_version().
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<p></p>
-    </div>
+    <dl><dt>which</dt>
+<dd><p>Component of the version number to update. Supported
+values are <code>"dev"</code> (default), <code>"patch"</code>, <code>"minor"</code> and <code>"major"</code>.</p></dd>
+
+
+<dt>no_change_behavior</dt>
+<dd><p>What to do if there was no change since the last
+version: <code>"bump"</code> for bump the version;
+<code>"noop"</code> for do nothing;
+<code>"fail"</code> for erroring.</p></dd>
+
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     
@@ -137,7 +146,7 @@ Fear not, run <code><a href="unbump_version.html">unbump_version()</a></code>, m
 <span class="r-in">  <span class="co"># Bump version with fledge.</span></span>
 <span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu">bump_version</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpvZcQaK/fledge1b4e2d5928ee/tea'</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpxjEwbL/fledge1c2f68b81d3f/tea'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'R/cool-function.R'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Call <span style="color: #555555;">`use_test()`</span> to create a matching test file</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Scraping <span style="color: #00BB00;">3</span> commit messages.</span>
@@ -173,7 +182,7 @@ Fear not, run <code><a href="unbump_version.html">unbump_version()</a></code>, m
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>
