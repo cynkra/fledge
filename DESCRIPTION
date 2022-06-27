@@ -53,6 +53,7 @@ Suggests:
     fansi,
     fs,
     httptest,
+    jsonlite,
     knitr,
     mockery,
     parsedate,

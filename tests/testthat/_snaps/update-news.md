@@ -34,29 +34,36 @@
 
 # Can parse PR merge commits
 
-    Code
-      extract_newsworthy_items(
-        "Merge pull request #332 from cynkra/conventional-parsing")
-    Message
-      No encoding supplied: defaulting to UTF-8.
-    Output
-      # A tibble: 1 x 4
-        description                                             type    breaking scope
-        <chr>                                                   <chr>   <lgl>    <lgl>
-      1 Improve parsing of conventional commit messages (#332). Featur~ FALSE    NA   
+    [
+      {
+        "description": "Improve parsing of conventional commit messages (#332).",
+        "type": "Features",
+        "breaking": false,
+        "scope": "NA"
+      }
+    ] 
+
+# Can parse PR merge commits - external contributor
+
+    [
+      {
+        "description": "Improve parsing of conventional commit messages (@someone, #18).",
+        "type": "Features",
+        "breaking": false,
+        "scope": "NA"
+      }
+    ] 
 
 # Can parse PR merge commits - internet error
 
-    Code
-      extract_newsworthy_items(
-        "Merge pull request #332 from cynkra/conventional-parsing")
-    Message
-      ! Could not get title for PR #332 (no internet connection)
-    Output
-      # A tibble: 1 x 4
-        description                                               type  breaking scope
-        <chr>                                                     <chr> <lgl>    <lgl>
-      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#~ Unca~ FALSE    NA   
+    [
+      {
+        "description": "PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#332).",
+        "type": "Uncategorized",
+        "breaking": false,
+        "scope": "NA"
+      }
+    ] 
 
 # Can parse PR merge commits - PAT error
 
@@ -72,8 +79,8 @@
     Message
       ! Could not get title for PR #332
     Output
-      # A tibble: 1 x 2
-        title pr_number
-        <chr> <chr>    
-      1 <NA>  332      
+      # A tibble: 1 x 3
+        title pr_number external_ctb
+        <chr> <chr>     <chr>       
+      1 <NA>  332       <NA>        
 

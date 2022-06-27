@@ -1,0 +1,10 @@
+{
+    "title": "feat: Improve parsing of conventional commit messages",
+    "head": {
+      "repo": {
+        "owner": {
+          "login": "someone"
+        }
+      }
+    }
+}
