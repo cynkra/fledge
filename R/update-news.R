@@ -312,7 +312,6 @@ harvest_pr_data <- function(message) {
 
   pr_sender <- pr_info$head$repo$owner$login
 
-
   external_ctb <- NA_character_
   if (!is.null(pr_sender)) {
     repo_owner <- sub("/.*", "", github_slug(get_remote_name()))
