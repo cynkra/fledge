@@ -36,6 +36,7 @@ Imports:
     gh,
     glue,
     httr,
+    jsonlite,
     magrittr,
     purrr (>= 0.3.2),
     rematch2,
