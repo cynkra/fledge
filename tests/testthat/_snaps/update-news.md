@@ -38,10 +38,9 @@
       {
         "description": "Improve parsing of conventional commit messages (#332).",
         "type": "Features",
-        "breaking": false,
-        "scope": "NA"
+        "breaking": false
       }
-    ] 
+    ]
 
 # Can parse PR merge commits - external contributor
 
@@ -49,10 +48,9 @@
       {
         "description": "Improve parsing of conventional commit messages (@someone, #18).",
         "type": "Features",
-        "breaking": false,
-        "scope": "NA"
+        "breaking": false
       }
-    ] 
+    ]
 
 # Can parse PR merge commits - internet error
 

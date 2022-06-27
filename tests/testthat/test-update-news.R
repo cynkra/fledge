@@ -43,7 +43,7 @@ test_that("Can parse PR merge commits", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   httptest::with_mock_dir("pr", {
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-    expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
+    expect_snapshot_value(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
   })
 })
 
@@ -51,7 +51,7 @@ test_that("Can parse PR merge commits - external contributor", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   httptest::with_mock_dir("pr", {
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-    expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
+    expect_snapshot_value(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
   })
 })
 
