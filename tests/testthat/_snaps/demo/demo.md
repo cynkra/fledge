@@ -76,6 +76,7 @@ nrow(gert::git_log())
 gert::git_status()
 ## # A tibble: 0 x 3
 ## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
+## # i Use `colnames()` to see all variable names
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
@@ -370,6 +371,7 @@ Note that it should be called after `fledge::bump_version()`, an error is raised
 show_tags(remote_url)
 ## # A tibble: 0 x 2
 ## # ... with 2 variables: name <chr>, ref <chr>
+## # i Use `colnames()` to see all variable names
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
