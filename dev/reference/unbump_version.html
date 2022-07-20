@@ -72,7 +72,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">unbump_version</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">unbump_version</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="value">
@@ -91,33 +91,33 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create mock package in a temporary directory.</span></span>
-<span class="r-in"><span class="co"># Set open to TRUE if you want to play in the mock package.</span></span>
-<span class="r-in"><span class="fu"><a href="with_demo_project.html">with_demo_project</a></span><span class="op">(</span><span class="op">{</span></span>
-<span class="r-in">  <span class="co"># Use functions as if inside the newly created package project.</span></span>
-<span class="r-in">  <span class="co"># (Or go and actually run code inside the newly created package project!)</span></span>
-<span class="r-in">  <span class="co"># Add a new R file.</span></span>
-<span class="r-in">  <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"cool-function"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># Pretend we added useful code inside it.</span></span>
-<span class="r-in">  <span class="co"># Track the new R file with Git.</span></span>
-<span class="r-in">  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_add</a></span><span class="op">(</span><span class="st">"R/cool-function.R"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"- Add cool function."</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># Bump version with fledge.</span></span>
-<span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># Oh no, we forgot to also add the awesome function for that version!</span></span>
-<span class="r-in">  <span class="co"># UNBUMP</span></span>
-<span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu">unbump_version</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># Add a new R file.</span></span>
-<span class="r-in">  <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"awesome-function"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># Pretend we added awesome code inside it.</span></span>
-<span class="r-in">  <span class="co"># Track the new R file with Git.</span></span>
-<span class="r-in">  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_add</a></span><span class="op">(</span><span class="st">"R/awesome-function.R"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"- Add awesome function."</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># Bump version with fledge.</span></span>
-<span class="r-in">  <span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co">#'</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/RtmpBCdJN9/fledge1c417a88cd7f/tea'</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create mock package in a temporary directory.</span></span></span>
+<span class="r-in"><span><span class="co"># Set open to TRUE if you want to play in the mock package.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="with_demo_project.html">with_demo_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Use functions as if inside the newly created package project.</span></span></span>
+<span class="r-in"><span>  <span class="co"># (Or go and actually run code inside the newly created package project!)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Add a new R file.</span></span></span>
+<span class="r-in"><span>  <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"cool-function"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Pretend we added useful code inside it.</span></span></span>
+<span class="r-in"><span>  <span class="co"># Track the new R file with Git.</span></span></span>
+<span class="r-in"><span>  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_add</a></span><span class="op">(</span><span class="st">"R/cool-function.R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"- Add cool function."</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Bump version with fledge.</span></span></span>
+<span class="r-in"><span>  <span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Oh no, we forgot to also add the awesome function for that version!</span></span></span>
+<span class="r-in"><span>  <span class="co"># UNBUMP</span></span></span>
+<span class="r-in"><span>  <span class="fu">fledge</span><span class="fu">::</span><span class="fu">unbump_version</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Add a new R file.</span></span></span>
+<span class="r-in"><span>  <span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"awesome-function"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Pretend we added awesome code inside it.</span></span></span>
+<span class="r-in"><span>  <span class="co"># Track the new R file with Git.</span></span></span>
+<span class="r-in"><span>  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_add</a></span><span class="op">(</span><span class="st">"R/awesome-function.R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_commit</a></span><span class="op">(</span><span class="st">"- Add awesome function."</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Bump version with fledge.</span></span></span>
+<span class="r-in"><span>  <span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">#'</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">'/tmp/Rtmpugd0gD/fledge1dc76ab3d5e5/tea'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Edit <span style="color: #0000BB;">'R/cool-function.R'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">•</span> Call <span style="color: #555555;">`use_test()`</span> to create a matching test file</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Scraping <span style="color: #00BB00;">3</span> commit messages.</span>
@@ -179,7 +179,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>
