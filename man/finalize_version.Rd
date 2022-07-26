@@ -5,10 +5,12 @@
 \alias{finalize_version_impl}
 \title{Finalize package version}
 \usage{
-finalize_version(push = FALSE)
+finalize_version(push = FALSE, pull = push)
 }
 \arguments{
 \item{push}{If \code{TRUE}, push the created tag.}
+
+\item{pull}{whether to fetch the remote (if it exists).}
 }
 \value{
 None

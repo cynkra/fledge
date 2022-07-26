@@ -1,6 +1,6 @@
 #' @rdname finalize_version
 #' @usage NULL
-finalize_version_impl <- function(push, suggest_finalize = TRUE) {
+finalize_version_impl <- function(push, suggest_finalize = TRUE, pull) {
   #' @description
   #' 1. [commit_version()]
   force <- commit_version()
