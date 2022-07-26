@@ -364,8 +364,9 @@ capitalize_description <- function(df) {
   }
 
   # leave package name alone
-  start_with_pkg <- (grepl(sprintf("^%s ", desc::desc_get("Package")), df$description) ||
-      grepl(sprintf("^%s's", desc::desc_get("Package")), df$description))
+  pkg_name <- Sys.getenv("FLEDGE_PACKAGE_NAME", desc::desc_get("Package"))
+  start_with_pkg <- (grepl(sprintf("^%s ", pkg_name), df$description) ||
+      grepl(sprintf("^%s's", pkg_name), df$description))
   if (start_with_pkg) {
     return(df)
   }

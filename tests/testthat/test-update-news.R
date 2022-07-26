@@ -29,6 +29,7 @@ test_that("Can parse conventional commits", {
   withr::local_dir(repo)
   create_cc_repo(repo)
   messages <- get_top_level_commits_impl(since = NULL)$message
+  usethis::with_project(repo, usethis::use_description())
   update_news(messages)
   expect_snapshot_file("NEWS.md")
 })
@@ -74,4 +75,18 @@ test_that("Can parse PR merge commits - other error", {
   bla <- function(...) stop("bla")
   mockery::stub(harvest_pr_data, "gh::gh", bla)
   expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
+})
+
+test_that("capitalize_news() works" , {
+  withr::local_envvar("FLEDGE_PACKAGE_NAME" = "fledge")
+  df <- tibble::tribble(
+    ~description,
+    "fledge has better support",
+    "fledge's interface was improved",
+    "fledged bird",
+    "`update_news()` capitalize items",
+    "2 new functions for bla",
+    "harvest PR title"
+  )
+  expect_snapshot(capitalize_news(df))
 })

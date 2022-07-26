@@ -2,7 +2,7 @@
 
 ## Bug fixes
 
-- prevent racing of requests
+- Prevent racing of requests
 
 Introduce a request id and a reference to latest request. Dismiss
 incoming responses other than from latest request.
@@ -17,7 +17,7 @@ Refs: #123
 
 ### lang 
 
-- add Polish language
+- Add Polish language
 
 ### api 
 
@@ -25,7 +25,7 @@ Refs: #123
 
 - Breaking change: send an email to the customer when a product is shipped
 
-- allow provided config object to extend other configs
+- Allow provided config object to extend other configs
 
   BREAKING CHANGE: `extends` key in config file is now used for extending other config files
 
@@ -37,7 +37,7 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 
 ## Documentation
 
-- correct spelling of CHANGELOG
+- Correct spelling of CHANGELOG
 
 ## Breaking changes
 
@@ -53,6 +53,6 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 
 ## upkeep
 
-- update rlang usage.
+- Update rlang usage.
 
 
