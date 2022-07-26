@@ -82,7 +82,7 @@ test_that("Can parse PR merge commits - other error", {
   expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
 })
 
-test_that("capitalize_news() works" , {
+test_that("capitalize_news() works", {
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
   usethis::with_project(
