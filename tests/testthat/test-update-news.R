@@ -77,7 +77,7 @@ test_that("Can parse PR merge commits - other error", {
   expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
 })
 
-test_that("capitalize_news() works" , {
+test_that("capitalize_news() works", {
   withr::local_envvar("FLEDGE_PACKAGE_NAME" = "fledge")
   df <- tibble::tribble(
     ~description,
