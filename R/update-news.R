@@ -377,7 +377,9 @@ has_internet <- function() {
   if (!rlang::is_installed("curl")) {
     return(FALSE)
   }
-
+  if (nzchar(Sys.getenv("YES_INTERNET_TEST_FLEDGE"))) {
+    return(TRUE)
+  }
   if (nzchar(Sys.getenv("NO_INTERNET_TEST_FLEDGE"))) {
     return(FALSE)
   }

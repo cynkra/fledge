@@ -48,6 +48,7 @@ test_that("Can parse Co-authored-by", {
 test_that("Can parse PR merge commits", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   httptest::with_mock_dir("pr", {
+    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
@@ -57,6 +58,7 @@ test_that("Can parse PR merge commits", {
 test_that("Can parse PR merge commits - external contributor", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   httptest::with_mock_dir("pr0", {
+    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
@@ -66,6 +68,7 @@ test_that("Can parse PR merge commits - external contributor", {
 test_that("Can parse PR merge commits - linked issues", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   httptest::with_mock_dir("pr2", {
+    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #328 from cynkra/blop"))
@@ -93,7 +96,11 @@ test_that("Can parse PR merge commits - other error", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   bla <- function(...) stop("bla")
   mockery::stub(harvest_pr_data, "gh::gh", bla)
-  expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
+  httptest::with_mock_dir("pr", {
+    withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
+    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
+    expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
+  })
 })
 
 test_that("capitalize_news() works", {

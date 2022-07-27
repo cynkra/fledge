@@ -92,15 +92,13 @@
 
     Code
       harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing")
-    Output
-      <simpleError in gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}")): bla>
     Message
-      ! Could not get title for PR #332
+      ! Could not get title for PR #332 (no internet connection)
     Output
       # A tibble: 1 x 4
         title pr_number issue_numbers external_ctb
         <chr> <chr>     <list>        <chr>       
-      1 <NA>  332       <list [0]>    <NA>        
+      1 <NA>  332       <NULL>        <NA>        
 
 # capitalize_news() works
 
