@@ -85,6 +85,7 @@ test_that("Can parse PR merge commits - internet error", {
 })
 
 test_that("Can parse PR merge commits - PAT error", {
+  skip_if_offline()
   withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_NO_PAT" = "blop")
