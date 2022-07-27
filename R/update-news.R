@@ -186,7 +186,12 @@ add_squash_info <- function(description) {
 
 parse_merge_commit <- function(message) {
   pr_data <- harvest_pr_data(message)
-  pr_number <- pr_data$pr_number
+  pr_numbers <- toString(
+    sprintf(
+      "#%s",
+      c(unlist(pr_data$issue_numbers), pr_data$pr_number)
+    )
+  )
 
   title <- if (is.na(pr_data$title)) {
     sprintf("- PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
@@ -199,7 +204,7 @@ parse_merge_commit <- function(message) {
     sprintf("@%s, ", pr_data$external_ctb)
   }
 
-  description <- sprintf("%s (%s#%s).", title, ctb, pr_number)
+  description <- sprintf("%s (%s%s).", title, ctb, pr_numbers)
 
   if (is_conventional_commit(title)) {
     return(parse_conventional_commit(description))
@@ -292,16 +297,46 @@ harvest_pr_data <- function(message) {
   pr_number <- sub("#", "", pr_number)
 
   slug <- github_slug()
+  org <- sub("/.*", "", slug)
+  repo <- sub(".*/", "", slug)
 
   failure_message <- sprintf("Could not get title for PR #%s", pr_number)
 
-  pr_info <- if (!has_internet()) {
+  if (!has_internet()) {
     cli::cli_alert_warning(sprintf("%s (no internet connection)", failure_message))
     NULL
   } else {
-    tryCatch(
+    pr_info <- tryCatch(
       {
         gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+      },
+      error = function(e) {
+        print(e)
+        cli::cli_alert_warning(failure_message)
+        return(NULL)
+      }
+    )
+    issue_info <- tryCatch(
+      {
+        gh::gh_gql(
+          sprintf(
+          '{
+  repository(owner: "%s", name: "%s") {
+    pullRequest(number: %s) {
+      id
+      closingIssuesReferences(first: 50) {
+        edges {
+          node {
+            number
+          }
+        }
+      }
+    }
+  }
+}',
+          org, repo, pr_number
+        )
+        )
       },
       error = function(e) {
         print(e)
@@ -321,9 +356,16 @@ harvest_pr_data <- function(message) {
     }
   }
 
+  issue_numbers <- if ("closingIssuesReferences" %in% names(issue_info$data$repository$pullRequest)) {
+    purrr::map(issue_info$data$repository$pullRequest$closingIssuesReferences$edges, ~ .x$node$number)
+  } else {
+    NULL
+  }
+
   tibble::tibble(
     title = pr_info$title %||% NA_character_,
     pr_number = pr_number,
+    issue_numbers = list(issue_numbers),
     external_ctb = external_ctb,
   )
 }
@@ -346,6 +388,24 @@ check_gh_pat <- function() {
       message = c(
         x = "Can't find a GitHub Personal Access Token (PAT).",
         i = 'See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html'
+      )
+    )
+  }
+
+  # check scopes for PR
+  scopes <- trimws(strsplit(gh::gh_whoami()[["scopes"]], ",")[[1]])
+  v4_scopes <- c(
+    "repo", "read:packages",
+    "read:org", "read:public_key", "read:repo_hook",
+    "user", "read:discussion", "read:enterprise",
+    "read:gpg_key"
+    )
+  missing_scopes <- v4_scopes[!(v4_scopes %in% scopes)]
+  if (length(missing_scopes) > 0) {
+        rlang::warn(
+      message = c(
+        x = sprintf("Missing scopes for GitHub GraphQL API (used for finding issues linked to PR): %s", toString(missing_scopes)),
+        i = 'See https://docs.github.com/en/graphql/guides/forming-calls-with-graphql'
       )
     )
   }
