@@ -186,6 +186,7 @@ add_squash_info <- function(description) {
 
 parse_merge_commit <- function(message) {
   pr_data <- harvest_pr_data(message)
+  pr_number <- pr_data$pr_number
   pr_numbers <- toString(
     sprintf(
       "#%s",
@@ -304,7 +305,8 @@ harvest_pr_data <- function(message) {
 
   if (!has_internet()) {
     cli::cli_alert_warning(sprintf("%s (no internet connection)", failure_message))
-    NULL
+    pr_info <- NULL
+    issue_info <- NULL
   } else {
     pr_info <- tryCatch(
       {
@@ -340,7 +342,7 @@ harvest_pr_data <- function(message) {
       },
       error = function(e) {
         print(e)
-        cli::cli_alert_warning(failure_message)
+        cli::cli_alert_warning(sprintf("Could not get linked issues for PR #%s", pr_number))
         return(NULL)
       }
     )
@@ -393,13 +395,19 @@ check_gh_pat <- function() {
   }
 
   # check scopes for PR
-  scopes <- trimws(strsplit(gh::gh_whoami()[["scopes"]], ",")[[1]])
   v4_scopes <- c(
     "repo", "read:packages",
     "read:org", "read:public_key", "read:repo_hook",
     "user", "read:discussion", "read:enterprise",
     "read:gpg_key"
     )
+  scopes <- if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES"))) {
+    v4_scopes
+  } else {
+    trimws(strsplit(gh::gh_whoami()[["scopes"]], ",")[[1]])
+  }
+
+
   missing_scopes <- v4_scopes[!(v4_scopes %in% scopes)]
   if (length(missing_scopes) > 0) {
         rlang::warn(
