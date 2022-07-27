@@ -322,7 +322,7 @@ harvest_pr_data <- function(message) {
       {
         gh::gh_gql(
           sprintf(
-          '{
+            '{
   repository(owner: "%s", name: "%s") {
     pullRequest(number: %s) {
       id
@@ -336,8 +336,8 @@ harvest_pr_data <- function(message) {
     }
   }
 }',
-          org, repo, pr_number
-        )
+            org, repo, pr_number
+          )
         )
       },
       error = function(e) {
@@ -402,7 +402,7 @@ check_gh_pat <- function() {
     "read:org", "read:public_key", "read:repo_hook",
     "user", "read:discussion", "read:enterprise",
     "read:gpg_key"
-    )
+  )
   scopes <- if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES"))) {
     v4_scopes
   } else {
@@ -412,7 +412,7 @@ check_gh_pat <- function() {
 
   missing_scopes <- v4_scopes[!(v4_scopes %in% scopes)]
   if (length(missing_scopes) > 0) {
-        rlang::warn(
+    rlang::warn(
       message = c(
         x = sprintf("Missing scopes for GitHub GraphQL API (used for finding issues linked to PR): %s", toString(missing_scopes)),
         i = 'See https://docs.github.com/en/graphql/guides/forming-calls-with-graphql'
