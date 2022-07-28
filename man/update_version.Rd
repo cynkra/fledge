@@ -4,11 +4,21 @@
 \alias{update_version}
 \title{Update NEWS.md and DESCRIPTION with a new version}
 \usage{
-update_version(which = c("dev", "patch", "minor", "major"))
+update_version(
+  which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major")
+)
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported
-values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+values are
+\itemize{
+\item \code{"dev"} (default),
+\item \code{"patch"},
+\item \code{"pre-minor"} (x.y.99.9000),
+\item \code{"minor"},
+\item \code{"pre-major"} (x.99.99.9000),
+\item \code{"major"}.
+}}
 }
 \value{
 None
