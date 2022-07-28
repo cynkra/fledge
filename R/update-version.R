@@ -73,6 +73,7 @@ fledge_bump_version <- function(desc, which) {
   if (is.na(version_components["dev"])) {
     rlang::abort(sprintf("Can't update version from not dev to %s.", which))
   }
+  version_components["dev"] <- "9000"
   version_components["patch"] <- "99"
   # pre-minor: make patch 99
   # pre-major: make both minor and patch 99
