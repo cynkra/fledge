@@ -6,7 +6,7 @@ update_version_impl <- function(which) {
   }
 
   # https://github.com/r-lib/desc/issues/93
-  suppressMessages(desc$bump_version(which))
+  desc <- suppressMessages(fledge_bump_version(desc, which))
 
   new_version <- desc$get_version()
 
@@ -54,4 +54,45 @@ get_date <- function() {
   }
   author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
   as.Date(author_time)
+}
+
+fledge_bump_version <- function(desc, which) {
+  if (which %in% c("patch", "minor", "major", "dev")) {
+    desc$bump_version(which)
+    return(desc)
+  }
+
+  # 0.x.99.9yyy -> 0.(x+1).0
+  # x.99.99.9yyy -> (x+1).0.0
+  version <- desc$get_version()
+  version_components <- get_version_components(version)
+
+  # first check there is a fourth component, if not
+  # the which should have been another one.
+  # at least that's what I understand?
+  if (is.na(version_components["dev"])) {
+    rlang::abort(sprintf("Can't update version from not dev to %s.", which))
+  }
+  version_components["patch"] <- "99"
+  # pre-minor: make patch 99
+  # pre-major: make both minor and patch 99
+  if (which == "pre-major") {
+    version_components["minor"] <- "99"
+  }
+  # does this assume patch/minor can't already be higher than 99?
+
+  new_version <- paste(version_components, collapse = ".")
+  desc$set_version(new_version)
+  return(desc)
+}
+
+get_version_components <- function(version) {
+  # from https://github.com/r-lib/desc/blob/daece0e5816e17a461969489bfdda2d50b4f5fe5/R/version.R#L53
+  components <- as.numeric(strsplit(format(version), "[-\\.]")[[1]])
+  c(
+    major = components[1],
+    minor = components[2],
+    patch = components[3],
+    dev = components[4] # can be NA
+  )
 }

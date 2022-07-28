@@ -101,5 +101,5 @@
 
 ---
 
-    `which` must be one of "dev", "patch", "minor", or "major", not "blabla".
+    `which` must be one of "dev", "patch", "pre-minor", "minor", "pre-major", or "major", not "blabla".
 

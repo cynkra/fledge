@@ -6,13 +6,21 @@
 \title{Bump package version}
 \usage{
 bump_version(
-  which = c("dev", "patch", "minor", "major"),
+  which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major"),
   no_change_behavior = c("bump", "noop", "fail")
 )
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported
-values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+values are
+\itemize{
+\item \code{"dev"} (default),
+\item \code{"patch"},
+\item \code{"pre-minor"} (x.y.99.9000),
+\item \code{"minor"},
+\item \code{"pre-major"} (x.99.99.9000),
+\item \code{"major"}.
+}}
 
 \item{no_change_behavior}{What to do if there was no change since the last
 version: \code{"bump"} for bump the version;
