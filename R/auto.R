@@ -11,7 +11,11 @@
 #' - Prompts the user to run `devtools::check_win_devel()`.
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
-#' @inheritParams bump_version
+#' @param which Component of the version number to update. Supported
+#'   values are
+#'   * `"patch"` (default),
+#'   * `"minor"`,
+#'   * `"major"`.
 #' @param force Create branches and tags even if they exist.
 #'   Useful to recover from a previously failed attempt.
 #' @name release
