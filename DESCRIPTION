@@ -28,6 +28,7 @@ Imports:
     callr,
     cli,
     clipr,
+    commonmark,
     desc (>= 1.2.0),
     devtools,
     enc,
@@ -42,9 +43,11 @@ Imports:
     rlang (>= 0.4.12),
     rversions,
     tibble,
+    tinkr (>= 0.0.0.9002),
     usethis (>= 2.1.5),
     whoami,
-    withr
+    withr,
+    xml2
 Suggests: 
     brio,
     covr,
@@ -72,3 +75,5 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: true
+Remotes:  
+    ropensci/tinkr
