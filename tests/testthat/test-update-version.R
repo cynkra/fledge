@@ -4,17 +4,30 @@ test_that("update_version() works", {
 
   local_demo_project(quiet = TRUE)
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
+
   update_version("dev")
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+
   update_version("pre-minor")
   expect_equal(as.character(desc::desc_get_version()), "0.0.99.9000")
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.0.99.9001")
+
   update_version("minor")
   expect_equal(as.character(desc::desc_get_version()), "0.1.0")
+
   expect_snapshot_error(update_version("pre-major"))
+
   update_version("dev")
   expect_equal(as.character(desc::desc_get_version()), "0.1.0.9000")
+
   update_version("pre-major")
   expect_equal(as.character(desc::desc_get_version()), "0.99.99.9000")
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.99.99.9001")
+
   update_version("major")
   expect_equal(as.character(desc::desc_get_version()), "1.0.0")
 })
