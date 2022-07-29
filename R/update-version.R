@@ -61,7 +61,7 @@ fledge_bump_version <- function(desc, which) {
     desc$bump_version(which)
     return(desc)
   }
-  
+
   version <- desc$get_version()
   version_components <- get_version_components(version)
 
