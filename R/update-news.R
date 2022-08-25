@@ -356,14 +356,8 @@ default_type <- function() {
 }
 
 capitalize_description <- function(df) {
-  df$description
 
-  # leave code alone
-  if (substr(df$description, 1, 1) == "`") {
-    return(df)
-  }
-
-  # leave package name alone
+  # leave package name (and code) alone
   pkg_name <- desc::desc_get("Package")
   start_with_pkg <- (grepl(sprintf("^%s ", pkg_name), df$description) ||
     grepl(sprintf("^%s's", pkg_name), df$description))
