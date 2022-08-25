@@ -365,6 +365,7 @@ capitalize_description <- function(df) {
     return(df)
   }
 
+  # capitalization
   df$description <- paste0(
     toupper(substr(df$description, 1, 1)),
     substr(df$description, 2, nchar(df$description))
