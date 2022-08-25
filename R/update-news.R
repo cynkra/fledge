@@ -373,9 +373,8 @@ capitalize_description <- function(df) {
 }
 
 capitalize_news <- function(news_items) {
-  news_item <- split(news_items, seq_len(nrow(news_items))) %>%
-    purrr::map(capitalize_description)
-  do.call(rbind, news_item)
+  split(news_items, seq_len(nrow(news_items))) %>%
+    map_dfr(capitalize_description)
 }
 
 regroup_news <- function(news_items) {
