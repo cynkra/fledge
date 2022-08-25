@@ -357,7 +357,7 @@ default_type <- function() {
 
 capitalize_description <- function(df) {
 
-  # leave package name (and code) alone
+  # leave package name alone
   pkg_name <- desc::desc_get("Package")
   pkg_name_regex <- sprintf("^%s(?: |'s)", pkg_name)
   start_with_pkg <- grepl(pkg_name_regex, df$description)
@@ -366,6 +366,7 @@ capitalize_description <- function(df) {
   }
 
   # capitalization
+  # Non-alphabetic characters are left unchanged.
   df$description <- paste0(
     toupper(substr(df$description, 1, 1)),
     substr(df$description, 2, nchar(df$description))
