@@ -356,7 +356,6 @@ default_type <- function() {
 }
 
 capitalize_description <- function(df) {
-
   # leave package name alone
   pkg_name <- desc::desc_get("Package")
   pkg_name_regex <- sprintf("^%s(?: |'s)", pkg_name)
