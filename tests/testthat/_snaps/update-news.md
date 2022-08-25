@@ -101,7 +101,7 @@
       # A tibble: 1 x 4
         title pr_number issue_numbers external_ctb
         <chr> <chr>     <list>        <chr>       
-      1 <NA>  332       <list [0]>    <NA>        
+      1 <NA>  332       <NULL>        <NA>        
 
 # capitalize_news() works
 
