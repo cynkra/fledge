@@ -5,8 +5,7 @@ update_version_impl <- function(which) {
     desc$set("Date", get_date())
   }
 
-  # https://github.com/r-lib/desc/issues/93
-  desc <- suppressMessages(fledge_bump_version(desc, which))
+  desc <- fledge_bump_version(desc, which)
 
   new_version <- desc$get_version()
 
