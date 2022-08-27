@@ -84,3 +84,18 @@
         <chr> <chr>     <chr>       
       1 <NA>  332       <NA>        
 
+# capitalize_news() works
+
+    Code
+      capitalize_news(df)
+    Output
+      # A tibble: 6 x 1
+        description                     
+      * <chr>                           
+      1 fledge has better support       
+      2 fledge's interface was improved 
+      3 Fledged bird                    
+      4 `update_news()` capitalize items
+      5 2 new functions for bla         
+      6 Harvest PR title                
+

@@ -1,5 +1,6 @@
 update_news_impl <- function(messages) {
   news_items <- collect_news(messages)
+  news_items <- capitalize_news(news_items)
   news_lines <- regroup_news(news_items)
 
   if (fledge_chatty()) {
@@ -352,6 +353,29 @@ check_gh_pat <- function() {
 
 default_type <- function() {
   "Uncategorized"
+}
+
+capitalize_description <- function(df) {
+  # leave package name alone
+  pkg_name <- desc::desc_get("Package")
+  pkg_name_regex <- sprintf("^%s(?: |'s)", pkg_name)
+  start_with_pkg <- grepl(pkg_name_regex, df$description)
+  if (start_with_pkg) {
+    return(df)
+  }
+
+  # capitalization
+  # Non-alphabetic characters are left unchanged.
+  df$description <- paste0(
+    toupper(substr(df$description, 1, 1)),
+    substr(df$description, 2, nchar(df$description))
+  )
+  df
+}
+
+capitalize_news <- function(news_items) {
+  split(news_items, seq_len(nrow(news_items))) %>%
+    map_dfr(capitalize_description)
 }
 
 regroup_news <- function(news_items) {
