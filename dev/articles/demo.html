@@ -137,8 +137,7 @@
 <span><span class="co"># Anything staged?</span></span>
 <span><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">git_status</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">## # A tibble: 0 × 3</span></span>
-<span><span class="co">## # … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</span></span>
-<span><span class="co">## # ℹ Use `colnames()` to see all variable names</span></span></code></pre></div>
+<span><span class="co">## # … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</span></span></code></pre></div>
 <p>For working in branches, it is recommended to turn off fast-forward merging:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_config.html" class="external-link">git_config_set</a></span><span class="op">(</span><span class="st">"merge.ff"</span>, <span class="st">"false"</span><span class="op">)</span></span>
@@ -371,7 +370,6 @@
 <code class="sourceCode R"><span><span class="fu">show_tags</span><span class="op">(</span><span class="va">remote_url</span><span class="op">)</span></span>
 <span><span class="co">## # A tibble: 0 × 2</span></span>
 <span><span class="co">## # … with 2 variables: name &lt;chr&gt;, ref &lt;chr&gt;</span></span>
-<span><span class="co">## # ℹ Use `colnames()` to see all variable names</span></span>
 <span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/finalize_version.html">finalize_version</a></span><span class="op">(</span>push <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## → Resetting to previous commit.</span></span>
 <span><span class="co">## → Committing changes.</span></span>
