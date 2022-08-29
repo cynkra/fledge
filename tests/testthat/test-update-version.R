@@ -30,4 +30,10 @@ test_that("update_version() works", {
 
   update_version("major")
   expect_equal(as.character(desc::desc_get_version()), "1.0.0")
+
+  desc::desc_set_version("1.0.100.999")
+  expect_snapshot_error(update_version("pre-minor"))
+
+  desc::desc_set_version("1.100.0.999")
+  expect_snapshot_error(update_version("pre-minor"))
 })

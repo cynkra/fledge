@@ -64,12 +64,18 @@ fledge_bump_version <- function(desc, which) {
   version <- desc$get_version()
   version_components <- get_version_components(version)
 
-  # first check there is a fourth component, if not
-  # the which should have been another one.
-  # at least that's what I understand?
   if (is.na(version_components["dev"])) {
     rlang::abort(sprintf("Can't update version from not dev to %s.", which))
   }
+
+  if (version_components["patch"] > 99) {
+    rlang::abort(sprintf("Can't bump to %s from version %s (patch > 99).", which, version))
+  }
+
+  if (version_components["minor"] > 99) {
+    rlang::abort(sprintf("Can't bump to %s from version %s (minor > 99).", which, version))
+  }
+
   version_components["dev"] <- "9000"
   version_components["patch"] <- "99"
   # pre-minor: make patch 99
@@ -77,7 +83,6 @@ fledge_bump_version <- function(desc, which) {
   if (which == "pre-major") {
     version_components["minor"] <- "99"
   }
-  # does this assume patch/minor can't already be higher than 99?
 
   new_version <- paste(version_components, collapse = ".")
   desc$set_version(new_version)
