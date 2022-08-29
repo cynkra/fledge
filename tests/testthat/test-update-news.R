@@ -87,11 +87,18 @@ test_that("Can parse PR merge commits - internet error", {
   expect_snapshot(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
 })
 
-test_that("Can parse PR merge commits - PAT error", {
+test_that("Can parse PR merge commits - PAT absence", {
   skip_if_offline()
   withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_NO_PAT" = "blop")
+  expect_snapshot_error(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
+})
+
+test_that("Can parse PR merge commits - PAT scopeless", {
+  skip_if_offline()
+  withr::local_envvar("FLEDGE_TEST_SCOPES_BAD" = "bla")
+  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   expect_snapshot_error(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
 })
 

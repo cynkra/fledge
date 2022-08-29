@@ -292,7 +292,7 @@ is_merge_commit <- function(message) {
 }
 
 harvest_pr_data <- function(message) {
-  check_gh_pat()
+  check_gh_pat("v4_api")
 
   pr_number <- regmatches(message, regexpr("#[0-9]*", message))
   pr_number <- sub("#", "", pr_number)
@@ -387,41 +387,6 @@ has_internet <- function() {
     return(FALSE)
   }
   curl::has_internet()
-}
-
-check_gh_pat <- function() {
-  if (!nzchar(gh::gh_token()) || nzchar(Sys.getenv("FLEDGE_TEST_NO_PAT"))) {
-    abort(
-      message = c(
-        x = "Can't find a GitHub Personal Access Token (PAT).",
-        i = 'See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html'
-      )
-    )
-  }
-
-  # check scopes for PR
-  v4_scopes <- c(
-    "repo", "read:packages",
-    "read:org", "read:public_key", "read:repo_hook",
-    "user", "read:discussion", "read:enterprise",
-    "read:gpg_key"
-  )
-  scopes <- if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES"))) {
-    v4_scopes
-  } else {
-    trimws(strsplit(gh::gh_whoami()[["scopes"]], ",")[[1]])
-  }
-
-
-  missing_scopes <- v4_scopes[!(v4_scopes %in% scopes)]
-  if (length(missing_scopes) > 0) {
-    rlang::warn(
-      message = c(
-        x = sprintf("Missing scopes for GitHub GraphQL API (used for finding issues linked to PR): %s", toString(missing_scopes)),
-        i = 'See https://docs.github.com/en/graphql/guides/forming-calls-with-graphql'
-      )
-    )
-  }
 }
 
 default_type <- function() {
