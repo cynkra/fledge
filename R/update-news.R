@@ -190,7 +190,7 @@ parse_merge_commit <- function(message) {
   pr_numbers <- toString(
     sprintf(
       "#%s",
-      c(unlist(pr_data$issue_numbers), pr_data$pr_number)
+      c(unlist(pr_data$issue_numbers), pr_number)
     )
   )
 
