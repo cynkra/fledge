@@ -17,7 +17,6 @@ collect_news <- function(commits) {
   }
 
   treat_message <- function(commit_df) {
-
     default_newsworthy <- commit_df$message %>%
       gsub("\r\n", "\n", .) %>%
       purrr::discard(~ . == "") %>%
@@ -38,7 +37,6 @@ collect_news <- function(commits) {
     } else {
       NULL
     }
-
   }
 
   newsworthy_items <- split(commits, seq_len(nrow(commits))) %>%
