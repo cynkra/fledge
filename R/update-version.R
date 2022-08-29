@@ -57,7 +57,7 @@ get_date <- function() {
 
 fledge_bump_version <- function(desc, which) {
   if (which %in% c("patch", "minor", "major", "dev")) {
-    desc$bump_version(which)
+    suppressMessages(desc$bump_version(which), classes = "descMessage")
     return(desc)
   }
 
