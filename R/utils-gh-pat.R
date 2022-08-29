@@ -8,7 +8,10 @@ check_gh_pat <- function(needed_scopes = "repo") {
     )
   }
 
-  scopes <- switch(needed_scopes, repo = "repo", v4_api = v4_scopes())
+  scopes <- switch(needed_scopes,
+    repo = "repo",
+    v4_api = v4_scopes()
+  )
   current_scopes <- gh_scopes()
   missing_scopes <- scopes[!(scopes %in% current_scopes)]
 
@@ -20,8 +23,7 @@ check_gh_pat <- function(needed_scopes = "repo") {
           i = 'See for instance https://usethis.r-lib.org/reference/github-token.html'
         )
       )
-    }
-    else {
+    } else {
       abort(
         message = c(
           x = sprintf("Missing scopes for GitHub GraphQL API (used for finding issues linked to PR): %s", toString(missing_scopes)),
