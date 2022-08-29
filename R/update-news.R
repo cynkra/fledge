@@ -310,7 +310,10 @@ harvest_pr_data <- function(message) {
   } else {
     pr_info <- tryCatch(
       {
-        gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+        # suppressMessages() for quiet mocking
+        suppressMessages(
+          gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+        )
       },
       error = function(e) {
         print(e)
@@ -320,7 +323,8 @@ harvest_pr_data <- function(message) {
     )
     issue_info <- tryCatch(
       {
-        gh::gh_gql(
+        # suppressMessages() for quiet mocking
+        suppressMessages(gh::gh_gql(
           sprintf(
             '{
   repository(owner: "%s", name: "%s") {
@@ -338,7 +342,7 @@ harvest_pr_data <- function(message) {
 }',
             org, repo, pr_number
           )
-        )
+        ))
       },
       error = function(e) {
         print(e)

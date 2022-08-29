@@ -98,7 +98,6 @@
       <simpleError in gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}")): bla>
     Message
       ! Could not get title for PR #332
-      No encoding supplied: defaulting to UTF-8.
     Output
       # A tibble: 1 x 4
         title pr_number issue_numbers external_ctb
