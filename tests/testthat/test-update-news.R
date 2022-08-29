@@ -39,6 +39,19 @@ test_that("Can parse conventional commits", {
   expect_snapshot_file("NEWS.md")
 })
 
+test_that("Will use commits", {
+  local_demo_project(quiet = TRUE)
+  commits_df <- tibble::tibble(
+    message = c("one", "two"),
+    merge = c(TRUE, FALSE)
+  )
+  mockery::stub(update_news, "default_commit_range", commits_df)
+
+  update_news()
+  file.copy("NEWS.md", "NEWS-merge.md")
+  expect_snapshot_file("NEWS-merge.md")
+})
+
 test_that("Can parse Co-authored-by", {
   expect_snapshot(extract_newsworthy_items("- blop\n-blip\n\nCo-authored-by: Person (<person@users.noreply.github.com>)"))
   expect_snapshot(extract_newsworthy_items("- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)"))
