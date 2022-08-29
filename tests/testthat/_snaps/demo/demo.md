@@ -281,6 +281,7 @@ fledge::bump_version()
 ## > Adding new entries to 'NEWS.md'.
 ## Warning: 'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to
 ## leave this field out completely. It is not required.
+## Package version bumped from '0.0.0.9000' to '0.0.0.9001'
 ## 
 ## -- Updating Version --
 ## 
@@ -485,6 +486,7 @@ fledge::bump_version()
 ## -- Updating NEWS --
 ## 
 ## > Adding new entries to 'NEWS.md'.
+## Package version bumped from '0.0.0.9001' to '0.0.0.9002'
 ## 
 ## -- Updating Version --
 ## 
@@ -551,6 +553,7 @@ fledge::bump_version("patch")
 ## -- Updating NEWS --
 ## 
 ## > Adding new entries to 'NEWS.md'.
+## Package version bumped from '0.0.0.9002' to '0.0.1'
 ## 
 ## -- Updating Version --
 ## 
@@ -654,6 +657,7 @@ fledge::bump_version()
 ## -- Updating NEWS --
 ## 
 ## > Adding new entries to 'NEWS.md'.
+## Package version bumped from '0.0.1' to '0.0.1.9000'
 ## 
 ## -- Updating Version --
 ## 

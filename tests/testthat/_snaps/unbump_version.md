@@ -9,6 +9,7 @@
       -- Updating NEWS --
       
       > Adding new entries to 'NEWS.md'.
+      Package version bumped from '0.0.0.9000' to '0.0.0.9001'
       
       -- Updating Version --
       
@@ -50,6 +51,7 @@
       -- Updating NEWS --
       
       > Adding new entries to 'NEWS.md'.
+      Package version bumped from '0.0.0.9000' to '0.0.0.9001'
       
       -- Updating Version --
       
