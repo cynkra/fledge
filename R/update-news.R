@@ -46,7 +46,7 @@ collect_news <- function(commits) {
     purrr::keep(~ !is.null(.)) %>%
     bind_rows()
 
-  if (nrow(newsworthy_items) == 0) {
+  if (is.null(newsworthy_items)) {
     if (nrow(commits) <= 1) {
       newsworthy_items <- parse_bullet_commit("- Same as previous version.")
       if (fledge_chatty()) cli_alert_info("Same as previous version.")
