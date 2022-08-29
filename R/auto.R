@@ -38,7 +38,7 @@ pre_release_impl <- function(which, force) {
   stopifnot(gert::git_branch() != "HEAD")
 
   # check PAT scopes for PR for early abort
-  check_gh_scopes()
+  check_gh_pat("repo")
 
   # Begin extension points
   # End extension points
