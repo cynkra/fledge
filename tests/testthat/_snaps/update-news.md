@@ -46,11 +46,8 @@
 # Can parse PR merge commits - external contributor
 
     Code
-      extract_newsworthy_items(
-        "Merge pull request #18 from someone/conventional-parsing")
-    Message
-      No encoding supplied: defaulting to UTF-8.
-      No encoding supplied: defaulting to UTF-8.
+      suppressMessages(extract_newsworthy_items(
+        "Merge pull request #18 from someone/conventional-parsing"))
     Output
       # A tibble: 1 x 4
         description                                                type  break~1 scope

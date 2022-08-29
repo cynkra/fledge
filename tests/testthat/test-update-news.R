@@ -61,7 +61,10 @@ test_that("Can parse PR merge commits - external contributor", {
     withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-    expect_snapshot(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
+    expect_snapshot(suppressMessages(
+      # https://github.com/nealrichardson/httptest/issues/75
+      extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing")
+    ))
   })
 })
 
