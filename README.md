@@ -31,12 +31,14 @@ What you need to do in practice is:
 -   Add a hyphen `-` or `*` at the beginning of important commit messages e.g. the merge or squash commits that merge a Pull Request. These are the commit messages that’ll be recorded in the changelog eventually! Exclude housekeeping parts of the message by typing them after a line `---`.
 
 ``` text
+
 - Add support for bla databases.
 ```
 
 or
 
 ``` text
+
 - Add support for bla databases.
 
 ---
@@ -48,7 +50,7 @@ For informative commit messages refer to the [Tidyverse style guide](https://sty
 
 -   Run [`fledge::bump_version()`](https://cynkra.github.io/fledge/reference/bump_version.html) regularly e.g. before every coffee break or at the end of the day or of the week. If you forgot to merge one PR run [`fledge::unbump_version()`](https://cynkra.github.io/fledge/reference/unbump_version.html), merge the PR with an informative squash commit message, then run [`fledge::bump_version()`](https://cynkra.github.io/fledge/reference/bump_version.html) and go drink that coffee!
 
--   Run [`fledge::finalize_version()`](https://cynkra.github.io/fledge/reference/finalize_version.html) if you add to edit `NEWS.md` manually e.g. if you made a typo or are not happy with a phrasing after thinking about it. Even if you edit a lot, what’s been written in by fledge is still a good place-holder.
+-   Run [`fledge::finalize_version()`](https://cynkra.github.io/fledge/reference/finalize_version.html) if you need to edit `NEWS.md` manually e.g. if you made a typo or are not happy with a phrasing in retrospect. Even if you edit a lot, what’s been written in by fledge is still a good place-holder.
 
 -   Follow the recommended steps at release (see `vignette("fledge")` usage section).
 
@@ -72,7 +74,7 @@ Install from CRAN using:
 Install from cynkra’s R-universe (development version) using:
 
 <pre class='chroma'>
-<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span>, repos <span class='o'>=</span> <span class='s'>"https://cynkra.r-universe.dev"</span><span class='o'>)</span></pre>
+<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>"https://cynkra.r-universe.dev"</span>, <span class='s'>"https://cloud.r-project.org"</span><span class='o'>)</span><span class='o'>)</span></pre>
 
 Or install from GitHub (development version as well) using:
 
