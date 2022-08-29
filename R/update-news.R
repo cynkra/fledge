@@ -358,14 +358,10 @@ harvest_pr_data <- function(message) {
     }
   }
 
-  issue_numbers <- purrr::map(
+  issue_numbers <- purrr::map_int(
     issue_info$data$repository$pullRequest$closingIssuesReferences$edges,
-    ~ .x$node$number
+    ~ as.integer(.x$node$number)
   )
-  if (length(issue_numbers) == 0) {
-    issue_numbers <- NULL
-  }
-
 
   tibble::tibble(
     title = pr_info$title %||% NA_character_,
