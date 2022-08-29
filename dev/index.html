@@ -109,7 +109,12 @@
 </ul>
 <p>Using fledge is a discipline / a few habits that is worth learning!</p>
 <p>What you need to do in practice is:</p>
-<ul><li>Add a hyphen <code>-</code> or <code>*</code> at the beginning of important commit messages e.g. the merge or squash commits that merge a Pull Request. These are the commit messages that’ll be recorded in the changelog eventually! Exclude housekeeping parts of the message by typing them after a line <code>---</code>.</li></ul>
+<ul><li>
+<p>For important commit messages you want recorded in the changelog, you can</p>
+<ul>
+<li><p>Use the <a href="https://www.conventionalcommits.org/en/v1.0.0/" class="external-link">conventional commits</a> syntax. For instance <code>feat: Enhanced support for time series</code>.</p></li>
+<li><p>Add a hyphen <code>-</code> or <code>*</code> at the beginning of the commit message. Exclude housekeeping parts of the message by typing them after a line <code>---</code>.</p></li>
+</ul>
 <pre class="text"><code>
 - Add support for bla databases.</code></pre>
 <p>or</p>
@@ -119,6 +124,8 @@
 ---
 
 Also tweak the CI workflow accordingly. :sweat_smile:</code></pre>
+<ul><li>(GitHub repositories only) For merge commits with the default message (“Merge pull request…”), rely on fledge’s querying GitHub API to get the PR title and include it in the changelog.</li></ul>
+</li></ul>
 <p>For informative commit messages refer to the <a href="https://style.tidyverse.org/news.html" class="external-link">Tidyverse style guide</a>.</p>
 <ul>
 <li><p>Run <a href="https://cynkra.github.io/fledge/reference/bump_version.html"><code>fledge::bump_version()</code></a> regularly e.g. before every coffee break or at the end of the day or of the week. If you forgot to merge one PR run <a href="https://cynkra.github.io/fledge/reference/unbump_version.html"><code>fledge::unbump_version()</code></a>, merge the PR with an informative squash commit message, then run <a href="https://cynkra.github.io/fledge/reference/bump_version.html"><code>fledge::bump_version()</code></a> and go drink that coffee!</p></li>
