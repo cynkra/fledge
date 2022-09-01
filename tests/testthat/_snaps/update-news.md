@@ -92,30 +92,35 @@
 
 # Can parse PR merge commits - other error
 
-    Code
-      harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing")
-    Output
-      <simpleError in gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}")): bla>
-    Message
-      ! Could not get title for PR #332
-    Output
-      # A tibble: 1 x 4
-        title pr_number issue_numbers external_ctb
-        <chr> <chr>     <list>        <chr>       
-      1 <NA>  332       <int [0]>     <NA>        
+    [
+      {
+        "title": "NA",
+        "pr_number": "332",
+        "issue_numbers": [],
+        "external_ctb": "NA"
+      }
+    ] 
 
 # capitalize_news() works
 
-    Code
-      capitalize_news(df)
-    Output
-      # A tibble: 6 x 1
-        description                     
-      * <chr>                           
-      1 fledge has better support       
-      2 fledge's interface was improved 
-      3 Fledged bird                    
-      4 `update_news()` capitalize items
-      5 2 new functions for bla         
-      6 Harvest PR title                
+    [
+      {
+        "description": "fledge has better support"
+      },
+      {
+        "description": "fledge's interface was improved"
+      },
+      {
+        "description": "Fledged bird"
+      },
+      {
+        "description": "`update_news()` capitalize items"
+      },
+      {
+        "description": "2 new functions for bla"
+      },
+      {
+        "description": "Harvest PR title"
+      }
+    ] 
 

@@ -110,7 +110,7 @@ test_that("Can parse PR merge commits - other error", {
   httptest::with_mock_dir("pr", {
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-    expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
+    expect_snapshot_tibble(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
   })
 })
 
@@ -131,5 +131,5 @@ test_that("capitalize_news() works", {
     "2 new functions for bla",
     "harvest PR title"
   )
-  expect_snapshot(capitalize_news(df))
+  expect_snapshot_tibble(capitalize_news(df))
 })
