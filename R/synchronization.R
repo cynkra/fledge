@@ -1,7 +1,6 @@
 #' Check whether all versions NEWS.md have been git-tagged
 #'
 #' @return `NULL`
-#' @export
 #'
 #' @example man/examples/check-tags.R
 check_tags <- function() {
