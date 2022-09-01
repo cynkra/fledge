@@ -392,7 +392,7 @@ merge_branch <- function(other_branch) {
 }
 
 check_post_release <- function() {
-  cli_alert("Checking presence and scope scope of {.var GITHUB_PAT}.")
+  cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
 
   # FIXME: Distinguish between public and private repo?
   check_gh_pat("repo")
