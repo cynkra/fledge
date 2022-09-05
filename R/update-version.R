@@ -60,8 +60,7 @@ fledge_bump_version <- function(desc, which) {
   version_components <- get_version_components(version)
 
   if (which %in% c("patch", "minor", "major", "dev")) {
-    version_components[["dev"]] <- switch(
-      which,
+    version_components[["dev"]] <- switch(which,
       dev = {
         if (!is.na(version_components[["dev"]]) && version_components[["dev"]] >= 9999) {
           rlang::abort(
@@ -76,13 +75,11 @@ fledge_bump_version <- function(desc, which) {
         } else {
           version_components["dev"] + 1
         }
-
       },
       NA
     )
 
-    version_components[["patch"]] <- switch(
-      which,
+    version_components[["patch"]] <- switch(which,
       dev = version_components[["patch"]],
       patch = {
         if (version_components[["patch"]] >= 99) {
@@ -98,8 +95,7 @@ fledge_bump_version <- function(desc, which) {
       0
     )
 
-    version_components[["minor"]] <- switch(
-      which,
+    version_components[["minor"]] <- switch(which,
       dev = version_components[["minor"]],
       patch = version_components[["minor"]],
       minor = {
@@ -116,13 +112,12 @@ fledge_bump_version <- function(desc, which) {
       major = 0
     )
 
-    version_components[["major"]] <- switch(
-      which,
+    version_components[["major"]] <- switch(which,
       major = version_components[["major"]] + 1,
       version_components[["major"]]
     )
-
-  } else { # pre-minor and pre-major
+  } else {
+    # pre-minor and pre-major
 
     if (is.na(version_components["dev"])) {
       rlang::abort(sprintf("Can't update version from not dev to %s.", which))
