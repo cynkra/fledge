@@ -1,14 +1,6 @@
 commit_version_impl <- function(pull) {
   check_only_staged(c("DESCRIPTION", news_path()))
 
-  if (has_remote_branch(gert::git_branch()) && pull) {
-    # is the local branch behind?
-    if (gert::git_ahead_behind()$behind > 0) {
-      # With pull = TRUE we would fetch always and always uncommit + commit if behind master
-      gert::git_pull(rebase = TRUE)
-    }
-  }
-
   if (is_last_commit_bump()) {
     if (fledge_chatty()) {
       cli_alert("Resetting to previous commit.")
