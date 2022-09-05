@@ -123,12 +123,12 @@ fledge_bump_version <- function(desc, which) {
       rlang::abort(sprintf("Can't update version from not dev to %s.", which))
     }
 
-    if (version_components["patch"] > 99) {
-      rlang::abort(sprintf("Can't bump to %s from version %s (patch > 99).", which, version))
+    if (version_components["patch"] >= 99) {
+      rlang::abort(sprintf("Can't bump to %s from version %s (patch >= 99).", which, version))
     }
 
-    if (version_components["minor"] > 99) {
-      rlang::abort(sprintf("Can't bump to %s from version %s (minor > 99).", which, version))
+    if (version_components["minor"] >= 99) {
+      rlang::abort(sprintf("Can't bump to %s from version %s (minor >= 99).", which, version))
     }
 
     version_components["dev"] <- "9000"
