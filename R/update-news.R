@@ -187,6 +187,12 @@ add_squash_info <- function(description) {
 parse_merge_commit <- function(message) {
   pr_data <- harvest_pr_data(message)
   pr_number <- pr_data$pr_number
+  pr_numbers <- toString(
+    sprintf(
+      "#%s",
+      c(unlist(pr_data$issue_numbers), pr_number)
+    )
+  )
 
   title <- if (is.na(pr_data$title)) {
     sprintf("- PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
@@ -199,7 +205,7 @@ parse_merge_commit <- function(message) {
     sprintf("@%s, ", pr_data$external_ctb)
   }
 
-  description <- sprintf("%s (%s#%s).", title, ctb, pr_number)
+  description <- sprintf("%s (%s%s).", title, ctb, pr_numbers)
 
   if (is_conventional_commit(title)) {
     return(parse_conventional_commit(description))
@@ -286,26 +292,61 @@ is_merge_commit <- function(message) {
 }
 
 harvest_pr_data <- function(message) {
-  check_gh_pat()
+  check_gh_pat("v4_api")
 
   pr_number <- regmatches(message, regexpr("#[0-9]*", message))
   pr_number <- sub("#", "", pr_number)
 
   slug <- github_slug()
+  org <- sub("/.*", "", slug)
+  repo <- sub(".*/", "", slug)
 
   failure_message <- sprintf("Could not get title for PR #%s", pr_number)
 
-  pr_info <- if (!has_internet()) {
+  if (!has_internet()) {
     cli::cli_alert_warning(sprintf("%s (no internet connection)", failure_message))
-    NULL
+    pr_info <- NULL
+    issue_info <- NULL
   } else {
-    tryCatch(
+    pr_info <- tryCatch(
       {
-        gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+        # suppressMessages() for quiet mocking
+        suppressMessages(
+          gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+        )
       },
       error = function(e) {
         print(e)
         cli::cli_alert_warning(failure_message)
+        return(NULL)
+      }
+    )
+    issue_info <- tryCatch(
+      {
+        # suppressMessages() for quiet mocking
+        suppressMessages(gh::gh_gql(
+          sprintf(
+            '{
+  repository(owner: "%s", name: "%s") {
+    pullRequest(number: %s) {
+      id
+      closingIssuesReferences(first: 50) {
+        edges {
+          node {
+            number
+          }
+        }
+      }
+    }
+  }
+}',
+            org, repo, pr_number
+          )
+        ))
+      },
+      error = function(e) {
+        print(e)
+        cli::cli_alert_warning(sprintf("Could not get linked issues for PR #%s", pr_number))
         return(NULL)
       }
     )
@@ -321,9 +362,15 @@ harvest_pr_data <- function(message) {
     }
   }
 
+  issue_numbers <- purrr::map_int(
+    issue_info$data$repository$pullRequest$closingIssuesReferences$edges,
+    ~ as.integer(.x$node$number)
+  )
+
   tibble::tibble(
     title = pr_info$title %||% NA_character_,
     pr_number = pr_number,
+    issue_numbers = list(issue_numbers),
     external_ctb = external_ctb,
   )
 }
@@ -333,22 +380,13 @@ has_internet <- function() {
   if (!rlang::is_installed("curl")) {
     return(FALSE)
   }
-
+  if (nzchar(Sys.getenv("YES_INTERNET_TEST_FLEDGE"))) {
+    return(TRUE)
+  }
   if (nzchar(Sys.getenv("NO_INTERNET_TEST_FLEDGE"))) {
     return(FALSE)
   }
   curl::has_internet()
-}
-
-check_gh_pat <- function() {
-  if (!nzchar(gh::gh_token()) || nzchar(Sys.getenv("FLEDGE_TEST_NO_PAT"))) {
-    abort(
-      message = c(
-        x = "Can't find a GitHub Personal Access Token (PAT).",
-        i = 'See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html'
-      )
-    )
-  }
 }
 
 default_type <- function() {
