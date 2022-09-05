@@ -30,9 +30,10 @@ pre_release <- function(which = "next", force = FALSE) {
   check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("next", "patch", "minor", "major"))
+  version_components <- get_version_components(desc$get_version())
   if (which == "next") {
-    if (patch == 99) {
-      if (minor == 99) {
+    if (version_components[["patch"]] == 99) {
+      if (version_components[["minor"]] == 99) {
         which <- "pre-major"
       } else {
         which <- "pre-minor"
