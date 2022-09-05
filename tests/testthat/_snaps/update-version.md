@@ -10,3 +10,11 @@
 
     Can't bump to pre-minor from version 1.100.0.999 (minor > 99).
 
+---
+
+    Can't increase version patch component (99) that is >= 99.
+
+---
+
+    Can't increase version minor component (99) that is >= 99.
+

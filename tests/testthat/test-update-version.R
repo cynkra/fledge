@@ -36,4 +36,10 @@ test_that("update_version() works", {
 
   desc::desc_set_version("1.100.0.999")
   expect_snapshot_error(update_version("pre-minor"))
+
+  desc::desc_set_version("1.0.99")
+  expect_snapshot_error(update_version("patch"))
+
+  desc::desc_set_version("1.99.0")
+  expect_snapshot_error(update_version("minor"))
 })
