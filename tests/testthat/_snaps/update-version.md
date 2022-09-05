@@ -18,3 +18,11 @@
 
     Can't increase version minor component (99) that is >= 99.
 
+# update_version() errors well
+
+    Can't bump to pre-minor from version 0.0.99.9000 (patch >= 99).
+
+---
+
+    Can't bump to pre-major from version 0.99.99.9000 (patch >= 99).
+
