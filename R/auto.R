@@ -38,7 +38,7 @@ pre_release_impl <- function(which, force) {
   stopifnot(gert::git_branch() != "HEAD")
 
   # check PAT scopes for PR for early abort
-  check_gh_scopes()
+  check_gh_pat("repo")
 
   # Begin extension points
   # End extension points
@@ -392,34 +392,15 @@ merge_branch <- function(other_branch) {
 }
 
 check_post_release <- function() {
-  cli_alert("Checking scope of {.var GITHUB_PAT} environment variable.")
+  cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
 
   # FIXME: Distinguish between public and private repo?
-  check_gh_scopes()
+  check_gh_pat("repo")
 
   # FIXME: release() should (force-)create and (force-)push a tag vx.y.z-rc
   # This can be taken as a reference for the new tag.
   repo_head_sha <- gert::git_log(max = 1)$commit
   repo_head_sha
-}
-
-check_gh_scopes <- function() {
-  if (!("repo" %in% gh_scopes())) {
-    abort(
-      message = c(
-        x = 'Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.',
-        i = 'See for instance https://usethis.r-lib.org/reference/github-token.html'
-      )
-    )
-  }
-}
-
-gh_scopes <- function() {
-  out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
-  if (out == "") {
-    return(character())
-  }
-  strsplit(out, ", *")[[1]]
 }
 
 check_gitignore <- function(files) {

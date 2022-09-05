@@ -45,9 +45,21 @@
 
 # Can parse PR merge commits - external contributor
 
+    Code
+      suppressMessages(extract_newsworthy_items(
+        "Merge pull request #18 from someone/conventional-parsing"))
+    Output
+      # A tibble: 1 x 4
+        description                                                type  break~1 scope
+        <chr>                                                      <chr> <lgl>   <lgl>
+      1 Improve parsing of conventional commit messages (@someone~ Feat~ FALSE   NA   
+      # ... with abbreviated variable name 1: breaking
+
+# Can parse PR merge commits - linked issues
+
     [
       {
-        "description": "Improve parsing of conventional commit messages (@someone, #18).",
+        "description": "improve bump_version() (error) messages  (#153, #325, #328).",
         "type": "Features",
         "breaking": false,
         "scope": "NA"
@@ -56,46 +68,59 @@
 
 # Can parse PR merge commits - internet error
 
-    [
-      {
-        "description": "PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#332).",
-        "type": "Uncategorized",
-        "breaking": false,
-        "scope": "NA"
-      }
-    ] 
+    Code
+      extract_newsworthy_items(
+        "Merge pull request #332 from cynkra/conventional-parsing")
+    Message
+      ! Could not get title for PR #332 (no internet connection)
+    Output
+      # A tibble: 1 x 4
+        description                                                type  break~1 scope
+        <chr>                                                      <chr> <lgl>   <lgl>
+      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#3~ Unca~ FALSE   NA   
+      # ... with abbreviated variable name 1: breaking
 
-# Can parse PR merge commits - PAT error
+# Can parse PR merge commits - PAT absence
 
     x Can't find a GitHub Personal Access Token (PAT).
     i See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html
 
+# Can parse PR merge commits - PAT scopeless
+
+    x Missing scopes for GitHub GraphQL API (used for finding issues linked to PR): repo, read:packages, read:org, read:public_key, read:repo_hook, user, read:discussion, read:enterprise, read:gpg_key
+    i See https://docs.github.com/en/graphql/guides/forming-calls-with-graphql
+
 # Can parse PR merge commits - other error
 
-    Code
-      harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing")
-    Output
-      <simpleError in gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}")): bla>
-    Message
-      ! Could not get title for PR #332
-    Output
-      # A tibble: 1 x 3
-        title pr_number external_ctb
-        <chr> <chr>     <chr>       
-      1 <NA>  332       <NA>        
+    [
+      {
+        "title": "NA",
+        "pr_number": "332",
+        "issue_numbers": [],
+        "external_ctb": "NA"
+      }
+    ] 
 
 # capitalize_news() works
 
-    Code
-      capitalize_news(df)
-    Output
-      # A tibble: 6 x 1
-        description                     
-      * <chr>                           
-      1 fledge has better support       
-      2 fledge's interface was improved 
-      3 Fledged bird                    
-      4 `update_news()` capitalize items
-      5 2 new functions for bla         
-      6 Harvest PR title                
+    [
+      {
+        "description": "fledge has better support"
+      },
+      {
+        "description": "fledge's interface was improved"
+      },
+      {
+        "description": "Fledged bird"
+      },
+      {
+        "description": "`update_news()` capitalize items"
+      },
+      {
+        "description": "2 new functions for bla"
+      },
+      {
+        "description": "Harvest PR title"
+      }
+    ] 
 
