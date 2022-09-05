@@ -1,0 +1,73 @@
+test_that("update_version() works", {
+  skip_if_not_installed("rlang", "1.0.1")
+  skip_if_not_installed("testthat", "3.1.2")
+
+  local_demo_project(quiet = TRUE)
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+
+  update_version("pre-minor")
+  expect_equal(as.character(desc::desc_get_version()), "0.0.99.9000")
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.0.99.9001")
+
+  update_version("minor")
+  expect_equal(as.character(desc::desc_get_version()), "0.1.0")
+
+  expect_snapshot_error(update_version("pre-major"))
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.1.0.9000")
+
+  update_version("pre-major")
+  expect_equal(as.character(desc::desc_get_version()), "0.99.99.9000")
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.99.99.9001")
+
+  update_version("major")
+  expect_equal(as.character(desc::desc_get_version()), "1.0.0")
+
+  desc::desc_set_version("1.0.100.999")
+  expect_snapshot_error(update_version("pre-minor"))
+
+  desc::desc_set_version("1.100.0.999")
+  expect_snapshot_error(update_version("pre-minor"))
+
+  desc::desc_set_version("1.0.99")
+  expect_snapshot_error(update_version("patch"))
+
+  desc::desc_set_version("1.99.0")
+  expect_snapshot_error(update_version("minor"))
+})
+
+test_that("update_version() errors well", {
+  skip_if_not_installed("rlang", "1.0.1")
+  skip_if_not_installed("testthat", "3.1.2")
+
+  local_demo_project(quiet = TRUE)
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+
+  update_version("pre-minor")
+  expect_equal(as.character(desc::desc_get_version()), "0.0.99.9000")
+  expect_snapshot_error(update_version("pre-minor"))
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.0.99.9001")
+
+  update_version("minor")
+  expect_equal(as.character(desc::desc_get_version()), "0.1.0")
+
+  update_version("dev")
+  expect_equal(as.character(desc::desc_get_version()), "0.1.0.9000")
+
+  update_version("pre-major")
+  expect_equal(as.character(desc::desc_get_version()), "0.99.99.9000")
+  expect_snapshot_error(update_version("pre-major"))
+})

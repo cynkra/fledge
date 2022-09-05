@@ -14,7 +14,12 @@ post_release()
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported
-values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+values are
+\itemize{
+\item \code{"patch"} (default),
+\item \code{"minor"},
+\item \code{"major"}.
+}}
 
 \item{force}{Create branches and tags even if they exist.
 Useful to recover from a previously failed attempt.}

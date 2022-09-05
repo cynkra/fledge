@@ -28,7 +28,7 @@ Imports:
     callr,
     cli,
     clipr,
-    desc (>= 1.2.0),
+    desc (>= 1.4.1),
     devtools,
     enc,
     foghorn,
