@@ -80,7 +80,7 @@ and offers help with accepting the submission.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pre_release</span><span class="op">(</span>which <span class="op">=</span> <span class="st">"patch"</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pre_release</span><span class="op">(</span>which <span class="op">=</span> <span class="st">"next"</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">release</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -91,7 +91,10 @@ and offers help with accepting the submission.</p>
     <h2>Arguments</h2>
     <dl><dt>which</dt>
 <dd><p>Component of the version number to update. Supported
-values are</p><ul><li><p><code>"patch"</code> (default),</p></li>
+values are</p><ul><li><p><code>"next"</code> (<code>"major"</code> if the current version is <code>x.99.99.9yz</code>,
+<code>"minor"</code> if the current version is <code>x.y.99.za</code>,
+<code>"patch"</code> otherwise),</p></li>
+<li><p><code>"patch"</code></p></li>
 <li><p><code>"minor"</code>,</p></li>
 <li><p><code>"major"</code>.</p></li>
 </ul></dd>
