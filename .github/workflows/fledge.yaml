@@ -19,8 +19,9 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Install fledge
-        run: Rscript -e 'install.packages("fledge")'
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: local::.
 
       - name: Bump version
-        run: Rscript -e 'fledge::bump_version(which = "dev")'
+        run: Rscript -e 'fledge::bump_version(which = "dev", no_change_behavior = "noop")'
