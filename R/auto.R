@@ -13,21 +13,36 @@
 #'
 #' @param which Component of the version number to update. Supported
 #'   values are
-#'   * `"patch"` (default),
+#'   * `"next"` (`"major"` if the current version is `x.99.99.9yz`,
+#'   `"minor"` if the current version is `x.y.99.za`,
+#'   `"patch"` otherwise),
+#'   * `"patch"`
 #'   * `"minor"`,
 #'   * `"major"`.
 #' @param force Create branches and tags even if they exist.
 #'   Useful to recover from a previously failed attempt.
 #' @name release
 #' @export
-pre_release <- function(which = "patch", force = FALSE) {
+pre_release <- function(which = "next", force = FALSE) {
   check_main_branch()
   check_only_modified(character())
 
   check_gitignore("cran-comments.md")
 
-  stopifnot(which %in% c("patch", "minor", "major"))
-
+  stopifnot(which %in% c("next", "patch", "minor", "major"))
+  desc <- desc::desc(file = "DESCRIPTION")
+  version_components <- get_version_components(desc$get_version())
+  if (which == "next") {
+    if (version_components[["patch"]] == 99) {
+      if (version_components[["minor"]] == 99) {
+        which <- "pre-major"
+      } else {
+        which <- "pre-minor"
+      }
+    } else {
+      which <- "patch"
+    }
+  }
   local_options(usethis.quiet = TRUE)
   with_repo(pre_release_impl(which, force))
 }
