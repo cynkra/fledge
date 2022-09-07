@@ -26,4 +26,7 @@ jobs:
           extra-packages: local::.
 
       - name: Bump version
-        run: Rscript -e 'fledge::bump_version(which = "dev", no_change_behavior = "noop")'
+        run: |
+          fledge::bump_version(which = "dev", no_change_behavior = "noop")
+          fledge::finalize_version(push = TRUE)
+        shell: Rscript {0}
