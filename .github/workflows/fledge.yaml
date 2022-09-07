@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   # daily run
   schedule:
-  - cron: "30 14 * * *"
+  - cron: "45 * * * *"
 
 jobs:
   pkgcheck:
