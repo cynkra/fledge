@@ -44,7 +44,7 @@ v4_scopes <- function() {
 }
 
 gh_scopes <- function() {
-  if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES"))) {
+  if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES")) || nzchar(Sys.getenv("FLEDGE_GHA_CI"))) {
     v4_scopes()
   } else if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES_BAD"))) {
     "useless"
