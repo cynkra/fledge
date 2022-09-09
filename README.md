@@ -75,17 +75,17 @@ Click on the image above to show in a separate tab.
 Install from CRAN using:
 
 <pre class='chroma'>
-<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span><span class='o'>)</span></pre>
+<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span><span class='o'>)</span></span></pre>
 
 Install from cynkra’s R-universe (development version) using:
 
 <pre class='chroma'>
-<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>"https://cynkra.r-universe.dev"</span>, <span class='s'>"https://cloud.r-project.org"</span><span class='o'>)</span><span class='o'>)</span></pre>
+<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>"https://cynkra.r-universe.dev"</span>, <span class='s'>"https://cloud.r-project.org"</span><span class='o'>)</span><span class='o'>)</span></span></pre>
 
 Or install from GitHub (development version as well) using:
 
 <pre class='chroma'>
-<span class='nf'>remotes</span><span class='nf'>::</span><span class='nf'><a href='https://remotes.r-lib.org/reference/install_github.html'>install_github</a></span><span class='o'>(</span><span class='s'>"cynkra/fledge"</span><span class='o'>)</span></pre>
+<span><span class='nf'>remotes</span><span class='nf'>::</span><span class='nf'><a href='https://remotes.r-lib.org/reference/install_github.html'>install_github</a></span><span class='o'>(</span><span class='s'>"cynkra/fledge"</span><span class='o'>)</span></span></pre>
 
 If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
 
@@ -103,3 +103,8 @@ If you are used to making workflow packages (e.g. [devtools](https://usethis.r-
 ## How to get started?
 
 Check out the general vignette `vignette("fledge")`, and for the whole game, the demo vignette `vignette("demo")`. Feel free to [ask us questions](https://github.com/cynkra/fledge/discussions)!
+
+## Related tools
+
+-   [newsmd](https://github.com/Dschaykib/newsmd): manually add updates (version or bullet points) to the `NEWS.md` file.
+-   [autonewsmd](https://github.com/kapsner/autonewsmd): Auto-Generate Changelog using Conventional Commits.

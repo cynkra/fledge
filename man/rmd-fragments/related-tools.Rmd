@@ -1,0 +1,2 @@
+* [newsmd](https://github.com/Dschaykib/newsmd): manually add updates (version or bullet points) to the `NEWS.md` file.
+* [autonewsmd](https://github.com/kapsner/autonewsmd): Auto-Generate Changelog using Conventional Commits.
