@@ -18,8 +18,7 @@ concurrency:
 jobs:
   fledge:
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
+    permissions: {}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       FLEDGE_GHA_CI: true
