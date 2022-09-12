@@ -11,6 +11,10 @@ on:
   schedule:
   - cron: "30 14 * * *"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref || '' }}-${{ github.base_ref || '' }}
+  cancel-in-progress: true
+
 jobs:
   fledge:
     runs-on: ubuntu-latest
