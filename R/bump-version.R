@@ -55,6 +55,7 @@ bump_version_to_dev_with_force <- function(force) {
 }
 
 check_main_branch <- function() {
+  return()
   if (gert::git_branch() != get_main_branch()) {
     rlang::abort(
       c(
