@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9003</span>
       </span>
     </div>
 
@@ -66,6 +66,51 @@
       <small>Source: <a href="https://github.com/cynkra/fledge/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.0.9003" id="fledge-0109003-2022-09-12">fledge 0.1.0.9003 (2022-09-12)<a class="anchor" aria-label="anchor" href="#fledge-0109003-2022-09-12"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-0-9003">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-0-9003"></a></h3>
+<ul><li><p>Adjust empty lines and space in update_news() (<a href="https://github.com/cynkra/fledge/issues/357" class="external-link">#357</a>)</p></li>
+<li><p>Add PR number to CC messages (<a href="https://github.com/cynkra/fledge/issues/353" class="external-link">#353</a>).</p></li>
+<li><p>Fix conventional commit regex (<a href="https://github.com/cynkra/fledge/issues/329" class="external-link">#329</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-1-0-9003">Features<a class="anchor" aria-label="anchor" href="#features-0-1-0-9003"></a></h3>
+<ul><li><p>New default <code>pre_release(which = "next")</code> (<a href="https://github.com/cynkra/fledge/issues/521" class="external-link">#521</a>, <a href="https://github.com/cynkra/fledge/issues/524" class="external-link">#524</a>).</p></li>
+<li><p>Add which “pre-minor” and “pre-major” to update_version() (<a href="https://github.com/cynkra/fledge/issues/413" class="external-link">#413</a>, <a href="https://github.com/cynkra/fledge/issues/412" class="external-link">#412</a>).</p></li>
+<li><p>Include reference to issue closed with a PR (<a href="https://github.com/cynkra/fledge/issues/361" class="external-link">#361</a>, <a href="https://github.com/cynkra/fledge/issues/411" class="external-link">#411</a>).</p></li>
+<li><p>Capitalize first letter of each bullet (<a href="https://github.com/cynkra/fledge/issues/360" class="external-link">#360</a>, <a href="https://github.com/cynkra/fledge/issues/409" class="external-link">#409</a>).</p></li>
+<li><p>Extract contributor name from PR merge message (<a href="https://github.com/krlmlr" class="external-link">@krlmlr</a>, <a href="https://github.com/cynkra/fledge/issues/358" class="external-link">#358</a>)</p></li>
+<li><p>Harvest PR attribution from squash commits (<a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/cynkra/fledge/issues/349" class="external-link">#349</a>)</p></li>
+<li><p>Harvest PR title from merge commit messages (<a href="https://github.com/krlmlr" class="external-link">@krlmlr</a>, <a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/cynkra/fledge/issues/343" class="external-link">#343</a>)</p></li>
+<li><p>Improve parsing of conventional commit messages (<a href="https://github.com/cynkra/fledge/issues/332" class="external-link">#332</a>).</p></li>
+<li><p>Improve bump_version() (error) messages (<a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/cynkra/fledge/issues/328" class="external-link">#328</a>)</p></li>
+<li><p>Improve bump_version() behavior in the absence of changes (<a href="https://github.com/krlmlr" class="external-link">@krlmlr</a>, <a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/cynkra/fledge/issues/323" class="external-link">#323</a>)</p></li>
+<li><p>New <code>local_test_project()</code> (<a href="https://github.com/cynkra/fledge/issues/318" class="external-link">#318</a>)</p></li>
+<li><p>Extract conventional commit messages for the changelog (<a href="https://github.com/cynkra/fledge/issues/314" class="external-link">#314</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-1-0-9003">Chore<a class="anchor" aria-label="anchor" href="#chore-0-1-0-9003"></a></h3>
+<ul><li><p>Turn Netlify builds off for now (<a href="https://github.com/cynkra/fledge/issues/326" class="external-link">#326</a>).</p></li>
+<li><p>Enable auto-style on GitHub Actions (<a href="https://github.com/cynkra/fledge/issues/317" class="external-link">#317</a>).</p></li>
+<li><p>Remove testthat specialization for snapshots (<a href="https://github.com/cynkra/fledge/issues/309" class="external-link">#309</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-1-0-9003">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-1-0-9003"></a></h3>
+<ul><li>Create fledge.yaml (<a href="https://github.com/cynkra/fledge/issues/520" class="external-link">#520</a>).</li></ul></div>
+<div class="section level3">
+<h3 id="documentation-0-1-0-9003">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-1-0-9003"></a></h3>
+<ul><li><p>Add README section on related tools (<a href="https://github.com/cynkra/fledge/issues/527" class="external-link">#527</a>).</p></li>
+<li><p>Update summary of how fledge uses commit messages (<a href="https://github.com/cynkra/fledge/issues/499" class="external-link">#499</a>, <a href="https://github.com/cynkra/fledge/issues/511" class="external-link">#511</a>).</p></li>
+<li><p>Fix typo in README (<a href="https://github.com/cynkra/fledge/issues/501" class="external-link">#501</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="uncategorized-0-1-0-9003">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-1-0-9003"></a></h3>
+<ul><li><p>Create and open draft release directly, without using <code><a href="https://usethis.r-lib.org/reference/use_github_release.html" class="external-link">usethis::use_github_release()</a></code>.</p></li>
+<li><p>Create tag as part of <code><a href="../reference/release.html">release()</a></code>.</p></li>
+<li><p>Fix <code><a href="../reference/release.html">post_release()</a></code>, still need to tag released version.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.0.9002" id="fledge-0109002-2022-04-02">fledge 0.1.0.9002 (2022-04-02)<a class="anchor" aria-label="anchor" href="#fledge-0109002-2022-04-02"></a></h2>
 <ul><li>
