@@ -9,7 +9,7 @@ on:
       - .github/workflows/fledge.yaml
   # daily run
   schedule:
-  - cron: "30 14 * * *"
+  - cron: "30 0 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref || '' }}-${{ github.base_ref || '' }}
