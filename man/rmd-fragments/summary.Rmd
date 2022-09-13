@@ -25,7 +25,7 @@ What you need to do in practice is:
     
     ```
     
-    - Use informative merge or squash commit messages as those will also be included by default in the changelog. On GitHub you can [control the default commit message when merging a pull request](https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/).
+    - Use informative merge commit messages as those will also be included by default in the changelog. On GitHub you can [control the default commit message when merging a pull request](https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/).
     
     - (GitHub repositories only) For merge commits with the default not self-contained message ("Merge pull request..."), rely on fledge's querying GitHub API to get the PR title and include it in the changelog.
 
