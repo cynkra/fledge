@@ -1,5 +1,80 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9005 (2022-09-13)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9004 (2022-09-12)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9003 (2022-09-12)
+
+## Bug fixes
+
+- Adjust empty lines and space in update_news() (#357)
+
+- Add PR number to CC messages (#353).
+
+- Fix conventional commit regex (#329)
+
+## Features
+
+- New default `pre_release(which = "next")` (#521, #524).
+
+- Add which "pre-minor" and "pre-major" to update_version() (#413, #412).
+
+- Include reference to issue closed with a PR (#361, #411).
+
+- Capitalize first letter of each bullet (#360, #409).
+
+- Extract contributor name from PR merge message (@krlmlr, #358)
+
+- Harvest PR attribution from squash commits (@maelle, #349)
+
+- Harvest PR title from merge commit messages (@krlmlr, @maelle, #343)
+
+- Improve parsing of conventional commit messages (#332).
+
+- Improve bump_version() (error) messages (@maelle, #328)
+
+- Improve bump_version() behavior in the absence of changes (@krlmlr, @maelle, #323)
+
+- New `local_test_project()` (#318)
+
+- Extract conventional commit messages for the changelog (#314).
+
+## Chore
+
+- Turn Netlify builds off for now (#326).
+
+- Enable auto-style on GitHub Actions (#317).
+
+- Remove testthat specialization for snapshots (#309).
+
+## Continuous integration
+
+- Create fledge.yaml (#520).
+
+## Documentation
+
+- Add README section on related tools (#527).
+
+- Update summary of how fledge uses commit messages (#499, #511).
+
+- Fix typo in README (#501)
+
+## Uncategorized
+
+- Create and open draft release directly, without using `usethis::use_github_release()`.
+
+- Create tag as part of `release()`.
+
+- Fix `post_release()`, still need to tag released version.
+
+
 # fledge 0.1.0.9002 (2022-04-02)
 
 - `release()` no longer asks for confirmation.

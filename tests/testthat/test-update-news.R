@@ -61,6 +61,8 @@ test_that("Can parse Co-authored-by", {
 test_that("Can parse PR merge commits", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   httptest::with_mock_dir("pr", {
+    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
+    withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
   })
@@ -68,22 +70,48 @@ test_that("Can parse PR merge commits", {
 
 test_that("Can parse PR merge commits - external contributor", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
-  httptest::with_mock_dir("pr", {
+  httptest::with_mock_dir("pr0", {
+    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
+    withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-    expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
+    expect_snapshot(suppressMessages(
+      # https://github.com/nealrichardson/httptest/issues/75
+      extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing")
+    ))
   })
 })
 
+test_that("Can parse PR merge commits - linked issues", {
+  withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
+  httptest::with_mock_dir("pr2", {
+    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
+    withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
+    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
+    expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #328 from cynkra/blop"))
+  })
+})
+
+
 test_that("Can parse PR merge commits - internet error", {
+  withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   withr::local_envvar("NO_INTERNET_TEST_FLEDGE" = "blop")
-  expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
+  expect_snapshot(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
 })
 
-test_that("Can parse PR merge commits - PAT error", {
+test_that("Can parse PR merge commits - PAT absence", {
+  skip_if_offline()
+  withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_NO_PAT" = "blop")
+  expect_snapshot_error(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
+})
+
+test_that("Can parse PR merge commits - PAT scopeless", {
+  skip_if_offline()
+  withr::local_envvar("FLEDGE_TEST_SCOPES_BAD" = "bla")
+  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   expect_snapshot_error(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
 })
 
@@ -92,7 +120,11 @@ test_that("Can parse PR merge commits - other error", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
   bla <- function(...) stop("bla")
   mockery::stub(harvest_pr_data, "gh::gh", bla)
-  expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
+  httptest::with_mock_dir("pr", {
+    withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
+    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
+    expect_snapshot_tibble(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
+  })
 })
 
 test_that("capitalize_news() works", {
@@ -112,5 +144,5 @@ test_that("capitalize_news() works", {
     "2 new functions for bla",
     "harvest PR title"
   )
-  expect_snapshot(capitalize_news(df))
+  expect_snapshot_tibble(capitalize_news(df))
 })

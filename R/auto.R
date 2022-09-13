@@ -11,19 +11,38 @@
 #' - Prompts the user to run `devtools::check_win_devel()`.
 #' - Prompts the user to run `rhub::check_for_cran()`.
 #'
-#' @inheritParams bump_version
+#' @param which Component of the version number to update. Supported
+#'   values are
+#'   * `"next"` (`"major"` if the current version is `x.99.99.9yz`,
+#'   `"minor"` if the current version is `x.y.99.za`,
+#'   `"patch"` otherwise),
+#'   * `"patch"`
+#'   * `"minor"`,
+#'   * `"major"`.
 #' @param force Create branches and tags even if they exist.
 #'   Useful to recover from a previously failed attempt.
 #' @name release
 #' @export
-pre_release <- function(which = "patch", force = FALSE) {
+pre_release <- function(which = "next", force = FALSE) {
   check_main_branch()
   check_only_modified(character())
 
   check_gitignore("cran-comments.md")
 
-  stopifnot(which %in% c("patch", "minor", "major"))
-
+  stopifnot(which %in% c("next", "patch", "minor", "major"))
+  desc <- desc::desc(file = "DESCRIPTION")
+  version_components <- get_version_components(desc$get_version())
+  if (which == "next") {
+    if (version_components[["patch"]] == 99) {
+      if (version_components[["minor"]] == 99) {
+        which <- "pre-major"
+      } else {
+        which <- "pre-minor"
+      }
+    } else {
+      which <- "patch"
+    }
+  }
   local_options(usethis.quiet = TRUE)
   with_repo(pre_release_impl(which, force))
 }
@@ -38,7 +57,7 @@ pre_release_impl <- function(which, force) {
   stopifnot(gert::git_branch() != "HEAD")
 
   # check PAT scopes for PR for early abort
-  check_gh_scopes()
+  check_gh_pat("repo")
 
   # Begin extension points
   # End extension points
@@ -392,34 +411,15 @@ merge_branch <- function(other_branch) {
 }
 
 check_post_release <- function() {
-  cli_alert("Checking scope of {.var GITHUB_PAT} environment variable.")
+  cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
 
   # FIXME: Distinguish between public and private repo?
-  check_gh_scopes()
+  check_gh_pat("repo")
 
   # FIXME: release() should (force-)create and (force-)push a tag vx.y.z-rc
   # This can be taken as a reference for the new tag.
   repo_head_sha <- gert::git_log(max = 1)$commit
   repo_head_sha
-}
-
-check_gh_scopes <- function() {
-  if (!("repo" %in% gh_scopes())) {
-    abort(
-      message = c(
-        x = 'Please set `GITHUB_PAT` to a PAT that has at least the "repo" scope.',
-        i = 'See for instance https://usethis.r-lib.org/reference/github-token.html'
-      )
-    )
-  }
-}
-
-gh_scopes <- function() {
-  out <- attr(gh::gh("/user"), "response")$"x-oauth-scopes"
-  if (out == "") {
-    return(character())
-  }
-  strsplit(out, ", *")[[1]]
 }
 
 check_gitignore <- function(files) {

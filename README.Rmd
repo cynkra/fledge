@@ -45,3 +45,8 @@ Click on the image above to show in a separate tab.
 
 Check out the general vignette `vignette("fledge")`, and for the whole game, the demo vignette `vignette("demo")`.
 Feel free to [ask us questions](https://github.com/cynkra/fledge/discussions)!
+
+## Related tools
+
+```{r child="man/rmd-fragments/related-tools.Rmd"} 
+```

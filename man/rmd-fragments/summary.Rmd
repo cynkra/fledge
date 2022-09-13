@@ -1,25 +1,31 @@
 
 What you need to do in practice is:
 
-- Add a hyphen `-` or `*` at the beginning of important commit messages e.g. the merge or squash commits that merge a Pull Request. These are the commit messages that'll be recorded in the changelog eventually! Exclude housekeeping parts of the message by typing them after a line `---`.
+- For important commit messages you want recorded in the changelog, you can
 
-```text
+    - Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax. For instance `feat: Enhanced support for time series`.
 
-- Add support for bla databases.
-
-```
-
-or 
-
-```text
-
-- Add support for bla databases.
-
----
-
-Also tweak the CI workflow accordingly. :sweat_smile:
-
-```
+     - Add a hyphen `-` or `*` at the beginning of the commit message.  Exclude housekeeping parts of the message by typing them after a line `---`.
+    
+    ```text
+    
+    - Add support for bla databases.
+    
+    ```
+    
+    or 
+    
+    ```text
+    
+    - Add support for bla databases.
+    
+    ---
+    
+    Also tweak the CI workflow accordingly. :sweat_smile:
+    
+    ```
+    
+    - (GitHub repositories only) For merge commits with the default message ("Merge pull request..."), rely on fledge's querying GitHub API to get the PR title and include it in the changelog.
 
 For informative commit messages refer to the [Tidyverse style guide](https://style.tidyverse.org/news.html).
 

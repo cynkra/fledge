@@ -1,0 +1,23 @@
+{
+    "data": {
+        "repository": {
+            "pullRequest": {
+                "id": "PR_kwDOB5UJLs438x4T",
+                "closingIssuesReferences": {
+                    "edges": [
+                        {
+                            "node": {
+                                "number": 153
+                            }
+                        },
+                        {
+                            "node": {
+                                "number": 325
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
