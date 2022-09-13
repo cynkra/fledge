@@ -112,7 +112,7 @@
 <ul><li>
 <p>For important commit messages you want recorded in the changelog, you can</p>
 <ul>
-<li><p>Use the <a href="https://www.conventionalcommits.org/en/v1.0.0/" class="external-link">conventional commits</a> syntax. For instance <code>feat: Enhanced support for time series</code>.</p></li>
+<li><p>Use the <a href="https://www.conventionalcommits.org/en/v1.0.0/" class="external-link">conventional commits</a> syntax. For instance <code>feat: Enhanced support for time series</code>. Only using conventional commits syntax will provide automatic <em>grouping</em> of changelog items into groups (Documentation, Bug Fixes, etc.).</p></li>
 <li><p>Add a hyphen <code>-</code> or <code>*</code> at the beginning of the commit message. Exclude housekeeping parts of the message by typing them after a line <code>---</code>.</p></li>
 </ul>
 <pre class="text"><code>
@@ -124,7 +124,10 @@
 ---
 
 Also tweak the CI workflow accordingly. :sweat_smile:</code></pre>
-<ul><li>(GitHub repositories only) For merge commits with the default message (“Merge pull request…”), rely on fledge’s querying GitHub API to get the PR title and include it in the changelog.</li></ul>
+<ul>
+<li><p>Use informative merge commit messages as those will also be included by default in the changelog. On GitHub you can <a href="https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/" class="external-link">control the default commit message when merging a pull request</a>.</p></li>
+<li><p>(GitHub repositories only) For merge commits with the default not self-contained message (“Merge pull request…”), rely on fledge’s querying GitHub API to get the PR title and include it in the changelog.</p></li>
+</ul>
 </li></ul>
 <p>For informative commit messages refer to the <a href="https://style.tidyverse.org/news.html" class="external-link">Tidyverse style guide</a>.</p>
 <ul>
