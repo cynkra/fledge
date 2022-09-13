@@ -3,7 +3,7 @@
     Code
       bump_version()
     Message
-      > Scraping 3 commit messages.
+      > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
@@ -43,7 +43,7 @@
     Code
       bump_version(no_change_behavior = "bump")
     Message
-      > Scraping 1 commit messages.
+      > Digesting messages from 1 commits.
       i Same as previous version.
       
       -- Updating NEWS --
@@ -68,7 +68,7 @@
     Code
       bump_version(which = "major")
     Message
-      > Scraping 3 commit messages.
+      > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --

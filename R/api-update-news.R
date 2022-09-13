@@ -12,10 +12,15 @@
 #' @export
 update_news <- function(messages = NULL) {
   if (is.null(messages)) {
-    messages <- default_commit_range()$message
+    commits <- default_commit_range()
+  } else {
+    commits <- tibble::tibble(
+      message = messages,
+      merge = FALSE
+    )
   }
 
-  with_repo(update_news_impl(messages))
+  with_repo(update_news_impl(commits))
   invisible(NULL)
 }
 

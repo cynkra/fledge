@@ -3,7 +3,7 @@ What you need to do in practice is:
 
 - For important commit messages you want recorded in the changelog, you can
 
-    - Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax. For instance `feat: Enhanced support for time series`.
+    - Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax. For instance `feat: Enhanced support for time series`. Only using conventional commits syntax will provide automatic *grouping* of changelog items into groups (Documentation, Bug Fixes, etc.).
 
      - Add a hyphen `-` or `*` at the beginning of the commit message.  Exclude housekeeping parts of the message by typing them after a line `---`.
     
@@ -25,7 +25,9 @@ What you need to do in practice is:
     
     ```
     
-    - (GitHub repositories only) For merge commits with the default message ("Merge pull request..."), rely on fledge's querying GitHub API to get the PR title and include it in the changelog.
+    - Use informative merge commit messages as those will also be included by default in the changelog. On GitHub you can [control the default commit message when merging a pull request](https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/).
+    
+    - (GitHub repositories only) For merge commits with the default not self-contained message ("Merge pull request..."), rely on fledge's querying GitHub API to get the PR title and include it in the changelog.
 
 For informative commit messages refer to the [Tidyverse style guide](https://style.tidyverse.org/news.html).
 

@@ -1,5 +1,5 @@
-update_news_impl <- function(messages) {
-  news_items <- collect_news(messages)
+update_news_impl <- function(commits) {
+  news_items <- collect_news(commits)
   news_items <- capitalize_news(news_items)
   news_lines <- regroup_news(news_items)
 
@@ -11,21 +11,41 @@ update_news_impl <- function(messages) {
   add_to_news(news_lines)
 }
 
-collect_news <- function(messages) {
+collect_news <- function(commits) {
   if (fledge_chatty()) {
-    cli_alert("Scraping {.field {length(messages)}} commit messages.")
+    cli_alert("Digesting messages from {.field {nrow(commits)}} commits.")
   }
 
-  newsworthy_items <- messages %>%
-    gsub("\r\n", "\n", .) %>%
-    purrr::discard(~ . == "") %>%
-    purrr::map_chr(remove_housekeeping) %>%
-    purrr::map(extract_newsworthy_items) %>%
+  treat_message <- function(commit_df) {
+    default_newsworthy <- commit_df$message %>%
+      gsub("\r\n", "\n", .) %>%
+      purrr::discard(~ . == "") %>%
+      purrr::map_chr(remove_housekeeping) %>%
+      purrr::map(extract_newsworthy_items)
+
+    if (nrow(default_newsworthy[[1]]) > 0) {
+      return(default_newsworthy[[1]])
+    }
+
+    if (commit_df$merge) {
+      tibble::tibble(
+        description = commit_df$message,
+        type = default_type(),
+        breaking = FALSE,
+        scope = NA
+      )
+    } else {
+      NULL
+    }
+  }
+
+  newsworthy_items <- split(commits, seq_len(nrow(commits))) %>%
+    purrr::map(treat_message) %>%
     purrr::keep(~ !is.null(.)) %>%
     bind_rows()
 
-  if (nrow(newsworthy_items) == 0) {
-    if (length(messages) <= 1) {
+  if (is.null(newsworthy_items)) {
+    if (nrow(commits) <= 1) {
       newsworthy_items <- parse_bullet_commit("- Same as previous version.")
       if (fledge_chatty()) cli_alert_info("Same as previous version.")
     } else {

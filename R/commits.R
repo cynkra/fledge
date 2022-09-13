@@ -14,7 +14,8 @@ get_top_level_commits_impl <- function(since) {
 
   commit <- get_first_parent(commit, since)
   message <- map_chr(commit, ~ gert::git_commit_info(.x)$message)
-  tibble::tibble(commit, message)
+  merge <- map_lgl(commit, ~ (length(gert::git_commit_info(.x)$parents) > 1))
+  tibble::tibble(commit, message, merge)
 }
 
 get_first_parent <- function(commit, since) {
