@@ -3,7 +3,7 @@ What you need to do in practice is:
 
 - For important commit messages you want recorded in the changelog, you can
 
-    - Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax. For instance `feat: Enhanced support for time series`. Only using conventional commits syntax will provide automatic *grouping* of changelog items into groups (Documentation, Bug Fixes, etc.).^
+    - Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax. For instance `feat: Enhanced support for time series`. Only using conventional commits syntax will provide automatic *grouping* of changelog items into groups (Documentation, Bug Fixes, etc.).
 
      - Add a hyphen `-` or `*` at the beginning of the commit message.  Exclude housekeeping parts of the message by typing them after a line `---`.
     
