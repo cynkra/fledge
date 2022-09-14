@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9006 (2022-09-14)
+
+## Features
+
+- Better support for merge commits of all kinds (@maelle, #512)
+
+## Uncategorized
+
+- Internal changes only.
+
+
 # fledge 0.1.0.9005 (2022-09-13)
 
 - Internal changes only.
