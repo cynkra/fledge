@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9010 (2022-09-20)
+
+## Features
+
+- `bump_version()` returns `TRUE` if a new version has been created
+
+
 # fledge 0.1.0.9009 (2022-09-20)
 
 ## Features
