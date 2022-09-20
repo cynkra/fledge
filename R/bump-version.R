@@ -17,7 +17,7 @@ bump_version_impl <- function(which, no_change_behavior) {
     }
     if (no_change_behavior == "noop") {
       cli::cli_alert_info("No change since last version.")
-      return()
+      return(invisible(FALSE))
     }
   }
   #' 1. [update_news()]
@@ -42,6 +42,8 @@ bump_version_impl <- function(which, no_change_behavior) {
       cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
     }
   }
+
+  invisible(TRUE)
 }
 
 bump_version_to_dev_with_force <- function(force) {

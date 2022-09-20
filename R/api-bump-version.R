@@ -8,7 +8,10 @@
 #' version: `"bump"` for bump the version;
 #' `"noop"` for do nothing;
 #' `"fail"` for erroring.
-#' @return None
+#' @return
+#'   `TRUE` if `NEWS.md` and `DESCRIPTION` have been updated,
+#'   `FALSE` otherwise.
+#'   Do not rely on this behavior.
 #' @export
 #'
 #' @seealso [unbump_version()]

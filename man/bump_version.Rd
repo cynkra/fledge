@@ -28,7 +28,9 @@ version: \code{"bump"} for bump the version;
 \code{"fail"} for erroring.}
 }
 \value{
-None
+\code{TRUE} if \code{NEWS.md} and \code{DESCRIPTION} have been updated,
+\code{FALSE} otherwise.
+Do not rely on this behavior.
 }
 \description{
 Calls the following functions:
