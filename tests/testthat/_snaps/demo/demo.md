@@ -292,7 +292,6 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
 ## ! Call `fledge::finalize_version(push = TRUE)`.
-## NULL
 ```
 
 The new version number is 0.0.0.9001.
@@ -496,7 +495,6 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
 ## ! Call `fledge::finalize_version(push = TRUE)`.
-## NULL
 news <- readLines("NEWS.md")
 writeLines(news)
 ## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
@@ -665,7 +663,6 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
 ## ! Call `fledge::finalize_version(push = TRUE)`.
-## NULL
 news <- readLines("NEWS.md")
 ```
 
