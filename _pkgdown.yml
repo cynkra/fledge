@@ -20,7 +20,6 @@ reference:
   - finalize_version
   - unbump_version
   - release
-  - check_tags
 - title: Lower-level functions
   contents:
   - get_last_tag
