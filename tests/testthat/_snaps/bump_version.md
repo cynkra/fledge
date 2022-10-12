@@ -20,8 +20,6 @@
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version(push = TRUE)`.
-    Output
-      NULL
 
 ---
 
@@ -35,8 +33,6 @@
       bump_version(no_change_behavior = "noop")
     Message
       i No change since last version.
-    Output
-      NULL
 
 ---
 
@@ -60,8 +56,6 @@
       
       > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version(push = TRUE)`.
-    Output
-      NULL
 
 # bump_version() works -- not dev
 
