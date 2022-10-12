@@ -20,8 +20,6 @@
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version()`.
-    Output
-      NULL
     Code
       unbump_version()
     Message
@@ -61,6 +59,4 @@
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version()`.
-    Output
-      NULL
 
