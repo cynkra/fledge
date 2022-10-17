@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cynkra.github.io/fledge/articles/cran-automation.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/articles/cran-automation.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/articles/demo.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/articles/demo.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/articles/fledge.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/articles/fledge.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/articles/index.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/articles/internals.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/articles/internals.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/authors.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/authors.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/index.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/index.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/news/index.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/bump_version.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/bump_version.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/commit_version.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/commit_version.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/create_demo_project.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/create_demo_project.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/finalize_version.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/finalize_version.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/get_last_tag.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/get_last_tag.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/get_top_level_commits.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/get_top_level_commits.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/index.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/release.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/release.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/tag_version.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/tag_version.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/unbump_version.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/unbump_version.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/update_news.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/update_news.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/update_version.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/update_version.html</loc>
   </url>
   <url>
-    <loc>https://cynkra.github.io/fledge/reference/with_demo_project.html</loc>
+    <loc>https://cynkra.github.io/fledge/dev/reference/with_demo_project.html</loc>
   </url>
 </urlset>
