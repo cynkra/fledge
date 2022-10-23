@@ -8,44 +8,30 @@ check_gh_pat <- function(needed_scopes = "repo") {
     )
   }
 
-  scopes <- switch(needed_scopes,
-    repo = "repo",
-    v4_api = v4_scopes()
-  )
+  if (is.null(needed_scopes)) {
+    # For the V4 API, the API itself will error if there is a problem
+    # but for the issues linked from a PR, no scope needed
+    return(TRUE)
+  }
+
+  scopes <- "repo"
+
   current_scopes <- gh_scopes()
   missing_scopes <- scopes[!(scopes %in% current_scopes)]
 
   if (length(missing_scopes) > 0) {
-    if (needed_scopes == "repo") {
-      abort(
-        message = c(
-          x = sprintf("Missing scopes for GitHub V3 API (used for opening a PR): %s", toString(missing_scopes)),
-          i = 'See for instance https://usethis.r-lib.org/reference/github-token.html'
-        )
+    abort(
+      message = c(
+        x = sprintf("Missing scopes for GitHub V3 API (used for opening a PR): %s", toString(missing_scopes)),
+        i = 'See for instance https://usethis.r-lib.org/reference/github-token.html'
       )
-    } else {
-      abort(
-        message = c(
-          x = sprintf("Missing scopes for GitHub GraphQL API (used for finding issues linked to PR): %s", toString(missing_scopes)),
-          i = 'See https://docs.github.com/en/graphql/guides/forming-calls-with-graphql'
-        )
-      )
-    }
+    )
   }
-}
-
-v4_scopes <- function() {
-  c(
-    "repo", "read:packages",
-    "read:org", "read:public_key", "read:repo_hook",
-    "user", "read:discussion", "read:enterprise",
-    "read:gpg_key"
-  )
 }
 
 gh_scopes <- function() {
   if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES")) || nzchar(Sys.getenv("FLEDGE_GHA_CI"))) {
-    v4_scopes()
+    "repo"
   } else if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES_BAD"))) {
     "useless"
   } else {
