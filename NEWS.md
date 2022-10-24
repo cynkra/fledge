@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9017 (2022-10-24)
+
+## Bug fixes
+
+- Relax requirement for GitHub PAT scope (#572)
+
+
 # fledge 0.1.0.9016 (2022-10-20)
 
 - Internal changes only.
