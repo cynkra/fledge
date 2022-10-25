@@ -21,7 +21,7 @@ Authors@R:
 Description: Streamlines the process of updating changelogs (NEWS.md)
     and versioning R packages developed in git repositories.
 License: GPL-3
-URL: https://cynkra.github.io/fledge/,
+URL: https://fledge.cynkra.com/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
