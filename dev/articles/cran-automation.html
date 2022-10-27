@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9017</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9018</span>
       </span>
     </div>
 
@@ -101,13 +101,22 @@
 <div class="section level2">
 <h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h2>
-<p>{fledge} is able to automate a CRAN release, both locally and via continuous integration (CI). The only difference between the local and the CI approach is that the user has to call <code>fledge::unleash()</code> (or its child functions) manually after each step.</p>
-<p>In the following we describe the workflow via the CI approach. If a CI build is triggered by a tag (i.e. a release was made), a specific runner in the build matrix is being run which calls <code>fledge::unleash()</code>. This runner is run every 2h (?) on the branch and calls <code>fledge::unleash()</code> every time.</p>
+<p>{fledge} is able to automate a CRAN release, both locally and via
+continuous integration (CI). The only difference between the local and
+the CI approach is that the user has to call
+<code>fledge::unleash()</code> (or its child functions) manually after
+each step.</p>
+<p>In the following we describe the workflow via the CI approach. If a
+CI build is triggered by a tag (i.e. a release was made), a specific
+runner in the build matrix is being run which calls
+<code>fledge::unleash()</code>. This runner is run every 2h (?) on the
+branch and calls <code>fledge::unleash()</code> every time.</p>
 </div>
 <div class="section level2">
 <h2 id="execution-conditions">Execution Conditions<a class="anchor" aria-label="anchor" href="#execution-conditions"></a>
 </h2>
-<p>The following list describes the conditions which need to be fulfilled for each state:</p>
+<p>The following list describes the conditions which need to be
+fulfilled for each state:</p>
 <ul>
 <li>
 <code><a href="../reference/release.html">pre_release()</a></code>:
@@ -133,7 +142,11 @@
 </ul>
 </li>
 </ul>
-<p>Possible improvements: - Let the user forward specific CRAN mails so fledge can check the required boxes itself. Currently users needs to check the boxes in <code>cran-comments.md</code> themselves. - Make strict NEWS checking optional - The branch creation should be optional (TRUE by default).</p>
+<p>Possible improvements: - Let the user forward specific CRAN mails so
+fledge can check the required boxes itself. Currently users needs to
+check the boxes in <code>cran-comments.md</code> themselves. - Make
+strict NEWS checking optional - The branch creation should be optional
+(TRUE by default).</p>
 <p><code>unleash()</code> wraps</p>
 <ul>
 <li><code><a href="../reference/release.html">fledge::pre_release()</a></code></li>
@@ -151,7 +164,8 @@
 <ul>
 <li>Creates <code>cran-comments.md</code> from template.</li>
 <li>Creates a branch named <code>r-release&lt;version&gt;</code>.</li>
-<li>Check recent changes to CRAN policies via <code>eddelbuettel/crp@master</code>.</li>
+<li>Check recent changes to CRAN policies via
+<code>eddelbuettel/crp@master</code>.</li>
 <li>Calls <code><a href="https://devtools.r-lib.org/reference/check_win.html" class="external-link">devtools::check_win_devel()</a></code>.</li>
 <li>Calls <code>rhub::check_for_cran()</code>.</li>
 <li>Calls <code><a href="https://rdrr.io/pkg/foghorn/man/cran_details.html" class="external-link">foghorn::cran_details()</a></code>.</li>
@@ -170,11 +184,13 @@
 <li>Calls <code><a href="../reference/tag_version.html">fledge::tag_version()</a></code>.</li>
 <li>Calls <code>git push --tags</code>.</li>
 <li>Calls <code><a href="https://usethis.r-lib.org/reference/use_github_release.html" class="external-link">usethis::use_github_release()</a></code>.</li>
-<li>Calls <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> to switch to dev version again.</li>
+<li>Calls <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> to switch to dev version
+again.</li>
 </ul>
 </li>
 </ul>
-<p>After <code><a href="../reference/release.html">post_release()</a></code>, the Pull Request should be merged and the branch deleted.</p>
+<p>After <code><a href="../reference/release.html">post_release()</a></code>, the Pull Request should be merged
+and the branch deleted.</p>
 </div>
   </div>
 

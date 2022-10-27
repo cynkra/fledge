@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9017</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9018</span>
       </span>
     </div>
 
@@ -103,15 +103,21 @@
 <div class="section level2">
 <h2 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
 </h2>
-<p>The following sections explain how things actually work inside fledge.</p>
+<p>The following sections explain how things actually work inside
+fledge.</p>
 <div class="section level3">
 <h3 id="updating-news-md">Updating <code>NEWS.md</code><a class="anchor" aria-label="anchor" href="#updating-news-md"></a>
 </h3>
-<p>New entries are added to <code>NEWS.md</code> from commit messages to commits in <code>master</code>.</p>
+<p>New entries are added to <code>NEWS.md</code> from commit messages to
+commits in <code>master</code>.</p>
 <ul>
-<li><p>Only top-level commits are considered (roughly equivalent to <code>git log --first-parent</code>.) The messages from these commits are parsed. Only lines that start with a star <code>*</code> or a dash <code>-</code> are included.</p></li>
+<li><p>Only top-level commits are considered (roughly equivalent to
+<code>git log --first-parent</code>.) The messages from these commits
+are parsed. Only lines that start with a star <code>*</code> or a dash
+<code>-</code> are included.</p></li>
 <li>
-<p>If a line starts with three dashes, then everything past that line is excluded. Example: the following commit message</p>
+<p>If a line starts with three dashes, then everything past that
+line is excluded. Example: the following commit message</p>
 <pre><code>Merge f-fancy-feature to master, closes #5678
 
 - Added fancy feature (#5678).
@@ -130,25 +136,41 @@ The fancy feature consists of the components:
 - Fixed bug as a side effect (#9012).</code></pre>
 </li>
 </ul>
-<p>When retrieving the current NEWS for defining the tag message, the entries between the first two first-level headers (starting with <code>#</code>) are returned. You can use second and third level headers and add as many empty lines as you want.</p>
+<p>When retrieving the current NEWS for defining the tag message, the
+entries between the first two first-level headers (starting with
+<code>#</code>) are returned. You can use second and third level headers
+and add as many empty lines as you want.</p>
 </div>
 <div class="section level3">
 <h3 id="collecting-news">Collecting NEWS<a class="anchor" aria-label="anchor" href="#collecting-news"></a>
 </h3>
-<p>The first function to call at any stage is always <code><a href="../reference/bump_version.html">bump_version()</a></code>. This does the following</p>
+<p>The first function to call at any stage is always
+<code><a href="../reference/bump_version.html">bump_version()</a></code>. This does the following</p>
 <ol style="list-style-type: decimal">
-<li><p>Calls <code><a href="../reference/update_news.html">update_news()</a></code> to collect NEWS entries from top-level commits.</p></li>
-<li><p>Calls <code><a href="../reference/update_version.html">update_version()</a></code> to increment the version in <code>DESCRIPTION</code> and add a header to <code>NEWS.md</code>.</p></li>
+<li><p>Calls <code><a href="../reference/update_news.html">update_news()</a></code> to collect NEWS entries from
+top-level commits.</p></li>
+<li><p>Calls <code><a href="../reference/update_version.html">update_version()</a></code> to increment the version in
+<code>DESCRIPTION</code> and add a header to
+<code>NEWS.md</code>.</p></li>
 </ol>
 </div>
 <div class="section level3">
 <h3 id="tagging-for-dev-vs--other-releases">Tagging for “dev” vs. other releases<a class="anchor" aria-label="anchor" href="#tagging-for-dev-vs--other-releases"></a>
 </h3>
-<p><code><a href="../reference/bump_version.html">bump_version()</a></code> continues depending on the release type:</p>
+<p><code><a href="../reference/bump_version.html">bump_version()</a></code> continues depending on the release
+type:</p>
 <ul>
 <li>
-<code>"dev"</code> releases: Calls <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to commit <code>DESCRIPTION</code> and <code>NEWS.md</code>. Also creates a tag with a message. You can always edit <code>NEWS.md</code> and call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> again. Both the commit and the tag will be updated.</li>
-<li>Other releases: Calls <code><a href="../reference/commit_version.html">commit_version()</a></code> to commit <code>DESCRIPTION</code> and <code>NEWS.md</code> without tagging. In this stage, you can edit <code>NEWS.md</code> and commit as much as you like. The tag is created only after you use <code><a href="../reference/tag_version.html">tag_version()</a></code> manually.</li>
+<code>"dev"</code> releases: Calls <code><a href="../reference/finalize_version.html">finalize_version()</a></code>
+to commit <code>DESCRIPTION</code> and <code>NEWS.md</code>. Also
+creates a tag with a message. You can always edit <code>NEWS.md</code>
+and call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> again. Both the commit and the
+tag will be updated.</li>
+<li>Other releases: Calls <code><a href="../reference/commit_version.html">commit_version()</a></code> to commit
+<code>DESCRIPTION</code> and <code>NEWS.md</code> without tagging. In
+this stage, you can edit <code>NEWS.md</code> and commit as much as you
+like. The tag is created only after you use <code><a href="../reference/tag_version.html">tag_version()</a></code>
+manually.</li>
 </ul>
 </div>
 </div>

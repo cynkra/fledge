@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fledge</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9017</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9018</span>
       </span>
     </div>
 
@@ -100,28 +100,47 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fledge.cynkra.com/">fledge</a></span><span class="op">)</span></span></code></pre></div>
-<p>Do you want to provide a changelog (<a href="https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd" class="external-link">NEWS.md</a>) more informative than <a href="https://twitter.com/EmilyKager/status/1413628436984188933" class="external-link">“bug fixes and performance improvements”</a> to the users of your package?</p>
+<p>Do you want to provide a changelog (<a href="https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd" class="external-link">NEWS.md</a>)
+more informative than <a href="https://twitter.com/EmilyKager/status/1413628436984188933" class="external-link">“bug
+fixes and performance improvements”</a> to the users of your
+package?</p>
 <p>Ways to achieve that are:</p>
 <ul>
-<li><p>Update NEWS.md right before release by reading through commit messages. Not necessarily fun!</p></li>
-<li><p>Update the changelog in every commit e.g. in every PR. Now, if there are several feature PRs around that update the changelog, you’ll have a few clicks to make to tackle conflicts. Easy enough, but potentially annoying.</p></li>
+<li><p>Update NEWS.md right before release by reading through commit
+messages. Not necessarily fun!</p></li>
+<li><p>Update the changelog in every commit e.g. in every PR. Now, if
+there are several feature PRs around that update the changelog, you’ll
+have a few clicks to make to tackle conflicts. Easy enough, but
+potentially annoying.</p></li>
 <li>
 <p>Use fledge to</p>
 <ul>
-<li>fill the <code>NEWS.md</code> for you based on informative commit messages,</li>
-<li>increase the version number in <code>DESCRIPTION</code> (e.g. useful in bug reports with session information!),</li>
-<li>create git tags (more coarse-grained history compared to top-level merges see <a href="https://github.com/cynkra/fledge/tags" class="external-link">fledge tag list on GitHub</a>).</li>
+<li>fill the <code>NEWS.md</code> for you based on informative commit
+messages,</li>
+<li>increase the version number in <code>DESCRIPTION</code> (e.g. useful
+in bug reports with session information!),</li>
+<li>create git tags (more coarse-grained history compared to top-level
+merges see <a href="https://github.com/cynkra/fledge/tags" class="external-link">fledge tag
+list on GitHub</a>).</li>
 </ul>
 </li>
 </ul>
-<p>Using fledge is a discipline / a few habits that is worth learning!</p>
+<p>Using fledge is a discipline / a few habits that is worth
+learning!</p>
 <p>What you need to do in practice is:</p>
 <ul>
 <li>
-<p>For important commit messages you want recorded in the changelog, you can</p>
+<p>For important commit messages you want recorded in the changelog,
+you can</p>
 <ul>
-<li><p>Use the <a href="https://www.conventionalcommits.org/en/v1.0.0/" class="external-link">conventional commits</a> syntax. For instance <code>feat: Enhanced support for time series</code>. Only using conventional commits syntax will provide automatic <em>grouping</em> of changelog items into groups (Documentation, Bug Fixes, etc.).</p></li>
-<li><p>Add a hyphen <code>-</code> or <code>*</code> at the beginning of the commit message. Exclude housekeeping parts of the message by typing them after a line <code>---</code>.</p></li>
+<li><p>Use the <a href="https://www.conventionalcommits.org/en/v1.0.0/" class="external-link">conventional
+commits</a> syntax. For instance
+<code>feat: Enhanced support for time series</code>. Only using
+conventional commits syntax will provide automatic <em>grouping</em> of
+changelog items into groups (Documentation, Bug Fixes, etc.).</p></li>
+<li><p>Add a hyphen <code>-</code> or <code>*</code> at the beginning of
+the commit message. Exclude housekeeping parts of the message by typing
+them after a line <code>---</code>.</p></li>
 </ul>
 <pre class="text"><code>
 - Add support for bla databases.
@@ -135,16 +154,30 @@
 Also tweak the CI workflow accordingly. :sweat_smile:
 </code></pre>
 <ul>
-<li><p>Use informative merge commit messages as those will also be included by default in the changelog. On GitHub you can <a href="https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/" class="external-link">control the default commit message when merging a pull request</a>.</p></li>
-<li><p>(GitHub repositories only) For merge commits with the default not self-contained message (“Merge pull request…”), rely on fledge’s querying GitHub API to get the PR title and include it in the changelog.</p></li>
+<li><p>Use informative merge commit messages as those will also be
+included by default in the changelog. On GitHub you can <a href="https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/" class="external-link">control
+the default commit message when merging a pull request</a>.</p></li>
+<li><p>(GitHub repositories only) For merge commits with the default not
+self-contained message (“Merge pull request…”), rely on fledge’s
+querying GitHub API to get the PR title and include it in the
+changelog.</p></li>
 </ul>
 </li>
 </ul>
-<p>For informative commit messages refer to the <a href="https://style.tidyverse.org/news.html" class="external-link">Tidyverse style guide</a>.</p>
+<p>For informative commit messages refer to the <a href="https://style.tidyverse.org/news.html" class="external-link">Tidyverse style
+guide</a>.</p>
 <ul>
-<li><p>Run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> regularly e.g. before every coffee break or at the end of the day or of the week. If you forgot to merge one PR run <code><a href="../reference/unbump_version.html">fledge::unbump_version()</a></code>, merge the PR with an informative squash commit message, then run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> and go drink that coffee!</p></li>
-<li><p>Run <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code> if you need to edit <code>NEWS.md</code> manually e.g. if you made a typo or are not happy with a phrasing in retrospect. Even if you edit a lot, what’s been written in by fledge is still a good place-holder.</p></li>
-<li><p>Follow the recommended steps at release (see <code><a href="../articles/fledge.html">vignette("fledge")</a></code> usage section).</p></li>
+<li><p>Run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> regularly e.g. before
+every coffee break or at the end of the day or of the week. If you
+forgot to merge one PR run <code><a href="../reference/unbump_version.html">fledge::unbump_version()</a></code>, merge
+the PR with an informative squash commit message, then run
+<code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> and go drink that coffee!</p></li>
+<li><p>Run <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code> if you need to edit
+<code>NEWS.md</code> manually e.g. if you made a typo or are not happy
+with a phrasing in retrospect. Even if you edit a lot, what’s been
+written in by fledge is still a good place-holder.</p></li>
+<li><p>Follow the recommended steps at release (see
+<code><a href="../articles/fledge.html">vignette("fledge")</a></code> usage section).</p></li>
 </ul>
 <p>These habits are worth learning!</p>
 <div class="section level2">
@@ -162,28 +195,39 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <p>Or install from GitHub (development version as well) using:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"cynkra/fledge"</span><span class="op">)</span></span></code></pre></div>
-<p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>) available for all your interactive work, you might enjoy loading fledge in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
+<p>If you are used to making workflow packages (e.g. <a href="https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work" class="external-link">devtools</a>)
+available for all your interactive work, you might enjoy loading fledge
+in your <a href="https://rstats.wtf/r-startup.html#rprofile" class="external-link">.Rprofile</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="once-per-package">Once per package<a class="anchor" aria-label="anchor" href="#once-per-package"></a>
 </h3>
 <ul>
-<li><p>Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) <em>or</em> to be using the same default branch name as your global/project <code>init.defaultbranch</code>.</p></li>
+<li><p>Your package needs to have a remote that indicates the default
+branch (e.g. GitHub remote) <em>or</em> to be using the same default
+branch name as your global/project
+<code>init.defaultbranch</code>.</p></li>
 <li>
 <p>If your package…</p>
 <ul>
-<li>is brand-new, remember to run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> regularly.</li>
-<li>has already undergone some development, it is not too late to jump on the train! Run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> and then <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code>.</li>
+<li>is brand-new, remember to run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code>
+regularly.</li>
+<li>has already undergone some development, it is not too late to jump
+on the train! Run <code><a href="../reference/bump_version.html">fledge::bump_version()</a></code> and then
+<code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code>.</li>
 </ul>
 </li>
-<li><p>Add a mention of fledge usage in your contributing guide, as contributors might not know about it. A comment is added to the top of <code>NEWS.md</code>, but it tends to be ignored occasionally.</p></li>
+<li><p>Add a mention of fledge usage in your contributing guide, as
+contributors might not know about it. A comment is added to the top of
+<code>NEWS.md</code>, but it tends to be ignored occasionally.</p></li>
 </ul>
 </div>
 </div>
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
 </h2>
-<p>{fledge} consists of the following functions that enable versioning at different stages through the package development lifecycle.</p>
+<p>{fledge} consists of the following functions that enable versioning
+at different stages through the package development lifecycle.</p>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="33%">
@@ -198,7 +242,8 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <tbody>
 <tr class="odd">
 <td><code>bump_version(which)</code></td>
-<td>Increments the package version based on argument. (Version format supported <em>major.minor.dev.patch</em>)</td>
+<td>Increments the package version based on argument. (Version format
+supported <em>major.minor.dev.patch</em>)</td>
 <td>Configuration, Development, Release</td>
 </tr>
 <tr class="even">
@@ -208,23 +253,27 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 </tr>
 <tr class="odd">
 <td><code><a href="../reference/commit_version.html">commit_version()</a></code></td>
-<td>Commits <code>NEWS.md</code> and <code>DESCRIPTION</code> to Git.</td>
+<td>Commits <code>NEWS.md</code> and <code>DESCRIPTION</code> to
+Git.</td>
 <td>Release</td>
 </tr>
 <tr class="even">
 <td><code><a href="../reference/tag_version.html">tag_version()</a></code></td>
-<td>Parses <code>NEWS.md</code> and creates/updates the tag for the most recent version.</td>
+<td>Parses <code>NEWS.md</code> and creates/updates the tag for the most
+recent version.</td>
 <td>Release</td>
 </tr>
 <tr class="odd">
 <td><code><a href="../reference/update_news.html">update_news()</a></code></td>
-<td>Update <code>NEWS.md</code> with messages from top level commits</td>
+<td>Update <code>NEWS.md</code> with messages from top level
+commits</td>
 <td>Used by <code><a href="../reference/bump_version.html">bump_version()</a></code>
 </td>
 </tr>
 <tr class="even">
 <td><code><a href="../reference/update_version.html">update_version()</a></code></td>
-<td>Update <code>NEWS.md</code> and <code>DESCRIPTION</code> with a new version</td>
+<td>Update <code>NEWS.md</code> and <code>DESCRIPTION</code> with a new
+version</td>
 <td>Used by <code><a href="../reference/bump_version.html">bump_version()</a></code>
 </td>
 </tr>
@@ -234,44 +283,74 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>The following sections show how to combine these functions at different stages with any R package on GitHub. All {fledge} commands should be issued from the package directory of the target R package.</p>
+<p>The following sections show how to combine these functions at
+different stages with any R package on GitHub. All {fledge} commands
+should be issued from the package directory of the target R package.</p>
 <div class="section level3">
 <h3 id="initial-configuration">Initial Configuration<a class="anchor" aria-label="anchor" href="#initial-configuration"></a>
 </h3>
-<p>{fledge} assumes that the target R package is version-controlled with Git in a dedicated repository. The following steps are required to set up {fledge} for first time use, with your package.</p>
+<p>{fledge} assumes that the target R package is version-controlled with
+Git in a dedicated repository. The following steps are required to set
+up {fledge} for first time use, with your package.</p>
 <ol style="list-style-type: decimal">
 <li>
-<p>Call <code><a href="../reference/bump_version.html">bump_version()</a></code> as given below to set the package version</p>
+<p>Call <code><a href="../reference/bump_version.html">bump_version()</a></code> as given below to set the
+package version</p>
 <pre><code><span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </li>
-<li><p>Edit <code>NEWS.md</code> if required (typo fixes, rephrasing, grouping).</p></li>
+<li><p>Edit <code>NEWS.md</code> if required (typo fixes, rephrasing,
+grouping).</p></li>
 <li>
-<p>Call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> as given below to update <code>NEWS.md</code></p>
+<p>Call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> as given below to update
+<code>NEWS.md</code></p>
 <pre><code><span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/finalize_version.html">finalize_version</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </li>
 </ol>
-<p>You are all set to switch to the development stage now. Ensure that you use bullet points (<code>*</code> or <code>-</code>) in your commit or merge messages to indicate the messages that you want to include in <code>NEWS.md</code>. Use <code>finalize_version(push = TRUE)</code> to push to the remote repository (e.g. GitHub) in one swoop.</p>
+<p>You are all set to switch to the development stage now. Ensure that
+you use bullet points (<code>*</code> or <code>-</code>) in your commit
+or merge messages to indicate the messages that you want to include in
+<code>NEWS.md</code>. Use <code>finalize_version(push = TRUE)</code> to
+push to the remote repository (e.g. GitHub) in one swoop.</p>
 </div>
 <div class="section level3">
 <h3 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
 </h3>
-<p>{fledge} aims to update <code>NEWS.md</code> and <code>DESCRIPTION</code> correctly whenever a new version is assigned. In order to do this, the following steps need to be included throughout the development workflow.</p>
+<p>{fledge} aims to update <code>NEWS.md</code> and
+<code>DESCRIPTION</code> correctly whenever a new version is assigned.
+In order to do this, the following steps need to be included throughout
+the development workflow.</p>
 <ol style="list-style-type: decimal">
-<li><p>In commit messages to your main branch (typically <code>main</code> or <code>master</code>), mark everything that should go to <code>NEWS.md</code> with a bullet point (<code>-</code> or <code>*</code>). This is applicable to single commits, merge commits, or squash commits from pull requests. Do not edit <code>NEWS.md</code> manually.</p></li>
+<li><p>In commit messages to your main branch (typically
+<code>main</code> or <code>master</code>), mark everything that should
+go to <code>NEWS.md</code> with a bullet point (<code>-</code> or
+<code>*</code>). This is applicable to single commits, merge commits, or
+squash commits from pull requests. Do not edit <code>NEWS.md</code>
+manually.</p></li>
 <li>
-<p>When you want to assign a version number to the current state of your R package e.g. at the end of the day or before a break, call</p>
+<p>When you want to assign a version number to the current state of
+your R package e.g. at the end of the day or before a break, call</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>The default argument for bump_version is “dev”. So the dev part of the version number will be updated. It is good practice to assign a new version number before switching focus to another project.</p>
+<p>The default argument for bump_version is “dev”. So the dev part of
+the version number will be updated. It is good practice to assign a new
+version number before switching focus to another project.</p>
 </li>
-<li><p>Edit <code>NEWS.md</code> if required (typo fixes, rephrasing, grouping).</p></li>
+<li><p>Edit <code>NEWS.md</code> if required (typo fixes, rephrasing,
+grouping).</p></li>
 <li>
-<p>Call <code><a href="../reference/finalize_version.html">finalize_version()</a></code>: <code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code>. This achieves the following:</p>
+<p>Call <code><a href="../reference/finalize_version.html">finalize_version()</a></code>:
+<code><a href="../reference/finalize_version.html">fledge::finalize_version()</a></code>. This achieves the
+following:</p>
 <ul>
 <li>
-<code>NEWS.md</code> is now composed, based on the most recent commit messages. To understand how <code>NEWS.md</code> is updated by fledge, see the section on <code>NEWS.md</code> implementation.</li>
-<li>A new version number is assigned automatically (this is modeled after <code><a href="https://usethis.r-lib.org/reference/use_version.html" class="external-link">usethis::use_version()</a></code>).</li>
-<li>A tag matching the version number is assigned automatically, with the most recent <code>NEWS.md</code> messages included in the tag’s message.</li>
+<code>NEWS.md</code> is now composed, based on the most recent
+commit messages. To understand how <code>NEWS.md</code> is updated by
+fledge, see the section on <code>NEWS.md</code> implementation.</li>
+<li>A new version number is assigned automatically (this is modeled
+after <code><a href="https://usethis.r-lib.org/reference/use_version.html" class="external-link">usethis::use_version()</a></code>).</li>
+<li>A tag matching the version number is assigned automatically, with
+the most recent <code>NEWS.md</code> messages included in the tag’s
+message.</li>
 </ul>
 </li>
 </ol>
@@ -279,22 +358,30 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <div class="section level3">
 <h3 id="releasing-to-cran">Releasing to CRAN<a class="anchor" aria-label="anchor" href="#releasing-to-cran"></a>
 </h3>
-<p>When you want to release your package to CRAN, follow the steps below:</p>
+<p>When you want to release your package to CRAN, follow the steps
+below:</p>
 <ol style="list-style-type: decimal">
 <li>
-<p>Call bump_version() with the appropriate argument (<code>"patch"</code>, <code>"major"</code>, <code>"minor"</code>). e.g.,</p>
+<p>Call bump_version() with the appropriate argument
+(<code>"patch"</code>, <code>"major"</code>, <code>"minor"</code>).
+e.g.,</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="st">"patch"</span><span class="op">)</span></span></code></pre></div>
 </li>
-<li><p>Edit <code>NEWS.md</code>, convert the “change log” to “release notes” – a higher-level description of features and bug fixes (typo fixes, rephrasing, grouping).</p></li>
+<li><p>Edit <code>NEWS.md</code>, convert the “change log” to “release
+notes” – a higher-level description of features and bug fixes (typo
+fixes, rephrasing, grouping).</p></li>
 <li>
 <p>Call <code><a href="../reference/commit_version.html">commit_version()</a></code> as below</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/commit_version.html">commit_version</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </li>
-<li><p>Make any necessary adjustments before releasing to CRAN depending on results of preparatory / incoming checks.</p></li>
+<li><p>Make any necessary adjustments before releasing to CRAN depending
+on results of preparatory / incoming checks.</p></li>
 <li>
-<p>Once the release/changes have been accepted by CRAN, use the following calls to tag the released version and to switch to a development version immediately.</p>
+<p>Once the release/changes have been accepted by CRAN, use the
+following calls to tag the released version and to switch to a
+development version immediately.</p>
 <pre><code><span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="../reference/bump_version.html">bump_version</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </li>
@@ -305,27 +392,36 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 <div class="section level2">
 <h2 id="faq-edge-cases">FAQ &amp; edge cases<a class="anchor" aria-label="anchor" href="#faq-edge-cases"></a>
 </h2>
-<p>At least we think these questions could be asked. Feel free to also <a href="https://github.com/cynkra/fledge/discussions" class="external-link">ask us questions</a>!</p>
+<p>At least we think these questions could be asked. Feel free to also
+<a href="https://github.com/cynkra/fledge/discussions" class="external-link">ask us
+questions</a>!</p>
 <div class="section level3">
 <h3 id="but-what-if-i-want-to-edit-news-md-manually">But what if I want to edit NEWS.md manually?<a class="anchor" aria-label="anchor" href="#but-what-if-i-want-to-edit-news-md-manually"></a>
 </h3>
 <p>You still can!</p>
 <ul>
-<li><p>The best moment is between <code><a href="../reference/bump_version.html">bump_version()</a></code> and <code>finalize_version(push = TRUE)</code>.</p></li>
-<li><p>You can actually edit at any time, but only between those two calls the text in the changelog will be captured in the tag message, which is better for the tag history.</p></li>
+<li><p>The best moment is between <code><a href="../reference/bump_version.html">bump_version()</a></code> and
+<code>finalize_version(push = TRUE)</code>.</p></li>
+<li><p>You can actually edit at any time, but only between those two
+calls the text in the changelog will be captured in the tag message,
+which is better for the tag history.</p></li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="what-if-a-contributor-wants-to-contribute-a-news-item">What if a contributor wants to contribute a NEWS item?<a class="anchor" aria-label="anchor" href="#what-if-a-contributor-wants-to-contribute-a-news-item"></a>
 </h3>
-<p>If someone opens a PR, with fledge the information about the changes should be entered in the message for the merge or squash commit. Now you could still advise contributors to provide a summary of the change as a comment to the PR.</p>
+<p>If someone opens a PR, with fledge the information about the changes
+should be entered in the message for the merge or squash commit. Now you
+could still advise contributors to provide a summary of the change as a
+comment to the PR.</p>
 </div>
 <div class="section level3">
 <h3 id="does-this-mean-fix-42-will-appear-in-news-md">Does this mean “Fix #42” will appear in NEWS.md?<a class="anchor" aria-label="anchor" href="#does-this-mean-fix-42-will-appear-in-news-md"></a>
 </h3>
 <p>If you want to fix an issue with a commit message you can</p>
 <ul>
-<li>put “Fix #42” on a separate non-bulleted line or after a line with 3 hyphens.</li>
+<li>put “Fix #42” on a separate non-bulleted line or after a line with 3
+hyphens.</li>
 </ul>
 <pre><code>- Adds support for coolness (#42, @contributor).
 
@@ -333,18 +429,29 @@ Also tweak the CI workflow accordingly. :sweat_smile:
 
 Fix #42</code></pre>
 <ul>
-<li>In a PR on e.g. GitHub you can link an issue to a PR by starting the first comment with “Fix 42” so the issue will be closed. The merge or squash commit will be hyperlinked to the PR, but the commit message won’t have that phrase. You should still add an acknowledgement in the actual commit message e.g. “- Adds support for coolness (#42, <span class="citation">@contributor</span>)”.</li>
+<li>In a PR on e.g. GitHub you can link an issue to a PR by starting the
+first comment with “Fix 42” so the issue will be closed. The merge or
+squash commit will be hyperlinked to the PR, but the commit message
+won’t have that phrase. You should still add an acknowledgement in the
+actual commit message e.g. “- Adds support for coolness (#42, <span class="citation">@contributor</span>)”.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="edge-cases">Edge cases<a class="anchor" aria-label="anchor" href="#edge-cases"></a>
 </h3>
 <ul>
-<li><p>If you <strong>rebase after creating a tag</strong>, you need to call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to make sure the tag is moved to the mainline branch.</p></li>
-<li><p>If you <strong>pushed</strong> via <code>finalize_version(push = TRUE)</code> or <code>git push</code>, the tag may have been pushed as well. In this case, invoke</p></li>
+<li><p>If you <strong>rebase after creating a tag</strong>, you need to
+call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> to make sure the tag is moved to
+the mainline branch.</p></li>
+<li><p>If you <strong>pushed</strong> via
+<code>finalize_version(push = TRUE)</code> or <code>git push</code>, the
+tag may have been pushed as well. In this case, invoke</p></li>
 </ul>
 <div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin :vx.y.z.9www</span></code></pre></div>
-<p>(where <code>x.y.z.9www</code> is the new version) to delete the newly created remote tag. This is the reason why {fledge} only tags <code>"dev"</code> releases automatically. Other releases always must be tagged manually with <code><a href="../reference/tag_version.html">tag_version()</a></code>.</p>
+<p>(where <code>x.y.z.9www</code> is the new version) to delete the
+newly created remote tag. This is the reason why {fledge} only tags
+<code>"dev"</code> releases automatically. Other releases always must be
+tagged manually with <code><a href="../reference/tag_version.html">tag_version()</a></code>.</p>
 </div>
 </div>
   </div>
