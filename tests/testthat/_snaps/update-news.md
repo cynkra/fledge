@@ -85,11 +85,6 @@
     x Can't find a GitHub Personal Access Token (PAT).
     i See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html
 
-# Can parse PR merge commits - PAT scopeless
-
-    x Missing scopes for GitHub GraphQL API (used for finding issues linked to PR): repo, read:packages, read:org, read:public_key, read:repo_hook, user, read:discussion, read:enterprise, read:gpg_key
-    i See https://docs.github.com/en/graphql/guides/forming-calls-with-graphql
-
 # Can parse PR merge commits - other error
 
     [

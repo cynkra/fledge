@@ -1,5 +1,41 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9019 (2022-10-28)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9018 (2022-10-26)
+
+## Documentation
+
+- Fix URL (#573)
+
+
+# fledge 0.1.0.9017 (2022-10-24)
+
+## Bug fixes
+
+- Relax requirement for GitHub PAT scope (#572)
+
+
+# fledge 0.1.0.9016 (2022-10-20)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9015 (2022-10-19)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9014 (2022-10-18)
+
+- Harmonize yaml formatting
+
+- Revert changes to matrix section
+
+
 # fledge 0.1.0.9013 (2022-10-16)
 
 - Internal changes only.
