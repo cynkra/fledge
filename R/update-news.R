@@ -312,7 +312,7 @@ is_merge_commit <- function(message) {
 }
 
 harvest_pr_data <- function(message) {
-  check_gh_pat("v4_api")
+  check_gh_pat(NULL)
 
   pr_number <- regmatches(message, regexpr("#[0-9]*", message))
   pr_number <- sub("#", "", pr_number)

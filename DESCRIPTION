@@ -1,7 +1,7 @@
 Package: fledge
 Title: Smoother Change Tracking and Versioning for R Packages
-Version: 0.1.0.9013
-Date: 2022-10-16
+Version: 0.1.0.9019
+Date: 2022-10-28
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
@@ -21,7 +21,7 @@ Authors@R:
 Description: Streamlines the process of updating changelogs (NEWS.md)
     and versioning R packages developed in git repositories.
 License: GPL-3
-URL: https://cynkra.github.io/fledge/,
+URL: https://fledge.cynkra.com/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
