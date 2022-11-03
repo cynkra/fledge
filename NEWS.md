@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9020 (2022-11-03)
+
+- Snapshot updates for R-CMD-check-base (null) (#570)
+
+
+
+
 # fledge 0.1.0.9019 (2022-10-28)
 
 - Internal changes only.
