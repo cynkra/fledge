@@ -45,12 +45,13 @@ read_news <- function() {
   start <- first_level_headers + 1L
   end <- c(first_level_headers[-1] - 1L, length(news))
 
-  header_df <- rematch2::re_match(news[first_level_headers], header_rx)[1:4]
-  header_df <- tibble::add_column(header_df, line = first_level_headers, .before = 1)
-  header_df <- tibble::add_column(header_df, original = news[first_level_headers])
-  header_df$h2 <- (header_df$h2 == "#")
-  header_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
-  header_df
+  section_df <- rematch2::re_match(news[first_level_headers], header_rx)[1:4]
+  section_df <- tibble::add_column(section_df, line = first_level_headers, .before = 1)
+  section_df <- tibble::add_column(section_df, original = news[first_level_headers])
+  section_df$h2 <- (section_df$h2 == "#")
+  section_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
+
+  section_df
 }
 
 read_fledgling <- function() {
