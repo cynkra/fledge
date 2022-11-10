@@ -130,12 +130,12 @@ test_that("capitalize_news() works", {
   )
   df <- tibble::tribble(
     ~description,
-    "fledge has better support",
-    "fledge's interface was improved",
-    "fledged bird",
+    "fledge has better support.",
+    "fledge's interface was improved!",
+    "fledged bird?",
     "`update_news()` capitalize items",
     "2 new functions for bla",
     "harvest PR title"
   )
-  expect_snapshot_tibble(capitalize_news(df))
+  expect_snapshot_tibble(normalize_news(df))
 })
