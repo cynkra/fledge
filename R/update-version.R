@@ -39,6 +39,7 @@ date_in_news_headers <- function() {
 }
 
 get_news_headers <- function() {
+  # FIXME: Make use of flegeling object
   news <- readLines(news_path())
   rx <- "^# +(?<package>[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]) +(?<version>[0-9][0-9.-]*) *(?<extra>.*)$"
   out <- rematch2::re_match(news, rx)
