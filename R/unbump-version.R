@@ -27,7 +27,7 @@ unbump_version_impl <- function() {
   }
   gert::git_tag_delete(tag$name)
 
-  parent_commit_id <- gert::git_commit_info(last_commit$commit)$parent
+  parent_commit_id <- gert::git_commit_info(last_commit$commit)$parents
 
   message_id <- if (in_example()) {
     42
