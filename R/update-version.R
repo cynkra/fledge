@@ -39,7 +39,7 @@ date_in_news_headers <- function() {
 }
 
 get_news_headers <- function() {
-  read_fledgeling()[["news"]][, c("line", "version", "date", "nickname")]
+  read_fledgling()[["news"]][, c("line", "version", "date", "nickname")]
 }
 
 get_date <- function() {
