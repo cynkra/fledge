@@ -1,13 +1,13 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# fledge 0.1.0.9022 (2022-11-10) "blabla blop"
+# fledge 0.1.0.9022 (2022-11-10)
 
 ## Bug fixes
 
 - Add full stop for entries
 
 
-# fledge 0.1.0.9021
+# fledge v0.1.0.9021 (2022-11-09)
 
 - Internal changes only.
 
