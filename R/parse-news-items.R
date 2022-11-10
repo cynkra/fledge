@@ -161,7 +161,6 @@ parse_conventional_commit <- function(message) {
     NA
   }
 
-
   description <- sub(header, "", message, fixed = TRUE)
 
   description <- add_squash_info(description)
