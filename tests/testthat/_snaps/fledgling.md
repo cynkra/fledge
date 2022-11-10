@@ -23,7 +23,7 @@
           "raw": "# fledge v1.0.0\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": ["# fledge v2.0.0"]
+      "preamble": null
     } 
 
 # read_news() works with other formats
@@ -51,7 +51,7 @@
           "raw": "# Changes in v1.0.0\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": ["# Changes in v2.0.0"]
+      "preamble": null
     } 
 
 # read_news() works with nicknames
@@ -79,7 +79,7 @@
           "raw": "# Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": ["# Changes in v2.0.0 \"Vigorous Calisthenics\""]
+      "preamble": null
     } 
 
 # read_news() works with h2
@@ -107,6 +107,6 @@
           "raw": "## Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": ["## Changes in v2.0.0 \"Vigorous Calisthenics\""]
+      "preamble": null
     } 
 

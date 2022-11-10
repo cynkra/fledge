@@ -60,11 +60,16 @@ parse_news <- function(news) {
 
   if (length(first_level_headers) == 0) {
     preamble <- news
+  } else if (first_level_headers[[1]] == 1) {
+    preamble <- NULL
   } else {
-    preamble <- trim_empty_lines(news[seq2(1, first_level_headers[[1]])])
+    preamble <- trim_empty_lines(news[seq2(1, first_level_headers[[1]] - 1)])
   }
 
-  list(section_df = section_df, preamble = paste(preamble, collapse = "\n"))
+  list(
+    section_df = section_df,
+    preamble = if (!is.null(preamble)) paste(preamble, collapse = "\n")
+  )
 }
 
 read_fledgling <- function() {
