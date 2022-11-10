@@ -33,7 +33,7 @@ read_news <- function() {
     news <- character()
   }
 
-  header_rx <- '^#(?<h2>#)? +[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
+  header_rx <- '^#(?<h2>#)? +[a-zA-Z]? ?+[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
 
   first_level_headers <- grep(header_rx, news, perl = TRUE)
   start <- first_level_headers + 1L
@@ -43,6 +43,7 @@ read_news <- function() {
   header_df <- tibble::add_column(header_df, line = first_level_headers, .before = 1)
   header_df$h2 <- (header_df$h2 == "#")
   header_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
+  header_df
 }
 
 read_fledgeling <- function() {
