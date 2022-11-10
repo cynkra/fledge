@@ -63,6 +63,7 @@ Suggests:
     rstudioapi,
     testthat (>= 3.0.0),
     vctrs
+Config/Needs/readme: r-lib/downlit@f-readme-document
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
