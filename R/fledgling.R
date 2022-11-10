@@ -41,6 +41,10 @@ read_news <- function() {
     news <- character()
   }
 
+  parse_news(news)
+}
+
+parse_news <- function(news) {
   header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
 
   first_level_headers <- grep(header_rx, news, perl = TRUE)
