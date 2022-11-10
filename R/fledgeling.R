@@ -18,10 +18,15 @@ new_fledgeling <- function(name, version, news) {
   )
 }
 
-read_fledgeling <- function() {
-  package <- unname(desc::desc_get("Package"))
-  version <- desc::desc_get_version()
+read_package <- function() {
+  unname(desc::desc_get("Package"))
+}
 
+read_version <- function() {
+  desc::desc_get_version()
+}
+
+read_news <- function() {
   if (file.exists("NEWS.md")) {
     news <- readLines("NEWS.md")
   } else {
@@ -38,6 +43,13 @@ read_fledgeling <- function() {
   header_df <- tibble::add_column(header_df, line = first_level_headers, .before = 1)
   header_df$h2 <- (header_df$h2 == "#")
   header_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
+}
+
+read_fledgeling <- function() {
+  package <- read_package()
+  version <- read_version()
+
+  header_df <- read_news()
 
   new_fledgeling(package, version, header_df)
 }
