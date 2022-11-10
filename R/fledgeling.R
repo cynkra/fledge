@@ -28,6 +28,8 @@ read_version <- function() {
 
 read_news_section <- function(lines) {
   # FIXME add function parsing subheaders to create named nested lists
+  # it'd be great to use Pandoc with "--section-divs" here instead of
+  # reinventing the wheel https://pandoc.org/MANUAL.html#options-affecting-specific-writers
 }
 
 read_news <- function() {
