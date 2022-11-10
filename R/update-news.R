@@ -93,10 +93,10 @@ parse_bullet_commit <- function(message) {
     bullets <- trimws(sub(sprintf("\\(%s\\)", meta["pr"]), "", bullets))
   }
 
-  description <- if (!is.null(meta)) {
-    sprintf("%s (%s).", bullets, toString(meta))
+  if (!is.null(meta)) {
+    description <- sprintf("%s (%s).", bullets, toString(meta))
   } else {
-    bullets
+    description <- bullets
   }
 
   tibble::tibble(
