@@ -31,17 +31,17 @@
     {
       "section_df": [
         {
-          "line": 1,
+          "line": 3,
           "h2": false,
           "version": "v2.0.0",
           "date": "",
           "nickname": "",
           "original": "# Changes in v2.0.0",
           "news": ["* blop", "", "* lala"],
-          "raw": "# Changes in v2.0.0\n\n* blop\n\n* lala\n"
+          "raw": "# Changes in v2.0.0\n\n* blop\n\n* lala\n\n"
         },
         {
-          "line": 7,
+          "line": 10,
           "h2": false,
           "version": "v1.0.0",
           "date": "",
@@ -51,7 +51,7 @@
           "raw": "# Changes in v1.0.0\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": null
+      "preamble": ["<!-- Hands off, please -->"]
     } 
 
 # read_news() works with nicknames

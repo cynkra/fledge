@@ -12,9 +12,12 @@ test_that("read_news() works with usual format", {
 
 test_that("read_news() works with other formats", {
   news_lines <- c(
+    "<!-- Hands off, please -->",
+    "",
     "# Changes in v2.0.0", "",
     "* blop", "",
     "* lala", "",
+    "",
     "# Changes in v1.0.0", "",
     "* blip", "",
     "* lili", ""
