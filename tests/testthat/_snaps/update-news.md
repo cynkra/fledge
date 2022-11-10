@@ -100,22 +100,22 @@
 
     [
       {
-        "description": "fledge has better support"
+        "description": "fledge has better support."
       },
       {
-        "description": "fledge's interface was improved"
+        "description": "fledge's interface was improved!"
       },
       {
-        "description": "Fledged bird"
+        "description": "Fledged bird?"
       },
       {
-        "description": "`update_news()` capitalize items"
+        "description": "`update_news()` capitalize items."
       },
       {
-        "description": "2 new functions for bla"
+        "description": "2 new functions for bla."
       },
       {
-        "description": "Harvest PR title"
+        "description": "Harvest PR title."
       }
     ] 
 

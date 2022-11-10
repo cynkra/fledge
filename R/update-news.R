@@ -1,6 +1,6 @@
 update_news_impl <- function(commits) {
   news_items <- collect_news(commits)
-  news_items <- capitalize_news(news_items)
+  news_items <- normalize_news(news_items)
   news_lines <- regroup_news(news_items)
 
   if (fledge_chatty()) {
@@ -413,27 +413,38 @@ default_type <- function() {
   "Uncategorized"
 }
 
-capitalize_description <- function(df) {
+capitalize_if_not_start_with_pkg <- function(x) {
   # leave package name alone
   pkg_name <- desc::desc_get("Package")
   pkg_name_regex <- sprintf("^%s(?: |'s)", pkg_name)
-  start_with_pkg <- grepl(pkg_name_regex, df$description)
-  if (start_with_pkg) {
-    return(df)
-  }
+  start_with_pkg <- grepl(pkg_name_regex, x)
 
-  # capitalization
-  # Non-alphabetic characters are left unchanged.
-  df$description <- paste0(
-    toupper(substr(df$description, 1, 1)),
-    substr(df$description, 2, nchar(df$description))
-  )
-  df
+  x[!start_with_pkg] <- capitalize(x[!start_with_pkg])
+  x
 }
 
-capitalize_news <- function(news_items) {
-  split(news_items, seq_len(nrow(news_items))) %>%
-    map_dfr(capitalize_description)
+capitalize <- function(x) {
+  # capitalization
+  # Non-alphabetic characters are left unchanged.
+  x <- paste0(
+    toupper(substr(x, 1, 1)),
+    substr(x, 2, nchar(x))
+  )
+  x
+}
+
+add_full_stop <- function(x) {
+  # Replace only the first bullet
+  sub("([^!?.])($|\n)", "\\1.\\2", x)
+}
+
+normalize_news <- function(df) {
+  if (nrow(df) == 0) {
+    return(df)
+  }
+  df$description <- capitalize_if_not_start_with_pkg(df$description)
+  df$description <- add_full_stop(df$description)
+  df
 }
 
 regroup_news <- function(news_items) {
