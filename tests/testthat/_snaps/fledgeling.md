@@ -40,3 +40,24 @@
       }
     ] 
 
+# read_news() works with nicknames
+
+    [
+      {
+        "line": 1,
+        "h2": true,
+        "version": "v2.0.0",
+        "date": "",
+        "nickname": "\"Vigorous Calisthenics\"",
+        "news": ["* blop", "", "* lala"]
+      },
+      {
+        "line": 7,
+        "h2": true,
+        "version": "v1.0.0",
+        "date": "",
+        "nickname": "\"Pumpkin Helmet\"",
+        "news": ["* blip", "", "* lili"]
+      }
+    ] 
+
