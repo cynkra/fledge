@@ -35,6 +35,7 @@ read_fledgeling <- function() {
   end <- c(first_level_headers[-1] - 1L, length(news))
 
   header_df <- rematch2::re_match(news[first_level_headers], header_rx)[1:3]
+  header_df <- tibble::add_column(header_df, line = first_level_headers, .before = 1)
   header_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
 
   new_fledgeling(package, version, header_df)
