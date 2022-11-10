@@ -5,13 +5,15 @@
 #'
 #' @param name The name of the package
 #' @param version A [package_version] that describes the current verson
-#' @param news A data frame
+#' @param preamble The text that appears before the first section header
+#' @param news A data frame FIXME
 #' @noRd
-new_fledgling <- function(name, version, news) {
+new_fledgling <- function(name, version, preamble, news) {
   structure(
     list(
       name = name,
       version = version,
+      preamble = preamble,
       news = news
     ),
     class = "fledgling"
@@ -51,16 +53,22 @@ read_news <- function() {
   section_df$h2 <- (section_df$h2 == "#")
   section_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
 
-  section_df
+  if (length(first_level_headers) == 0) {
+    preamble <- news
+  } else {
+    preamble <- trim_empty_lines(news[seq2(1, first_level_headers[[1]])])
+  }
+
+  list(section_df = section_df, preamble = paste(preamble, collapse = "\n"))
 }
 
 read_fledgling <- function() {
   package <- read_package()
   version <- read_version()
 
-  header_df <- read_news()
+  news_and_preamble <- read_news()
 
-  new_fledgling(package, version, header_df)
+  new_fledgling(package, version, news_and_preamble$preamble, news_and_preamble$section_df)
 }
 
 trim_empty_lines <- function(x) {
