@@ -26,6 +26,10 @@ read_version <- function() {
   desc::desc_get_version()
 }
 
+read_news_section <- function(lines) {
+  # FIXME add function parsing subheaders to create named nested lists
+}
+
 read_news <- function() {
   if (file.exists("NEWS.md")) {
     news <- readLines("NEWS.md")
