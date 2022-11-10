@@ -7,7 +7,7 @@
 - Add full stop for entries
 
 
-# fledge v0.1.0.9021 (2022-11-09)
+# fledge 0.1.0.9021 (2022-11-09)
 
 - Internal changes only.
 
