@@ -1,12 +1,10 @@
 url: https://fledge.cynkra.com/
 
 template:
-  params:
-    bootswatch: flatly # https://bootswatch.com/flatly/
-
+  params: {}
+  package: cynkratemplate
 development:
   mode: auto
-
 authors:
   Kirill Müller:
     href: https://krlmlr.info
