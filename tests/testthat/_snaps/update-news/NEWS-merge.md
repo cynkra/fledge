@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-- One
+- One.
 
 
 # tea 0.0.0.9000

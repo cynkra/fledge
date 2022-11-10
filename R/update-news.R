@@ -433,11 +433,17 @@ capitalize <- function(x) {
   x
 }
 
+add_full_stop <- function(x) {
+  # Replace only the first bullet
+  sub("([^!?.])($|\n)", "\\1.\\2", x)
+}
+
 normalize_news <- function(df) {
   if (nrow(df) == 0) {
     return(df)
   }
   df$description <- capitalize_if_not_start_with_pkg(df$description)
+  df$description <- add_full_stop(df$description)
   df
 }
 
