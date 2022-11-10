@@ -44,14 +44,15 @@ read_news <- function() {
   header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
 
   first_level_headers <- grep(header_rx, news, perl = TRUE)
-  start <- first_level_headers + 1L
+  start <- first_level_headers
   end <- c(first_level_headers[-1] - 1L, length(news))
 
   section_df <- rematch2::re_match(news[first_level_headers], header_rx)[1:4]
   section_df <- tibble::add_column(section_df, line = first_level_headers, .before = 1)
   section_df <- tibble::add_column(section_df, original = news[first_level_headers])
   section_df$h2 <- (section_df$h2 == "#")
-  section_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
+  section_df$news <- map2(start + 1L, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
+  section_df$raw <- map2_chr(start, end, ~ paste(news[seq2(.x, .y)], collapse = "\n"))
 
   if (length(first_level_headers) == 0) {
     preamble <- news
