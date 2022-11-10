@@ -5,10 +5,10 @@
         "- blop\n-blip\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
     Output
       # A tibble: 2 x 4
-        description    type          breaking scope
-        <chr>          <chr>         <lgl>    <lgl>
-      1 blop (@person) Uncategorized FALSE    NA   
-      2 blip (@person) Uncategorized FALSE    NA   
+        description     type          breaking scope
+        <chr>           <chr>         <lgl>    <lgl>
+      1 blop (@person). Uncategorized FALSE    NA   
+      2 blip (@person). Uncategorized FALSE    NA   
 
 ---
 
@@ -17,9 +17,9 @@
         "- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)")
     Output
       # A tibble: 1 x 4
-        description                type          breaking scope
-        <chr>                      <chr>         <lgl>    <lgl>
-      1 blop (@person, @else, #42) Uncategorized FALSE    NA   
+        description                 type          breaking scope
+        <chr>                       <chr>         <lgl>    <lgl>
+      1 blop (@person, @else, #42). Uncategorized FALSE    NA   
 
 ---
 

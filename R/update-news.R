@@ -94,7 +94,7 @@ parse_bullet_commit <- function(message) {
   }
 
   description <- if (!is.null(meta)) {
-    sprintf("%s (%s)", bullets, toString(meta))
+    sprintf("%s (%s).", bullets, toString(meta))
   } else {
     bullets
   }
