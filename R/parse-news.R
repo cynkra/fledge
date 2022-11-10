@@ -361,4 +361,3 @@ has_internet <- function() {
   }
   curl::has_internet()
 }
-
