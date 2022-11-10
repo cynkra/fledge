@@ -28,7 +28,7 @@ read_fledgeling <- function() {
     news <- character()
   }
 
-  header_rx <- '^# +[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
+  header_rx <- '^#(?<h2>#)? +[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
 
   first_level_headers <- grep(header_rx, news, perl = TRUE)
   start <- first_level_headers + 1L
@@ -36,6 +36,7 @@ read_fledgeling <- function() {
 
   header_df <- rematch2::re_match(news[first_level_headers], header_rx)[1:3]
   header_df <- tibble::add_column(header_df, line = first_level_headers, .before = 1)
+  header_df$h2 <- (header_df$h2 == "#")
   header_df$news <- map2(start, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
 
   new_fledgeling(package, version, header_df)
