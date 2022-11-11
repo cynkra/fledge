@@ -1,5 +1,32 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.0.9023 (2022-11-11)
+
+## Bug fixes
+
+- Remove partial matching warning (#579).
+
+## Features
+
+- Draft fledgeling object, ready for internal use (#581).
+
+- Add full stop to messages (#578).
+
+## Chore
+
+- Store downlit info (#580).
+
+## Documentation
+
+- Cynkratemplate::use_cynkra_pkgdown() + re-add comment (@krlmlr, @41898282+github-actions[bot], @maelle, #568).
+
+## Uncategorized
+
+- Split news (#584).
+
+
+
+
 # fledge 0.1.0.9022 (2022-11-10)
 
 ## Bug fixes
