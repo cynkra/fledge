@@ -68,7 +68,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/autostyle/scope: line_breaks
