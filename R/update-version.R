@@ -53,6 +53,12 @@ get_date <- function() {
 
 fledge_bump_version <- function(desc, which) {
   version <- desc$get_version()
+  new_version <- fledge_guess_version(version, which)
+  desc$set_version(new_version)
+  return(desc)
+}
+
+fledge_guess_version <- function(version, which) {
   version_components <- get_version_components(version)
   dev <- version_components[["dev"]]
   patch <- version_components[["patch"]]
@@ -146,9 +152,8 @@ fledge_bump_version <- function(desc, which) {
     patch = patch,
     dev = dev
   )
-  new_version <- paste(version_components[!is.na(version_components)], collapse = ".")
-  desc$set_version(new_version)
-  return(desc)
+  paste(version_components[!is.na(version_components)], collapse = ".")
+
 }
 
 get_version_components <- function(version) {
