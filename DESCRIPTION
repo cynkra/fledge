@@ -25,6 +25,7 @@ URL: https://fledge.cynkra.com/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
+    brio,
     callr,
     cli,
     clipr,
@@ -46,7 +47,6 @@ Imports:
     whoami,
     withr
 Suggests: 
-    brio,
     covr,
     curl,
     digest,

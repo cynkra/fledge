@@ -4,7 +4,6 @@
 
 - Internal changes only.
 
-
 # fledge 0.1.0.9023 (2022-11-11)
 
 ## Bug fixes
@@ -29,32 +28,23 @@
 
 - Split news (#584).
 
-
-
-
 # fledge 0.1.0.9022 (2022-11-10)
 
 ## Bug fixes
 
 - Add full stop for entries
 
-
 # fledge 0.1.0.9021 (2022-11-09)
 
 - Internal changes only.
-
 
 # fledge 0.1.0.9020 (2022-11-03)
 
 - Snapshot updates for R-CMD-check-base (null) (#570)
 
-
-
-
 # fledge 0.1.0.9019 (2022-10-28)
 
 - Internal changes only.
-
 
 # fledge 0.1.0.9018 (2022-10-26)
 
@@ -62,23 +52,19 @@
 
 - Fix URL (#573)
 
-
 # fledge 0.1.0.9017 (2022-10-24)
 
 ## Bug fixes
 
 - Relax requirement for GitHub PAT scope (#572)
 
-
 # fledge 0.1.0.9016 (2022-10-20)
 
 - Internal changes only.
 
-
 # fledge 0.1.0.9015 (2022-10-19)
 
 - Internal changes only.
-
 
 # fledge 0.1.0.9014 (2022-10-18)
 
@@ -86,28 +72,23 @@
 
 - Revert changes to matrix section
 
-
 # fledge 0.1.0.9013 (2022-10-16)
 
 - Internal changes only.
-
 
 # fledge 0.1.0.9012 (2022-10-14)
 
 - Internal changes only.
 
-
 # fledge 0.1.0.9011 (2022-10-11)
 
 - Internal changes only.
-
 
 # fledge 0.1.0.9010 (2022-09-20)
 
 ## Features
 
 - `bump_version()` returns `TRUE` if a new version has been created
-
 
 # fledge 0.1.0.9009 (2022-09-20)
 
@@ -119,7 +100,6 @@
 
 - Internal changes only.
 
-
 # fledge 0.1.0.9008 (2022-09-18)
 
 ## Features
@@ -129,7 +109,6 @@
 ## Uncategorized
 
 - Internal changes only.
-
 
 # fledge 0.1.0.9007 (2022-09-16)
 
@@ -141,7 +120,6 @@
 
 - Internal changes only.
 
-
 # fledge 0.1.0.9006 (2022-09-14)
 
 ## Features
@@ -152,16 +130,13 @@
 
 - Internal changes only.
 
-
 # fledge 0.1.0.9005 (2022-09-13)
 
 - Internal changes only.
 
-
 # fledge 0.1.0.9004 (2022-09-12)
 
 - Internal changes only.
-
 
 # fledge 0.1.0.9003 (2022-09-12)
 
@@ -227,23 +202,19 @@
 
 - Fix `post_release()`, still need to tag released version.
 
-
 # fledge 0.1.0.9002 (2022-04-02)
 
 - `release()` no longer asks for confirmation.
 - Inline `devtools::submit_cran()` minus the confirmation messages.
-
 
 # fledge 0.1.0.9001 (2022-02-22)
 
 - New `pre_release()`, `release()` and `post_release()` for semi-automatic CRAN releases (#27, #28).
 - Separate snapshot tests for dev version of testthat.
 
-
 # fledge 0.1.0.9000 (2021-12-07)
 
 - Same as previous version.
-
 
 # fledge 0.1.0 (2021-12-07)
 
@@ -276,3 +247,4 @@ Includes vignettes: "Get started", "Using fledge", and "Fledge internals".
 Examples and tests are supported with a demo project, created via `with_demo_project()`.
 
 Thanks Patrick Schratz and Maëlle Salmon for your contributions!
+

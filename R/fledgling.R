@@ -96,3 +96,33 @@ trim_empty_lines <- function(x) {
 
   x[seq2(start, end)]
 }
+
+write_fledgeling <- function(fledgeling) {
+  # store version
+  desc::desc_set_version(fledgeling$version, file = "DESCRIPTION")
+
+  # store news
+  news_df <- fledgeling$news
+
+  write_one_section <- function(df) {
+    if (df$h2) {
+      header_sign <- "##"
+    } else {
+      header_sign <- "#"
+    }
+    section_lines <- c(
+      trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
+      unlist(df$news), ""
+    )
+    paste0(section_lines, collapse = "\n")
+  }
+
+  news_lines <- purrr::map_chr(split(news_df, sort(as.numeric(rownames(news_df)))), write_one_section)
+
+  lines <- c(
+    fledgeling$preamble, "",
+    paste0(news_lines, collapse = "\n")
+  )
+
+  brio::write_lines(lines, news_path())
+}
