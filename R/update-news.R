@@ -1,6 +1,7 @@
 # File editing ------
 
-update_news_impl <- function(commits) {
+update_news_impl <- function(commits, which) {
+
   news_items <- collect_news(commits)
   news_items <- normalize_news(news_items)
   news_lines <- regroup_news(news_items)
@@ -10,7 +11,34 @@ update_news_impl <- function(commits) {
     cli_alert("Adding new entries to {.file {news_path()}}.")
   }
 
-  add_to_news(news_lines)
+  fledgeling <- read_fledgling()
+
+  if (is.null(which)) {
+    # if not dev header error
+    dev_header_present <- grepl(fledgeling$news$version, "(\\development version\\)")
+    if (!dev_header_present) {
+      rlang::abort("Can't find a development version NEWS header")
+    }
+
+    # if dev header complement it
+  } else {
+    new_version <- fledge_guess_version(which)
+    fledgeling$version <- new_version
+    section_df <- tibble::tibble(
+      line = 3,
+      h2 = df[["news"]]$h2[1],
+      version = new_version,
+      date = get_date(), # FIXME not always
+      nickname = "",
+      original = "",
+      news = news_lines,
+      raw = ""
+    )
+    fledgeling[["news"]] <- rbind(
+      ,
+      fledgeling[["news"]]
+    )
+  }
 }
 
 news_path <- function() {

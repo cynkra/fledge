@@ -6,11 +6,12 @@
 #' @param messages A character vector of commit messages,
 #'   e.g. as in the `message` column in the return value of [get_top_level_commits()].
 #'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
+#' @inheritParams update_version
 #' @example man/examples/tag-version.R
 #'
 #' @return None
 #' @export
-update_news <- function(messages = NULL) {
+update_news <- function(messages = NULL, which = NULL) {
   if (is.null(messages)) {
     commits <- default_commit_range()
   } else {
@@ -20,7 +21,7 @@ update_news <- function(messages = NULL) {
     )
   }
 
-  with_repo(update_news_impl(commits))
+  with_repo(update_news_impl(commits, which))
   invisible(NULL)
 }
 
