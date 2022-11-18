@@ -4,7 +4,7 @@
 #' The internal structure of this object is subject to change.
 #'
 #' @param name The name of the package
-#' @param version A [package_version] that describes the current verson
+#' @param version A [package_version] that describes the current version
 #' @param preamble The text that appears before the first section header
 #' @param news A data frame FIXME
 #' @noRd
