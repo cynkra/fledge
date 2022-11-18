@@ -14,17 +14,31 @@ update_news_impl <- function(commits, which) {
   fledgeling <- read_fledgling()
 
   if (is.null(which)) {
-    # if not dev header error
+
     dev_header_present <- grepl("(development version)", fledgeling[["news"]][["version"]][1])
+
     if (!dev_header_present) {
       rlang::abort("Can't find a development version NEWS header")
     }
 
-    # if dev header complement it
+    # FIXME: add regrouping here!!
+    fledgeling[["news"]][1,]$news <- list(
+      paste(
+        news_lines,
+        fledgeling[["news"]][1,]$news,
+        collapse = "\n\n"
+      )
+    )
+    write_fledgling(fledgeling)
+
+    if (fledge_chatty()) {
+      cli_alert("Added items to {.file {news_path()}}.")
+    }
+
   } else {
     current_version <- desc::desc_get_version()
     new_version <- fledge_guess_version(current_version, which)
-    fledgeling$version <- new_version
+    fledgeling[["version"]] <- new_version
     section_df <- tibble::tibble(
       line = 3,
       h2 = fledgeling[["news"]]$h2[1],
@@ -41,6 +55,14 @@ update_news_impl <- function(commits, which) {
       fledgeling[["news"]]
     )
     write_fledgling(fledgeling)
+
+    if (fledge_chatty()) {
+      cli_h2("Updating Version")
+
+      cli_alert_success("Package version bumped to {.field {new_version}}.")
+
+      cli_alert("Added header to {.file {news_path()}}.")
+    }
   }
 }
 

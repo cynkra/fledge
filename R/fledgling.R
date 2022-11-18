@@ -44,26 +44,56 @@ read_news <- function() {
   parse_news(news)
 }
 
-parse_news <- function(news) {
-  header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
+get_header_df <- function(news, header_rx) {
 
   first_level_headers <- grep(header_rx, news, perl = TRUE)
   start <- first_level_headers
-  end <- c(first_level_headers[-1] - 1L, length(news))
 
-  section_df <- rematch2::re_match(news[first_level_headers], header_rx)[1:4]
+  if (length(start) == 0) {
+    return(NULL)
+  }
+
+  end <- if (length(start) > 1) {
+    c(first_level_headers[-1] - 1L, length(news))
+  } else {
+    min(which(grepl("^# ", news[(start + 1):length(news)])) -1L, length(news) - start) + start
+  }
+
+  section_df <- rematch2::re_match(news[first_level_headers], header_rx)
+  section_df <- section_df[-c(ncol(section_df)-1, ncol(section_df))]
   section_df <- tibble::add_column(section_df, line = first_level_headers, .before = 1)
   section_df <- tibble::add_column(section_df, original = news[first_level_headers])
   section_df$h2 <- (section_df$h2 == "#")
   section_df$news <- map2(start + 1L, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
   section_df$raw <- map2_chr(start, end, ~ paste(news[seq2(.x, .y)], collapse = "\n"))
+  section_df
+}
 
-  if (length(first_level_headers) == 0) {
+parse_news <- function(news) {
+
+  dev_header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>\\(development version\\))?$'
+  header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
+
+  section_df <- get_header_df(news, header_rx)
+  dev_header <- get_header_df(news, dev_header_rx)
+
+  if (!is.null(dev_header)) {
+    section_df <- tibble::add_row(
+      section_df,
+      dev_header,
+      .before = 1
+    )
+  }
+
+  section_df$date[is.na(section_df$date)] <- ""
+  section_df$nickname[is.na(section_df$nickname)] <- ""
+
+  if (nrow(section_df) == 0) {
     preamble <- news
-  } else if (first_level_headers[[1]] == 1) {
+  } else if (section_df[["line"]][[1]] == 1) {
     preamble <- NULL
   } else {
-    preamble <- trim_empty_lines(news[seq2(1, first_level_headers[[1]] - 1)])
+    preamble <- trim_empty_lines(news[seq2(1, section_df[["line"]][[1]] - 1)])
   }
 
   list(
