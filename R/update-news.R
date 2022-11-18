@@ -15,29 +15,32 @@ update_news_impl <- function(commits, which) {
 
   if (is.null(which)) {
     # if not dev header error
-    dev_header_present <- grepl(fledgeling$news$version, "(\\development version\\)")
+    dev_header_present <- grepl("(development version)", fledgeling[["news"]][["version"]][1])
     if (!dev_header_present) {
       rlang::abort("Can't find a development version NEWS header")
     }
 
     # if dev header complement it
   } else {
-    new_version <- fledge_guess_version(which)
+    current_version <- desc::desc_get_version()
+    new_version <- fledge_guess_version(current_version, which)
     fledgeling$version <- new_version
     section_df <- tibble::tibble(
       line = 3,
-      h2 = df[["news"]]$h2[1],
+      h2 = fledgeling[["news"]]$h2[1],
       version = new_version,
-      date = get_date(), # FIXME not always
+      date = sprintf("(%s)", as.character(get_date())), # FIXME not always
       nickname = "",
       original = "",
-      news = news_lines,
+      news = list(news_lines),
       raw = ""
     )
+
     fledgeling[["news"]] <- rbind(
-      ,
+      section_df,
       fledgeling[["news"]]
     )
+    write_fledgling(fledgeling)
   }
 }
 
@@ -129,7 +132,7 @@ normalize_news <- function(df) {
 regroup_news <- function(news_items) {
   ## Only uncategorized?
   if (isTRUE(all.equal(unique(news_items$type), default_type()))) {
-    return(sprintf("%s\n\n", treat_type_items(news_items, header = FALSE)))
+    return(sprintf("%s", treat_type_items(news_items, header = FALSE)))
   }
 
   # Repeat breaking changes in a distinct section
@@ -150,7 +153,7 @@ regroup_news <- function(news_items) {
 
   # Collapse and ensure the whole section is followed by an empty line
   glue::glue_collapse(
-    c(purrr::map_chr(news_types, treat_type_items), ""),
+    c(purrr::map_chr(news_types, treat_type_items)),
     sep = "\n\n"
   )
 }

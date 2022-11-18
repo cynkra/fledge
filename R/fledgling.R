@@ -97,7 +97,7 @@ trim_empty_lines <- function(x) {
   x[seq2(start, end)]
 }
 
-write_fledgeling <- function(fledgeling) {
+write_fledgling <- function(fledgeling) {
   # store version
   desc::desc_set_version(fledgeling$version, file = "DESCRIPTION")
 
