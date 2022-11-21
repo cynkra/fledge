@@ -38,7 +38,7 @@ update_news_impl <- function(commits, which) {
     fledgeling[["version"]] <- new_version
 
     maybe_date <- function(df) {
-      if (!is.null(df[["date"]])&&nzchar(df[["date"]][1])) {
+      if (!is.null(df[["date"]]) && nzchar(df[["date"]][1])) {
         sprintf("(%s)", as.character(get_date()))
       } else {
         ""
