@@ -6,5 +6,4 @@ Function Name | Description|Stage Applicable
 `finalize_version()`|Finalize the package version|Configuration, Development
 `commit_version()`|Commits `NEWS.md` and `DESCRIPTION` to Git.| Release
 `tag_version()`|Parses `NEWS.md` and creates/updates the tag for the most recent version.|Release
-`update_news()`|Update `NEWS.md` with messages from top level commits|Used by `bump_version()`
-`update_version()`|Update `NEWS.md` and `DESCRIPTION` with a new version|Used by `bump_version()`
+`update_news()`|Update `NEWS.md` with messages from top level commits; Update `NEWS.md` and `DESCRIPTION` with a new version|Used by `bump_version()`
