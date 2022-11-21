@@ -1,7 +1,11 @@
-parse_news_md <- function(path = news_path()) {
-  temp_file <- withr::local_tempfile(fileext = ".html")
-  pandoc::pandoc_run(c("-o", temp_file, path, "--section-divs"))
-  html <- xml2::read_html(temp_file, encoding = "UTF-8")
+parse_news_md <- function(news = brio::read_lines(news_path())) {
+  temp_file <- withr::local_tempfile(fileext = ".md")
+  brio::write_lines(news, temp_file)
+
+  out_temp_file <- withr::local_tempfile(fileext = ".html")
+  pandoc::pandoc_run(c("-o", out_temp_file, temp_file, "--section-divs"))
+
+  html <- xml2::read_html(out_temp_file, encoding = "UTF-8")
   if (length(xml2::xml_contents(html)) == 0) {
     return(NULL)
   }
@@ -49,7 +53,13 @@ parse_news_md <- function(path = news_path()) {
     }
   }
 
-  unlist(purrr::map(versions, treat_section), recursive = FALSE)
+  info <- purrr::map(versions, treat_section)
+  if (length(info) > 1) {
+    unlist(info, recursive = FALSE)
+  } else {
+    info
+  }
+
 
 }
 
