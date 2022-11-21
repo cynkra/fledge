@@ -6,7 +6,14 @@
 #' @param messages A character vector of commit messages,
 #'   e.g. as in the `message` column in the return value of [get_top_level_commits()].
 #'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
-#' @inheritParams update_version
+#' @param which Component of the version number to update. Supported
+#'   values are
+#'   * `"dev"` (default),
+#'   * `"patch"`,
+#'   * `"pre-minor"` (x.y.99.9000),
+#'   * `"minor"`,
+#'   * `"pre-major"` (x.99.99.9000),
+#'   * `"major"`.
 #' @example man/examples/tag-version.R
 #'
 #' @return None

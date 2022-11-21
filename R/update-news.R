@@ -189,3 +189,126 @@ add_hyphen <- function(row) {
 bind_rows <- function(df_list) {
   do.call(rbind, df_list)
 }
+
+fledge_guess_version <- function(version, which) {
+  version_components <- get_version_components(version)
+  dev <- version_components[["dev"]]
+  patch <- version_components[["patch"]]
+  minor <- version_components[["minor"]]
+  major <- version_components[["major"]]
+
+  if (which %in% c("patch", "minor", "major", "dev")) {
+    dev <- switch(which,
+      dev = {
+        if (!is.na(dev) && dev >= 9999) {
+          rlang::abort(
+            sprintf(
+              "Can't increase version dev component (%s) that is >= 9999.",
+              dev
+            )
+          )
+        }
+        if (is.na(dev)) {
+          9000
+        } else {
+          dev + 1
+        }
+      },
+      NA
+    )
+
+    patch <- switch(which,
+      dev = patch,
+      patch = {
+        if (patch >= 99) {
+          rlang::abort(
+            sprintf(
+              "Can't increase version patch component (%s) that is >= 99.",
+              patch
+            )
+          )
+        }
+        patch + 1
+      },
+      0
+    )
+
+    minor <- switch(which,
+      dev = minor,
+      patch = minor,
+      minor = {
+        if (minor >= 99) {
+          rlang::abort(
+            sprintf(
+              "Can't increase version minor component (%s) that is >= 99.",
+              minor
+            )
+          )
+        }
+        minor + 1
+      },
+      major = 0
+    )
+
+    major <- switch(which,
+      major = major + 1,
+      major
+    )
+  } else {
+    # pre-minor and pre-major
+
+    if (is.na(dev)) {
+      rlang::abort(sprintf("Can't update version from not dev to %s.", which))
+    }
+
+    if (patch >= 99) {
+      rlang::abort(sprintf("Can't bump to %s from version %s (patch >= 99).", which, version))
+    }
+
+    if (minor >= 99) {
+      rlang::abort(sprintf("Can't bump to %s from version %s (minor >= 99).", which, version))
+    }
+
+    dev <- "9000"
+    patch <- "99"
+    # pre-minor: make patch 99
+    # pre-major: make both minor and patch 99
+    if (which == "pre-major") {
+      minor <- "99"
+    }
+  }
+
+  version_components <- c(
+    major = major,
+    minor = minor,
+    patch = patch,
+    dev = dev
+  )
+  paste(version_components[!is.na(version_components)], collapse = ".")
+
+}
+
+get_version_components <- function(version) {
+  # from https://github.com/r-lib/desc/blob/daece0e5816e17a461969489bfdda2d50b4f5fe5/R/version.R#L53
+  components <- as.numeric(strsplit(format(version), "[-\\.]")[[1]])
+  c(
+    major = components[1],
+    minor = components[2],
+    patch = components[3],
+    dev = components[4] # can be NA
+  )
+}
+
+get_news_headers <- function() {
+  read_fledgling()[["news"]][, c("line", "version", "date", "nickname")]
+}
+
+get_date <- function() {
+  # For stable Rmarkdown output
+  if (Sys.getenv("IN_PKGDOWN") == "") {
+    return(Sys.Date())
+  }
+  author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
+  as.Date(author_time)
+}
+
