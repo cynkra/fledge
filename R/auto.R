@@ -155,6 +155,7 @@ switch_branch <- function(name) {
 }
 
 update_cran_comments <- function() {
+  rlang::check_installed("rversions")
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
   old_crp_date <- get_old_crp_date()
@@ -230,6 +231,7 @@ is_new_submission <- function(package) {
 }
 
 get_cransplainer_update <- function(package) {
+  rlang::check_installed("foghorn")
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
   checked_on <- paste0("Checked on ", get_date())

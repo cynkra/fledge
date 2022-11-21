@@ -1,0 +1,70 @@
+parse_news_md <- function(path = news_path()) {
+  temp_file <- withr::local_tempfile(fileext = ".html")
+  pandoc::pandoc_run(c("-o", temp_file, path, "--section-divs"))
+  html <- xml2::read_html(temp_file, encoding = "UTF-8")
+  if (length(xml2::xml_contents(html)) == 0) {
+    return(NULL)
+  }
+
+  version_header_level <- 1
+  versions <- xml2::xml_find_all(html, ".//section[@class='level1']")
+  if (length(versions) == 0) {
+    version_header_level <- 2
+    versions <- xml2::xml_find_all(html, ".//section[@class='level2']")
+  }
+  if (length(versions) == 0) {
+    return(NULL)
+  }
+
+  treat_section <- function(section) {
+
+    children <- xml2::xml_children(section)
+
+    header <- children[grepl("^h[1-9]", xml2::xml_name(children))][1]
+    title <- xml2::xml_text(header)
+    xml2::xml_remove(header)
+
+    children <- xml2::xml_children(section)
+
+    no_section <- all(xml2::xml_name(children) != "section")
+    if (no_section) {
+      contents <- markdownify(section)
+      return(
+        structure(
+          list(contents),
+          names = title
+        )
+      )
+    } else {
+      treat_children <- function(child) {
+        if (xml2::xml_name(child) == "section") {
+          treat_section(child)
+        } else {
+          list(markdownify(child))
+        }
+      }
+      structure(
+        purrr::map(children, treat_children),
+        names = title
+      )
+    }
+  }
+
+  purrr::map(versions, treat_section)
+
+}
+
+markdownify <- function(html) {
+  temp_file <- withr::local_tempfile(fileext = ".html")
+  temp_outfile <- withr::local_tempfile(fileext = ".md")
+  xml2::write_html(html, temp_file)
+  pandoc::pandoc_run(c("-o", temp_outfile, temp_file))
+  markdown_lines <- brio::read_lines(temp_outfile)
+  if (grepl("^:::", markdown_lines[1])) {
+    markdown_lines <- markdown_lines[-1]
+  }
+  if (grepl("^:::", markdown_lines[length(markdown_lines)])) {
+    markdown_lines <- markdown_lines[-length(markdown_lines)]
+  }
+  markdown_lines
+}
