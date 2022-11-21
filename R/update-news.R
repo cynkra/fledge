@@ -13,7 +13,10 @@ update_news_impl <- function(commits, which) {
   fledgeling <- read_fledgling()
 
   if (is.null(which)) {
-    dev_header_present <- grepl("(development version)", fledgeling[["news"]][["version"]][1])
+    dev_header_present <- grepl(
+      "(development version)",
+      fledgeling[["news"]][["version"]][1]
+    )
 
     if (!dev_header_present) {
       rlang::abort("Can't find a development version NEWS header")
@@ -47,7 +50,7 @@ update_news_impl <- function(commits, which) {
 
     section_df <- tibble::tibble(
       line = 3,
-      h2 = fledgeling[["news"]]$h2[1],
+      h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
       version = new_version,
       date = maybe_date(fledgeling[["news"]]),
       nickname = "",

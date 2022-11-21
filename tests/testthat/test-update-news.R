@@ -1,8 +1,15 @@
-test_that("add_to_news works when news file still empty", {
+test_that("update_news() works when news file absent", {
+  withr::local_options("fledge.quiet" = TRUE)
+  local_demo_project(news = FALSE, quiet = TRUE)
+  expect_no_error(update_news(which = "patch"))
 })
 
-
-test_that("add_to_news works when no news file yet", {
+test_that("update_news() works when news file still empty", {
+  withr::local_options("fledge.quiet" = TRUE)
+  local_demo_project(news = FALSE, quiet = TRUE)
+  file.create("NEWS.md")
+  expect_no_error(update_news(which = "patch"))
+  expect_snapshot(read_fledgling())
 })
 
 test_that("normalize_news() works", {
