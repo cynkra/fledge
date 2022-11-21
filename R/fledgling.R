@@ -83,13 +83,23 @@ parse_news <- function(news) {
     )
   }
 
+  # changelog absent or empty
+  if (is.null(section_df)) {
+    return(
+      list(
+        section_df = NULL,
+        preamble = news_preamble()
+      )
+    )
+  }
+
   section_df$date[is.na(section_df$date)] <- ""
   section_df$nickname[is.na(section_df$nickname)] <- ""
 
-  if (nrow(section_df) == 0) {
-    preamble <- news
-  } else if (section_df[["line"]][[1]] == 1) {
-    preamble <- news_comment()
+  # re-use current preamble
+  # FIXME: check the "preamble" is an HTML comment?
+  if (section_df[["line"]][[1]] == 1) {
+    preamble <- news_preamble()
   } else {
     preamble <- trim_empty_lines(news[seq2(1, section_df[["line"]][[1]] - 1)])
   }
@@ -133,7 +143,9 @@ write_fledgling <- function(fledgeling) {
   news_df <- fledgeling$news
 
   write_one_section <- function(df) {
-    if (df$h2) {
+    # isTRUE as sometimes there is no previous header
+    # so h2 is NULL not FALSE
+    if (isTRUE(df$h2)) {
       header_sign <- "##"
     } else {
       header_sign <- "#"

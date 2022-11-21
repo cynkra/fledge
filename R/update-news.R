@@ -38,7 +38,7 @@ update_news_impl <- function(commits, which) {
     fledgeling[["version"]] <- new_version
 
     maybe_date <- function(df) {
-      if (nzchar(df[["date"]][1])) {
+      if (!is.null(df[["date"]])&&nzchar(df[["date"]][1])) {
         sprintf("(%s)", as.character(get_date()))
       } else {
         ""
@@ -76,7 +76,7 @@ news_path <- function() {
   "NEWS.md"
 }
 
-news_comment <- function() {
+news_preamble <- function() {
   "<!-- NEWS.md is maintained by https://fledge.cynkra.com/, do not edit -->"
 }
 

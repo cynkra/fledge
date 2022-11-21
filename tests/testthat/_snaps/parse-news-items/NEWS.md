@@ -1,4 +1,6 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com/, do not edit -->
+
+# fledge 0.0.1
 
 ## Bug fixes
 
@@ -54,5 +56,4 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 ## upkeep
 
 - Update rlang usage.
-
 

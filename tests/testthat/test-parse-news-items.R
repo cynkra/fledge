@@ -9,7 +9,7 @@ test_that("Can parse conventional commits", {
     usethis::use_description(fields = list(Package = "fledge")),
     force = TRUE
   )
-  update_news(messages)
+  update_news(messages, which = "patch")
   expect_snapshot_file("NEWS.md")
 })
 
