@@ -21,7 +21,7 @@ test_that("Will use commits", {
   )
   mockery::stub(update_news, "default_commit_range", commits_df)
 
-  update_news()
+  update_news(which = "minor")
   file.copy("NEWS.md", "NEWS-merge.md")
   expect_snapshot_file("NEWS-merge.md")
 })
