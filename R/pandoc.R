@@ -17,7 +17,6 @@ parse_news_md <- function(path = news_path()) {
   }
 
   treat_section <- function(section) {
-
     children <- xml2::xml_children(section)
 
     header <- children[grepl("^h[1-9]", xml2::xml_name(children))][1]
@@ -51,7 +50,6 @@ parse_news_md <- function(path = news_path()) {
   }
 
   purrr::map(versions, treat_section)
-
 }
 
 markdownify <- function(html) {
