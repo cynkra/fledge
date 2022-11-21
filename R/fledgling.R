@@ -91,7 +91,7 @@ parse_news <- function(news) {
   if (nrow(section_df) == 0) {
     preamble <- news
   } else if (section_df[["line"]][[1]] == 1) {
-    preamble <- NULL
+    preamble <- news_comment()
   } else {
     preamble <- trim_empty_lines(news[seq2(1, section_df[["line"]][[1]] - 1)])
   }

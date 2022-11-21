@@ -39,11 +39,20 @@ update_news_impl <- function(commits, which) {
     current_version <- desc::desc_get_version()
     new_version <- fledge_guess_version(current_version, which)
     fledgeling[["version"]] <- new_version
+
+    maybe_date <- function(df) {
+      if (nzchar(df[["date"]][1])) {
+        sprintf("(%s)", as.character(get_date()))
+      } else {
+        ""
+      }
+    }
+
     section_df <- tibble::tibble(
       line = 3,
       h2 = fledgeling[["news"]]$h2[1],
       version = new_version,
-      date = sprintf("(%s)", as.character(get_date())), # FIXME not always
+      date = maybe_date(fledgeling[["news"]]),
       nickname = "",
       original = "",
       news = list(news_lines),
@@ -71,36 +80,7 @@ news_path <- function() {
 }
 
 news_comment <- function() {
-  "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
-}
-
-add_to_news <- function(news) {
-  if (!file.exists(news_path())) {
-    file.create(news_path())
-  }
-
-  enc::transform_lines_enc(news_path(), make_prepend(news))
-  invisible(news_path())
-}
-
-make_prepend <- function(news) {
-  force(news)
-
-  function(x) {
-    # Not empty news file needs to be tweaked
-    if (length(x) > 0) {
-      # Remove fledge NEWS.md comment
-      if (x[[1]] == news_comment()) {
-        x <- x[-1]
-        # Remove empty line at the top
-        if (x[[1]] == "") {
-          x <- x[-1]
-        }
-      }
-    }
-
-    c(news_comment(), "", news, x)
-  }
+  "<!-- NEWS.md is maintained by https://fledge.cynkra.com/, do not edit -->"
 }
 
 edit_news <- function() {
