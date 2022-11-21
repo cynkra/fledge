@@ -1,7 +1,6 @@
 # File editing ------
 
 update_news_impl <- function(commits, which) {
-
   news_items <- collect_news(commits)
   news_items <- normalize_news(news_items)
   news_lines <- regroup_news(news_items)
@@ -14,7 +13,6 @@ update_news_impl <- function(commits, which) {
   fledgeling <- read_fledgling()
 
   if (is.null(which)) {
-
     dev_header_present <- grepl("(development version)", fledgeling[["news"]][["version"]][1])
 
     if (!dev_header_present) {
@@ -22,10 +20,10 @@ update_news_impl <- function(commits, which) {
     }
 
     # FIXME: add regrouping here!!
-    fledgeling[["news"]][1,]$news <- list(
+    fledgeling[["news"]][1, ]$news <- list(
       paste(
         news_lines,
-        fledgeling[["news"]][1,]$news,
+        fledgeling[["news"]][1, ]$news,
         collapse = "\n\n"
       )
     )
@@ -34,7 +32,6 @@ update_news_impl <- function(commits, which) {
     if (fledge_chatty()) {
       cli_alert("Added items to {.file {news_path()}}.")
     }
-
   } else {
     current_version <- desc::desc_get_version()
     new_version <- fledge_guess_version(current_version, which)
@@ -285,7 +282,6 @@ fledge_guess_version <- function(version, which) {
     dev = dev
   )
   paste(version_components[!is.na(version_components)], collapse = ".")
-
 }
 
 get_version_components <- function(version) {
@@ -311,4 +307,3 @@ get_date <- function() {
   author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
   as.Date(author_time)
 }
-

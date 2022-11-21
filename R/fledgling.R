@@ -45,7 +45,6 @@ read_news <- function() {
 }
 
 get_header_df <- function(news, header_rx) {
-
   first_level_headers <- grep(header_rx, news, perl = TRUE)
   start <- first_level_headers
 
@@ -56,11 +55,11 @@ get_header_df <- function(news, header_rx) {
   end <- if (length(start) > 1) {
     c(first_level_headers[-1] - 1L, length(news))
   } else {
-    min(which(grepl("^# ", news[(start + 1):length(news)])) -1L, length(news) - start) + start
+    min(which(grepl("^# ", news[(start + 1):length(news)])) - 1L, length(news) - start) + start
   }
 
   section_df <- rematch2::re_match(news[first_level_headers], header_rx)
-  section_df <- section_df[-c(ncol(section_df)-1, ncol(section_df))]
+  section_df <- section_df[-c(ncol(section_df) - 1, ncol(section_df))]
   section_df <- tibble::add_column(section_df, line = first_level_headers, .before = 1)
   section_df <- tibble::add_column(section_df, original = news[first_level_headers])
   section_df$h2 <- (section_df$h2 == "#")
@@ -70,7 +69,6 @@ get_header_df <- function(news, header_rx) {
 }
 
 parse_news <- function(news) {
-
   dev_header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>\\(development version\\))?$'
   header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
 
