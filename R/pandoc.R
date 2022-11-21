@@ -30,7 +30,7 @@ parse_news_md <- function(path = news_path()) {
       contents <- markdownify(section)
       return(
         structure(
-          list(contents),
+          list(list(contents)),
           names = title
         )
       )
@@ -43,13 +43,14 @@ parse_news_md <- function(path = news_path()) {
         }
       }
       structure(
-        purrr::map(children, treat_children),
+        list(purrr::map(children, treat_children)),
         names = title
       )
     }
   }
 
-  purrr::map(versions, treat_section)
+  unlist(purrr::map(versions, treat_section), recursive = FALSE)
+
 }
 
 markdownify <- function(html) {
