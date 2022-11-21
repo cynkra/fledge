@@ -59,8 +59,6 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
   } else {
     info
   }
-
-
 }
 
 markdownify <- function(html) {
