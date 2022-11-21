@@ -31,7 +31,6 @@ Imports:
     clipr,
     desc (>= 1.4.1),
     devtools,
-    enc,
     foghorn,
     gert (>= 1.4.0),
     gh,
