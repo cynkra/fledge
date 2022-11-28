@@ -17,7 +17,8 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
     versions <- xml2::xml_find_all(html, ".//section[@class='level2']")
   }
   if (length(versions) == 0) {
-    return(NULL)
+    contents <- markdownify(html)
+    return(list(contents))
   }
 
   treat_section <- function(section) {

@@ -28,12 +28,6 @@ read_version <- function() {
   desc::desc_get_version()
 }
 
-read_news_section <- function(lines) {
-  # FIXME add function parsing subheaders to create named nested lists
-  # it'd be great to use Pandoc with "--section-divs" here instead of
-  # reinventing the wheel https://pandoc.org/MANUAL.html#options-affecting-specific-writers
-}
-
 read_news <- function() {
   if (file.exists("NEWS.md")) {
     news <- readLines("NEWS.md")
@@ -63,7 +57,7 @@ get_header_df <- function(news, header_rx) {
   section_df <- tibble::add_column(section_df, line = first_level_headers, .before = 1)
   section_df <- tibble::add_column(section_df, original = news[first_level_headers])
   section_df$h2 <- (section_df$h2 == "#")
-  section_df$news <- map2(start + 1L, end, ~ trim_empty_lines(news[seq2(.x, .y)]))
+  section_df$news <- map2(start + 1L, end, ~ parse_news_md(trim_empty_lines(news[seq2(.x, .y)])))
   section_df$raw <- map2_chr(start, end, ~ paste(news[seq2(.x, .y)], collapse = "\n"))
   section_df
 }
@@ -157,7 +151,10 @@ write_fledgling <- function(fledgeling) {
     paste0(section_lines, collapse = "\n")
   }
 
-  news_lines <- purrr::map_chr(split(news_df, sort(as.numeric(rownames(news_df)))), write_one_section)
+  news_lines <- purrr::map_chr(
+    split(news_df, sort(as.numeric(rownames(news_df)))),
+    write_one_section
+  )
 
   lines <- c(
     fledgeling$preamble, "",
