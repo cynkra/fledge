@@ -146,6 +146,7 @@ write_fledgling <- function(fledgeling) {
   news_df <- fledgeling$news
 
   write_one_section <- function(df) {
+    browser()
     # isTRUE as sometimes there is no previous header
     # so h2 is NULL not FALSE
     if (isTRUE(df$h2)) {
@@ -153,6 +154,7 @@ write_fledgling <- function(fledgeling) {
     } else {
       header_sign <- "#"
     }
+    # FIXME add writing
     section_lines <- c(
       trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
       unlist(df$news), ""
