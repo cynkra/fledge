@@ -58,6 +58,15 @@ get_header_df <- function(news, header_rx) {
   section_df <- tibble::add_column(section_df, original = news[first_level_headers])
   section_df$h2 <- (section_df$h2 == "#")
   section_df$news <- map2(start + 1L, end, ~ parse_news_md(trim_empty_lines(news[seq2(.x, .y)])))
+
+  fix_name <- function(news_list) {
+    if (is.null(names(news_list))) {
+      setNames(news_list, default_type())
+    } else {
+      news_list
+    }
+  }
+  section_df$news <- map(section_df$news, fix_name)
   section_df$raw <- map2_chr(start, end, ~ paste(news[seq2(.x, .y)], collapse = "\n"))
   section_df
 }

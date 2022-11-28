@@ -35,7 +35,7 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
       contents <- markdownify(section)
       return(
         structure(
-          list(list(contents)),
+          list(contents),
           names = title
         )
       )
@@ -55,11 +55,7 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
   }
 
   info <- purrr::map(versions, treat_section)
-  if (length(info) > 1) {
-    unlist(info, recursive = FALSE)
-  } else {
-    info
-  }
+  unlist(info, recursive = FALSE)
 }
 
 markdownify <- function(html) {
