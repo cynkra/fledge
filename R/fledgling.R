@@ -177,23 +177,44 @@ write_news_section <- function(df) {
       paste(df$news[[1]][[1]], collapse = "\n"), ""
     )
   } else {
+    if (isTRUE(df$h2)) {
+      header_level <- 3
+    } else {
+      header_level <- 2
+    }
     section_lines <- c(
       trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
-      format_news_subsections(df$news[[1]], df$h2), ""
+      format_news_subsections(df$news[[1]], header_level), ""
     )
   }
   paste0(section_lines, collapse = "\n")
 }
 
-format_news_subsections <- function(news_list, h2) {
-  header_sign <- if (h2) {
-    "###"
-  } else {
-    "##"
-  }
+format_news_subsections <- function(news_list, header_level) {
+  header_sign <- paste(rep("#", header_level), collapse = "")
   lines <- purrr::imap_chr(
     news_list,
-    ~ sprintf("%s %s\n\n%s", header_sign, .y, paste(.x, collapse = "\n")),
+    ~sprintf("%s %s\n\n%s", header_sign, .y, paste_news_lines(.x, header_level = header_level + 1)),
   )
   paste(lines, collapse = "\n\n")
+}
+
+paste_news_lines <- function(lines, header_level) {
+  lines <- unlist(lines, recursive = FALSE)
+  if (rlang::is_named(lines)) {
+    header_sign <- paste(rep("#", header_level), collapse = "")
+    lines <- purrr::imap_chr(
+      lines,
+      ~sprintf(
+        "%s %s\n\n%s",
+        header_sign,
+        .y, paste_news_lines(.x,
+          header_level = header_level + 1
+          )
+      )
+    )
+    paste(lines, collapse = "\n\n")
+  } else {
+    paste(lines, collapse = "\n")
+  }
 }
