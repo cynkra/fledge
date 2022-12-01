@@ -140,31 +140,17 @@ trim_empty_lines <- function(x) {
 
 write_fledgling <- function(fledgeling) {
   # store version
-  desc::desc_set_version(fledgeling$version, file = "DESCRIPTION")
+  desc::desc_set_version(
+    fledgeling$version,
+    file = "DESCRIPTION"
+  )
 
   # store news
   news_df <- fledgeling$news
 
-  write_one_section <- function(df) {
-    browser()
-    # isTRUE as sometimes there is no previous header
-    # so h2 is NULL not FALSE
-    if (isTRUE(df$h2)) {
-      header_sign <- "##"
-    } else {
-      header_sign <- "#"
-    }
-    # FIXME add writing
-    section_lines <- c(
-      trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
-      unlist(df$news), ""
-    )
-    paste0(section_lines, collapse = "\n")
-  }
-
   news_lines <- purrr::map_chr(
     split(news_df, sort(as.numeric(rownames(news_df)))),
-    write_one_section
+    write_news_section
   )
 
   lines <- c(
@@ -172,5 +158,42 @@ write_fledgling <- function(fledgeling) {
     paste0(news_lines, collapse = "\n")
   )
 
+  lines <- unprotect_hashtag(lines)
   brio::write_lines(lines, news_path())
+}
+
+write_news_section <- function(df) {
+    # isTRUE as sometimes there is no previous header
+    # so h2 is NULL not FALSE
+    if (isTRUE(df$h2)) {
+      header_sign <- "##"
+    } else {
+      header_sign <- "#"
+    }
+
+  if (length(df$news[[1]]) == 1 && names(df$news[[1]]) == default_type()) {
+    section_lines <- c(
+      trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
+      paste(df$news[[1]][[1]], collapse = "\n"), ""
+    )
+  } else {
+    section_lines <- c(
+      trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
+      format_news_subsections(df$news[[1]], df$h2), ""
+    )
+  }
+    paste0(section_lines, collapse = "\n")
+  }
+
+format_news_subsections <- function(news_list, h2) {
+  header_sign <- if (h2) {
+    "###"
+  } else {
+    "##"
+  }
+  lines <- purrr::imap_chr(
+    news_list,
+    ~sprintf("%s %s\n\n%s", header_sign, .y, paste(.x, collapse = "\n")),
+  )
+  paste(lines, collapse = "\n\n")
 }

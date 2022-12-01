@@ -1,11 +1,14 @@
 parse_news_md <- function(news = brio::read_lines(news_path())) {
+  news <- protect_hashtag(news)
+
   temp_file <- withr::local_tempfile(fileext = ".md")
   brio::write_lines(news, temp_file)
 
   out_temp_file <- withr::local_tempfile(fileext = ".html")
-  pandoc::pandoc_run(c("-o", out_temp_file, temp_file, "--section-divs"))
+  pandoc::pandoc_run(c("-t", "html", "-f", "gfm", "-o", out_temp_file, temp_file, "--section-divs"))
 
   html <- xml2::read_html(out_temp_file, encoding = "UTF-8")
+
   if (length(xml2::xml_contents(html)) == 0) {
     return(NULL)
   }
@@ -58,11 +61,32 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
   unlist(info, recursive = FALSE)
 }
 
+protect_hashtag <- function(lines) {
+  lines <- gsub(
+    "(?<!#)(?<!^)(?<!`)#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
+    "`#\\1`{=html}\\2",
+    lines, perl = TRUE
+  )
+  gsub(
+    "(?<!#)(?<!^)(?<!`)#([[:alnum:]]*)$",
+    "`#\\1`{=html}",
+    lines, perl = TRUE
+  )
+}
+
+unprotect_hashtag <- function(lines) {
+  gsub(
+    "`#([[:alnum:]]*)`{=html}",
+    "#\\1",
+    lines, perl = TRUE
+  )
+}
+
 markdownify <- function(html) {
   temp_file <- withr::local_tempfile(fileext = ".html")
   temp_outfile <- withr::local_tempfile(fileext = ".md")
   xml2::write_html(html, temp_file)
-  pandoc::pandoc_run(c("-o", temp_outfile, temp_file))
+  pandoc::pandoc_run(c("-t", "gfm-raw_html", "-o", temp_outfile, temp_file))
   markdown_lines <- brio::read_lines(temp_outfile)
   if (grepl("^:::", markdown_lines[1])) {
     markdown_lines <- markdown_lines[-1]
