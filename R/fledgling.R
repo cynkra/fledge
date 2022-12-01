@@ -163,13 +163,13 @@ write_fledgling <- function(fledgeling) {
 }
 
 write_news_section <- function(df) {
-    # isTRUE as sometimes there is no previous header
-    # so h2 is NULL not FALSE
-    if (isTRUE(df$h2)) {
-      header_sign <- "##"
-    } else {
-      header_sign <- "#"
-    }
+  # isTRUE as sometimes there is no previous header
+  # so h2 is NULL not FALSE
+  if (isTRUE(df$h2)) {
+    header_sign <- "##"
+  } else {
+    header_sign <- "#"
+  }
 
   if (length(df$news[[1]]) == 1 && names(df$news[[1]]) == default_type()) {
     section_lines <- c(
@@ -182,8 +182,8 @@ write_news_section <- function(df) {
       format_news_subsections(df$news[[1]], df$h2), ""
     )
   }
-    paste0(section_lines, collapse = "\n")
-  }
+  paste0(section_lines, collapse = "\n")
+}
 
 format_news_subsections <- function(news_list, h2) {
   header_sign <- if (h2) {
@@ -193,7 +193,7 @@ format_news_subsections <- function(news_list, h2) {
   }
   lines <- purrr::imap_chr(
     news_list,
-    ~sprintf("%s %s\n\n%s", header_sign, .y, paste(.x, collapse = "\n")),
+    ~ sprintf("%s %s\n\n%s", header_sign, .y, paste(.x, collapse = "\n")),
   )
   paste(lines, collapse = "\n\n")
 }

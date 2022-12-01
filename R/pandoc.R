@@ -65,12 +65,14 @@ protect_hashtag <- function(lines) {
   lines <- gsub(
     "(?<!#)(?<!^)(?<!`)#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
     "`#\\1`{=html}\\2",
-    lines, perl = TRUE
+    lines,
+    perl = TRUE
   )
   gsub(
     "(?<!#)(?<!^)(?<!`)#([[:alnum:]]*)$",
     "`#\\1`{=html}",
-    lines, perl = TRUE
+    lines,
+    perl = TRUE
   )
 }
 
@@ -78,7 +80,8 @@ unprotect_hashtag <- function(lines) {
   gsub(
     "`#([[:alnum:]]*)`{=html}",
     "#\\1",
-    lines, perl = TRUE
+    lines,
+    perl = TRUE
   )
 }
 

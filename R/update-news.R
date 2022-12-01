@@ -28,15 +28,15 @@ update_news_impl <- function(commits, which) {
     # Append and regroup
     if (is.null(fledgeling[["news"]])) {
       fledgeling[["news"]] <- tibble::tibble(
-      line = 3,
-      h2 = FALSE,
-      version = fledgeling[["version"]],
-      date = "",
-      nickname = "",
-      original = "",
-      news = list(parse_news_md(news_lines)),
-      raw = ""
-    )
+        line = 3,
+        h2 = FALSE,
+        version = fledgeling[["version"]],
+        date = "",
+        nickname = "",
+        original = "",
+        news = list(parse_news_md(news_lines)),
+        raw = ""
+      )
     } else {
       fledgeling[["news"]][1, ]$news <- list(
         c(
@@ -168,7 +168,7 @@ regroup_news <- function(list) {
 merge_news_group <- function(name, groups) {
   this_group <- do.call(
     c,
-    purrr::map(groups[names(groups)==name], unlist, recursive = FALSE)
+    purrr::map(groups[names(groups) == name], unlist, recursive = FALSE)
   )
   this_group <- this_group[this_group != ""]
   unname(this_group)
