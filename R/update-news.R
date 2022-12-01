@@ -157,7 +157,7 @@ regroup_news <- function(list) {
   unique_names <- unique(names(groups))
   # merge groups with the same name
   groups <- purrr::map(unique_names, merge_news_group, groups)
-  groups <- setNames(groups, unique_names)
+  groups <- stats::setNames(groups, unique_names)
   # put custom first
   not_custom <- c(names(conventional_commit_types()), default_type())
   custom_names <- unique_names[!(unique_names %in% not_custom)]

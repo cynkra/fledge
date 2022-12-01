@@ -61,7 +61,7 @@ get_header_df <- function(news, header_rx) {
 
   fix_name <- function(news_list) {
     if (is.null(names(news_list))) {
-      setNames(news_list, default_type())
+      stats::setNames(news_list, default_type())
     } else {
       news_list
     }
