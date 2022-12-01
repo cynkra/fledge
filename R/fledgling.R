@@ -194,7 +194,7 @@ format_news_subsections <- function(news_list, header_level) {
   header_sign <- paste(rep("#", header_level), collapse = "")
   lines <- purrr::imap_chr(
     news_list,
-    ~sprintf("%s %s\n\n%s", header_sign, .y, paste_news_lines(.x, header_level = header_level + 1)),
+    ~ sprintf("%s %s\n\n%s", header_sign, .y, paste_news_lines(.x, header_level = header_level + 1)),
   )
   paste(lines, collapse = "\n\n")
 }
@@ -205,12 +205,12 @@ paste_news_lines <- function(lines, header_level) {
     header_sign <- paste(rep("#", header_level), collapse = "")
     lines <- purrr::imap_chr(
       lines,
-      ~sprintf(
+      ~ sprintf(
         "%s %s\n\n%s",
         header_sign,
         .y, paste_news_lines(.x,
           header_level = header_level + 1
-          )
+        )
       )
     )
     paste(lines, collapse = "\n\n")
