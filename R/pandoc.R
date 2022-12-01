@@ -5,7 +5,7 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
   brio::write_lines(news, temp_file)
 
   out_temp_file <- withr::local_tempfile(fileext = ".html")
-  pandoc::pandoc_run(c("-t", "html", "-f", "gfm", "-o", out_temp_file, temp_file, "--section-divs"))
+  pandoc::pandoc_run(c("-t", "html", "--wrap=preserve", "-f", "gfm", "-o", out_temp_file, temp_file, "--section-divs"))
 
   html <- xml2::read_html(out_temp_file, encoding = "UTF-8")
 

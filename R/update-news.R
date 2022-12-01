@@ -3,7 +3,7 @@
 update_news_impl <- function(commits, which) {
   news_items <- collect_news(commits)
   news_items <- normalize_news(news_items)
-  news_lines <- regroup_news(news_items)
+  news_lines <- organize_news(news_items)
 
   if (fledge_chatty()) {
     cli_h2("Updating NEWS")
@@ -22,13 +22,15 @@ update_news_impl <- function(commits, which) {
       rlang::abort("Can't find a development version NEWS header")
     }
 
-    # FIXME: add regrouping here!!
+    # Append and regroup
     fledgeling[["news"]][1, ]$news <- list(
-      paste(
-        news_lines,
-        fledgeling[["news"]][1, ]$news,
-        collapse = "\n\n"
+      c(
+        parse_news_md(news_lines),
+        fledgeling[["news"]][1, ]$news
       )
+    )
+    fledgeling[["news"]][1, ]$news <- list(
+      regroup_news(fledgeling[["news"]][1, ]$news)
     )
     write_fledgling(fledgeling)
 
@@ -129,14 +131,31 @@ normalize_news <- function(df) {
   df
 }
 
+regroup_news <- function(list) {
+  groups <- unlist(list[[1]], recursive = FALSE)
+  unique_names <- unique(names(groups))
+  # merge groups with the same name
+  groups <- purrr::map(unique_names, merge_news_group, groups)
+  groups <- setNames(groups, unique_names)
+  # put custom first
+  not_custom <- c(names(conventional_commit_types()), default_type())
+  custom_names <- unique_names[!(unique_names %in% not_custom)]
+  unique_names <- factor(unique_names, levels = c(custom_names, not_custom))
+  groups[order(unique_names)]
+}
+
+merge_news_group <- function(name, groups) {
+  this_group <- do.call(
+    c,
+    purrr::map(groups[names(groups)==name], unlist, recursive = FALSE)
+  )
+  this_group <- this_group[this_group != ""]
+  unname(this_group)
+}
+
 # Grouping -------
 
-regroup_news <- function(news_items) {
-  ## Only uncategorized?
-  if (isTRUE(all.equal(unique(news_items$type), default_type()))) {
-    return(sprintf("%s", treat_type_items(news_items, header = FALSE)))
-  }
-
+organize_news <- function(news_items) {
   # Repeat breaking changes in a distinct section
   breaking <- news_items[news_items$breaking, ]
   breaking$type <- "Breaking changes"
