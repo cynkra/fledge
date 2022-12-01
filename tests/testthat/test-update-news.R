@@ -5,7 +5,6 @@ test_that("update_news() works when news file absent", {
 })
 
 test_that("update_news() works when news file still empty", {
-  withr::local_options("fledge.quiet" = TRUE)
   local_demo_project(news = FALSE, quiet = TRUE)
   file.create("NEWS.md")
   expect_no_error(update_news(which = "patch"))

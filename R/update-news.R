@@ -13,9 +13,12 @@ update_news_impl <- function(commits, which) {
   fledgeling <- read_fledgling()
 
   if (is.null(which)) {
-    dev_header_present <- grepl(
-      "(development version)",
-      fledgeling[["news"]][["version"]][1]
+    # isTRUE() as NEWS.md can be empty
+    dev_header_present <- isTRUE(
+      grepl(
+        "(development version)",
+        fledgeling[["news"]][["version"]][1]
+      )
     )
 
     if (!dev_header_present) {
@@ -23,15 +26,28 @@ update_news_impl <- function(commits, which) {
     }
 
     # Append and regroup
-    fledgeling[["news"]][1, ]$news <- list(
-      c(
-        parse_news_md(news_lines),
-        fledgeling[["news"]][1, ]$news
+    if (is.null(fledgeling[["news"]])) {
+      fledgeling[["news"]] <- tibble::tibble(
+      line = 3,
+      h2 = FALSE,
+      version = fledgeling[["version"]],
+      date = "",
+      nickname = "",
+      original = "",
+      news = list(parse_news_md(news_lines)),
+      raw = ""
+    )
+    } else {
+      fledgeling[["news"]][1, ]$news <- list(
+        c(
+          parse_news_md(news_lines),
+          fledgeling[["news"]][1, ]$news
+        )
       )
-    )
-    fledgeling[["news"]][1, ]$news <- list(
-      regroup_news(fledgeling[["news"]][1, ]$news)
-    )
+      fledgeling[["news"]][1, ]$news <- list(
+        regroup_news(fledgeling[["news"]][1, ]$news)
+      )
+    }
     write_fledgling(fledgeling)
 
     if (fledge_chatty()) {
@@ -42,14 +58,6 @@ update_news_impl <- function(commits, which) {
     new_version <- fledge_guess_version(current_version, which)
     fledgeling[["version"]] <- new_version
 
-    maybe_date <- function(df) {
-      if (!is.null(df[["date"]]) && nzchar(df[["date"]][1])) {
-        sprintf("(%s)", as.character(get_date()))
-      } else {
-        ""
-      }
-    }
-
     section_df <- tibble::tibble(
       line = 3,
       h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
@@ -57,14 +65,19 @@ update_news_impl <- function(commits, which) {
       date = maybe_date(fledgeling[["news"]]),
       nickname = "",
       original = "",
-      news = list(news_lines),
+      news = list(parse_news_md(news_lines)),
       raw = ""
     )
 
-    fledgeling[["news"]] <- rbind(
-      section_df,
-      fledgeling[["news"]]
-    )
+    if (is.null(fledgeling[["news"]])) {
+      fledgeling[["news"]] <- section_df
+    } else {
+      fledgeling[["news"]] <- rbind(
+        section_df,
+        fledgeling[["news"]]
+      )
+    }
+
     write_fledgling(fledgeling)
 
     if (fledge_chatty()) {
@@ -93,6 +106,14 @@ edit_news <- function() {
 edit_cran_comments <- function() {
   local_options(usethis.quiet = TRUE)
   edit_file("cran-comments.md")
+}
+
+maybe_date <- function(df) {
+  if (!is.null(df[["date"]]) && nzchar(df[["date"]][1])) {
+    sprintf("(%s)", as.character(get_date()))
+  } else {
+    ""
+  }
 }
 
 # Normalization ----

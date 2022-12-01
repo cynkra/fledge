@@ -14,9 +14,9 @@
       
       $news
       # A tibble: 1 x 8
-         line h2    version date  nickname original    news      raw                  
-        <int> <lgl> <chr>   <chr> <chr>    <chr>       <list>    <chr>                
-      1     3 FALSE 0.0.1   ""    ""       # tea 0.0.1 <chr [1]> "# tea 0.0.1\n\n- In~
+         line h2    version date  nickname original    news             raw           
+        <int> <lgl> <chr>   <chr> <chr>    <chr>       <list>           <chr>         
+      1     3 FALSE 0.0.1   ""    ""       # tea 0.0.1 <named list [1]> "# tea 0.0.1\~
       
       attr(,"class")
       [1] "fledgling"
