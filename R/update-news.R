@@ -38,11 +38,9 @@ update_news_impl <- function(commits, which) {
         raw = ""
       )
     } else {
-      fledgeling[["news"]][1, ]$news <- list(
-        c(
+      fledgeling[["news"]][1, ]$news <- c(
           parse_news_md(news_lines),
           fledgeling[["news"]][1, ]$news
-        )
       )
       fledgeling[["news"]][1, ]$news <- list(
         regroup_news(fledgeling[["news"]][1, ]$news)
@@ -153,10 +151,9 @@ normalize_news <- function(df) {
 }
 
 regroup_news <- function(list) {
-  groups <- unlist(list[[1]], recursive = FALSE)
-  unique_names <- unique(names(groups))
+  unique_names <- unique(names(list))
   # merge groups with the same name
-  groups <- purrr::map(unique_names, merge_news_group, groups)
+  groups <- purrr::map(unique_names, merge_news_group, list)
   groups <- stats::setNames(groups, unique_names)
   # put custom first
   not_custom <- c(names(conventional_commit_types()), default_type())

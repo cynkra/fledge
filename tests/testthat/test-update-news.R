@@ -30,3 +30,25 @@ test_that("normalize_news() works", {
   )
   expect_snapshot_tibble(normalize_news(df))
 })
+
+test_that("regroup_news() works", {
+  news_list1 <- list(
+    Uncategorized = c("- blop", "- etc"),
+    Documentation = c("- stuff", "- other")
+  )
+  news_list2 <- list(
+    Features = c("- feat1", "- feat2"),
+    `Custom type` = "cool right",
+    Uncategorized = c("- pof", "- ok"),
+    Documentation = "- again"
+  )
+  combined <- c(news_list1, news_list2)
+  regrouped <- regroup_news(combined)
+
+  expect_equal(
+    names(regrouped),
+    c("Custom type", "Features", "Documentation", "Uncategorized")
+  )
+  expect_length(regrouped[["Documentation"]], 3)
+  expect_length(regrouped[["Uncategorized"]], 4)
+})
