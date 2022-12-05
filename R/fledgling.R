@@ -152,7 +152,7 @@ write_fledgling <- function(fledgeling) {
     split(news_df, sort(as.numeric(rownames(news_df)))),
     write_news_section
   )
-  lines <- unprotect_hashtag(lines)
+  news_lines <- unprotect_hashtag(news_lines)
 
   lines <- c(
     fledgeling$preamble, "",
@@ -170,10 +170,21 @@ write_news_section <- function(df) {
     header_sign <- "#"
   }
 
+  version_header <- trimws(
+    sprintf(
+      "%s %s %s %s %s",
+      header_sign,
+      read_package(),
+      df$version,
+      df$date,
+      df$nickname
+    )
+  )
+
   # If only uncategorized items for the version, no subheaders
   if (length(df$news[[1]]) == 1 && names(df$news[[1]]) == default_type()) {
     section_lines <- c(
-      trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
+      version_header, "",
       paste(df$news[[1]][[1]], collapse = "\n"), ""
     )
   } else {
@@ -183,7 +194,7 @@ write_news_section <- function(df) {
       header_level <- 2
     }
     section_lines <- c(
-      trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
+      version_header, "",
       format_news_subsections(df$news[[1]], header_level), ""
     )
   }
@@ -192,26 +203,37 @@ write_news_section <- function(df) {
 
 format_news_subsections <- function(news_list, header_level) {
   header_sign <- paste(rep("#", header_level), collapse = "")
+
   lines <- purrr::imap_chr(
     news_list,
-    ~ sprintf("%s %s\n\n%s", header_sign, .y, paste_news_lines(.x, header_level = header_level + 1)),
+    ~ sprintf(
+      "%s %s\n\n%s",
+      header_sign,
+      .y,
+      paste_news_lines(.x, header_level = header_level + 1)
+    ),
   )
+
   paste(lines, collapse = "\n\n")
 }
 
 paste_news_lines <- function(lines, header_level) {
-  if (length(lines) == 3) browser()
   lines <- unlist(lines, recursive = FALSE)
-  if (rlang::is_named(lines)) {
+  if (is_any_named(lines)) {
     header_sign <- paste(rep("#", header_level), collapse = "")
+    sub_header <- function(x, header_sign) {
+      if (!nzchar(x)) {
+        ""
+      } else {
+        paste(header_sign, x)
+      }
+    }
     lines <- purrr::imap_chr(
       lines,
       ~ sprintf(
-        "%s %s\n\n%s",
-        header_sign,
-        .y, paste_news_lines(.x,
-          header_level = header_level + 1
-        )
+        "%s\n\n%s",
+        sub_header(.y, header_sign),
+        paste_news_lines(.x, header_level = header_level + 1)
       )
     )
     paste(lines, collapse = "\n\n")
