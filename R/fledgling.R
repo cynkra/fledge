@@ -160,7 +160,7 @@ write_fledgling <- function(fledgeling) {
 
   lines <- c(
     fledgeling$preamble, "",
-    paste0(news_lines, collapse = "\n")
+    paste0(news_lines, collapse = "\n\n")
   )
   brio::write_lines(lines, news_path())
 }
