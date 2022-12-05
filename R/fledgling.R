@@ -193,6 +193,7 @@ write_news_section <- function(df) {
     } else {
       header_level <- 2
     }
+
     section_lines <- c(
       version_header, "",
       format_news_subsections(df$news[[1]], header_level), ""
@@ -225,13 +226,13 @@ paste_news_lines <- function(lines, header_level) {
       if (!nzchar(x)) {
         ""
       } else {
-        paste(header_sign, x)
+        paste(header_sign, x, "\n\n")
       }
     }
     lines <- purrr::imap_chr(
       lines,
       ~ sprintf(
-        "%s\n\n%s",
+        "%s%s",
         sub_header(.y, header_sign),
         paste_news_lines(.x, header_level = header_level + 1)
       )
