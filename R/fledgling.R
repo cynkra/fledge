@@ -171,6 +171,7 @@ write_news_section <- function(df) {
     header_sign <- "#"
   }
 
+  # If only uncategorized items for the version, no subheaders
   if (length(df$news[[1]]) == 1 && names(df$news[[1]]) == default_type()) {
     section_lines <- c(
       trimws(sprintf("%s %s %s %s %s", header_sign, read_package(), df$version, df$date, df$nickname)), "",
