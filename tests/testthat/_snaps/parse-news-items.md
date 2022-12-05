@@ -59,7 +59,7 @@
 
     [
       {
-        "description": "improve bump_version() (error) messages  (#153, #325, #328).",
+        "description": "improve bump_version() (error) messages  (#153, cynkra/dm#325, #328).",
         "type": "Features",
         "breaking": false,
         "scope": "NA"

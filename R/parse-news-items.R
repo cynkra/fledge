@@ -231,12 +231,7 @@ add_squash_info <- function(description) {
 parse_merge_commit <- function(message) {
   pr_data <- harvest_pr_data(message)
   pr_number <- pr_data$pr_number
-  pr_numbers <- toString(
-    sprintf(
-      "#%s",
-      c(unlist(pr_data$issue_numbers), pr_number)
-    )
-  )
+  pr_numbers <- toString(c(unlist(pr_data$issue_numbers), paste0("#", pr_number)))
 
   title <- if (is.na(pr_data$title)) {
     sprintf("- PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
@@ -306,6 +301,9 @@ harvest_pr_data <- function(message) {
         edges {
           node {
             number
+            repository {
+              nameWithOwner
+            }
           }
         }
       }
@@ -334,9 +332,19 @@ harvest_pr_data <- function(message) {
     }
   }
 
-  issue_numbers <- purrr::map_int(
+  format_linked_issue <- function(x, slug) {
+    issue_repo <- x$node$repository$nameWithOwner
+    repo <- if (issue_repo == slug) {
+      ""
+    } else {
+      issue_repo
+    }
+
+    paste0(repo, "#", x$node$number)
+  }
+  issue_numbers <- purrr::map_chr(
     issue_info$data$repository$pullRequest$closingIssuesReferences$edges,
-    ~ as.integer(.x$node$number)
+    format_linked_issue, github_slug(get_remote_name())
   )
 
   tibble::tibble(
