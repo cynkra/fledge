@@ -315,6 +315,7 @@ cat(news, sep = "\n")
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tee.
 ## 
+## 
 ## # tea 0.0.0.9000
 ## 
 ## - Added a `NEWS.md` file to track changes to the package.
@@ -339,6 +340,7 @@ cat(news, sep = "\n")
 ## - Add tests for cup of tea.
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## 
 ## # tea 0.0.0.9000
 ## 
@@ -395,6 +397,7 @@ cat(news, sep = "\n")
 ## - Add tests for cup of tea.
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## 
 ## # tea 0.0.0.9000
 ## 
@@ -496,11 +499,13 @@ writeLines(news)
 ## 
 ## - New bowl_of_tea() function makes it easy to drink a bowl of tea.
 ## 
+## 
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## 
 ## # tea 0.0.0.9000
 ## 
@@ -568,15 +573,18 @@ cat(news, sep = "\n")
 ## 
 ## - Same as previous version.
 ## 
+## 
 ## # tea 0.0.0.9002
 ## 
 ## - New bowl_of_tea() function makes it easy to drink a bowl of tea.
+## 
 ## 
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## 
 ## # tea 0.0.0.9000
 ## 
