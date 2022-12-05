@@ -49,7 +49,6 @@
       suppressMessages(extract_newsworthy_items(
         "Merge pull request #18 from someone/conventional-parsing"))
     Output
-      <simpleError: POST https://api.github.com/graphql {"query":"{\n  repository(owner: \"cynkra\", name: \"fledge\") {\n    pullRequest(number: 18) {\n      id\n      closingIssuesReferences(first: 50) {\n        edges {\n          node {\n            number\n            repository {\n              nameWithOwner\n            }\n          }\n        }\n      }\n    }\n  }\n}"} (api.github.com/graphql-a0b10d-POST.json)>
       # A tibble: 1 x 4
         description                                                type  break~1 scope
         <chr>                                                      <chr> <lgl>   <lgl>
