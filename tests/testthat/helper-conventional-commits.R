@@ -48,8 +48,8 @@ Also tweak the CI workflow accordingly. :sweat_smile:",
 
 sort_of_commit <- function(commit_message, repo) {
   file <- digest::sha1(commit_message)
-  file.create(file)
-  gert::git_add(file)
+  file.create(file.path(repo, file))
+  gert::git_add(file, repo = repo)
   gert::git_commit(commit_message, repo = repo)
 }
 

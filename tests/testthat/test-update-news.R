@@ -52,3 +52,36 @@ test_that("regroup_news() works", {
   expect_length(regrouped[["Documentation"]], 3)
   expect_length(regrouped[["Uncategorized"]], 4)
 })
+
+test_that("Can update dev version news item", {
+  repo <- withr::local_tempdir(pattern = "devpkg")
+
+  create_cc_repo(
+    repo,
+    commit_messages = "feat: new stuff"
+  )
+
+  usethis::with_project(
+    repo, {
+      usethis::use_description(
+        fields = list(Package = "fledge", Version = "0.1.0"))
+      usethis::use_news_md()
+      usethis::use_dev_version()
+    },
+    force = TRUE
+  )
+  usethis::local_project(repo, force = TRUE, setwd = FALSE)
+  withr::with_dir(repo, update_news())
+  expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    name = "dev-NEWS.md"
+  )
+
+  # regrouping!
+  sort_of_commit("fix: horrible bug", repo = repo)
+  sort_of_commit("feat: neat helper", repo = repo)
+  withr::with_dir(repo, update_news())
+  expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    name = "dev-updated-NEWS.md"
+  )})

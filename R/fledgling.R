@@ -60,6 +60,10 @@ get_header_df <- function(news, header_rx) {
   section_df$news <- map2(start + 1L, end, ~ parse_news_md(trim_empty_lines(news[seq2(.x, .y)])))
 
   fix_name <- function(news_list) {
+    if (is.null(news_list)) {
+      return(news_list)
+    }
+
     if (is.null(names(news_list))) {
       stats::setNames(news_list, default_type())
     } else {

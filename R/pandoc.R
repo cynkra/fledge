@@ -1,4 +1,5 @@
 parse_news_md <- function(news = brio::read_lines(news_path())) {
+
   news <- protect_hashtag(news)
 
   temp_file <- withr::local_tempfile(fileext = ".md")

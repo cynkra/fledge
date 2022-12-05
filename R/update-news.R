@@ -38,12 +38,13 @@ update_news_impl <- function(commits, which) {
         raw = ""
       )
     } else {
-      fledgeling[["news"]][1, ]$news <- c(
+      combined <- c(
           parse_news_md(news_lines),
-          fledgeling[["news"]][1, ]$news
+          fledgeling[["news"]][1, ]$news[[1]]
       )
+      combined <- purrr::discard(combined, purrr::is_empty)
       fledgeling[["news"]][1, ]$news <- list(
-        regroup_news(fledgeling[["news"]][1, ]$news)
+        regroup_news(combined)
       )
     }
     write_fledgling(fledgeling)
@@ -167,7 +168,7 @@ merge_news_group <- function(name, groups) {
     c,
     purrr::map(groups[names(groups) == name], unlist, recursive = FALSE)
   )
-  this_group <- this_group[this_group != ""]
+  this_group <- unique(this_group[this_group != ""])
   unname(this_group)
 }
 
@@ -189,12 +190,7 @@ organize_news <- function(news_items) {
   types <- factor(types, levels = c(names(conventional_commit_types()), "Breaking changes", custom_types, default_type()))
   order <- order(types)
   news_types <- news_types[order]
-
-  # Collapse and ensure the whole section is followed by an empty line
-  glue::glue_collapse(
-    c(purrr::map_chr(news_types, treat_type_items)),
-    sep = "\n\n"
-  )
+  purrr::map_chr(news_types, treat_type_items)
 }
 
 treat_type_items <- function(df, header = TRUE) {
