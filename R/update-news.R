@@ -39,8 +39,8 @@ update_news_impl <- function(commits, which) {
       )
     } else {
       combined <- c(
-          parse_news_md(news_lines),
-          fledgeling[["news"]][1, ]$news[[1]]
+        parse_news_md(news_lines),
+        fledgeling[["news"]][1, ]$news[[1]]
       )
       combined <- purrr::discard(combined, purrr::is_empty)
       fledgeling[["news"]][1, ]$news <- list(

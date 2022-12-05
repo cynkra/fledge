@@ -62,9 +62,11 @@ test_that("Can update dev version news item", {
   )
 
   usethis::with_project(
-    repo, {
+    repo,
+    {
       usethis::use_description(
-        fields = list(Package = "fledge", Version = "0.1.0"))
+        fields = list(Package = "fledge", Version = "0.1.0")
+      )
       usethis::use_news_md()
       usethis::use_dev_version()
     },
@@ -84,4 +86,5 @@ test_that("Can update dev version news item", {
   expect_snapshot_file(
     file.path(repo, "NEWS.md"),
     name = "dev-updated-NEWS.md"
-  )})
+  )
+})
