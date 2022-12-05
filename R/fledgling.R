@@ -146,19 +146,18 @@ write_fledgling <- function(fledgeling) {
   )
 
   # store news
-  news_df <- fledgeling$news
 
+  news_df <- fledgeling$news
   news_lines <- purrr::map_chr(
     split(news_df, sort(as.numeric(rownames(news_df)))),
     write_news_section
   )
+  lines <- unprotect_hashtag(lines)
 
   lines <- c(
     fledgeling$preamble, "",
     paste0(news_lines, collapse = "\n")
   )
-
-  lines <- unprotect_hashtag(lines)
   brio::write_lines(lines, news_path())
 }
 
@@ -201,6 +200,7 @@ format_news_subsections <- function(news_list, header_level) {
 }
 
 paste_news_lines <- function(lines, header_level) {
+  if (length(lines) == 3) browser()
   lines <- unlist(lines, recursive = FALSE)
   if (rlang::is_named(lines)) {
     header_sign <- paste(rep("#", header_level), collapse = "")
