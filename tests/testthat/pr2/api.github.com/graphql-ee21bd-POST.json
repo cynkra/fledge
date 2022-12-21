@@ -7,12 +7,18 @@
                     "edges": [
                         {
                             "node": {
-                                "number": 153
+                                "number": 153,
+                                "repository": {
+                                    "nameWithOwner": "cynkra/fledge"
+                                }
                             }
                         },
                         {
                             "node": {
-                                "number": 325
+                                "number": 325,
+                                "repository": {
+                                    "nameWithOwner": "cynkra/dm"
+                                }
                             }
                         }
                     ]

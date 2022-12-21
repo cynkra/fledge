@@ -1,7 +1,7 @@
 Package: fledge
 Title: Smoother Change Tracking and Versioning for R Packages
-Version: 0.1.0.9022
-Date: 2022-11-10
+Version: 0.1.0.9027
+Date: 2022-12-09
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
@@ -68,7 +68,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/autostyle/scope: line_breaks

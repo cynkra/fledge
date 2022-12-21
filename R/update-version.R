@@ -34,16 +34,12 @@ date_in_news_headers <- function() {
     return(TRUE)
   }
 
-  dates <- grep("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]", headers$extra)
+  dates <- headers[["date"]][nzchar(headers[["date"]])]
   length(dates) > 0
 }
 
 get_news_headers <- function() {
-  news <- readLines(news_path())
-  rx <- "^# +(?<package>[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]) +(?<version>[0-9][0-9.-]*) *(?<extra>.*)$"
-  out <- rematch2::re_match(news, rx)
-  out <- tibble::add_column(out, line = seq_len(nrow(out)), .before = 1)
-  out[!is.na(out$package), grep("^[^.]", names(out), value = TRUE)]
+  read_fledgling()[["news"]][, c("line", "version", "date", "nickname")]
 }
 
 get_date <- function() {
