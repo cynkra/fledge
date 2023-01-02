@@ -1,4 +1,4 @@
-<!-- NEWS.md is maintained by https://fledge.cynkra.com/, do not edit -->
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge/, do not edit -->
 
 # tea 0.1.0
 
