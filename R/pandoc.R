@@ -11,7 +11,7 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
       "--wrap=preserve", # preserve soft linebreaks
       "-f", "gfm", # input format
       "-o", out_temp_file, # output temp file
-      temp_file, # temp file with curret Markdown news
+      temp_file, # temp file with current Markdown news
       "--section-divs" # wrap sections into divs (for parsing)
     )
   )
