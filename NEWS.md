@@ -52,7 +52,7 @@
 
 ## Documentation
 
-- Cynkratemplate::use_cynkra_pkgdown() + re-add comment (@krlmlr, @41898282+github-actions[bot], @maelle, #568).
+- Cynkratemplate::use_cynkra_pkgdown() + re-add comment (@krlmlr, @41898282+github-actions-bot, @maelle, #568).
 
 ## Uncategorized
 
