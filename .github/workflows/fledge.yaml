@@ -35,9 +35,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           install-r: false
           cache-version: fledge-1
-          extra-packages: local::.
+          packages: local::.
 
       - name: Bump version
         run: |
-          if (fledge::bump_version(which = "dev", no_change_behavior = "noop")) fledge::finalize_version(push = TRUE)
+          if (fledge::bump_version(which = "dev", no_change_behavior = "noop")) {
+            fledge::finalize_version(push = TRUE)
+          }
         shell: Rscript {0}
