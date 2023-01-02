@@ -12,7 +12,8 @@ incoming responses other than from latest request.
 Remove timeouts which were used to mitigate the racing issue but are
 obsolete now.
 
-Reviewed-by: Z Refs: #123
+Reviewed-by: Z
+Refs: #123
 
 ## Features
 
@@ -22,16 +23,13 @@ Reviewed-by: Z Refs: #123
 
 ### api
 
-- Breaking change: send an email to the customer when a product is
-  shipped.
+- Breaking change: send an email to the customer when a product is shipped.
 
-- Breaking change: send an email to the customer when a product is
-  shipped.
+- Breaking change: send an email to the customer when a product is shipped.
 
 - Allow provided config object to extend other configs.
 
-  BREAKING CHANGE: `extends` key in config file is now used for
-  extending other config files
+  BREAKING CHANGE: `extends` key in config file is now used for extending other config files
 
 ## Chore
 
@@ -51,11 +49,9 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 
 ### api
 
-- Breaking change: send an email to the customer when a product is
-  shipped.
+- Breaking change: send an email to the customer when a product is shipped.
 
-- Breaking change: send an email to the customer when a product is
-  shipped.
+- Breaking change: send an email to the customer when a product is shipped.
 
 ## upkeep
 
