@@ -5,7 +5,16 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
   brio::write_lines(news, temp_file)
 
   out_temp_file <- withr::local_tempfile(fileext = ".html")
-  pandoc::pandoc_run(c("-t", "html", "--wrap=preserve", "-f", "gfm", "-o", out_temp_file, temp_file, "--section-divs"))
+  pandoc::pandoc_run(
+    c(
+      "-t", "html", # output format
+      "--wrap=preserve", # option for output format
+      "-f", "gfm", # input format
+      "-o", out_temp_file, # output temp file
+      temp_file, # temp file with curret Markdown news
+      "--section-divs" # wrap sections into divs (for parsing)
+    )
+  )
 
   html <- xml2::read_html(out_temp_file, encoding = "UTF-8")
 
@@ -89,7 +98,13 @@ markdownify <- function(html) {
   temp_file <- withr::local_tempfile(fileext = ".html")
   temp_outfile <- withr::local_tempfile(fileext = ".md")
   xml2::write_html(html, temp_file)
-  pandoc::pandoc_run(c("-t", "gfm-raw_html", "-o", temp_outfile, temp_file))
+  pandoc::pandoc_run(
+    c(
+      "-t", "gfm-raw_html", # output format
+      "-o", temp_outfile, # output file
+      temp_file # input temp file with HTML news
+    )
+  )
   markdown_lines <- brio::read_lines(temp_outfile)
   if (grepl("^:::", markdown_lines[1])) {
     markdown_lines <- markdown_lines[-1]
