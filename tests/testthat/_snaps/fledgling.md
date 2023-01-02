@@ -27,7 +27,7 @@
           "raw": "# fledge v1.0.0\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge/, do not edit -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
     } 
 
 # read_news() works with other formats
@@ -91,7 +91,7 @@
           "raw": "# Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge/, do not edit -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
     } 
 
 # read_news() works with h2
@@ -123,6 +123,6 @@
           "raw": "## Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge/, do not edit -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
     } 
 

@@ -10,7 +10,7 @@
       [1] '0.0.1'
       
       $preamble
-      [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge/, do not edit -->"
+      [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
       
       $news
       # A tibble: 1 x 8
