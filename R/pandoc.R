@@ -8,10 +8,7 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
   pandoc::pandoc_run(
     c(
       "-t", "html", # output format
-      "--wrap=preserve", # option for output format
-      # "With preserve, pandoc will attempt to preserve the wrapping
-      # from the source document (that is, where there are nonsemantic newlines
-      # in the source, there will be nonsemantic newlines in the output as well)."
+      "--wrap=preserve", # preserve soft linebreaks
       "-f", "gfm", # input format
       "-o", out_temp_file, # output temp file
       temp_file, # temp file with curret Markdown news
@@ -105,7 +102,7 @@ markdownify <- function(html) {
     c(
       "-t", "gfm-raw_html", # output format
       "-o", temp_outfile, # output file
-      "--wrap=preserve",
+      "--wrap=preserve", # preserve soft linebreaks
       temp_file # input temp file with HTML news
     )
   )
