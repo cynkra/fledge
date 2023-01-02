@@ -3,7 +3,7 @@
     Code
       bump_version()
     Message
-      > Scraping 3 commit messages.
+      > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
@@ -20,8 +20,6 @@
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version()`.
-    Output
-      NULL
     Code
       unbump_version()
     Message
@@ -44,7 +42,7 @@
       committer = default_gert_committer())
       bump_version()
     Message
-      > Scraping 4 commit messages.
+      > Digesting messages from 4 commits.
       v Found 2 NEWS-worthy entries.
       
       -- Updating NEWS --
@@ -61,6 +59,4 @@
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version()`.
-    Output
-      NULL
 

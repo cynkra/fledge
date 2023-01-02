@@ -76,7 +76,6 @@ nrow(gert::git_log())
 gert::git_status()
 ## # A tibble: 0 x 3
 ## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
-## # i Use `colnames()` to see all variable names
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
@@ -103,7 +102,7 @@ In real life, you'd probably simply browse the GitHub interface for instance!
 show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
-    repo <- gert::git_clone(remote_url)  
+    repo <- gert::git_clone(remote_url)
     suppressMessages(gert::git_branch_checkout("main", force = TRUE, repo = "remote"))
     fs::dir_ls("remote", recurse = TRUE)
   })
@@ -114,7 +113,7 @@ show_files(remote_url)
 show_tags <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
-    gert::git_clone(remote_url)  
+    gert::git_clone(remote_url)
     # Only show name and ref
     gert::git_tag_list(repo = "remote")[, c("name", "ref")]
   })
@@ -273,7 +272,7 @@ The current version number of our package is 0.0.0.9000.
 
 ```r
 fledge::bump_version()
-## > Scraping 4 commit messages.
+## > Digesting messages from 4 commits.
 ## v Found 2 NEWS-worthy entries.
 ## 
 ## -- Updating NEWS --
@@ -292,7 +291,6 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
 ## ! Call `fledge::finalize_version(push = TRUE)`.
-## NULL
 ```
 
 The new version number is 0.0.0.9001.
@@ -371,7 +369,6 @@ Note that it should be called after `fledge::bump_version()`, an error is raised
 show_tags(remote_url)
 ## # A tibble: 0 x 2
 ## # ... with 2 variables: name <chr>, ref <chr>
-## # i Use `colnames()` to see all variable names
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
@@ -479,7 +476,7 @@ Now that we have added bowl support to our package, it is time to bump the versi
 
 ```r
 fledge::bump_version()
-## > Scraping 2 commit messages.
+## > Digesting messages from 2 commits.
 ## v Found 1 NEWS-worthy entry.
 ## 
 ## -- Updating NEWS --
@@ -496,7 +493,6 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
 ## ! Call `fledge::finalize_version(push = TRUE)`.
-## NULL
 news <- readLines("NEWS.md")
 writeLines(news)
 ## <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
@@ -545,7 +541,7 @@ Other values for the arguments are "dev" (default), "minor" and "major".
 
 ```r
 fledge::bump_version("patch")
-## > Scraping 1 commit messages.
+## > Digesting messages from 1 commits.
 ## i Same as previous version.
 ## 
 ## -- Updating NEWS --
@@ -648,7 +644,7 @@ The `fledge::bump_version()` takes care of it.
 
 ```r
 fledge::bump_version()
-## > Scraping 1 commit messages.
+## > Digesting messages from 1 commits.
 ## i Same as previous version.
 ## 
 ## -- Updating NEWS --
@@ -665,7 +661,6 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
 ## ! Call `fledge::finalize_version(push = TRUE)`.
-## NULL
 news <- readLines("NEWS.md")
 ```
 

@@ -3,7 +3,7 @@
     Code
       bump_version()
     Message
-      > Scraping 3 commit messages.
+      > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
@@ -20,8 +20,6 @@
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version(push = TRUE)`.
-    Output
-      NULL
 
 ---
 
@@ -35,15 +33,13 @@
       bump_version(no_change_behavior = "noop")
     Message
       i No change since last version.
-    Output
-      NULL
 
 ---
 
     Code
       bump_version(no_change_behavior = "bump")
     Message
-      > Scraping 1 commit messages.
+      > Digesting messages from 1 commits.
       i Same as previous version.
       
       -- Updating NEWS --
@@ -60,15 +56,13 @@
       
       > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
       ! Call `fledge::finalize_version(push = TRUE)`.
-    Output
-      NULL
 
 # bump_version() works -- not dev
 
     Code
       bump_version(which = "major")
     Message
-      > Scraping 3 commit messages.
+      > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
@@ -101,5 +95,5 @@
 
 ---
 
-    `which` must be one of "dev", "patch", "minor", or "major", not "blabla".
+    `which` must be one of "dev", "patch", "pre-minor", "minor", "pre-major", or "major", not "blabla".
 
