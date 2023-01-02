@@ -29,7 +29,6 @@
 - Typo.
 
 
-
 # fledge 0.1.0.9024 (2022-11-12)
 
 - Internal changes only.
@@ -60,13 +59,11 @@
 - Split news (#584).
 
 
-
 # fledge 0.1.0.9022 (2022-11-10)
 
 ## Bug fixes
 
 - Add full stop for entries
-
 
 
 # fledge 0.1.0.9021 (2022-11-09)
@@ -91,13 +88,11 @@
 - Fix URL (#573)
 
 
-
 # fledge 0.1.0.9017 (2022-10-24)
 
 ## Bug fixes
 
 - Relax requirement for GitHub PAT scope (#572)
-
 
 
 # fledge 0.1.0.9016 (2022-10-20)
@@ -139,7 +134,6 @@
 - `bump_version()` returns `TRUE` if a new version has been created
 
 
-
 # fledge 0.1.0.9009 (2022-09-20)
 
 ## Features
@@ -149,7 +143,6 @@
 ## Uncategorized
 
 - Internal changes only.
-
 
 
 # fledge 0.1.0.9008 (2022-09-18)
@@ -163,7 +156,6 @@
 - Internal changes only.
 
 
-
 # fledge 0.1.0.9007 (2022-09-16)
 
 ## Features
@@ -175,7 +167,6 @@
 - Internal changes only.
 
 
-
 # fledge 0.1.0.9006 (2022-09-14)
 
 ## Features
@@ -185,7 +176,6 @@
 ## Uncategorized
 
 - Internal changes only.
-
 
 
 # fledge 0.1.0.9005 (2022-09-13)
@@ -261,7 +251,6 @@
 - Create tag as part of `release()`.
 
 - Fix `post_release()`, still need to tag released version.
-
 
 
 # fledge 0.1.0.9002 (2022-04-02)
