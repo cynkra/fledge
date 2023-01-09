@@ -74,7 +74,7 @@ read_news <- function(news_lines = NULL) {
   ends <- if (length(starts) == 1) {
     length(news_lines)
   } else {
-    c(starts[seq_along(starts[-1])+1] - 1, length(news_lines))
+    c(starts[seq_along(starts[-1]) + 1] - 1, length(news_lines))
   }
 
   section_df <- tibble::tibble(
@@ -141,7 +141,6 @@ read_news <- function(news_lines = NULL) {
     }
 
     unlist(news_list[[1]], recursive = FALSE)
-
   }
   section_df$news <- map(section_df$news, fix_name_and_level)
 

@@ -109,7 +109,6 @@ edit_cran_comments <- function() {
 }
 
 maybe_date <- function(df) {
-
   if (nzchar(Sys.getenv("FLEDGE.EMPTY.DATE"))) {
     return("")
   }

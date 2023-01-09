@@ -31,7 +31,7 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
   }
   if (length(versions) == 0) {
     rlang::abort("Empty changelog")
-   
+
     message("Empty changelog")
     contents <- markdownify(html)
     return(list(contents))
