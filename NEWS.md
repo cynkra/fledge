@@ -1,10 +1,7 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# fledge (development version)
+# fledge 0.1.0.9029 (2022-12-30)
 
-- Merge remote-tracking branch 'origin/main' into write-fledgeling.
-- Merge branch 'main' into write-fledgeling.
-- Remove false Markdown link? (#592).
 - Internal changes only.
 
 
