@@ -13,10 +13,11 @@
       [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
       
       $news
-      # A tibble: 1 x 8
-         line h2    version date  nickname original    news             raw           
-        <int> <lgl> <chr>   <chr> <chr>    <chr>       <list>           <chr>         
-      1     3 FALSE 0.0.1   ""    ""       # tea 0.0.1 <named list [1]> "# tea 0.0.1\~
+      # A tibble: 1 x 9
+        start   end h2    raw                 news         title version date  nickn~1
+        <int> <int> <lgl> <chr>               <named list> <chr> <chr>   <chr> <chr>  
+      1     3     6 FALSE "# tea 0.0.1\n\n- ~ <named list> tea ~ 0.0.1   <NA>  <NA>   
+      # ... with abbreviated variable name 1: nickname
       
       attr(,"class")
       [1] "fledgling"

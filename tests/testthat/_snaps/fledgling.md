@@ -3,28 +3,30 @@
     {
       "section_df": [
         {
-          "line": 1,
+          "start": 1,
+          "end": 6,
           "h2": false,
-          "version": "v2.0.0",
-          "date": "",
-          "nickname": "",
-          "original": "# fledge v2.0.0",
+          "raw": "# fledge v2.0.0\n\n* blop\n\n* lala\n",
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
-          "raw": "# fledge v2.0.0\n\n* blop\n\n* lala\n"
+          "title": "fledge v2.0.0",
+          "version": "2.0.0",
+          "date": "NA",
+          "nickname": "NA"
         },
         {
-          "line": 7,
+          "start": 7,
+          "end": 12,
           "h2": false,
-          "version": "v1.0.0",
-          "date": "",
-          "nickname": "",
-          "original": "# fledge v1.0.0",
+          "raw": "# fledge v1.0.0\n\n* blip\n\n* lili\n",
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
-          "raw": "# fledge v1.0.0\n\n* blip\n\n* lili\n"
+          "title": "fledge v1.0.0",
+          "version": "1.0.0",
+          "date": "NA",
+          "nickname": "NA"
         }
       ],
       "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
@@ -35,28 +37,30 @@
     {
       "section_df": [
         {
-          "line": 3,
+          "start": 3,
+          "end": 9,
           "h2": false,
-          "version": "v2.0.0",
-          "date": "",
-          "nickname": "",
-          "original": "# Changes in v2.0.0",
+          "raw": "# Changes in v2.0.0\n\n* blop\n\n* lala\n\n",
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
-          "raw": "# Changes in v2.0.0\n\n* blop\n\n* lala\n\n"
+          "title": "Changes in v2.0.0",
+          "version": "2.0.0",
+          "date": "NA",
+          "nickname": "NA"
         },
         {
-          "line": 10,
+          "start": 10,
+          "end": 15,
           "h2": false,
-          "version": "v1.0.0",
-          "date": "",
-          "nickname": "",
-          "original": "# Changes in v1.0.0",
+          "raw": "# Changes in v1.0.0\n\n* blip\n\n* lili\n",
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
-          "raw": "# Changes in v1.0.0\n\n* blip\n\n* lili\n"
+          "title": "Changes in v1.0.0",
+          "version": "1.0.0",
+          "date": "NA",
+          "nickname": "NA"
         }
       ],
       "preamble": ["<!-- Hands off, please -->"]
@@ -67,28 +71,30 @@
     {
       "section_df": [
         {
-          "line": 1,
+          "start": 1,
+          "end": 6,
           "h2": false,
-          "version": "v2.0.0",
-          "date": "",
-          "nickname": "\"Vigorous Calisthenics\"",
-          "original": "# Changes in v2.0.0 \"Vigorous Calisthenics\"",
+          "raw": "# Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n",
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
-          "raw": "# Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n"
+          "title": "Changes in v2.0.0 \"Vigorous Calisthenics\"",
+          "version": "2.0.0",
+          "date": "NA",
+          "nickname": "\"Vigorous Calisthenics\""
         },
         {
-          "line": 7,
+          "start": 7,
+          "end": 12,
           "h2": false,
-          "version": "v1.0.0",
-          "date": "",
-          "nickname": "\"Pumpkin Helmet\"",
-          "original": "# Changes in v1.0.0 \"Pumpkin Helmet\"",
+          "raw": "# Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n",
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
-          "raw": "# Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n"
+          "title": "Changes in v1.0.0 \"Pumpkin Helmet\"",
+          "version": "1.0.0",
+          "date": "NA",
+          "nickname": "\"Pumpkin Helmet\""
         }
       ],
       "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
@@ -99,28 +105,30 @@
     {
       "section_df": [
         {
-          "line": 1,
+          "start": 1,
+          "end": 6,
           "h2": true,
-          "version": "v2.0.0",
-          "date": "",
-          "nickname": "\"Vigorous Calisthenics\"",
-          "original": "## Changes in v2.0.0 \"Vigorous Calisthenics\"",
+          "raw": "## Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n",
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
-          "raw": "## Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n"
+          "title": "Changes in v2.0.0 \"Vigorous Calisthenics\"",
+          "version": "2.0.0",
+          "date": "NA",
+          "nickname": "\"Vigorous Calisthenics\""
         },
         {
-          "line": 7,
+          "start": 7,
+          "end": 12,
           "h2": true,
-          "version": "v1.0.0",
-          "date": "",
-          "nickname": "\"Pumpkin Helmet\"",
-          "original": "## Changes in v1.0.0 \"Pumpkin Helmet\"",
+          "raw": "## Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n",
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
-          "raw": "## Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n"
+          "title": "Changes in v1.0.0 \"Pumpkin Helmet\"",
+          "version": "1.0.0",
+          "date": "NA",
+          "nickname": "\"Pumpkin Helmet\""
         }
       ],
       "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]

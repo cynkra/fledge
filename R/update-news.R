@@ -17,7 +17,7 @@ update_news_impl <- function(commits, which) {
     dev_header_present <- isTRUE(
       grepl(
         "(development version)",
-        fledgeling[["news"]][["version"]][1]
+        fledgeling[["news"]][["title"]][1]
       )
     )
 
@@ -28,7 +28,7 @@ update_news_impl <- function(commits, which) {
     # Append and regroup
     if (is.null(fledgeling[["news"]])) {
       fledgeling[["news"]] <- tibble::tibble(
-        line = 3,
+        start = 3,
         h2 = FALSE,
         version = fledgeling[["version"]],
         date = "",
@@ -58,14 +58,15 @@ update_news_impl <- function(commits, which) {
     fledgeling[["version"]] <- new_version
 
     section_df <- tibble::tibble(
-      line = 3,
+      start = 3,
+      end = NA,
       h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
       version = new_version,
       date = maybe_date(fledgeling[["news"]]),
-      nickname = "",
-      original = "",
+      nickname = NA,
       news = list(parse_news_md(news_lines)),
-      raw = ""
+      raw = "",
+      title = ""
     )
 
     if (is.null(fledgeling[["news"]])) {
@@ -108,7 +109,12 @@ edit_cran_comments <- function() {
 }
 
 maybe_date <- function(df) {
-  if (!is.null(df[["date"]]) && nzchar(df[["date"]][1])) {
+
+  if (nzchar(Sys.getenv("FLEDGE.EMPTY.DATE"))) {
+    return("")
+  }
+
+  if (!is.na(df[["date"]][1]) && !is.null(df[["date"]]) && nzchar(df[["date"]][1])) {
     sprintf("(%s)", as.character(get_date()))
   } else {
     ""
@@ -332,7 +338,7 @@ get_version_components <- function(version) {
 }
 
 get_news_headers <- function() {
-  read_fledgling()[["news"]][, c("line", "version", "date", "nickname")]
+  read_fledgling()[["news"]][, c("start", "version", "date", "nickname")]
 }
 
 get_date <- function() {

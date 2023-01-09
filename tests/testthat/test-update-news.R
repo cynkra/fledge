@@ -1,10 +1,12 @@
 test_that("update_news() works when news file absent", {
   withr::local_options("fledge.quiet" = TRUE)
+  withr::local_options("usethis.quiet" = TRUE)
   local_demo_project(news = FALSE, quiet = TRUE)
   expect_no_error(update_news(which = "patch"))
 })
 
 test_that("update_news() works when news file still empty", {
+  withr::local_options("usethis.quiet" = TRUE)
   local_demo_project(news = FALSE, quiet = TRUE)
   file.create("NEWS.md")
   expect_no_error(update_news(which = "patch"))
@@ -12,6 +14,7 @@ test_that("update_news() works when news file still empty", {
 })
 
 test_that("normalize_news() works", {
+  withr::local_options("usethis.quiet" = TRUE)
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
   usethis::with_project(
@@ -32,6 +35,7 @@ test_that("normalize_news() works", {
 })
 
 test_that("regroup_news() works", {
+  withr::local_options("usethis.quiet" = TRUE)
   news_list1 <- list(
     Uncategorized = c("- blop", "- etc"),
     Documentation = c("- stuff", "- other")
@@ -54,6 +58,7 @@ test_that("regroup_news() works", {
 })
 
 test_that("Can update dev version news item", {
+  withr::local_options("usethis.quiet" = TRUE)
   repo <- withr::local_tempdir(pattern = "devpkg")
 
   create_cc_repo(

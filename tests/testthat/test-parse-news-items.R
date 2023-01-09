@@ -14,6 +14,8 @@ test_that("Can parse conventional commits", {
 })
 
 test_that("Will use commits", {
+  withr::local_envvar("FLEDGE.EMPTY.DATE" = "blabla")
+
   local_demo_project(quiet = TRUE)
   commits_df <- tibble::tibble(
     message = c("one", "two"),

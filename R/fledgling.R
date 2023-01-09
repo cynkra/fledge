@@ -28,17 +28,19 @@ read_version <- function() {
   desc::desc_get_version()
 }
 
-read_news <- function() {
-  if (file.exists("NEWS.md")) {
-    news_lines <- readLines("NEWS.md")
-  } else {
-    news_lines <- character()
+read_news <- function(news_lines = NULL) {
+  if (is.null(news_lines)) {
+    if (file.exists("NEWS.md")) {
+      news_lines <- readLines("NEWS.md")
+    } else {
+      news_lines <- character()
+    }
   }
 
-  news <- parse_news_md(news_lines)
+  news <- parse_news_md(news_lines, strict = TRUE)
 
   if (is.null(news)) {
-     return(
+    return(
       list(
         section_df = NULL,
         preamble = news_preamble()
@@ -84,19 +86,23 @@ read_news <- function() {
   )
   section_df$title <- names(news)
 
-   find_version <- function(text) {
+  find_version <- function(text) {
     m <- regmatches(
       text,
       regexpr("[0-9]*\\.[0-9]*\\.[0-9]*(\\.[0-9]*)*", text)
     )
     if (length(m) == 0) {
-      return(NA_character_)
+      if (grepl("(development version)", text)) {
+        return("(development version)")
+      } else {
+        return(NA_character_)
+      }
     }
     m
   }
   section_df$version <- purrr::map_chr(names(news), find_version)
 
- find_date <- function(text) {
+  find_date <- function(text) {
     m <- regmatches(
       text,
       regexpr('\\(....-..-..\\)', text)
@@ -127,6 +133,9 @@ read_news <- function() {
     }
 
     if (!is.list(news_list[[1]])) {
+      if (length(news_list[[1]]) == 1 && !nzchar(news_list[[1]])) {
+        return(NULL)
+      }
       names(news_list) <- default_type()
       return(news_list)
     }

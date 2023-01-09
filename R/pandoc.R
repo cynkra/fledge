@@ -30,29 +30,16 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     versions <- xml2::xml_find_all(html, ".//section[@class='level2']")
   }
   if (length(versions) == 0) {
-    if (strict) {
-      rlang::abort("Empty changelog")
-    }
+    rlang::abort("Empty changelog")
+   
     message("Empty changelog")
     contents <- markdownify(html)
     return(list(contents))
   }
 
-  # check top-level headers
-  extract_version <- function(version) {
-    trimws(xml2::xml_text(xml2::xml_child(version)))
+  if (strict) {
+    check_top_level_headers(versions)
   }
-  version_titles <- purrr::map_chr(versions, extract_version)
-  malformatted_titles <- version_titles[!(is_header(version_titles) | is_dev_header(version_titles))]
-  if (length(malformatted_titles) > 0) {
-    rlang::abort(
-      c(
-        sprintf("Can't parse version headers: %s.", toString(sprintf("'%s'", malformatted_titles))),
-        i = "All top level headers in NEWS.md should be version titles."
-      )
-    )
-  }
-
 
   treat_section <- function(section) {
     children <- xml2::xml_children(section)
@@ -150,4 +137,20 @@ markdownify <- function(html) {
     markdown_lines <- markdown_lines[-length(markdown_lines)]
   }
   markdown_lines
+}
+
+check_top_level_headers <- function(versions) {
+  extract_version <- function(version) {
+    trimws(xml2::xml_text(xml2::xml_child(version)))
+  }
+  version_titles <- purrr::map_chr(versions, extract_version)
+  malformatted_titles <- version_titles[!(is_header(version_titles) | is_dev_header(version_titles))]
+  if (length(malformatted_titles) > 0) {
+    rlang::abort(
+      c(
+        sprintf("Can't parse version headers: %s.", toString(sprintf("'%s'", malformatted_titles))),
+        i = "All top level headers in NEWS.md should be version titles."
+      )
+    )
+  }
 }
