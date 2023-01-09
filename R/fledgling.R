@@ -75,12 +75,18 @@ get_header_df <- function(news, header_rx) {
   section_df
 }
 
-parse_news <- function(news) {
-  dev_header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>\\(development version\\))?$'
-  header_rx <- '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
+dev_header_rx <- function() {
+  '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>\\(development version\\))?$'
+}
 
-  section_df <- get_header_df(news, header_rx)
-  dev_header <- get_header_df(news, dev_header_rx)
+header_rx <- function() {
+  '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
+}
+
+parse_news <- function(news) {
+
+  section_df <- get_header_df(news, header_rx())
+  dev_header <- get_header_df(news, dev_header_rx())
 
   if (!is.null(dev_header)) {
     section_df <- tibble::add_row(
