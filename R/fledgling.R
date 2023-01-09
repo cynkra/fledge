@@ -84,7 +84,6 @@ header_rx <- function() {
 }
 
 parse_news <- function(news) {
-
   section_df <- get_header_df(news, header_rx())
   dev_header <- get_header_df(news, dev_header_rx())
 
