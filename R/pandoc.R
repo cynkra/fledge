@@ -9,6 +9,7 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
     c(
       "-t", "html", # output format
       "--wrap=preserve", # preserve soft linebreaks
+      "--no-highlight",
       "-f", "gfm-autolink_bare_uris", # input format, do not transform bare URIs into links
       "-o", out_temp_file, # output temp file
       temp_file, # temp file with current Markdown news
