@@ -30,74 +30,15 @@ read_version <- function() {
 
 read_news <- function() {
   if (file.exists("NEWS.md")) {
-    news <- readLines("NEWS.md")
+    news_lines <- readLines("NEWS.md")
   } else {
-    news <- character()
+    news_lines <- character()
   }
 
-  parse_news(news)
-}
+  news <- parse_news_md(news_lines)
 
-get_header_df <- function(news, header_rx) {
-  first_level_headers <- grep(header_rx, news, perl = TRUE)
-  start <- first_level_headers
-
-  if (length(start) == 0) {
-    return(NULL)
-  }
-
-  end <- if (length(start) > 1) {
-    c(first_level_headers[-1] - 1L, length(news))
-  } else {
-    min(which(grepl("^# ", news[(start + 1):length(news)])) - 1L, length(news) - start) + start
-  }
-
-  section_df <- rematch2::re_match(news[first_level_headers], header_rx)
-  section_df <- section_df[-c(ncol(section_df) - 1, ncol(section_df))]
-  section_df <- tibble::add_column(section_df, line = first_level_headers, .before = 1)
-  section_df <- tibble::add_column(section_df, original = news[first_level_headers])
-  section_df$h2 <- (section_df$h2 == "#")
-  section_df$news <- map2(start + 1L, end, ~ parse_news_md(trim_empty_lines(news[seq2(.x, .y)])))
-
-  fix_name <- function(news_list) {
-    if (is.null(news_list)) {
-      return(news_list)
-    }
-
-    if (is.null(names(news_list))) {
-      stats::setNames(news_list, default_type())
-    } else {
-      news_list
-    }
-  }
-  section_df$news <- map(section_df$news, fix_name)
-  section_df$raw <- map2_chr(start, end, ~ paste(news[seq2(.x, .y)], collapse = "\n"))
-  section_df
-}
-
-dev_header_rx <- function() {
-  '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>\\(development version\\))?$'
-}
-
-header_rx <- function() {
-  '^#(?<h2>#)? +[a-zA-Z ]*?[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9] +(?<version>v?[0-9][0-9.-]*) *(?<date>\\(.*\\))? *(?<nickname>".*")?$'
-}
-
-parse_news <- function(news) {
-  section_df <- get_header_df(news, header_rx())
-  dev_header <- get_header_df(news, dev_header_rx())
-
-  if (!is.null(dev_header)) {
-    section_df <- tibble::add_row(
-      section_df,
-      dev_header,
-      .before = 1
-    )
-  }
-
-  # changelog absent or empty
-  if (is.null(section_df)) {
-    return(
+  if (is.null(news)) {
+     return(
       list(
         section_df = NULL,
         preamble = news_preamble()
@@ -105,17 +46,103 @@ parse_news <- function(news) {
     )
   }
 
-  section_df$date[is.na(section_df$date)] <- ""
-  section_df$nickname[is.na(section_df$nickname)] <- ""
+  # NEWS content under no version
+  if (length(news) == 1 && !nzchar(names(news))) {
+    rlang::abort("NEWS content not under a version header")
+  }
+
+  # match parsed headers to the Markdown
+  get_section_start <- function(section_title, news_lines) {
+    escaped_section_title <- sub("\\(", "\\\\(", section_title)
+    escaped_section_title <- sub("\\)", "\\\\)", escaped_section_title)
+    section_start <- which(grepl(sprintf("^#+ +%s[:space:]?$", escaped_section_title), news_lines))
+
+    if (length(section_start) == 0) {
+      # what to do
+    }
+
+    if (length(section_start) > 1) {
+      # what to do
+    }
+    section_start
+  }
+
+  starts <- purrr::map_int(names(news), get_section_start, news_lines)
+
+  ends <- if (length(starts) == 1) {
+    length(news_lines)
+  } else {
+    c(starts[seq_along(starts[-1])+1] - 1, length(news_lines))
+  }
+
+  section_df <- tibble::tibble(
+    start = starts,
+    end = ends,
+    h2 = grepl("##", news_lines[starts]), # TODO does not account for all syntaxes,
+    raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
+    news = split(news, seq_len(length(news)))
+  )
+  section_df$title <- names(news)
+
+   find_version <- function(text) {
+    m <- regmatches(
+      text,
+      regexpr("[0-9]*\\.[0-9]*\\.[0-9]*(\\.[0-9]*)*", text)
+    )
+    if (length(m) == 0) {
+      return(NA_character_)
+    }
+    m
+  }
+  section_df$version <- purrr::map_chr(names(news), find_version)
+
+ find_date <- function(text) {
+    m <- regmatches(
+      text,
+      regexpr('\\(....-..-..\\)', text)
+    )
+    if (length(m) == 0) {
+      return(NA_character_)
+    }
+    m
+  }
+  section_df$date <- purrr::map_chr(names(news), find_date)
+
+  find_nickname <- function(text) {
+    m <- regmatches(
+      text,
+      regexpr('".*"', text)
+    )
+    if (length(m) == 0) {
+      return(NA_character_)
+    }
+    m
+  }
+  section_df$nickname <- purrr::map_chr(names(news), find_nickname)
+
+
+  fix_name_and_level <- function(news_list) {
+    if (is.null(news_list)) {
+      return(news_list)
+    }
+
+    if (!is.list(news_list[[1]])) {
+      names(news_list) <- default_type()
+      return(news_list)
+    }
+
+    unlist(news_list[[1]], recursive = FALSE)
+
+  }
+  section_df$news <- map(section_df$news, fix_name_and_level)
 
   # re-use current preamble
   # FIXME: check the "preamble" is an HTML comment?
-  if (section_df[["line"]][[1]] == 1) {
+  if (section_df[["start"]][[1]] == 1) {
     preamble <- news_preamble()
   } else {
-    preamble <- trim_empty_lines(news[seq2(1, section_df[["line"]][[1]] - 1)])
+    preamble <- trim_empty_lines(news_lines[seq2(1, section_df[["start"]][[1]] - 1)])
   }
-
   list(
     section_df = section_df,
     preamble = if (!is.null(preamble)) paste(preamble, collapse = "\n")
@@ -185,8 +212,8 @@ write_news_section <- function(df) {
       header_sign,
       read_package(),
       df$version,
-      df$date,
-      df$nickname
+      if (!is.na(df$date)) df$date else "",
+      if (!is.na(df$nickname)) df$nickname else ""
     )
   )
 
