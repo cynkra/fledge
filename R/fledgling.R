@@ -84,6 +84,9 @@ read_news <- function(news_lines = NULL) {
     raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
     news = split(news, seq_len(length(news)))
   )
+
+  section_df$section_state <- "keep"
+
   section_df$title <- names(news)
 
   find_version <- function(text) {
@@ -208,6 +211,10 @@ write_fledgling <- function(fledgeling) {
 write_news_section <- function(df) {
   # isTRUE as sometimes there is no previous header
   # so h2 is NULL not FALSE
+  if (df$section_state == "keep") {
+    return(df$raw)
+  }
+
   if (isTRUE(df$h2)) {
     header_sign <- "##"
   } else {
