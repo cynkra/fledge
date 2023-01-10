@@ -35,7 +35,8 @@ update_news_impl <- function(commits, which) {
         nickname = "",
         original = "",
         news = list(parse_news_md(news_lines)),
-        raw = ""
+        raw = "",
+        section_state = "new"
       )
     } else {
       combined <- c(
@@ -46,6 +47,7 @@ update_news_impl <- function(commits, which) {
       fledgeling[["news"]][1, ]$news <- list(
         regroup_news(combined)
       )
+      fledgeling[["news"]][1, ]$section_state <- "new"
     }
     write_fledgling(fledgeling)
 
@@ -66,7 +68,8 @@ update_news_impl <- function(commits, which) {
       nickname = NA,
       news = list(parse_news_md(news_lines)),
       raw = "",
-      title = ""
+      title = "",
+      section_state = "new"
     )
 
     if (is.null(fledgeling[["news"]])) {

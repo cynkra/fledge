@@ -318,7 +318,7 @@ cat(news, sep = "\n")
 ## 
 ## # tea 0.0.0.9000
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## * Added a `NEWS.md` file to track changes to the package.
 ```
 
 While reviewing we notice that there was a typo in one of the comments (congrats if you noticed right away that we typed "tee" instead of "tea"!).
@@ -344,7 +344,7 @@ cat(news, sep = "\n")
 ## 
 ## # tea 0.0.0.9000
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## * Added a `NEWS.md` file to track changes to the package.
 writeLines(news, "NEWS.md")
 ```
 
@@ -401,7 +401,7 @@ cat(news, sep = "\n")
 ## 
 ## # tea 0.0.0.9000
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## * Added a `NEWS.md` file to track changes to the package.
 ```
 
 The version of the package is 0.0.0.9001.
@@ -509,7 +509,7 @@ writeLines(news)
 ## 
 ## # tea 0.0.0.9000
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## * Added a `NEWS.md` file to track changes to the package.
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
@@ -588,7 +588,7 @@ cat(news, sep = "\n")
 ## 
 ## # tea 0.0.0.9000
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## * Added a `NEWS.md` file to track changes to the package.
 ```
 
 Some of the intermediate commit messages are not relevant in the release notes for this release.

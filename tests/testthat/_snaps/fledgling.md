@@ -10,6 +10,7 @@
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
+          "section_state": "keep",
           "title": "fledge v2.0.0",
           "version": "2.0.0",
           "date": "NA",
@@ -23,6 +24,7 @@
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
+          "section_state": "keep",
           "title": "fledge v1.0.0",
           "version": "1.0.0",
           "date": "NA",
@@ -44,6 +46,7 @@
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
+          "section_state": "keep",
           "title": "Changes in v2.0.0",
           "version": "2.0.0",
           "date": "NA",
@@ -57,6 +60,7 @@
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
+          "section_state": "keep",
           "title": "Changes in v1.0.0",
           "version": "1.0.0",
           "date": "NA",
@@ -78,6 +82,7 @@
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
+          "section_state": "keep",
           "title": "Changes in v2.0.0 \"Vigorous Calisthenics\"",
           "version": "2.0.0",
           "date": "NA",
@@ -91,6 +96,7 @@
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
+          "section_state": "keep",
           "title": "Changes in v1.0.0 \"Pumpkin Helmet\"",
           "version": "1.0.0",
           "date": "NA",
@@ -112,6 +118,7 @@
           "news": {
             "Uncategorized": ["- blop", "", "- lala"]
           },
+          "section_state": "keep",
           "title": "Changes in v2.0.0 \"Vigorous Calisthenics\"",
           "version": "2.0.0",
           "date": "NA",
@@ -125,6 +132,7 @@
           "news": {
             "Uncategorized": ["- blip", "", "- lili"]
           },
+          "section_state": "keep",
           "title": "Changes in v1.0.0 \"Pumpkin Helmet\"",
           "version": "1.0.0",
           "date": "NA",

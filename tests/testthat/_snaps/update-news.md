@@ -13,11 +13,11 @@
       [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
       
       $news
-      # A tibble: 1 x 9
-        start   end h2    raw                 news         title version date  nickn~1
-        <int> <int> <lgl> <chr>               <named list> <chr> <chr>   <chr> <chr>  
-      1     3     6 FALSE "# tea 0.0.1\n\n- ~ <named list> tea ~ 0.0.1   <NA>  <NA>   
-      # ... with abbreviated variable name 1: nickname
+      # A tibble: 1 x 10
+        start   end h2    raw         news         secti~1 title version date  nickn~2
+        <int> <int> <lgl> <chr>       <named list> <chr>   <chr> <chr>   <chr> <chr>  
+      1     3     6 FALSE "# tea 0.0~ <named list> keep    tea ~ 0.0.1   <NA>  <NA>   
+      # ... with abbreviated variable names 1: section_state, 2: nickname
       
       attr(,"class")
       [1] "fledgling"

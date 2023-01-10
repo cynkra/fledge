@@ -212,7 +212,9 @@ write_news_section <- function(df) {
   # isTRUE as sometimes there is no previous header
   # so h2 is NULL not FALSE
   if (df$section_state == "keep") {
-    return(df$raw)
+    # remove the lines that will be re-added
+    raw <- sub("\n$", "", df$raw)
+    return(raw)
   }
 
   if (isTRUE(df$h2)) {
