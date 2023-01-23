@@ -20,10 +20,8 @@ bump_version_impl <- function(which, no_change_behavior) {
       return(invisible(FALSE))
     }
   }
-  #' 1. [update_news()]
-  update_news()
-  #' 1. [update_version()], using the `which` argument
-  update_version(which = which)
+  #' 1. [update_news()], using the `which` argument
+  update_news(which = which)
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
