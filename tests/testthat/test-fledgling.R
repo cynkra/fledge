@@ -7,7 +7,7 @@ test_that("read_news() works with usual format", {
     "* blip", "",
     "* lili", ""
   )
-  expect_snapshot_tibble(parse_news(news_lines))
+  expect_snapshot_tibble(read_news(news_lines))
 })
 
 test_that("read_news() works with other formats", {
@@ -22,7 +22,7 @@ test_that("read_news() works with other formats", {
     "* blip", "",
     "* lili", ""
   )
-  expect_snapshot_tibble(parse_news(news_lines))
+  expect_snapshot_tibble(read_news(news_lines))
 })
 
 test_that("read_news() works with nicknames", {
@@ -34,7 +34,7 @@ test_that("read_news() works with nicknames", {
     "* blip", "",
     "* lili", ""
   )
-  expect_snapshot_tibble(parse_news(news_lines))
+  expect_snapshot_tibble(read_news(news_lines))
 })
 
 test_that("read_news() works with h2", {
@@ -46,5 +46,5 @@ test_that("read_news() works with h2", {
     "* blip", "",
     "* lili", ""
   )
-  expect_snapshot_tibble(parse_news(news_lines))
+  expect_snapshot_tibble(read_news(news_lines))
 })

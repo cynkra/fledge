@@ -9,11 +9,13 @@ test_that("Can parse conventional commits", {
     usethis::use_description(fields = list(Package = "fledge")),
     force = TRUE
   )
-  update_news(messages)
+  update_news(messages, which = "patch")
   expect_snapshot_file("NEWS.md")
 })
 
 test_that("Will use commits", {
+  withr::local_envvar("FLEDGE.EMPTY.DATE" = "blabla")
+
   local_demo_project(quiet = TRUE)
   commits_df <- tibble::tibble(
     message = c("one", "two"),
@@ -21,7 +23,7 @@ test_that("Will use commits", {
   )
   mockery::stub(update_news, "default_commit_range", commits_df)
 
-  update_news()
+  update_news(which = "minor")
   file.copy("NEWS.md", "NEWS-merge.md")
   expect_snapshot_file("NEWS-merge.md")
 })

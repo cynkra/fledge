@@ -284,7 +284,7 @@ fledge::bump_version()
 ## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.0.9001.
-## > Adding header to 'NEWS.md'.
+## > Added header to 'NEWS.md'.
 ## > Committing changes.
 ## 
 ## -- Tagging Version --
@@ -486,7 +486,7 @@ fledge::bump_version()
 ## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.0.9002.
-## > Adding header to 'NEWS.md'.
+## > Added header to 'NEWS.md'.
 ## > Committing changes.
 ## 
 ## -- Tagging Version --
@@ -551,7 +551,7 @@ fledge::bump_version("patch")
 ## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.1.
-## > Adding header to 'NEWS.md'.
+## > Added header to 'NEWS.md'.
 ## > Committing changes.
 ## 
 ## -- Preparing package for CRAN release --
@@ -654,7 +654,7 @@ fledge::bump_version()
 ## -- Updating Version --
 ## 
 ## v Package version bumped to 0.0.1.9000.
-## > Adding header to 'NEWS.md'.
+## > Added header to 'NEWS.md'.
 ## > Committing changes.
 ## 
 ## -- Tagging Version --
