@@ -4,12 +4,26 @@
 \alias{update_news}
 \title{Update NEWS.md with messages from top-level commits}
 \usage{
-update_news(messages = NULL)
+update_news(
+  messages = NULL,
+  which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major")
+)
 }
 \arguments{
 \item{messages}{A character vector of commit messages,
 e.g. as in the \code{message} column in the return value of \code{\link[=get_top_level_commits]{get_top_level_commits()}}.
 The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_tag]{get_last_tag()}}.}
+
+\item{which}{Component of the version number to update. Supported
+values are
+\itemize{
+\item \code{"dev"} (default),
+\item \code{"patch"},
+\item \code{"pre-minor"} (x.y.99.9000),
+\item \code{"minor"},
+\item \code{"pre-major"} (x.99.99.9000),
+\item \code{"major"}.
+}}
 }
 \value{
 None
