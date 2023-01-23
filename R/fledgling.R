@@ -9,7 +9,6 @@
 #' @param news A data frame FIXME
 #' @noRd
 new_fledgling <- function(name, version, preamble, news) {
-
   structure(
     list(
       name = name,
