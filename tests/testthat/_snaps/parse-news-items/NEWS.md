@@ -1,5 +1,7 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.0.9001 (2023-01-23)
+
 ## Bug fixes
 
 - Prevent racing of requests.
