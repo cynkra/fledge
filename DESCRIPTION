@@ -36,13 +36,15 @@ Imports:
     glue,
     httr,
     magrittr,
+    pandoc,
     purrr (>= 0.3.2),
     rematch2,
     rlang (>= 0.4.12),
     tibble,
     usethis (>= 2.1.5),
     whoami,
-    withr
+    withr,
+    xml2
 Suggests: 
     brio,
     covr,
