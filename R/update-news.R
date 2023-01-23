@@ -112,12 +112,23 @@ edit_cran_comments <- function() {
 }
 
 maybe_date <- function(df) {
+  # escape hatch for tests
   if (nzchar(Sys.getenv("FLEDGE.EMPTY.DATE"))) {
     return("")
   }
 
-  if (!is.na(df[["date"]][1]) && !is.null(df[["date"]]) && nzchar(df[["date"]][1])) {
-    sprintf("(%s)", as.character(get_date()))
+  formatted_date <- sprintf("(%s)", as.character(get_date()))
+
+  # starting with an empty changelog,
+  # return date
+  if (is.null(df)) {
+    return(formatted_date)
+  }
+
+  # if existing headers,
+  # use date only if the latest one uses date
+  if (is_non_empty_string(df[["date"]][1])) {
+    formatted_date
   } else {
     ""
   }

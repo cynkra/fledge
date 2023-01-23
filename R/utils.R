@@ -6,3 +6,7 @@ map_dfr <- function(list, ...) {
 is_any_named <- function(x) {
   any(nzchar(names(x)))
 }
+
+is_non_empty_string <- function(x) {
+  !is.na(x) && nzchar(x)
+}

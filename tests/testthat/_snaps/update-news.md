@@ -16,7 +16,7 @@
       # A tibble: 1 x 10
         start   end h2    raw         news         secti~1 title version date  nickn~2
         <int> <int> <lgl> <chr>       <named list> <chr>   <chr> <chr>   <chr> <chr>  
-      1     3     6 FALSE "# tea 0.0~ <named list> keep    tea ~ 0.0.1   <NA>  <NA>   
+      1     3     6 FALSE "# tea 0.0~ <named list> keep    tea ~ 0.0.1   (202~ <NA>   
       # ... with abbreviated variable names 1: section_state, 2: nickname
       
       attr(,"class")
