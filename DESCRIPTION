@@ -54,6 +54,7 @@ Suggests:
     httptest,
     jsonlite,
     knitr,
+    lifecycle,
     mockery,
     parsedate,
     pkgbuild,

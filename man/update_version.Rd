@@ -24,7 +24,7 @@ values are
 None
 }
 \description{
-Bumps a version component and adds to \code{NEWS.md} and \code{DESCRIPTION}.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Bumps a version component and adds to \code{NEWS.md} and \code{DESCRIPTION}.
 }
 \examples{
 # Create mock package in a temporary directory.
