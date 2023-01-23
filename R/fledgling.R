@@ -34,14 +34,16 @@ read_news_section <- function(lines) {
   # reinventing the wheel https://pandoc.org/MANUAL.html#options-affecting-specific-writers
 }
 
-read_news <- function() {
-  if (file.exists("NEWS.md")) {
-    news <- readLines("NEWS.md")
-  } else {
-    news <- character()
+read_news <- function(news_lines = NULL) {
+  if (is.null(news_lines)) {
+    if (file.exists("NEWS.md")) {
+      news_lines <- readLines("NEWS.md")
+    } else {
+      news_lines <- character()
+    }
   }
 
-  parse_news(news)
+  parse_news(news_lines)
 }
 
 parse_news <- function(news) {
