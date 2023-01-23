@@ -14,7 +14,7 @@ update_version_impl <- function(which) {
 
     cli_alert_success("Package version bumped to {.field {new_version}}.")
 
-    cli_alert("Adding header to {.file {news_path()}}.")
+    cli_alert("Added header to {.file {news_path()}}.")
   }
 
   header <- paste0(
