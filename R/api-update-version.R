@@ -9,6 +9,10 @@
 #' @return None
 #' @export
 update_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
-  .Deprecated()
+  lifecycle::deprecate_soft(
+    when = "0.1.1",
+    what = "update_version()",
+    details = "use usethis::use_version() if you need to change the version only."
+  )
   update_news(character(), which)
 }
