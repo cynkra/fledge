@@ -25,5 +25,4 @@ parse_version <- function(version_header) {
     dev_df[["date"]] <- NA_character_
     dev_df
   }
-
 }
