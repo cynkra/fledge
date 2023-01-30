@@ -57,7 +57,7 @@ read_news <- function(news_lines = NULL) {
   get_section_start <- function(section_title, news_lines) {
     escaped_section_title <- sub("\\(", "\\\\(", section_title)
     escaped_section_title <- sub("\\)", "\\\\)", escaped_section_title)
-    section_start <- which(grepl(sprintf("^#+ +%s[:space:]?$", escaped_section_title), news_lines))
+    section_start <- which(grepl(sprintf("^(#+ +)?%s[:space:]?$", escaped_section_title), news_lines))
 
     if (length(section_start) == 0) {
       # what to do
