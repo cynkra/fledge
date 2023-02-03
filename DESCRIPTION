@@ -35,6 +35,7 @@ Imports:
     gh,
     glue,
     httr,
+    lifecycle,
     magrittr,
     pandoc,
     purrr (>= 0.3.2),
