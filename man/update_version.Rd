@@ -27,7 +27,9 @@ values are
 None
 }
 \description{
-Bumps a version component and adds to \code{NEWS.md} and \code{DESCRIPTION}.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Deprecated, use \code{\link[=update_news]{update_news()}}.
 }
 \examples{
 # Create mock package in a temporary directory.
@@ -50,3 +52,4 @@ with_demo_project({
   print(fledge::get_last_tag())
 })
 }
+\keyword{internal}

@@ -1,14 +1,18 @@
 #' Update NEWS.md and DESCRIPTION with a new version
 #'
-#' Bumps a version component and adds to `NEWS.md` and `DESCRIPTION`.
+#' @description
+#'`r lifecycle::badge("deprecated")`
+#'
+#' Deprecated, use [update_news()].
 #'
 #' @inheritParams update_news
 #' @example man/examples/tag-version.R
 #'
 #' @return None
+#' @keywords internal
 #' @export
 update_version <- function(which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
-  # FIXME: Signal deprecation
+  lifecycle::deprecate_soft("0.1.1", "fledge::update_version()", "fledge::update_news()")
 
   update_news(character(), which)
 }
