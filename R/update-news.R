@@ -66,6 +66,9 @@ update_news_impl <- function(commits, which) {
     current_version <- desc::desc_get_version()
     new_version <- fledge_guess_version(current_version, which)
     fledgeling[["version"]] <- new_version
+    if (!is.null(fledgeling[["date"]])) {
+      fledgeling[["date"]] <- as.character(Sys.Date())
+    }
 
     section_df <- tibble::tibble(
       start = 3,

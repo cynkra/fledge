@@ -29,5 +29,7 @@ bump_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-ma
 
   check_clean(c("DESCRIPTION", news_path))
 
-  with_repo(bump_version_impl(which = which, no_change_behavior = no_change_behavior))
+  local_repo()
+
+  bump_version_impl(which = which, no_change_behavior = no_change_behavior)
 }
