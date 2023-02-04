@@ -66,7 +66,9 @@ update_news_impl <- function(commits, which) {
     current_version <- desc::desc_get_version()
     new_version <- fledge_guess_version(current_version, which)
     fledgeling[["version"]] <- new_version
-    if (!is.null(fledgeling[["date"]])) {
+
+    # In the galley test for the demo vignette, for some reason, `is.na(get_date())`
+    if (!is.null(fledgeling[["date"]]) && !is.na(get_date())) {
       fledgeling[["date"]] <- as.character(get_date())
     }
 
