@@ -113,7 +113,7 @@ edit_cran_comments <- function() {
 
 maybe_date <- function(df) {
   # escape hatch for tests
-  if (nzchar(Sys.getenv("FLEDGE.EMPTY.DATE"))) {
+  if (nzchar(Sys.getenv("FLEDGE_EMPTY_DATE"))) {
     return("")
   }
 
@@ -355,6 +355,10 @@ get_news_headers <- function() {
 }
 
 get_date <- function() {
+  # For stable tests
+  if (Sys.getenv("FLEDGE_DATE") != "") {
+    return(as.Date(Sys.getenv("FLEDGE_DATE")))
+  }
   # For stable Rmarkdown output
   if (Sys.getenv("IN_PKGDOWN") == "") {
     return(Sys.Date())

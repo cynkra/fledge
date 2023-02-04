@@ -1,6 +1,7 @@
 test_that("Can parse conventional commits", {
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
+
   create_cc_repo(repo)
   messages <- get_top_level_commits_impl(since = NULL)$message
 
@@ -9,12 +10,15 @@ test_that("Can parse conventional commits", {
     usethis::use_description(fields = list(Package = "fledge")),
     force = TRUE
   )
+
+  withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
+
   update_news(messages, which = "patch")
   expect_snapshot_file("NEWS.md")
 })
 
 test_that("Will use commits", {
-  withr::local_envvar("FLEDGE.EMPTY.DATE" = "blabla")
+  withr::local_envvar("FLEDGE_EMPTY_DATE" = "true")
 
   local_demo_project(quiet = TRUE)
   commits_df <- tibble::tibble(
