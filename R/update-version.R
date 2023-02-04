@@ -43,6 +43,10 @@ get_news_headers <- function() {
 }
 
 get_date <- function() {
+  # For stable tests
+  if (Sys.getenv("FLEDGE_DATE") != "") {
+    return(as.Date(Sys.getenv("FLEDGE_DATE")))
+  }
   # For stable Rmarkdown output
   if (Sys.getenv("IN_PKGDOWN") == "") {
     return(Sys.Date())
