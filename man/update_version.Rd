@@ -5,19 +5,22 @@
 \title{Update NEWS.md and DESCRIPTION with a new version}
 \usage{
 update_version(
-  which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major")
+  which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major",
+    "major")
 )
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported
 values are
 \itemize{
-\item \code{"dev"} (default),
-\item \code{"patch"},
-\item \code{"pre-minor"} (x.y.99.9000),
-\item \code{"minor"},
-\item \code{"pre-major"} (x.99.99.9000),
-\item \code{"major"}.
+\item \code{"auto"} (default: \code{"samedev"} or \code{"dev"}, depending on contents of \code{NEWS.md}),
+\item \code{"samedev"} (a.b.c.900x with stable version),
+\item \code{"dev"} (a.b.c.9xxx),
+\item \code{"patch"} (a.b.x),
+\item \code{"pre-minor"} (a.b.99.9000),
+\item \code{"minor"} (a.x.0),
+\item \code{"pre-major"} (a.99.99.9000),
+\item \code{"major"} (x.0.0).
 }}
 }
 \value{
