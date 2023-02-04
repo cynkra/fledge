@@ -12,6 +12,8 @@ test_that("update_news() works when news file still empty", {
   local_demo_project(news = FALSE, quiet = TRUE)
   file.create("NEWS.md")
   expect_no_error(update_news(which = "patch"))
+
+  local_options(pillar.width = 240)
   expect_snapshot(read_fledgling())
 })
 
