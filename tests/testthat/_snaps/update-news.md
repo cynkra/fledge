@@ -9,6 +9,9 @@
       $version
       [1] '0.0.1'
       
+      $date
+      [1] "2023-01-23"
+      
       $preamble
       [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
       
