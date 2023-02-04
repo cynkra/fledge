@@ -61,12 +61,12 @@ get_current_news <- function() {
     return(character())
   }
   # FIXME: Add body column to get_news_headers()?
-  stopifnot(headers$line[[1]] %in% 1:3)
+  stopifnot(headers$start[[1]] %in% 1:3)
 
   if (nrow(headers) == 1) {
     n <- -1L
   } else {
-    n <- headers$line[[2]] - 1L
+    n <- headers$start[[2]] - 1L
   }
 
   current_news <- readLines(news_path(), n)[-1]

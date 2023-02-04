@@ -278,8 +278,6 @@ fledge::bump_version()
 ## -- Updating NEWS --
 ## 
 ## > Adding new entries to 'NEWS.md'.
-## Warning: 'Date' must be an ISO date: yyyy-mm-dd, but it is actually better to
-## leave this field out completely. It is not required.
 ## 
 ## -- Updating Version --
 ## 

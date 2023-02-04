@@ -59,8 +59,6 @@
 - Split news (#584).
 
 
-
-
 # fledge 0.1.0.9022 (2022-11-10)
 
 ## Bug fixes
@@ -76,8 +74,6 @@
 # fledge 0.1.0.9020 (2022-11-03)
 
 - Snapshot updates for R-CMD-check-base (null) (#570)
-
-
 
 
 # fledge 0.1.0.9019 (2022-10-28)
@@ -305,3 +301,4 @@ Includes vignettes: "Get started", "Using fledge", and "Fledge internals".
 Examples and tests are supported with a demo project, created via `with_demo_project()`.
 
 Thanks Patrick Schratz and Maëlle Salmon for your contributions!
+

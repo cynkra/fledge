@@ -25,11 +25,11 @@ URL: https://fledge.cynkra.com/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
+    brio,
     callr,
     cli,
     desc (>= 1.4.1),
     devtools,
-    enc,
     glue,
     httr,
     lifecycle,
@@ -42,7 +42,6 @@ Imports:
     whoami,
     xml2
 Suggests: 
-    brio,
     clipr,
     covr,
     curl,

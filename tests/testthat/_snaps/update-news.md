@@ -13,10 +13,16 @@
       [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
       
       $news
-      # A tibble: 1 x 8
-         line h2    version date         nickname original                 news  raw  
-        <int> <lgl> <chr>   <chr>        <chr>    <chr>                    <lis> <chr>
-      1     3 FALSE 0.0.1   (2023-01-23) ""       # tea 0.0.1 (2023-01-23) <chr> "# t~
+      # A tibble: 1 x 10
+        start   end h2    raw                                                     
+        <int> <int> <lgl> <chr>                                                   
+      1     3     6 FALSE "# tea 0.0.1 (2023-01-23)\n\n- Internal changes only.\n"
+        news             section_state title                  version date        
+        <named list>     <chr>         <chr>                  <chr>   <chr>       
+      1 <named list [1]> keep          tea 0.0.1 (2023-01-23) 0.0.1   (2023-01-23)
+        nickname
+        <chr>   
+      1 <NA>    
       
       attr(,"class")
       [1] "fledgling"

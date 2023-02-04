@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# fledge 0.1.0.9002
+# fledge (development version)
 
 ## Bug fixes
 
@@ -9,18 +9,8 @@
 ## Features
 
 - Neat helper.
-
 - New stuff.
 
-
-# fledge 0.1.0.9001
-
-## Features
-
-- New stuff.
-
-
-# fledge (development version)
 
 # fledge 0.1.0
 

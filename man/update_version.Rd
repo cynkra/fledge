@@ -27,7 +27,9 @@ values are
 None
 }
 \description{
-Bumps a version component and adds to \code{NEWS.md} and \code{DESCRIPTION}.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Deprecated, use \code{\link[=update_news]{update_news()}}.
 }
 \examples{
 # Create mock package in a temporary directory.
@@ -43,11 +45,11 @@ with_demo_project({
   gert::git_commit("- Add cool function.")
   # Bump version with fledge.
   fledge::bump_version()
-  fledge::update_news(c("- something I forgot", "- blabla"))
-  fledge::update_version()
+  fledge::update_news(c("- something I forgot", "- blabla"), which = "patch")
   gert::git_add("NEWS.md")
   gert::git_commit(message = "release notes tweaking")
   fledge::tag_version()
   print(fledge::get_last_tag())
 })
 }
+\keyword{internal}

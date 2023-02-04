@@ -71,8 +71,7 @@ pre_release_impl <- function(which, force) {
   # bump version on main branch to version set by user
   # Avoid `bump_version()` to avoid showing `NEWS.md` at this stage,
   # because it changes as we jump between branches.
-  update_news()
-  update_version(which = which)
+  update_news(which = which)
   commit_version()
 
   # switch to release branch and update cran-comments
@@ -86,7 +85,7 @@ pre_release_impl <- function(which, force) {
 
   cli_h1("2. Bumping main branch to dev version and updating NEWS")
   # manual implementation of bump_version(), it doesn't expose `force` yet
-  bump_version_to_dev_with_force(force)
+  bump_version_to_dev_with_force(force, which = which)
 
   cli_h1("3. Opening Pull Request for release branch")
   # switch to release branch and init pre_release actions

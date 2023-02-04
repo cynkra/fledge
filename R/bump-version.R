@@ -44,9 +44,8 @@ bump_version_impl <- function(which, no_change_behavior) {
   invisible(TRUE)
 }
 
-bump_version_to_dev_with_force <- function(force) {
-  update_news()
-  update_version()
+bump_version_to_dev_with_force <- function(force, which) {
+  update_news(which = which)
 
   force <- commit_version() || force
   tag <- tag_version(force)

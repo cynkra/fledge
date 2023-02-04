@@ -17,11 +17,11 @@ Refs: #123
 
 ## Features
 
-### lang 
+### lang
 
 - Add Polish language.
 
-### api 
+### api
 
 - Breaking change: send an email to the customer when a product is shipped.
 
@@ -47,7 +47,7 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 
-### api 
+### api
 
 - Breaking change: send an email to the customer when a product is shipped.
 
@@ -56,5 +56,4 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 ## upkeep
 
 - Update rlang usage.
-
 
