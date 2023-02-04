@@ -13,7 +13,7 @@
       -- Updating Version --
       
       v Package version bumped to 0.0.0.9001.
-      > Adding header to 'NEWS.md'.
+      > Added header to 'NEWS.md'.
       > Committing changes.
       
       -- Tagging Version --
@@ -49,7 +49,7 @@
       -- Updating Version --
       
       v Package version bumped to 0.0.0.9002.
-      > Adding header to 'NEWS.md'.
+      > Added header to 'NEWS.md'.
       > Committing changes.
       
       -- Tagging Version --
@@ -72,7 +72,7 @@
       -- Updating Version --
       
       v Package version bumped to 1.0.0.
-      > Adding header to 'NEWS.md'.
+      > Added header to 'NEWS.md'.
       > Committing changes.
       
       -- Preparing package for CRAN release --

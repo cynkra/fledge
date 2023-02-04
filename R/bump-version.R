@@ -20,10 +20,8 @@ bump_version_impl <- function(which, no_change_behavior) {
       return(invisible(FALSE))
     }
   }
-  #' 1. [update_news()]
-  update_news()
-  #' 1. [update_version()], using the `which` argument
-  update_version(which = which)
+  #' 1. [update_news()], using the `which` argument
+  update_news(which = which)
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
@@ -46,9 +44,8 @@ bump_version_impl <- function(which, no_change_behavior) {
   invisible(TRUE)
 }
 
-bump_version_to_dev_with_force <- function(force) {
-  update_news()
-  update_version()
+bump_version_to_dev_with_force <- function(force, which) {
+  update_news(which = which)
 
   force <- commit_version() || force
   tag <- tag_version(force)

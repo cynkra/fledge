@@ -71,8 +71,7 @@ pre_release_impl <- function(which, force) {
   # bump version on main branch to version set by user
   # Avoid `bump_version()` to avoid showing `NEWS.md` at this stage,
   # because it changes as we jump between branches.
-  update_news()
-  update_version(which = which)
+  update_news(which = which)
   commit_version()
 
   # switch to release branch and update cran-comments
@@ -86,7 +85,7 @@ pre_release_impl <- function(which, force) {
 
   cli_h1("2. Bumping main branch to dev version and updating NEWS")
   # manual implementation of bump_version(), it doesn't expose `force` yet
-  bump_version_to_dev_with_force(force)
+  bump_version_to_dev_with_force(force, which = which)
 
   cli_h1("3. Opening Pull Request for release branch")
   # switch to release branch and init pre_release actions
@@ -156,6 +155,7 @@ switch_branch <- function(name) {
 }
 
 update_cran_comments <- function() {
+  rlang::check_installed("rversions")
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
   old_crp_date <- get_old_crp_date()
@@ -231,6 +231,7 @@ is_new_submission <- function(package) {
 }
 
 get_cransplainer_update <- function(package) {
+  rlang::check_installed("foghorn")
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
   checked_on <- paste0("Checked on ", get_date())
@@ -371,6 +372,7 @@ post_release_impl <- function() {
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
+  pull_head()
   merge_branch(release_branch)
   push_head()
 

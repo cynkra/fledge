@@ -1,5 +1,7 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.0.1 (2023-01-23)
+
 ## Bug fixes
 
 - Prevent racing of requests.
@@ -15,11 +17,11 @@ Refs: #123
 
 ## Features
 
-### lang 
+### lang
 
 - Add Polish language.
 
-### api 
+### api
 
 - Breaking change: send an email to the customer when a product is shipped.
 
@@ -45,7 +47,7 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 
-### api 
+### api
 
 - Breaking change: send an email to the customer when a product is shipped.
 
@@ -54,5 +56,4 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 ## upkeep
 
 - Update rlang usage.
-
 

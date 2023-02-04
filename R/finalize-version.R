@@ -26,6 +26,16 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   }
 }
 
+pull_head <- function() {
+  head <- gert::git_branch()
+
+  if (fledge_chatty()) {
+    cli_alert("Pulling {.field {head}}.")
+  }
+
+  gert::git_pull(rebase = TRUE)
+}
+
 push_tag <- function(tag, force = TRUE) {
   if (fledge_chatty()) {
     cli_alert("Force-pushing tag {.field {tag}}.")

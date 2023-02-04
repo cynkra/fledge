@@ -25,33 +25,32 @@ URL: https://fledge.cynkra.com/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
+    brio,
     callr,
     cli,
-    clipr,
     desc (>= 1.4.1),
     devtools,
-    enc,
-    foghorn,
-    gert (>= 1.4.0),
-    gh,
     glue,
     httr,
-    magrittr,
+    lifecycle,
+    pandoc,
     purrr (>= 0.3.2),
     rematch2,
     rlang (>= 0.4.12),
-    rversions,
     tibble,
     usethis (>= 2.1.5),
     whoami,
-    withr
+    xml2
 Suggests: 
-    brio,
+    clipr,
     covr,
     curl,
     digest,
     fansi,
+    foghorn,
     fs,
+    gert (>= 1.4.0),
+    gh,
     httptest,
     jsonlite,
     knitr,
@@ -61,8 +60,10 @@ Suggests:
     pkgload,
     rmarkdown,
     rstudioapi,
+    rversions,
     testthat (>= 3.0.0),
-    vctrs
+    vctrs,
+    withr
 Config/Needs/readme: r-lib/downlit@f-readme-document
 VignetteBuilder: 
     knitr

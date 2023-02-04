@@ -6,11 +6,24 @@
 #' @param messages A character vector of commit messages,
 #'   e.g. as in the `message` column in the return value of [get_top_level_commits()].
 #'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
+#' @param which Component of the version number to update. Supported
+#'   values are
+#'   * `"auto"` (default: `"samedev"` or `"dev"`, depending on contents of `NEWS.md`),
+#'   * `"samedev"` (a.b.c.900x with stable version),
+#'   * `"dev"` (a.b.c.9xxx),
+#'   * `"patch"` (a.b.x),
+#'   * `"pre-minor"` (a.b.99.9000),
+#'   * `"minor"` (a.x.0),
+#'   * `"pre-major"` (a.99.99.9000),
+#'   * `"major"` (x.0.0).
 #' @example man/examples/tag-version.R
 #'
 #' @return None
 #' @export
-update_news <- function(messages = NULL) {
+update_news <- function(messages = NULL,
+                        which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
+  which <- arg_match(which)
+
   if (is.null(messages)) {
     commits <- default_commit_range()
   } else {
@@ -20,7 +33,10 @@ update_news <- function(messages = NULL) {
     )
   }
 
-  with_repo(update_news_impl(commits))
+  local_repo()
+
+  update_news_impl(commits, which)
+
   invisible(NULL)
 }
 

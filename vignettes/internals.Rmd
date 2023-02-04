@@ -62,9 +62,7 @@ You can use second and third level headers and add as many empty lines as you wa
 
 The first function to call at any stage is always `bump_version()`. This does the following
 
-1. Calls `update_news()` to collect NEWS entries from top-level commits.
-
-2. Calls `update_version()` to increment the version in `DESCRIPTION` and add a header to `NEWS.md`.
+1. Calls `update_news()` to collect NEWS entries from top-level commits and to increment the version in `DESCRIPTION` and add a header to `NEWS.md`.
 
 ### Tagging for "dev" vs. other releases
 
