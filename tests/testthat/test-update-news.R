@@ -1,77 +1,104 @@
-test_that("add_to_news works when news file still empty", {
-  temp_dir <- withr::local_tempdir()
-  temp_news <- file.path(temp_dir, "NEWS-empty.md")
-  file.create(temp_news)
-  mockery::stub(
-    where = add_to_news,
-    what = "news_path",
-    how = temp_news
-  )
-  add_to_news("* Cool stuff!")
-  expect_snapshot_file(temp_news)
+test_that("update_news() works when news file absent", {
+  withr::local_options("fledge.quiet" = TRUE)
+  withr::local_options("usethis.quiet" = TRUE)
+  local_demo_project(news = FALSE, quiet = TRUE)
+  expect_no_error(update_news(which = "patch"))
 })
 
+test_that("update_news() works when news file still empty", {
+  withr::local_options("usethis.quiet" = TRUE)
+  withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
 
-test_that("add_to_news works when no news file yet", {
-  temp_dir <- withr::local_tempdir()
-  temp_news <- file.path(temp_dir, "NEWS-new.md")
-  mockery::stub(
-    where = add_to_news,
-    what = "news_path",
-    how = temp_news
-  )
-  add_to_news("* Cool stuff!")
-  expect_snapshot_file(temp_news)
+  local_demo_project(news = FALSE, quiet = TRUE)
+  file.create("NEWS.md")
+  expect_no_error(update_news(which = "patch"))
+
+  local_options(pillar.width = 240)
+  expect_snapshot(read_fledgling())
 })
 
-test_that("Can parse conventional commits", {
+test_that("normalize_news() works", {
+  withr::local_options("usethis.quiet" = TRUE)
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
-  create_cc_repo(repo)
-  messages <- get_top_level_commits_impl(since = NULL)$message
-  update_news(messages)
-  expect_snapshot_file("NEWS.md")
+  usethis::with_project(
+    repo,
+    usethis::use_description(fields = list(Package = "fledge")),
+    force = TRUE
+  )
+  df <- tibble::tribble(
+    ~description,
+    "fledge has better support.",
+    "fledge's interface was improved!",
+    "fledged bird?",
+    "`update_news()` capitalize items",
+    "2 new functions for bla",
+    "harvest PR title"
+  )
+  expect_snapshot_tibble(normalize_news(df))
 })
 
-test_that("Can parse Co-authored-by", {
-  expect_snapshot(extract_newsworthy_items("- blop\n-blip\n\nCo-authored-by: Person (<person@users.noreply.github.com>)"))
-  expect_snapshot(extract_newsworthy_items("- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)"))
-  expect_snapshot(extract_newsworthy_items("feat: blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)"))
+test_that("regroup_news() works", {
+  withr::local_options("usethis.quiet" = TRUE)
+  news_list1 <- list(
+    Uncategorized = c("- blop", "- etc"),
+    Documentation = c("- stuff", "- other")
+  )
+  news_list2 <- list(
+    Features = c("- feat1", "- feat2"),
+    `Custom type` = "cool right",
+    Uncategorized = c("- pof", "- ok"),
+    Documentation = "- again"
+  )
+  combined <- c(news_list1, news_list2)
+  regrouped <- regroup_news(combined)
+
+  expect_equal(
+    names(regrouped),
+    c("Custom type", "Features", "Documentation", "Uncategorized")
+  )
+  expect_length(regrouped[["Documentation"]], 3)
+  expect_length(regrouped[["Uncategorized"]], 4)
 })
 
-test_that("Can parse PR merge commits", {
-  withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
-  httptest::with_mock_dir("pr", {
-    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-    expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
-  })
-})
+test_that("Can update dev version news item", {
+  withr::local_options("usethis.quiet" = TRUE)
+  repo <- withr::local_tempdir(pattern = "devpkg")
 
-test_that("Can parse PR merge commits - external contributor", {
-  withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
-  httptest::with_mock_dir("pr", {
-    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-    expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
-  })
-})
+  create_cc_repo(
+    repo,
+    commit_messages = "feat: new stuff"
+  )
 
-test_that("Can parse PR merge commits - internet error", {
-  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-  withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
-  withr::local_envvar("NO_INTERNET_TEST_FLEDGE" = "blop")
-  expect_snapshot_tibble(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
-})
+  usethis::with_project(
+    repo,
+    {
+      usethis::use_description(
+        fields = list(Package = "fledge", Version = "0.1.0")
+      )
+      usethis::use_news_md()
+      usethis::use_dev_version()
+    },
+    force = TRUE
+  )
+  expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    name = "samedev-base.md"
+  )
 
-test_that("Can parse PR merge commits - PAT error", {
-  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-  withr::local_envvar("FLEDGE_TEST_NO_PAT" = "blop")
-  expect_snapshot_error(extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing"))
-})
+  usethis::local_project(repo, force = TRUE, setwd = FALSE)
+  withr::with_dir(repo, update_news())
+  expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    name = "samedev.md"
+  )
 
-test_that("Can parse PR merge commits - other error", {
-  withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
-  withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
-  bla <- function(...) stop("bla")
-  mockery::stub(harvest_pr_data, "gh::gh", bla)
-  expect_snapshot(harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing"))
+  # regrouping!
+  sort_of_commit("fix: horrible bug", repo = repo)
+  sort_of_commit("feat: neat helper", repo = repo)
+  withr::with_dir(repo, update_news())
+  expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    name = "samedev-updated.md"
+  )
 })

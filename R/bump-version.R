@@ -17,13 +17,11 @@ bump_version_impl <- function(which, no_change_behavior) {
     }
     if (no_change_behavior == "noop") {
       cli::cli_alert_info("No change since last version.")
-      return()
+      return(invisible(FALSE))
     }
   }
-  #' 1. [update_news()]
-  update_news()
-  #' 1. [update_version()], using the `which` argument
-  update_version(which = which)
+  #' 1. [update_news()], using the `which` argument
+  update_news(which = which)
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
@@ -42,11 +40,12 @@ bump_version_impl <- function(which, no_change_behavior) {
       cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
     }
   }
+
+  invisible(TRUE)
 }
 
-bump_version_to_dev_with_force <- function(force) {
-  update_news()
-  update_version()
+bump_version_to_dev_with_force <- function(force, which) {
+  update_news(which = which)
 
   force <- commit_version() || force
   tag <- tag_version(force)

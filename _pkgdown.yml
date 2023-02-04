@@ -1,12 +1,10 @@
-url: https://cynkra.github.io/fledge
+url: https://fledge.cynkra.com/
 
 template:
-  params:
-    bootswatch: flatly # https://bootswatch.com/flatly/
-
+  params: {}
+  package: cynkratemplate
 development:
   mode: auto
-
 authors:
   Kirill Müller:
     href: https://krlmlr.info
@@ -26,7 +24,6 @@ reference:
   - get_top_level_commits
   - tag_version
   - update_news
-  - update_version
 - title: Helper for fledge demonstration
   contents:
   - create_demo_project

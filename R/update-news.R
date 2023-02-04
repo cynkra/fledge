@@ -1,209 +1,106 @@
-update_news_impl <- function(messages) {
-  news_items <- collect_news(messages)
-  news_lines <- regroup_news(news_items)
+# File editing ------
+
+update_news_impl <- function(commits, which) {
+  news_items <- collect_news(commits)
+  news_items <- normalize_news(news_items)
+  news_lines <- organize_news(news_items)
 
   if (fledge_chatty()) {
     cli_h2("Updating NEWS")
     cli_alert("Adding new entries to {.file {news_path()}}.")
   }
 
-  add_to_news(news_lines)
-}
+  fledgeling <- read_fledgling()
 
-collect_news <- function(messages) {
-  if (fledge_chatty()) {
-    cli_alert("Scraping {.field {length(messages)}} commit messages.")
-  }
+  # isTRUE() as NEWS.md can be empty
+  dev_header_present <- isTRUE(
+    grepl(
+      "(development version)",
+      fledgeling[["news"]][["title"]][1]
+    )
+  )
 
-  newsworthy_items <- messages %>%
-    gsub("\r\n", "\n", .) %>%
-    purrr::discard(~ . == "") %>%
-    purrr::map_chr(remove_housekeeping) %>%
-    purrr::map(extract_newsworthy_items) %>%
-    purrr::keep(~ !is.null(.)) %>%
-    bind_rows()
-
-  if (nrow(newsworthy_items) == 0) {
-    if (length(messages) <= 1) {
-      newsworthy_items <- parse_bullet_commit("- Same as previous version.")
-      if (fledge_chatty()) cli_alert_info("Same as previous version.")
+  if (which == "auto") {
+    if (dev_header_present) {
+      which <- "samedev"
     } else {
-      newsworthy_items <- parse_bullet_commit("- Internal changes only.")
-      if (fledge_chatty()) cli_alert_info("Internal changes only.")
+      which <- "dev"
     }
-  } else {
+  }
+
+  if (which == "samedev") {
+    if (!dev_header_present) {
+      rlang::abort("Can't find a development version NEWS header")
+    }
+
+    # Append and regroup
+    if (is.null(fledgeling[["news"]])) {
+      fledgeling[["news"]] <- tibble::tibble(
+        start = 3,
+        h2 = FALSE,
+        version = fledgeling[["version"]],
+        date = "",
+        nickname = "",
+        original = "",
+        news = list(parse_news_md(news_lines)),
+        raw = "",
+        section_state = "new"
+      )
+    } else {
+      combined <- c(
+        parse_news_md(news_lines),
+        fledgeling[["news"]][1, ]$news[[1]]
+      )
+      combined <- purrr::discard(combined, purrr::is_empty)
+      fledgeling[["news"]][1, ]$news <- list(
+        regroup_news(combined)
+      )
+      fledgeling[["news"]][1, ]$section_state <- "new"
+    }
+    write_fledgling(fledgeling)
+
     if (fledge_chatty()) {
-      no <- nrow(newsworthy_items)
-      entry_word <- if (no == 1) "entry" else "entries"
-      cli_alert_success(sprintf("Found %s NEWS-worthy %s.", no, entry_word))
+      cli_alert("Added items to {.file {news_path()}}.")
     }
-  }
-
-  newsworthy_items
-}
-
-remove_housekeeping <- function(message) {
-  strsplit(message, "\n---", fixed = TRUE)[[1]][1]
-}
-
-extract_newsworthy_items <- function(message) {
-  # Merge messages
-  if (is_merge_commit(message)) {
-    return(parse_merge_commit(message))
-  }
-
-  # Conventional commits messages
-  if (is_conventional_commit(message)) {
-    return(parse_conventional_commit(message))
-  }
-
-  # Bullets messages
-  # There can be several bullets per message!
-  parse_bullet_commit(message)
-}
-
-parse_bullet_commit <- function(message) {
-  message_lines <- strsplit(message, "\n", fixed = TRUE)[[1]]
-  bullets <- purrr::keep(message_lines, is_bullet_message)
-  bullets <- trimws(sub(bullet_pattern(), "", bullets))
-
-  meta <- parse_squash_info(message)
-  if (!is.null(meta["pr"])) {
-    bullets <- trimws(sub(sprintf("\\(%s\\)", meta["pr"]), "", bullets))
-  }
-
-  description <- if (!is.null(meta)) {
-    sprintf("%s (%s)", bullets, toString(meta))
   } else {
-    bullets
-  }
+    current_version <- desc::desc_get_version()
+    new_version <- fledge_guess_version(current_version, which)
+    fledgeling[["version"]] <- new_version
+    if (!is.null(fledgeling[["date"]])) {
+      fledgeling[["date"]] <- as.character(get_date())
+    }
 
-  tibble::tibble(
-    description = description,
-    type = default_type(),
-    breaking = FALSE,
-    scope = NA
-  )
-}
+    section_df <- tibble::tibble(
+      start = 3,
+      end = NA,
+      h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
+      version = new_version,
+      date = maybe_date(fledgeling[["news"]]),
+      nickname = NA,
+      news = list(parse_news_md(news_lines)),
+      raw = "",
+      title = "",
+      section_state = "new"
+    )
 
-bullet_pattern <- function() {
-  "^[*-]"
-}
+    if (is.null(fledgeling[["news"]])) {
+      fledgeling[["news"]] <- section_df
+    } else {
+      fledgeling[["news"]] <- rbind(
+        section_df,
+        fledgeling[["news"]]
+      )
+    }
 
-is_bullet_message <- function(message) {
-  grepl(bullet_pattern(), message)
-}
+    write_fledgling(fledgeling)
 
-conventional_commit_header_pattern <- function() {
-  # Type is a noun
-  # There can be a scope
-  # Compulsory space after the colon
-  "^[A-Za-z]*(\\(.*\\))?!?:[[:space:]]"
-}
+    if (fledge_chatty()) {
+      cli_h2("Updating Version")
 
-is_conventional_commit <- function(message) {
-  grepl(conventional_commit_header_pattern(), message)
-}
+      cli_alert_success("Package version bumped to {.field {new_version}}.")
 
-parse_conventional_commit <- function(message) {
-  type_matches <- regexpr(conventional_commit_header_pattern(), message)
-  header <- regmatches(message, type_matches)
-
-  type <- sub("(\\(.*\\))?!?:[[:space:]]$", "", header)
-  type <- translate_type(type)
-
-  scope <- regmatches(header, regexpr("(\\(.*\\))", header))
-  scope <- if (length(scope) > 0) {
-    gsub("[\\(\\)]", "", scope)
-  } else {
-    NA
-  }
-
-
-  description <- sub(header, "", message, fixed = TRUE)
-
-  description <- add_squash_info(description)
-
-  breaking <- grepl("!:", header)
-  breaking_prefix <- if (breaking) {
-    "Breaking change: "
-  } else {
-    ""
-  }
-  tibble::tibble(
-    description = trimws(sprintf("%s%s", breaking_prefix, description)),
-    type = type,
-    breaking = breaking,
-    scope = scope
-  )
-}
-
-author_pattern <- function() {
-  "^Co-authored-by:"
-}
-
-parse_squash_info <- function(description) {
-  description_lines <- strsplit(description, "\n")[[1]]
-  author_lines <- description_lines[grepl(author_pattern(), description_lines)]
-  authors <- rematch2::re_match(author_lines, "<.*@users.noreply.github.com>")$.match
-  authors <- stats::na.omit(authors)
-
-  if (length(author_lines) == 0 || length(authors) == 0) {
-    return(NULL)
-  }
-
-  authors <- sub("^<", "", authors)
-  authors <- sub("@.*", "", authors)
-
-  meta <- sprintf("@%s", authors)
-
-  # If there are co-authors, this is a merge commit so use its syntax
-  pr <- rematch2::re_match(description_lines[1], "(#[0-9]*)")$.match
-  if (!is.na(pr)) {
-    meta <- c(meta, "pr" = pr)
-  }
-
-  meta
-}
-
-add_squash_info <- function(description) {
-  description_lines <- strsplit(description, "\n")[[1]]
-
-  meta <- parse_squash_info(description)
-  if (!is.null(meta["pr"])) {
-    description_lines[1] <- trimws(sub(sprintf("\\(%s\\)", meta["pr"]), "", description_lines[1]))
-  }
-
-  description <- trimws(paste(description_lines[!grepl(author_pattern(), description_lines)], collapse = "\n"))
-
-  if (!is.null(meta)) {
-    sprintf("%s (%s)", description, toString(meta))
-  } else {
-    description
-  }
-}
-
-parse_merge_commit <- function(message) {
-  pr_data <- harvest_pr_data(message)
-  pr_number <- pr_data$pr_number
-
-  title <- if (is.na(pr_data$title)) {
-    sprintf("- PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
-  } else {
-    pr_data$title
-  }
-  ctb <- if (is.na(pr_data$external_ctb)) {
-    ""
-  } else {
-    sprintf("@%s, ", pr_data$external_ctb)
-  }
-
-  description <- sprintf("%s (%s#%s).", title, ctb, pr_number)
-
-  if (is_conventional_commit(title)) {
-    return(parse_conventional_commit(description))
-  } else {
-    return(parse_bullet_commit(description))
+      cli_alert("Added header to {.file {news_path()}}.")
+    }
   }
 }
 
@@ -211,39 +108,9 @@ news_path <- function() {
   "NEWS.md"
 }
 
-news_comment <- function() {
+news_preamble <- function() {
   "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
 }
-
-add_to_news <- function(news) {
-  if (!file.exists(news_path())) {
-    file.create(news_path())
-  }
-
-  enc::transform_lines_enc(news_path(), make_prepend(news))
-  invisible(news_path())
-}
-
-make_prepend <- function(news) {
-  force(news)
-
-  function(x) {
-    # Not empty news file needs to be tweaked
-    if (length(x) > 0) {
-      # Remove fledge NEWS.md comment
-      if (x[[1]] == news_comment()) {
-        x <- x[-1]
-        # Remove empty line at the top
-        if (x[[1]] == "") {
-          x <- x[-1]
-        }
-      }
-    }
-
-    c(news_comment(), "", news, x)
-  }
-}
-
 
 edit_news <- function() {
   local_options(usethis.quiet = TRUE)
@@ -255,111 +122,89 @@ edit_cran_comments <- function() {
   edit_file("cran-comments.md")
 }
 
-translate_type <- function(type) {
-  standard <- names(conventional_commit_types())[conventional_commit_types() == tolower(type)]
+maybe_date <- function(df) {
+  # escape hatch for tests
+  if (nzchar(Sys.getenv("FLEDGE_EMPTY_DATE"))) {
+    return("")
+  }
 
-  if (length(standard) > 0) {
-    standard
+  formatted_date <- sprintf("(%s)", as.character(get_date()))
+
+  # starting with an empty changelog,
+  # return date
+  if (is.null(df)) {
+    return(formatted_date)
+  }
+
+  # if existing headers,
+  # use date only if the latest one uses date
+  if (is_non_empty_string(df[["date"]][1])) {
+    formatted_date
   } else {
-    type
+    ""
   }
 }
 
-conventional_commit_types <- function() {
-  c(
-    "Bug fixes" = "fix",
-    "Features" = "feat",
-    "Build system, external dependencies" = "build",
-    "Chore" = "chore",
-    "Continuous integration" = "ci",
-    "Documentation" = "docs",
-    "Code style" = "style",
-    "Refactoring" = "refactor",
-    "Performance" = "perf",
-    "Testing" = "test"
+# Normalization ----
+
+capitalize_if_not_start_with_pkg <- function(x) {
+  # leave package name alone
+  pkg_name <- desc::desc_get("Package")
+  pkg_name_regex <- sprintf("^%s(?: |'s)", pkg_name)
+  start_with_pkg <- grepl(pkg_name_regex, x)
+
+  x[!start_with_pkg] <- capitalize(x[!start_with_pkg])
+  x
+}
+
+capitalize <- function(x) {
+  # capitalization
+  # Non-alphabetic characters are left unchanged.
+  x <- paste0(
+    toupper(substr(x, 1, 1)),
+    substr(x, 2, nchar(x))
   )
+  x
 }
 
-is_merge_commit <- function(message) {
-  grepl("^Merge pull request #([0-9]*) from", message)
+add_full_stop <- function(x) {
+  # Replace only the first bullet
+  sub("([^!?.])($|\n)", "\\1.\\2", x)
 }
 
-harvest_pr_data <- function(message) {
-  check_gh_pat()
-
-  pr_number <- regmatches(message, regexpr("#[0-9]*", message))
-  pr_number <- sub("#", "", pr_number)
-
-  slug <- github_slug()
-
-  failure_message <- sprintf("Could not get title for PR #%s", pr_number)
-
-  pr_info <- if (!has_internet()) {
-    cli::cli_alert_warning(sprintf("%s (no internet connection)", failure_message))
-    NULL
-  } else {
-    tryCatch(
-      {
-        gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
-      },
-      error = function(e) {
-        print(e)
-        cli::cli_alert_warning(failure_message)
-        return(NULL)
-      }
-    )
+normalize_news <- function(df) {
+  if (nrow(df) == 0) {
+    return(df)
   }
+  df$description <- capitalize_if_not_start_with_pkg(df$description)
+  df$description <- add_full_stop(df$description)
+  df
+}
 
-  pr_sender <- pr_info$head$repo$owner$login
+regroup_news <- function(list) {
+  unique_names <- unique(names(list))
+  # merge groups with the same name
+  groups <- purrr::map(unique_names, merge_news_group, list)
+  groups <- stats::setNames(groups, unique_names)
+  # put custom first
+  not_custom <- c(names(conventional_commit_types()), default_type())
+  custom_names <- unique_names[!(unique_names %in% not_custom)]
+  unique_names <- factor(unique_names, levels = c(custom_names, not_custom))
+  groups[order(unique_names)]
+}
 
-  external_ctb <- NA_character_
-  if (!is.null(pr_sender)) {
-    repo_owner <- sub("/.*", "", github_slug(get_remote_name()))
-    if (pr_sender != repo_owner) {
-      external_ctb <- pr_sender
-    }
-  }
-
-  tibble::tibble(
-    title = pr_info$title %||% NA_character_,
-    pr_number = pr_number,
-    external_ctb = external_ctb,
+merge_news_group <- function(name, groups) {
+  this_group <- do.call(
+    c,
+    purrr::map(groups[names(groups) == name], unlist, recursive = FALSE)
   )
+  this_group <- unique(this_group[this_group != ""])
+  unname(this_group)
 }
 
-has_internet <- function() {
-  # impossible as fledge imports httr that imports curl :-)
-  if (!rlang::is_installed("curl")) {
-    return(FALSE)
-  }
+# Grouping -------
 
-  if (nzchar(Sys.getenv("NO_INTERNET_TEST_FLEDGE"))) {
-    return(FALSE)
-  }
-  curl::has_internet()
-}
-
-check_gh_pat <- function() {
-  if (!nzchar(gh::gh_token()) || nzchar(Sys.getenv("FLEDGE_TEST_NO_PAT"))) {
-    abort(
-      message = c(
-        x = "Can't find a GitHub Personal Access Token (PAT).",
-        i = 'See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html'
-      )
-    )
-  }
-}
-
-default_type <- function() {
-  "Uncategorized"
-}
-
-regroup_news <- function(news_items) {
-  ## Only uncategorized?
-  if (isTRUE(all.equal(unique(news_items$type), default_type()))) {
-    return(sprintf("%s\n\n", treat_type_items(news_items, header = FALSE)))
-  }
-
+organize_news <- function(news_items) {
   # Repeat breaking changes in a distinct section
   breaking <- news_items[news_items$breaking, ]
   breaking$type <- "Breaking changes"
@@ -375,12 +220,7 @@ regroup_news <- function(news_items) {
   types <- factor(types, levels = c(names(conventional_commit_types()), "Breaking changes", custom_types, default_type()))
   order <- order(types)
   news_types <- news_types[order]
-
-  # Collapse and ensure the whole section is followed by an empty line
-  glue::glue_collapse(
-    c(purrr::map_chr(news_types, treat_type_items), ""),
-    sep = "\n\n"
-  )
+  purrr::map_chr(news_types, treat_type_items)
 }
 
 treat_type_items <- function(df, header = TRUE) {
@@ -411,4 +251,129 @@ add_hyphen <- function(row) {
 
 bind_rows <- function(df_list) {
   do.call(rbind, df_list)
+}
+
+fledge_guess_version <- function(version, which) {
+  version_components <- get_version_components(version)
+  dev <- version_components[["dev"]]
+  patch <- version_components[["patch"]]
+  minor <- version_components[["minor"]]
+  major <- version_components[["major"]]
+
+  if (which %in% c("patch", "minor", "major", "dev")) {
+    dev <- switch(which,
+      dev = {
+        if (!is.na(dev) && dev >= 9999) {
+          rlang::abort(
+            sprintf(
+              "Can't increase version dev component (%s) that is >= 9999.",
+              dev
+            )
+          )
+        }
+        if (is.na(dev)) {
+          9000
+        } else {
+          dev + 1
+        }
+      },
+      NA
+    )
+
+    patch <- switch(which,
+      dev = patch,
+      patch = {
+        if (patch >= 99) {
+          rlang::abort(
+            sprintf(
+              "Can't increase version patch component (%s) that is >= 99.",
+              patch
+            )
+          )
+        }
+        patch + 1
+      },
+      0
+    )
+
+    minor <- switch(which,
+      dev = minor,
+      patch = minor,
+      minor = {
+        if (minor >= 99) {
+          rlang::abort(
+            sprintf(
+              "Can't increase version minor component (%s) that is >= 99.",
+              minor
+            )
+          )
+        }
+        minor + 1
+      },
+      major = 0
+    )
+
+    major <- switch(which,
+      major = major + 1,
+      major
+    )
+  } else {
+    # pre-minor and pre-major
+
+    if (is.na(dev)) {
+      rlang::abort(sprintf("Can't update version from not dev to %s.", which))
+    }
+
+    if (patch >= 99) {
+      rlang::abort(sprintf("Can't bump to %s from version %s (patch >= 99).", which, version))
+    }
+
+    if (minor >= 99) {
+      rlang::abort(sprintf("Can't bump to %s from version %s (minor >= 99).", which, version))
+    }
+
+    dev <- "9000"
+    patch <- "99"
+    # pre-minor: make patch 99
+    # pre-major: make both minor and patch 99
+    if (which == "pre-major") {
+      minor <- "99"
+    }
+  }
+
+  version_components <- c(
+    major = major,
+    minor = minor,
+    patch = patch,
+    dev = dev
+  )
+  paste(version_components[!is.na(version_components)], collapse = ".")
+}
+
+get_version_components <- function(version) {
+  # from https://github.com/r-lib/desc/blob/daece0e5816e17a461969489bfdda2d50b4f5fe5/R/version.R#L53
+  components <- as.numeric(strsplit(format(version), "[-\\.]")[[1]])
+  c(
+    major = components[1],
+    minor = components[2],
+    patch = components[3],
+    dev = components[4] # can be NA
+  )
+}
+
+get_news_headers <- function() {
+  read_fledgling()[["news"]][, c("start", "version", "date", "nickname")]
+}
+
+get_date <- function() {
+  # For stable tests
+  if (Sys.getenv("FLEDGE_DATE") != "") {
+    return(as.Date(Sys.getenv("FLEDGE_DATE")))
+  }
+  # For stable Rmarkdown output
+  if (Sys.getenv("IN_PKGDOWN") == "") {
+    return(Sys.Date())
+  }
+  author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
+  as.Date(author_time)
 }

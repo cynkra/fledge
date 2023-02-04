@@ -34,6 +34,6 @@ testthat_os <- function() {
 
 expect_snapshot_tibble <- function(code) {
   json <- eval(code) %>%
-    jsonlite::toJSON(pretty = TRUE, na = "string")
+    jsonlite::toJSON(pretty = TRUE, na = "string", null = "null")
   expect_snapshot_output(json)
 }

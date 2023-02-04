@@ -1,15 +1,18 @@
 #' Update NEWS.md and DESCRIPTION with a new version
 #'
-#' Bumps a version component and adds to `NEWS.md` and `DESCRIPTION`.
+#' @description
+#' `r lifecycle::badge("deprecated")`
 #'
-#' @param which Component of the version number to update. Supported
-#'   values are `"dev"` (default), `"patch"`, `"minor"` and `"major"`.
+#' Deprecated, use [update_news()].
+#'
+#' @inheritParams update_news
 #' @example man/examples/tag-version.R
 #'
 #' @return None
+#' @keywords internal
 #' @export
-update_version <- function(which = c("dev", "patch", "minor", "major")) {
-  which <- arg_match(which)
-  update_version_impl(which)
-  invisible(NULL)
+update_version <- function(which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
+  lifecycle::deprecate_soft("0.1.1", "fledge::update_version()", "fledge::update_news()")
+
+  update_news(character(), which)
 }

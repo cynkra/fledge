@@ -28,27 +28,37 @@ Using fledge is a discipline / a few habits that is worth learning!
 
 What you need to do in practice is:
 
--   Add a hyphen `-` or `*` at the beginning of important commit messages e.g. the merge or squash commits that merge a Pull Request. These are the commit messages that’ll be recorded in the changelog eventually! Exclude housekeeping parts of the message by typing them after a line `---`.
+-   For important commit messages you want recorded in the changelog, you can
 
-``` text
-- Add support for bla databases.
-```
+    -   Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax. For instance `feat: Enhanced support for time series`. Only using conventional commits syntax will provide automatic *grouping* of changelog items into groups (Documentation, Bug Fixes, etc.).
 
-or
+    -   Add a hyphen `-` or `*` at the beginning of the commit message. Exclude housekeeping parts of the message by typing them after a line `---`.
 
-``` text
-- Add support for bla databases.
+    ``` text
 
----
+    - Add support for bla databases.
+    ```
 
-Also tweak the CI workflow accordingly. :sweat_smile:
-```
+    or
+
+    ``` text
+
+    - Add support for bla databases.
+
+    ---
+
+    Also tweak the CI workflow accordingly. :sweat_smile:
+    ```
+
+    -   Use informative merge commit messages as those will also be included by default in the changelog. On GitHub you can [control the default commit message when merging a pull request](https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/).
+
+    -   (GitHub repositories only) For merge commits with the default not self-contained message (“Merge pull request…”), rely on fledge’s querying GitHub API to get the PR title and include it in the changelog.
 
 For informative commit messages refer to the [Tidyverse style guide](https://style.tidyverse.org/news.html).
 
 -   Run [`fledge::bump_version()`](https://cynkra.github.io/fledge/reference/bump_version.html) regularly e.g. before every coffee break or at the end of the day or of the week. If you forgot to merge one PR run [`fledge::unbump_version()`](https://cynkra.github.io/fledge/reference/unbump_version.html), merge the PR with an informative squash commit message, then run [`fledge::bump_version()`](https://cynkra.github.io/fledge/reference/bump_version.html) and go drink that coffee!
 
--   Run [`fledge::finalize_version()`](https://cynkra.github.io/fledge/reference/finalize_version.html) if you add to edit `NEWS.md` manually e.g. if you made a typo or are not happy with a phrasing after thinking about it. Even if you edit a lot, what’s been written in by fledge is still a good place-holder.
+-   Run [`fledge::finalize_version()`](https://cynkra.github.io/fledge/reference/finalize_version.html) if you need to edit `NEWS.md` manually e.g. if you made a typo or are not happy with a phrasing in retrospect. Even if you edit a lot, what’s been written in by fledge is still a good place-holder.
 
 -   Follow the recommended steps at release (see `vignette("fledge")` usage section).
 
@@ -67,17 +77,17 @@ Click on the image above to show in a separate tab.
 Install from CRAN using:
 
 <pre class='chroma'>
-<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span><span class='o'>)</span></pre>
+<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span><span class='o'>)</span></span></pre>
 
 Install from cynkra’s R-universe (development version) using:
 
 <pre class='chroma'>
-<span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span>, repos <span class='o'>=</span> <span class='s'>"https://cynkra.r-universe.dev"</span><span class='o'>)</span></pre>
+<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"fledge"</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>"https://cynkra.r-universe.dev"</span>, <span class='s'>"https://cloud.r-project.org"</span><span class='o'>)</span><span class='o'>)</span></span></pre>
 
 Or install from GitHub (development version as well) using:
 
 <pre class='chroma'>
-<span class='nf'>remotes</span><span class='nf'>::</span><span class='nf'><a href='https://remotes.r-lib.org/reference/install_github.html'>install_github</a></span><span class='o'>(</span><span class='s'>"cynkra/fledge"</span><span class='o'>)</span></pre>
+<span><span class='nf'>remotes</span><span class='nf'>::</span><span class='nf'><a href='https://remotes.r-lib.org/reference/install_github.html'>install_github</a></span><span class='o'>(</span><span class='s'>"cynkra/fledge"</span><span class='o'>)</span></span></pre>
 
 If you are used to making workflow packages (e.g. [devtools](https://usethis.r-lib.org/articles/articles/usethis-setup.html#use-usethis-or-devtools-in-interactive-work)) available for all your interactive work, you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
 
@@ -95,3 +105,8 @@ If you are used to making workflow packages (e.g. [devtools](https://usethis.r-
 ## How to get started?
 
 Check out the general vignette `vignette("fledge")`, and for the whole game, the demo vignette `vignette("demo")`. Feel free to [ask us questions](https://github.com/cynkra/fledge/discussions)!
+
+## Related tools
+
+-   [newsmd](https://github.com/Dschaykib/newsmd): manually add updates (version or bullet points) to the `NEWS.md` file.
+-   [autonewsmd](https://github.com/kapsner/autonewsmd): Auto-Generate Changelog using Conventional Commits.

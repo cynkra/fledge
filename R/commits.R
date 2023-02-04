@@ -2,6 +2,10 @@ with_repo <- function(code) {
   withr::with_dir(usethis::proj_get(), code)
 }
 
+local_repo <- function(.local_envir = caller_env()) {
+  withr::local_dir(usethis::proj_get(), .local_envir = .local_envir)
+}
+
 get_top_level_commits_impl <- function(since) {
   commit <- gert::git_log(max = 1)$commit
 
@@ -14,7 +18,8 @@ get_top_level_commits_impl <- function(since) {
 
   commit <- get_first_parent(commit, since)
   message <- map_chr(commit, ~ gert::git_commit_info(.x)$message)
-  tibble::tibble(commit, message)
+  merge <- map_lgl(commit, ~ (length(gert::git_commit_info(.x)$parents) > 1))
+  tibble::tibble(commit, message, merge)
 }
 
 get_first_parent <- function(commit, since) {

@@ -1,86 +1,55 @@
-# Can parse Co-authored-by
+# update_news() works when news file still empty
 
     Code
-      extract_newsworthy_items(
-        "- blop\n-blip\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
+      read_fledgling()
     Output
-      # A tibble: 2 x 4
-        description    type          breaking scope
-        <chr>          <chr>         <lgl>    <lgl>
-      1 blop (@person) Uncategorized FALSE    NA   
-      2 blip (@person) Uncategorized FALSE    NA   
+      $name
+      [1] "tea"
+      
+      $version
+      [1] '0.0.1'
+      
+      $date
+      [1] "2023-01-23"
+      
+      $preamble
+      [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
+      
+      $news
+      # A tibble: 1 x 10
+        start   end h2    raw                                                     
+        <int> <int> <lgl> <chr>                                                   
+      1     3     6 FALSE "# tea 0.0.1 (2023-01-23)\n\n- Internal changes only.\n"
+        news             section_state title                  version date        
+        <named list>     <chr>         <chr>                  <chr>   <chr>       
+      1 <named list [1]> keep          tea 0.0.1 (2023-01-23) 0.0.1   (2023-01-23)
+        nickname
+        <chr>   
+      1 <NA>    
+      
+      attr(,"class")
+      [1] "fledgling"
 
----
-
-    Code
-      extract_newsworthy_items(
-        "- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)")
-    Output
-      # A tibble: 1 x 4
-        description                type          breaking scope
-        <chr>                      <chr>         <lgl>    <lgl>
-      1 blop (@person, @else, #42) Uncategorized FALSE    NA   
-
----
-
-    Code
-      extract_newsworthy_items(
-        "feat: blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
-    Output
-      # A tibble: 1 x 4
-        description         type     breaking scope
-        <chr>               <chr>    <lgl>    <lgl>
-      1 blop (@person, #42) Features FALSE    NA   
-
-# Can parse PR merge commits
+# normalize_news() works
 
     [
       {
-        "description": "Improve parsing of conventional commit messages (#332).",
-        "type": "Features",
-        "breaking": false,
-        "scope": "NA"
-      }
-    ] 
-
-# Can parse PR merge commits - external contributor
-
-    [
+        "description": "fledge has better support."
+      },
       {
-        "description": "Improve parsing of conventional commit messages (@someone, #18).",
-        "type": "Features",
-        "breaking": false,
-        "scope": "NA"
-      }
-    ] 
-
-# Can parse PR merge commits - internet error
-
-    [
+        "description": "fledge's interface was improved!"
+      },
       {
-        "description": "PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#332).",
-        "type": "Uncategorized",
-        "breaking": false,
-        "scope": "NA"
+        "description": "Fledged bird?"
+      },
+      {
+        "description": "`update_news()` capitalize items."
+      },
+      {
+        "description": "2 new functions for bla."
+      },
+      {
+        "description": "Harvest PR title."
       }
     ] 
-
-# Can parse PR merge commits - PAT error
-
-    x Can't find a GitHub Personal Access Token (PAT).
-    i See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html
-
-# Can parse PR merge commits - other error
-
-    Code
-      harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing")
-    Output
-      <simpleError in gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}")): bla>
-    Message
-      ! Could not get title for PR #332
-    Output
-      # A tibble: 1 x 3
-        title pr_number external_ctb
-        <chr> <chr>     <chr>       
-      1 <NA>  332       <NA>        
 

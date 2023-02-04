@@ -8,7 +8,10 @@
 #' version: `"bump"` for bump the version;
 #' `"noop"` for do nothing;
 #' `"fail"` for erroring.
-#' @return None
+#' @return
+#'   `TRUE` if `NEWS.md` and `DESCRIPTION` have been updated,
+#'   `FALSE` otherwise.
+#'   Do not rely on this behavior.
 #' @export
 #'
 #' @seealso [unbump_version()]
@@ -20,11 +23,13 @@
 #' Fear not, run [unbump_version()], merge that PR, run `bump_version()`.
 #'
 #' @example man/examples/bump-version.R
-bump_version <- function(which = c("dev", "patch", "minor", "major"), no_change_behavior = c("bump", "noop", "fail")) {
+bump_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major"), no_change_behavior = c("bump", "noop", "fail")) {
   which <- arg_match(which)
   no_change_behavior <- arg_match(no_change_behavior)
 
   check_clean(c("DESCRIPTION", news_path))
 
-  with_repo(bump_version_impl(which = which, no_change_behavior = no_change_behavior))
+  local_repo()
+
+  bump_version_impl(which = which, no_change_behavior = no_change_behavior)
 }
