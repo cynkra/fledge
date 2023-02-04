@@ -12,15 +12,23 @@ update_news_impl <- function(commits, which) {
 
   fledgeling <- read_fledgling()
 
-  if (is.null(which)) {
-    # isTRUE() as NEWS.md can be empty
-    dev_header_present <- isTRUE(
-      grepl(
-        "(development version)",
-        fledgeling[["news"]][["title"]][1]
-      )
+  # isTRUE() as NEWS.md can be empty
+  dev_header_present <- isTRUE(
+    grepl(
+      "(development version)",
+      fledgeling[["news"]][["title"]][1]
     )
+  )
 
+  if (which == "auto") {
+    if (dev_header_present) {
+      which <- "samedev"
+    } else {
+      which <- "dev"
+    }
+  }
+
+  if (which == "samedev") {
     if (!dev_header_present) {
       rlang::abort("Can't find a development version NEWS header")
     }
