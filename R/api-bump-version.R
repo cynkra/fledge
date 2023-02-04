@@ -3,7 +3,7 @@
 #' @description
 #' Calls the following functions:
 #'
-#' @inheritParams update_news
+#' @inheritParams update_version
 #' @param no_change_behavior What to do if there was no change since the last
 #' version: `"bump"` for bump the version;
 #' `"noop"` for do nothing;
@@ -29,5 +29,7 @@ bump_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-ma
 
   check_clean(c("DESCRIPTION", news_path))
 
-  with_repo(bump_version_impl(which = which, no_change_behavior = no_change_behavior))
+  local_repo()
+
+  bump_version_impl(which = which, no_change_behavior = no_change_behavior)
 }

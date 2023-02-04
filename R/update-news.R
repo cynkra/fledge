@@ -12,15 +12,23 @@ update_news_impl <- function(commits, which) {
 
   fledgeling <- read_fledgling()
 
-  if (is.null(which)) {
-    # isTRUE() as NEWS.md can be empty
-    dev_header_present <- isTRUE(
-      grepl(
-        "(development version)",
-        fledgeling[["news"]][["title"]][1]
-      )
+  # isTRUE() as NEWS.md can be empty
+  dev_header_present <- isTRUE(
+    grepl(
+      "(development version)",
+      fledgeling[["news"]][["title"]][1]
     )
+  )
 
+  if (which == "auto") {
+    if (dev_header_present) {
+      which <- "samedev"
+    } else {
+      which <- "dev"
+    }
+  }
+
+  if (which == "samedev") {
     if (!dev_header_present) {
       rlang::abort("Can't find a development version NEWS header")
     }
@@ -58,6 +66,9 @@ update_news_impl <- function(commits, which) {
     current_version <- desc::desc_get_version()
     new_version <- fledge_guess_version(current_version, which)
     fledgeling[["version"]] <- new_version
+    if (!is.null(fledgeling[["date"]])) {
+      fledgeling[["date"]] <- as.character(get_date())
+    }
 
     section_df <- tibble::tibble(
       start = 3,
@@ -113,7 +124,7 @@ edit_cran_comments <- function() {
 
 maybe_date <- function(df) {
   # escape hatch for tests
-  if (nzchar(Sys.getenv("FLEDGE.EMPTY.DATE"))) {
+  if (nzchar(Sys.getenv("FLEDGE_EMPTY_DATE"))) {
     return("")
   }
 
@@ -355,6 +366,10 @@ get_news_headers <- function() {
 }
 
 get_date <- function() {
+  # For stable tests
+  if (Sys.getenv("FLEDGE_DATE") != "") {
+    return(as.Date(Sys.getenv("FLEDGE_DATE")))
+  }
   # For stable Rmarkdown output
   if (Sys.getenv("IN_PKGDOWN") == "") {
     return(Sys.Date())
