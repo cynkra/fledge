@@ -85,7 +85,7 @@ test_that("Can update dev version news item", {
   withr::with_dir(repo, update_news())
   expect_snapshot_file(
     file.path(repo, "NEWS.md"),
-    name = "dev-NEWS.md"
+    name = "samedev.md"
   )
 
   # regrouping!
@@ -94,6 +94,6 @@ test_that("Can update dev version news item", {
   withr::with_dir(repo, update_news())
   expect_snapshot_file(
     file.path(repo, "NEWS.md"),
-    name = "dev-updated-NEWS.md"
+    name = "samedev-updated.md"
   )
 })
