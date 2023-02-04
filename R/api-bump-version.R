@@ -3,7 +3,7 @@
 #' @description
 #' Calls the following functions:
 #'
-#' @inheritParams update_news
+#' @inheritParams update_version
 #' @param no_change_behavior What to do if there was no change since the last
 #' version: `"bump"` for bump the version;
 #' `"noop"` for do nothing;
