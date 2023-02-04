@@ -81,6 +81,11 @@ test_that("Can update dev version news item", {
     },
     force = TRUE
   )
+  expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    name = "samedev-base.md"
+  )
+
   usethis::local_project(repo, force = TRUE, setwd = FALSE)
   withr::with_dir(repo, update_news())
   expect_snapshot_file(
