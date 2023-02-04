@@ -2,6 +2,10 @@ with_repo <- function(code) {
   withr::with_dir(usethis::proj_get(), code)
 }
 
+local_repo <- function(.local_envir = caller_env()) {
+  withr::local_dir(usethis::proj_get(), .local_envir = .local_envir)
+}
+
 get_top_level_commits_impl <- function(since) {
   commit <- gert::git_log(max = 1)$commit
 

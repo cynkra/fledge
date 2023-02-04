@@ -9,15 +9,23 @@
       $version
       [1] '0.0.1'
       
+      $date
+      [1] "2023-01-23"
+      
       $preamble
       [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
       
       $news
       # A tibble: 1 x 10
-        start   end h2    raw         news         secti~1 title version date  nickn~2
-        <int> <int> <lgl> <chr>       <named list> <chr>   <chr> <chr>   <chr> <chr>  
-      1     3     6 FALSE "# tea 0.0~ <named list> keep    tea ~ 0.0.1   (202~ <NA>   
-      # ... with abbreviated variable names 1: section_state, 2: nickname
+        start   end h2    raw                                                     
+        <int> <int> <lgl> <chr>                                                   
+      1     3     6 FALSE "# tea 0.0.1 (2023-01-23)\n\n- Internal changes only.\n"
+        news             section_state title                  version date        
+        <named list>     <chr>         <chr>                  <chr>   <chr>       
+      1 <named list [1]> keep          tea 0.0.1 (2023-01-23) 0.0.1   (2023-01-23)
+        nickname
+        <chr>   
+      1 <NA>    
       
       attr(,"class")
       [1] "fledgling"

@@ -7,9 +7,13 @@ test_that("update_news() works when news file absent", {
 
 test_that("update_news() works when news file still empty", {
   withr::local_options("usethis.quiet" = TRUE)
+  withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
+
   local_demo_project(news = FALSE, quiet = TRUE)
   file.create("NEWS.md")
   expect_no_error(update_news(which = "patch"))
+
+  local_options(pillar.width = 240)
   expect_snapshot(read_fledgling())
 })
 
@@ -77,11 +81,16 @@ test_that("Can update dev version news item", {
     },
     force = TRUE
   )
+  expect_snapshot_file(
+    file.path(repo, "NEWS.md"),
+    name = "samedev-base.md"
+  )
+
   usethis::local_project(repo, force = TRUE, setwd = FALSE)
   withr::with_dir(repo, update_news())
   expect_snapshot_file(
     file.path(repo, "NEWS.md"),
-    name = "dev-NEWS.md"
+    name = "samedev.md"
   )
 
   # regrouping!
@@ -90,6 +99,6 @@ test_that("Can update dev version news item", {
   withr::with_dir(repo, update_news())
   expect_snapshot_file(
     file.path(repo, "NEWS.md"),
-    name = "dev-updated-NEWS.md"
+    name = "samedev-updated.md"
   )
 })
