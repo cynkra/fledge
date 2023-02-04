@@ -8,18 +8,20 @@
 #'   The default uses the top level commits since the last tag as retrieved by [get_last_tag()].
 #' @param which Component of the version number to update. Supported
 #'   values are
-#'   * `"dev"` (default),
-#'   * `"patch"`,
-#'   * `"pre-minor"` (x.y.99.9000),
-#'   * `"minor"`,
-#'   * `"pre-major"` (x.99.99.9000),
-#'   * `"major"`.
+#'   * `"auto"` (default: `"samedev"` or `"dev"`, depending on contents of `NEWS.md`),
+#'   * `"samedev"` (a.b.c.900x with stable version),
+#'   * `"dev"` (a.b.c.9xxx),
+#'   * `"patch"` (a.b.x),
+#'   * `"pre-minor"` (a.b.99.9000),
+#'   * `"minor"` (a.x.0),
+#'   * `"pre-major"` (a.99.99.9000),
+#'   * `"major"` (x.0.0).
 #' @example man/examples/tag-version.R
 #'
 #' @return None
 #' @export
 update_news <- function(messages = NULL,
-                        which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
+                        which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
   which <- arg_match(which)
 
   if (is.null(messages)) {

@@ -7,7 +7,7 @@
 #'
 #' @return None
 #' @export
-update_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
+update_version <- function(which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
   # FIXME: Signal deprecation
 
   update_news(character(), which)

@@ -1,4 +1,10 @@
 update_version_impl <- function(which) {
+  if (which == "auto") {
+    which <- "dev"
+  } else if (which == "samedev") {
+    abort("Not yet implemented")
+  }
+
   desc <- desc::desc(file = "DESCRIPTION")
 
   if (desc$has_fields("Date")) {
