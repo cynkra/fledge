@@ -1,7 +1,7 @@
 #' Update NEWS.md and DESCRIPTION with a new version
 #'
 #' @description
-#'`r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' Deprecated, use [update_news()].
 #'
