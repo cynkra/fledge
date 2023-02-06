@@ -153,12 +153,18 @@ read_news <- function(news_lines = NULL) {
   }
   section_df$news <- map(section_df$news, fix_name_and_level)
 
-  # re-use current preamble
-  # FIXME: check the "preamble" is an HTML comment?
-  if (section_df[["start"]][[1]] == 1) {
+  # create, update or re-use preamble
+  # no preamble yet
+  is_preamble_absent <- (section_df[["start"]][[1]] == 1)
+  if (is_preamble_absent) {
     preamble <- news_preamble()
   } else {
     preamble <- trim_empty_lines(news_lines[seq2(1, section_df[["start"]][[1]] - 1)])
+
+    is_outdated_fledge_preamble <- (trimws(preamble) %in% old_news_preambles())
+    if (is_outdated_fledge_preamble) preamble <- news_preamble()
+
+     # FIXME: check the "preamble" is an HTML comment?
   }
   list(
     section_df = section_df,
