@@ -219,7 +219,7 @@ write_fledgling <- function(fledgeling) {
   news_lines <- unprotect_hashtag(news_lines)
 
   lines <- c(
-    fledgeling$preamble, "",
+    fledgeling[["preamble"]], "",
     paste0(news_lines, collapse = "\n\n")
   )
   brio::write_lines(lines, news_path())
