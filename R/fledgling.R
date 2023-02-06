@@ -164,7 +164,7 @@ read_news <- function(news_lines = NULL) {
     is_outdated_fledge_preamble <- (trimws(preamble) %in% old_news_preambles())
     if (is_outdated_fledge_preamble) preamble <- news_preamble()
 
-     # FIXME: check the "preamble" is an HTML comment?
+    # FIXME: check the "preamble" is an HTML comment?
   }
   list(
     section_df = section_df,
