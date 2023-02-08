@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# fledge 0.0.1
+# fledge 0.0.1 (2023-01-23)
 
 ## Bug fixes
 
