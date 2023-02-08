@@ -31,7 +31,7 @@
           "nickname": "NA"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
     } 
 
 # read_news() works with other formats
@@ -103,7 +103,7 @@
           "nickname": "\"Pumpkin Helmet\""
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
     } 
 
 # read_news() works with h2
@@ -139,6 +139,6 @@
           "nickname": "\"Pumpkin Helmet\""
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
     } 
 
