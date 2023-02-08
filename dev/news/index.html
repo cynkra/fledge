@@ -10,7 +10,7 @@
     <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-nav" alt="cynkra"></a>
     <a class="navbar-brand me-2" href="../index.html">fledge</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.0.9029</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,45 @@
       <small>Source: <a href="https://github.com/cynkra/fledge/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0.9030" id="fledge-0109030-2023-02-05">fledge 0.1.0.9030 (2023-02-05)<a class="anchor" aria-label="anchor" href="#fledge-0109030-2023-02-05"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-0-9030">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-0-9030"></a></h3>
+<ul><li><p>Work around unexplicable behavior in demo tests.</p></li>
+<li><p>Remove push trigger in <code>fledge.yaml</code>, seems broken.</p></li>
+<li><p><code><a href="../reference/bump_version.html">bump_version()</a></code> keeps updating <code>Date</code> field if it exists in <code>DESCRIPTION</code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-1-0-9030">Features<a class="anchor" aria-label="anchor" href="#features-0-1-0-9030"></a></h3>
+<ul><li>
+<code><a href="../reference/release.html">post_release()</a></code> pulls the main branch before merging (<a href="https://github.com/cynkra/fledge/issues/525" class="external-link">#525</a>).</li>
+</ul><p>Closes <a href="https://github.com/cynkra/fledge/issues/525" class="external-link">#525</a>.</p>
+<ul><li><p>New mode of operation <code>"samedev"</code>, for <a href="https://github.com/cynkra/fledge/issues/147" class="external-link">#147</a>.</p></li>
+<li><p><code><a href="../reference/update_news.html">update_news()</a></code> gains which argument, deprecate <code><a href="../reference/update_version.html">update_version()</a></code> (<a href="https://github.com/cynkra/fledge/issues/607" class="external-link">#607</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-1-0-9030">Chore<a class="anchor" aria-label="anchor" href="#chore-0-1-0-9030"></a></h3>
+<ul><li><p>Move packages from Imports to Suggests.</p></li>
+<li><p>Add extra snapshot.</p></li>
+<li><p>Clean up snapshots.</p></li>
+<li><p><code><a href="https://usethis.r-lib.org/reference/use_lifecycle.html" class="external-link">usethis::use_lifecycle()</a></code>.</p></li>
+<li><p>Prepare roundtrip via fledgeling (<a href="https://github.com/cynkra/fledge/issues/606" class="external-link">#606</a>).</p></li>
+<li><p>Move foghorn and rversions to Suggests (<a href="https://github.com/cynkra/fledge/issues/605" class="external-link">#605</a>).</p></li>
+<li><p>Run fledge workflow only on main branch (<a href="https://github.com/cynkra/fledge/issues/597" class="external-link">#597</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-1-0-9030">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-1-0-9030"></a></h3>
+<ul><li>Add test prefix to snapshot updates PR template (<a href="https://github.com/cynkra/fledge/issues/582" class="external-link">#582</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="refactoring-0-1-0-9030">Refactoring<a class="anchor" aria-label="anchor" href="#refactoring-0-1-0-9030"></a></h3>
+<ul><li>Use <code>write_fledgling()</code> to write <code>NEWS.md</code> (<a href="https://github.com/cynkra/fledge/issues/588" class="external-link">#588</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="uncategorized-0-1-0-9030">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-1-0-9030"></a></h3>
+<ul><li>Remove false Markdown link? (<a href="https://github.com/cynkra/fledge/issues/592" class="external-link">#592</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0.9029" id="fledge-0109029-2022-12-30">fledge 0.1.0.9029 (2022-12-30)<a class="anchor" aria-label="anchor" href="#fledge-0109029-2022-12-30"></a></h2>
 <ul><li>Internal changes only.</li>
