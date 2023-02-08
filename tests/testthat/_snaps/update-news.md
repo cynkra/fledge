@@ -13,7 +13,7 @@
       [1] "2023-01-23"
       
       $preamble
-      [1] "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
+      [1] "<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"
       
       $news
       # A tibble: 1 x 10
