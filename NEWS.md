@@ -1,4 +1,11 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# fledge 0.1.0.9031 (2023-02-09)
+
+## Refactoring
+
+- Update fledge URL in NEWS preamble (#622).
+
 
 # fledge 0.1.0.9030 (2023-02-05)
 
