@@ -36,8 +36,8 @@
 
     [
       {
-        "description": "Improve parsing of conventional commit messages (#332).",
-        "type": "Features",
+        "description": "PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#332).",
+        "type": "Uncategorized",
         "breaking": false,
         "scope": "NA"
       }
@@ -49,18 +49,48 @@
       suppressMessages(extract_newsworthy_items(
         "Merge pull request #18 from someone/conventional-parsing"))
     Output
+      <error/github_error>
+      Error in `gh::gh()`:
+      ! GitHub API error (401): Bad credentials
+      i Read more at <https://docs.github.com/rest>
+      ---
+      Backtrace:
+        1. base::suppressMessages(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
+        3. fledge:::extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing")
+        4. fledge:::parse_merge_commit(message)
+             at fledge/R/parse-news-items.R:62:4
+        5. fledge:::harvest_pr_data(message)
+             at fledge/R/parse-news-items.R:232:2
+       12. gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+             at fledge/R/parse-news-items.R:281:8
+      <error/github_error>
+      Error in `gh()`:
+      ! GitHub API error (401): Bad credentials
+      i Read more at <https://docs.github.com/graphql>
+      ---
+      Backtrace:
+        1. base::suppressMessages(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
+        3. fledge:::extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing")
+        4. fledge:::parse_merge_commit(message)
+             at fledge/R/parse-news-items.R:62:4
+        5. fledge:::harvest_pr_data(message)
+             at fledge/R/parse-news-items.R:232:2
+       12. gh::gh_gql(...)
+             at fledge/R/parse-news-items.R:294:8
+       13. gh::gh(endpoint = "POST /graphql", query = query, ...)
+             at gh/R/gh_gql.R:36:2
       # A tibble: 1 x 4
         description                                                type  break~1 scope
         <chr>                                                      <chr> <lgl>   <lgl>
-      1 Improve parsing of conventional commit messages (@someone~ Feat~ FALSE   NA   
+      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/18 (#18~ Unca~ FALSE   NA   
       # ... with abbreviated variable name 1: breaking
 
 # Can parse PR merge commits - linked issues
 
     [
       {
-        "description": "improve bump_version() (error) messages  (#153, cynkra/dm#325, #328).",
-        "type": "Features",
+        "description": "PLACEHOLDER https://github.com/cynkra/fledge/pull/328 (#328).",
+        "type": "Uncategorized",
         "breaking": false,
         "scope": "NA"
       }
