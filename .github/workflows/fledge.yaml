@@ -45,6 +45,10 @@ jobs:
           cache-version: fledge-1
           packages: local::.
 
+      - uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: '2.19.2'
+
       - name: Bump version
         run: |
           if (fledge::bump_version(which = "dev", no_change_behavior = "noop")) {
