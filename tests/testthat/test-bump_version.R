@@ -72,3 +72,17 @@ test_that("bump_version() errors well for wrong arguments", {
   expect_snapshot_error(bump_version(no_change_behavior = "blabla"))
   expect_snapshot_error(bump_version(which = "blabla"))
 })
+
+test_that("bump_version() does nothing if no preamble and not interactive", {
+  skip_if_not_installed("rlang", "1.0.1")
+  skip_if_not_installed("testthat", "3.1.2")
+
+  withr::local_options(rlang_interactive = FALSE)
+
+  local_demo_project(quiet = TRUE)
+  # remove preamble
+  news_lines <- readLines("NEWS.md")
+  writeLines(news_lines[3:length(news_lines)], "NEWS.md")
+
+  expect_snapshot(bump_version(), variant = snapshot_variant("testthat"))
+})
