@@ -3,8 +3,8 @@
     {
       "section_df": [
         {
-          "start": 1,
-          "end": 6,
+          "start": 3,
+          "end": 8,
           "h2": false,
           "raw": "# fledge v2.0.0\n\n* blop\n\n* lala\n",
           "news": {
@@ -17,8 +17,8 @@
           "nickname": "NA"
         },
         {
-          "start": 7,
-          "end": 12,
+          "start": 9,
+          "end": 14,
           "h2": false,
           "raw": "# fledge v1.0.0\n\n* blip\n\n* lili\n",
           "news": {
@@ -75,8 +75,8 @@
     {
       "section_df": [
         {
-          "start": 1,
-          "end": 6,
+          "start": 3,
+          "end": 8,
           "h2": false,
           "raw": "# Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n",
           "news": {
@@ -89,8 +89,8 @@
           "nickname": "\"Vigorous Calisthenics\""
         },
         {
-          "start": 7,
-          "end": 12,
+          "start": 9,
+          "end": 14,
           "h2": false,
           "raw": "# Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n",
           "news": {
@@ -111,8 +111,8 @@
     {
       "section_df": [
         {
-          "start": 1,
-          "end": 6,
+          "start": 3,
+          "end": 8,
           "h2": true,
           "raw": "## Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n",
           "news": {
@@ -125,8 +125,8 @@
           "nickname": "\"Vigorous Calisthenics\""
         },
         {
-          "start": 7,
-          "end": 12,
+          "start": 9,
+          "end": 14,
           "h2": true,
           "raw": "## Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n",
           "news": {
