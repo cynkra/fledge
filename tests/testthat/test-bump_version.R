@@ -77,8 +77,6 @@ test_that("bump_version() does nothing if no preamble and not interactive", {
   skip_if_not_installed("rlang", "1.0.1")
   skip_if_not_installed("testthat", "3.1.2")
 
-  withr::local_options(rlang_interactive = FALSE)
-
   local_demo_project(quiet = TRUE)
   # remove preamble
   news_lines <- readLines("NEWS.md")
