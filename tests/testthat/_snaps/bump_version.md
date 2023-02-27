@@ -101,5 +101,5 @@
     Code
       bump_version()
     Message
-      i Can't act non-interactively on a NEWS.md with no fledge-like preamble (HTML comment).
+      i Can't act non-interactively on a 'NEWS.md' with no fledge-like preamble (HTML comment).
 
