@@ -156,7 +156,7 @@ read_news <- function(news_lines = NULL) {
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
   if (is_preamble_absent) {
-    preamble <- news_preamble()
+    preamble <- NULL
   } else {
     preamble <- trim_empty_lines(news_lines[seq2(1, section_df[["start"]][[1]] - 1)])
 
@@ -177,8 +177,9 @@ read_fledgling <- function() {
   date <- read_date()
 
   news_and_preamble <- read_news()
+  news_and_preamble[["preamble"]] <- news_and_preamble[["preamble"]] %||% news_preamble()
 
-  new_fledgling(package, version, date, news_and_preamble$preamble, news_and_preamble$section_df)
+  new_fledgling(package, version, date, news_and_preamble[["preamble"]], news_and_preamble[["section_df"]])
 }
 
 trim_empty_lines <- function(x) {
