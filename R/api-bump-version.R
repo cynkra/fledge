@@ -29,7 +29,7 @@ bump_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-ma
   no_change_behavior <- arg_match(no_change_behavior)
 
   if (!fledge_is_interactive() && !read_fledgling()[["preamble_in_file"]]) {
-    cli::cli_alert_info("Can't act non-interactively on a {.field NEWS.md} with no fledge-like preamble (HTML comment).")
+    cli::cli_alert_info("Can't act non-interactively on a {.file NEWS.md} with no fledge-like preamble (HTML comment).")
     return(invisible(FALSE))
   }
 
