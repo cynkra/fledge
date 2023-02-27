@@ -142,3 +142,39 @@
       "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
     } 
 
+# read_news() works with two-lines headers
+
+    {
+      "section_df": [
+        {
+          "start": 1,
+          "end": 7,
+          "h2": false,
+          "raw": "fledge v2.0.0\n=============\n\n* blop\n\n* lala\n",
+          "news": {
+            "Uncategorized": ["- blop", "", "- lala"]
+          },
+          "section_state": "keep",
+          "title": "fledge v2.0.0",
+          "version": "2.0.0",
+          "date": "NA",
+          "nickname": "NA"
+        },
+        {
+          "start": 8,
+          "end": 13,
+          "h2": false,
+          "raw": "# fledge v1.0.0\n\n* blip\n\n* lili\n",
+          "news": {
+            "Uncategorized": ["- blip", "", "- lili"]
+          },
+          "section_state": "keep",
+          "title": "fledge v1.0.0",
+          "version": "1.0.0",
+          "date": "NA",
+          "nickname": "NA"
+        }
+      ],
+      "preamble": ["<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"]
+    } 
+

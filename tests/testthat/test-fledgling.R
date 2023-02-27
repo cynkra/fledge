@@ -48,3 +48,16 @@ test_that("read_news() works with h2", {
   )
   expect_snapshot_tibble(read_news(news_lines))
 })
+
+test_that("read_news() works with two-lines headers", {
+  news_lines <- c(
+    "fledge v2.0.0",
+    "=============", "",
+    "* blop", "",
+    "* lala", "",
+    "# fledge v1.0.0", "",
+    "* blip", "",
+    "* lili", ""
+  )
+  expect_snapshot_tibble(read_news(news_lines))
+})
