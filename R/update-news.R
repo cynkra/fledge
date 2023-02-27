@@ -30,7 +30,7 @@ update_news_impl <- function(commits, which) {
 
   if (which == "samedev") {
     if (!dev_header_present) {
-      rlang::abort("Can't find a development version NEWS header")
+      cli::cli_abort("Can't find a development version header in {.file NEWS.md}.")
     }
 
     # Append and regroup
@@ -272,11 +272,8 @@ fledge_guess_version <- function(version, which) {
     dev <- switch(which,
       dev = {
         if (!is.na(dev) && dev >= 9999) {
-          rlang::abort(
-            sprintf(
-              "Can't increase version dev component (%s) that is >= 9999.",
-              dev
-            )
+          cli::cli_abort(
+            "Can't increase version dev component ({.val {dev}}) that is >= 9999."
           )
         }
         if (is.na(dev)) {
@@ -292,11 +289,8 @@ fledge_guess_version <- function(version, which) {
       dev = patch,
       patch = {
         if (patch >= 99) {
-          rlang::abort(
-            sprintf(
-              "Can't increase version patch component (%s) that is >= 99.",
-              patch
-            )
+          cli::cli_abort(
+            "Can't increase version patch component {.val {patch}} that is >= 99."
           )
         }
         patch + 1
@@ -309,11 +303,8 @@ fledge_guess_version <- function(version, which) {
       patch = minor,
       minor = {
         if (minor >= 99) {
-          rlang::abort(
-            sprintf(
-              "Can't increase version minor component (%s) that is >= 99.",
-              minor
-            )
+          cli::cli_abort(
+            "Can't increase version minor component ({.val {minor}}) that is >= 99."
           )
         }
         minor + 1
@@ -329,15 +320,15 @@ fledge_guess_version <- function(version, which) {
     # pre-minor and pre-major
 
     if (is.na(dev)) {
-      rlang::abort(sprintf("Can't update version from not dev to %s.", which))
+      cli::cli_abort("Can't update version from not dev to {.val {which}}.")
     }
 
     if (patch >= 99) {
-      rlang::abort(sprintf("Can't bump to %s from version %s (patch >= 99).", which, version))
+      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (patch >= 99).")
     }
 
     if (minor >= 99) {
-      rlang::abort(sprintf("Can't bump to %s from version %s (minor >= 99).", which, version))
+      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (minor >= 99).")
     }
 
     dev <- "9000"

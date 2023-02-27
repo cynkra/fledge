@@ -56,7 +56,7 @@ read_news <- function(news_lines = NULL) {
 
   # NEWS content under no version
   if (length(news) == 1 && !nzchar(names(news))) {
-    rlang::abort("NEWS content not under a version header")
+    cli::cli_abort("All {.file NEWS.md} content must be under version headers.")
   }
 
   # match parsed headers to the Markdown

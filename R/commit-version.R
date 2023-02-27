@@ -58,7 +58,7 @@ check_clean <- function(forbidden_modifications) {
     "Unindexed change(s) in %s.",
     toString(sprintf("`%s`", unexpected))
   )
-  rlang::abort(
+  cli::cli_abort(
     message = c(
       x = error_message,
       i = "Commit the change(s) before running any fledge function again."
