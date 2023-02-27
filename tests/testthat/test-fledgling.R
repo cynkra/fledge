@@ -60,6 +60,8 @@ test_that("read_news() works with two-lines headers", {
     "* lili", ""
   )
   expect_snapshot_tibble(read_news(news_lines))
+})
+
 test_that("correct handling of the preamble", {
   # no preamble ----
   news_lines <- c(
