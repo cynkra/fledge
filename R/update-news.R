@@ -111,7 +111,13 @@ news_path <- function() {
 }
 
 news_preamble <- function() {
-  "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
+  "<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"
+}
+
+old_news_preambles <- function() {
+  c(
+    "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->"
+  )
 }
 
 edit_news <- function() {

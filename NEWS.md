@@ -1,4 +1,72 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# fledge 0.1.0.9033 (2023-02-17)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9032 (2023-02-12)
+
+## Bug fixes
+
+- Bump to dev version in `pre_release()`.
+
+
+# fledge 0.1.0.9031 (2023-02-09)
+
+## Refactoring
+
+- Update fledge URL in NEWS preamble (#622).
+
+
+# fledge 0.1.0.9030 (2023-02-05)
+
+## Bug fixes
+
+- Work around unexplicable behavior in demo tests.
+
+- Remove push trigger in `fledge.yaml`, seems broken.
+
+- `bump_version()` keeps updating `Date` field if it exists in `DESCRIPTION`.
+
+## Features
+
+- `post_release()` pulls the main branch before merging (#525).
+
+Closes #525.
+
+- New mode of operation `"samedev"`, for #147.
+
+- `update_news()` gains which argument, deprecate `update_version()` (#607).
+
+## Chore
+
+- Move packages from Imports to Suggests.
+
+- Add extra snapshot.
+
+- Clean up snapshots.
+
+- `usethis::use_lifecycle()`.
+
+- Prepare roundtrip via fledgeling (#606).
+
+- Move foghorn and rversions to Suggests (#605).
+
+- Run fledge workflow only on main branch (#597).
+
+## Continuous integration
+
+- Add test prefix to snapshot updates PR template (#582).
+
+## Refactoring
+
+- Use `write_fledgling()` to write `NEWS.md` (#588).
+
+## Uncategorized
+
+- Remove false Markdown link? (#592).
+
 
 # fledge 0.1.0.9029 (2022-12-30)
 
@@ -301,4 +369,3 @@ Includes vignettes: "Get started", "Using fledge", and "Fledge internals".
 Examples and tests are supported with a demo project, created via `with_demo_project()`.
 
 Thanks Patrick Schratz and Maëlle Salmon for your contributions!
-
