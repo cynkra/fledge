@@ -10,3 +10,11 @@ is_any_named <- function(x) {
 is_non_empty_string <- function(x) {
   !is.na(x) && nzchar(x)
 }
+
+is_interactive <- function(x) {
+  if (nzchar(Sys.getenv("FLEDGE.INTERACTIVE"))) {
+    return(TRUE)
+  }
+
+  interactive()
+}
