@@ -28,6 +28,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   error = !in_pkgdown
 )
+withr::local_options(rlang_interactive = TRUE)
 ```
 
 ## Set up the development environment
