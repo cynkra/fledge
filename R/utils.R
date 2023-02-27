@@ -11,7 +11,7 @@ is_non_empty_string <- function(x) {
   !is.na(x) && nzchar(x)
 }
 
-is_interactive <- function(x) {
+fledge_is_interactive <- function(x) {
   if (nzchar(Sys.getenv("FLEDGE.INTERACTIVE"))) {
     return(TRUE)
   }
