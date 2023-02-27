@@ -432,7 +432,7 @@ check_gitignore <- function(files) {
     cli::cli_alert_warning("The following files are listed in {.file .gitignore}:")
     cli::cli_ul("{files_ignored}")
     cli::cli_text("Certain {.pkg fledge} automation steps might fail due to this.")
-    abort(paste0("Remove ", glue_collapse(files_ignored, ", "), " from .gitignore."))
+    cli::cli_abort('Remove {glue_collapse(files_ignored, ", ")} from .gitignore.')
   }
 }
 

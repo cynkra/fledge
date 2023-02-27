@@ -37,9 +37,9 @@ submit_cran <- function(pkg = ".", args = NULL) {
 build_cran <- function(pkg, args) {
   cli::cli_alert_info("Building")
   built_path <- pkgbuild::build(pkg, tempdir(), manual = TRUE, args = args)
-  cli::cli_alert_info("Submitting file: {built_path}")
+  cli::cli_alert_info("Submitting file: {.file {built_path}}")
   size <- format(as.object_size(fs::file_info(built_path)$size), units = "auto")
-  cli::cli_alert_info("File size: {size}")
+  cli::cli_alert_info("File size: {.val {size}}")
   built_path
 }
 
