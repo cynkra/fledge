@@ -58,7 +58,7 @@ test_that("correct handling of the preamble", {
     "# fledge v2.0.0", "",
     "* blop", ""
   )
-  expect_null(read_news(news_lines)[["preamble"]])
+  expect_equal(read_news(news_lines)[["preamble"]], news_preamble())
 
   # old preamble ----
   news_lines <- c(

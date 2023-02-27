@@ -27,6 +27,9 @@
         <chr>   
       1 <NA>    
       
+      $preamble_in_file
+      [1] TRUE
+      
       attr(,"class")
       [1] "fledgling"
 
