@@ -31,7 +31,8 @@
           "nickname": "NA"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with other formats
@@ -67,7 +68,8 @@
           "nickname": "NA"
         }
       ],
-      "preamble": ["<!-- Hands off, please -->"]
+      "preamble": ["<!-- Hands off, please -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with nicknames
@@ -103,7 +105,8 @@
           "nickname": "\"Pumpkin Helmet\""
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with h2
@@ -139,7 +142,8 @@
           "nickname": "\"Pumpkin Helmet\""
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with two-lines headers
