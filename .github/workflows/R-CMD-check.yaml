@@ -32,7 +32,10 @@ jobs:
     name: "Smoke test: stock R"
 
     # Begin custom: services
-    # End custom: services
+    # End custom: services    
+    
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v3
