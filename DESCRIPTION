@@ -51,7 +51,7 @@ Suggests:
     fs,
     gert (>= 1.4.0),
     gh,
-    httptest,
+    httptest2,
     jsonlite,
     knitr,
     mockery,
