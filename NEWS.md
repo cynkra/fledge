@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9034 (2023-03-08)
+
+## tests
+
+- Replace httptest with httptest2 as gh now uses httr2 instead of httr (#646).
+
+
 # fledge 0.1.0.9033 (2023-02-17)
 
 - Internal changes only.
