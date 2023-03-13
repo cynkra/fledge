@@ -514,7 +514,10 @@ release_after_cran_built_binaries <- function() {
 
   # treat binaries link
   tibblify_binary_link <- function(link) {
-    rematch2::re_match(link, "/bin/(?<flavor>.+)/contrib/(?<r_version>[^/]+)/[^_]+_(?<binary_version>[-0-9.]+)[.][a-z]+$")
+    rematch2::re_match(
+      link,
+      "/bin/(?<flavor>.+)/contrib/(?<r_version>[^/]+)/[^_]+_(?<binary_version>[-0-9.]+)[.][a-z]+$"
+    )
   }
 
   # binaries
