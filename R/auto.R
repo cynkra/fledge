@@ -472,7 +472,7 @@ watch_cran <- function() {
   # look for PR branch
   # on GHA so only one remote? hopefully set?
   remote <- gert::git_remote_info(gert::git_remote_list()[1,])
-  github_info <- fledge:::github_info(remote[["name"]])
+  github_info <- github_info(remote[["name"]])
 
   prs <- gh::gh(
     "GET /repos/:owner/:repo/pulls",
