@@ -393,15 +393,17 @@ create_github_release <- function() {
     body = tag$body
   )
 
-  url <- out$html_url
+  if (rlang::is_interactive()) {
+    url <- out$html_url
 
-  cli_alert("Opening release URL {.url {url}}.")
-  utils::browseURL(url)
+    cli_alert("Opening release URL {.url {url}}.")
+    utils::browseURL(url)
 
-  edit_url <- gsub("/tag/", "/edit/", url)
+    edit_url <- gsub("/tag/", "/edit/", url)
 
-  cli_alert("Opening release edit URL {.url {edit_url}}.")
-  utils::browseURL(edit_url)
+    cli_alert("Opening release edit URL {.url {edit_url}}.")
+    utils::browseURL(edit_url)
+  }
 }
 
 merge_branch <- function(other_branch) {
