@@ -486,7 +486,8 @@ release_after_cran_built_binaries <- function() {
   )
 
   if (length(cran_pr) == 0) {
-    cli::cli_abort("Can't find a 'CRAN release'-labelled PR")
+    cli::cli_alert_info("Can't find a 'CRAN release'-labelled PR")
+    return(invisible(FALSE))
   }
 
   if (length(cran_pr) > 1) {
@@ -535,5 +536,8 @@ release_after_cran_built_binaries <- function() {
 
   if (all_ok) {
     release()
+    return(invisible(TRUE))
+  } else {
+    return(invisible(FALSE))
   }
 }
