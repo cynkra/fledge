@@ -496,7 +496,7 @@ release_after_cran_built_binaries <- function() {
   cran_pr <- cran_pr[[1]]
   gert::git_branch_checkout(cran_pr[["head"]][["ref"]])
 
-  # get info ----
+  # get info from CRAN page ----
 
   pkg <- read_package()
 
