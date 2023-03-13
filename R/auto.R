@@ -390,8 +390,7 @@ create_github_release <- function() {
     glue("POST /repos/{slug}/releases"),
     tag_name = tag$name,
     name = tag$header,
-    body = tag$body,
-    draft = TRUE
+    body = tag$body
   )
 
   url <- out$html_url
