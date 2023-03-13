@@ -470,9 +470,8 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 
 release_after_cran_built_binaries <- function() {
   # look for PR branch
-  # on GHA so only one remote? hopefully set?
-  remote <- gert::git_remote_info(gert::git_remote_list()[1, ])
-  github_info <- github_info(remote[["name"]])
+  remote <- "origin"
+  github_info <- github_info(remote)
 
   prs <- gh::gh(
     "GET /repos/:owner/:repo/pulls",
