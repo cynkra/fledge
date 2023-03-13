@@ -487,13 +487,12 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 
     ## add label to PR ----
     gh::gh(
-        "PATCH /repos/:owner/:repo/issues/:issue_number",
-        owner = info[["owner"]][["login"]],
-        repo = info[["name"]],
-        issue_number = pr[["id"]],
-        labels = as.list(cran_release_label)
+      "PATCH /repos/:owner/:repo/issues/:issue_number",
+      owner = info[["owner"]][["login"]],
+      repo = info[["name"]],
+      issue_number = pr[["id"]],
+      labels = as.list(cran_release_label)
     )
-
   }
 
   # FIXME: Use response from gh() call to open URL
