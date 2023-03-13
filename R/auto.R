@@ -490,7 +490,7 @@ release_after_cran_built_binaries <- function() {
   }
 
   if (length(cran_pr) > 1) {
-    cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PR")
+    cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PRs")
   }
 
   cran_pr <- cran_pr[[1]]
