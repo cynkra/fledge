@@ -534,7 +534,7 @@ release_after_cran_built_binaries <- function() {
   all_ok <- all(binaries[["up_to_date"]])
 
   if (all_ok) {
-    release()
+    post_release()
     return(invisible(TRUE))
   } else {
     return(invisible(FALSE))
