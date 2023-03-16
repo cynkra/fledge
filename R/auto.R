@@ -447,10 +447,12 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 
   if (create) {
     info <- github_info(remote = remote_name)
+    ## create PR ----
     template_path <- system.file("templates", "pr.md", package = "fledge")
     body <- glue_collapse(readLines(template_path), sep = "\n")
 
-    gh::gh("POST /repos/:owner/:repo/pulls",
+    pr <- gh::gh(
+      "POST /repos/:owner/:repo/pulls",
       owner = info$owner$login,
       repo = info$name,
       title = sprintf(
@@ -462,6 +464,35 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       maintainer_can_modify = TRUE,
       draft = TRUE,
       body = body
+    )
+
+    ## ensure that label exists ----
+    labels <- gh::gh(
+      "GET /repos/:owner/:repo/labels",
+      owner = info$owner$login,
+      repo = info$name
+    )
+    label_names <- purrr::map_chr(labels, "name")
+    cran_release_label <- label_names[grepl("^cran release", tolower(label_names))]
+    no_cran_release_label <- (length(cran_release_label) == 0)
+    if (no_cran_release_label) {
+      cran_release_label <- "CRAN release :station:"
+      gh::gh(
+        "POST /repos/:owner/:repo/labels",
+        owner = info[["owner"]][["login"]],
+        repo = info[["name"]],
+        color = "d3d3d3",
+        name = cran_release_label
+      )
+    }
+
+    ## add label to PR ----
+    gh::gh(
+      "PATCH /repos/:owner/:repo/issues/:issue_number",
+      owner = info[["owner"]][["login"]],
+      repo = info[["name"]],
+      issue_number = pr[["id"]],
+      labels = as.list(cran_release_label)
     )
   }
 
