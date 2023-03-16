@@ -558,7 +558,7 @@ release_after_cran_built_binaries <- function() {
     ".//a[starts-with(@href, '../../../bin/')]"
   ) %>%
     xml2::xml_attr("href") %>%
-    purrr::map_df(tibblify_binary_link)
+    map_dfr(tibblify_binary_link)
 
   # put it together
   binaries[["up_to_date"]] <- (binaries[["binary_version"]] == pkg_version)
