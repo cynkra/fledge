@@ -566,9 +566,15 @@ release_after_cran_built_binaries <- function() {
   all_ok <- all(binaries[["up_to_date"]])
 
   if (all_ok) {
+    if (fledge_chatty()) {
+      cli_alert_info("All binaries match the most recent version, releasing.")
+    }
     post_release()
     return(invisible(TRUE))
   } else {
+    if (fledge_chatty()) {
+      cli_alert_info("Some binaries don't match the most recent version.")
+    }
     return(invisible(FALSE))
   }
 }
