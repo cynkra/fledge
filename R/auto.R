@@ -541,7 +541,7 @@ release_after_cran_built_binaries <- function() {
 
   pkg_cran_page <- xml2::read_html(temp_file)
   pkg_version_pre <- xml2::xml_find_first(pkg_cran_page, ".//td[text()='Version:']")
-  pkg_version <- xml2::xml_siblings(pkg_version_pre)[[1]] |>
+  pkg_version <- xml2::xml_siblings(pkg_version_pre)[[1]] %>%
     xml2::xml_text()
 
   # treat binaries link
@@ -556,8 +556,8 @@ release_after_cran_built_binaries <- function() {
   binaries <- xml2::xml_find_all(
     pkg_cran_page,
     ".//a[starts-with(@href, '../../../bin/')]"
-  ) |>
-    xml2::xml_attr("href") |>
+  ) %>%
+    xml2::xml_attr("href") %>%
     purrr::map_df(tibblify_binary_link)
 
   # put it together
