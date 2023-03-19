@@ -261,6 +261,8 @@ knitr::kable(gert::git_log()[-(1:3)])
 |     1|FALSE |Initial NEWS.md .                                                |
 |     5|FALSE |First commit                                                     |
 
+
+
 We have two "bulletted" messages which for fledge means two NEWS-worthy messages.
 
 Let us update `NEWS.md`!
