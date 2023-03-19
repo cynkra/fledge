@@ -491,7 +491,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       "PATCH /repos/:owner/:repo/issues/:issue_number",
       owner = info[["owner"]][["login"]],
       repo = info[["name"]],
-      issue_number = pr[["id"]],
+      issue_number = pr[["number"]],
       labels = as.list(cran_release_label)
     )
   }
