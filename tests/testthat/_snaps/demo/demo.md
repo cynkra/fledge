@@ -171,7 +171,6 @@ We start by creating the new R file called `cup.R` and adding code (well only a 
 ```r
 usethis::use_r("cup")
 ## * Edit 'R/cup.R'
-## * Call `use_test()` to create a matching test file
 writeLines("# cup", "R/cup.R")
 ```
 
@@ -442,7 +441,6 @@ gert::git_commit("Add bowl tests.")
 ```r
 usethis::use_r("bowl")
 ## * Edit 'R/bowl.R'
-## * Call `use_test()` to create a matching test file
 writeLines("# bowl of tea", "R/bowl.R")
 ```
 
