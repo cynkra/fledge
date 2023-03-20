@@ -7,7 +7,8 @@
 update_news(
   messages = NULL,
   which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major",
-    "major")
+    "major"),
+  fledgeling = NULL
 )
 }
 \arguments{
@@ -27,6 +28,8 @@ values are
 \item \code{"pre-major"} (a.99.99.9000),
 \item \code{"major"} (x.0.0).
 }}
+
+\item{fledgeling}{Fledgeling object. For advanced use only.}
 }
 \value{
 None
