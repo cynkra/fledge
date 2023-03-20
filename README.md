@@ -26,7 +26,7 @@ Ways to achieve that are:
 
 Using fledge is a discipline, a few habits, that are worth learning!
 
-What you need to do in practice is, **no matter your fledge committment level**:
+What you need to do in practice is, **no matter your fledge commitment level**:
 
 - For important commit messages you want recorded in the changelog, you can
 
