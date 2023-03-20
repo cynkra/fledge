@@ -37,7 +37,6 @@ update_news_impl <- function(commits, which) {
     # Append and regroup
 
     if (no_news.md_yet) {
-
       fledgeling[["news"]] <- tibble::tibble(
         start = 3,
         h2 = FALSE,
