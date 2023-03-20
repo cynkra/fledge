@@ -35,11 +35,11 @@ collect_news <- function(commits) {
 
   if (is.null(newsworthy_items)) {
     if (nrow(commits) <= 1) {
-      newsworthy_items <- parse_bullet_commit("- Same as previous version.")
-      if (fledge_chatty()) cli_alert_info("Same as previous version.")
+      newsworthy_items <- parse_bullet_commit(sprintf("- %s", same_as_previous()))
+      if (fledge_chatty()) cli_alert_info(same_as_previous())
     } else {
-      newsworthy_items <- parse_bullet_commit("- Internal changes only.")
-      if (fledge_chatty()) cli_alert_info("Internal changes only.")
+      newsworthy_items <- parse_bullet_commit(sprintf("- %s", internal_changes_only()))
+      if (fledge_chatty()) cli_alert_info(internal_changes_only())
     }
   } else {
     if (fledge_chatty()) {
@@ -367,4 +367,17 @@ has_internet <- function() {
     return(FALSE)
   }
   curl::has_internet()
+}
+
+same_as_previous <- function() {
+  "Same as previous version."
+}
+
+internal_changes_only <- function() {
+  "Internal changes only."
+}
+
+added_changelog <- function() {
+  # same as in usethis
+  "Added a `NEWS.md` file to track changes to the package."
 }
