@@ -16,12 +16,14 @@
 #'   * `"minor"` (a.x.0),
 #'   * `"pre-major"` (a.99.99.9000),
 #'   * `"major"` (x.0.0).
+#' @param fledgeling Fledgeling object. For advanced use only.
 #' @example man/examples/tag-version.R
 #'
 #' @return None
 #' @export
 update_news <- function(messages = NULL,
-                        which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
+                        which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major"),
+                        fledgeling = NULL) {
   which <- arg_match(which)
 
   if (is.null(messages)) {
@@ -35,7 +37,11 @@ update_news <- function(messages = NULL,
 
   local_repo()
 
-  update_news_impl(commits, which)
+  update_news_impl(
+    commits = commits,
+    which = which,
+    fledgeling = fledgeling
+  )
 
   invisible(NULL)
 }
