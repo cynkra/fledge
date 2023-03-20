@@ -24,7 +24,6 @@
 #'
 #' @example man/examples/bump-version.R
 bump_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major"), no_change_behavior = c("bump", "noop", "fail")) {
-
   which <- arg_match(which)
   no_change_behavior <- arg_match(no_change_behavior)
 
