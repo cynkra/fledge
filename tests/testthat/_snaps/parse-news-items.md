@@ -83,7 +83,7 @@
 # Can parse PR merge commits - PAT absence
 
     x Can't find a GitHub Personal Access Token (PAT).
-    i See for instance `?gh::gh_token` or https://usethis.r-lib.org/reference/github-token.html
+    i See for instance `?gh::gh_token` or <https://usethis.r-lib.org/reference/github-token.html>
 
 # Can parse PR merge commits - other error
 

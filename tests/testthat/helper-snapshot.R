@@ -3,7 +3,7 @@ snapshot_variant <- function(...) {
 
   bad_variants <- setdiff(matrix, c("testthat", "os"))
   if (length(bad_variants) > 0) {
-    abort(paste0("Unknown variant selector: ", bad_variants[[1]]))
+    cli::cli_abort("Unknown variant selector: {.val {bad_variants[[1]]}}")
   }
 
   variant <- NULL

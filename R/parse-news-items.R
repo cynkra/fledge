@@ -45,7 +45,7 @@ collect_news <- function(commits) {
     if (fledge_chatty()) {
       no <- nrow(newsworthy_items)
       entry_word <- if (no == 1) "entry" else "entries"
-      cli_alert_success(sprintf("Found %s NEWS-worthy %s.", no, entry_word))
+      cli_alert_success("Found {.val {no}} NEWS-worthy {entry_word}.")
     }
   }
 
@@ -271,7 +271,7 @@ harvest_pr_data <- function(message) {
   failure_message <- sprintf("Could not get title for PR #%s", pr_number)
 
   if (!has_internet()) {
-    cli::cli_alert_warning(sprintf("%s (no internet connection)", failure_message))
+    cli::cli_alert_warning("{failure_message} (no internet connection)")
     pr_info <- NULL
     issue_info <- NULL
   } else {
@@ -316,7 +316,7 @@ harvest_pr_data <- function(message) {
       },
       error = function(e) {
         print(e)
-        cli::cli_alert_warning(sprintf("Could not get linked issues for PR #%s", pr_number))
+        cli::cli_alert_warning("Could not get linked issues for PR #{.val {pr_number}}")
         return(NULL)
       }
     )

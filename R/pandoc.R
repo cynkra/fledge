@@ -30,9 +30,8 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     versions <- xml2::xml_find_all(html, ".//section[@class='level2']")
   }
   if (length(versions) == 0) {
-    rlang::abort("Empty changelog")
+    cli::cli_abort("Empty {.file NEWS.md}")
 
-    message("Empty changelog")
     contents <- markdownify(html)
     return(list(contents))
   }
@@ -146,10 +145,11 @@ check_top_level_headers <- function(versions) {
   version_titles <- purrr::map_chr(versions, extract_version)
   malformatted_titles <- version_titles[!(is_header(version_titles) | is_dev_header(version_titles))]
   if (length(malformatted_titles) > 0) {
-    rlang::abort(
+    malformatted_titles_string <- toString(sprintf("'%s'", malformatted_titles))
+    cli::cli_abort(
       c(
-        sprintf("Can't parse version headers: %s.", toString(sprintf("'%s'", malformatted_titles))),
-        i = "All top level headers in NEWS.md should be version titles."
+        "Can't parse version headers: {malformatted_titles_string}",
+        i = "All top level headers in {.file NEWS.md} should be version titles."
       )
     )
   }
