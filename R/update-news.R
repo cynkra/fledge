@@ -1,6 +1,6 @@
 # File editing ------
 
-update_news_impl <- function(commits, which) {
+update_news_impl <- function(commits, which, fledgeling = NULL) {
   news_items <- collect_news(commits)
   news_items <- normalize_news(news_items)
   news_lines <- organize_news(news_items)
@@ -10,7 +10,7 @@ update_news_impl <- function(commits, which) {
     cli_alert("Adding new entries to {.file {news_path()}}.")
   }
 
-  fledgeling <- read_fledgling()
+  fledgeling <- fledgeling %||% read_fledgling()
 
   # isTRUE() as NEWS.md can be empty
   dev_header_present <- isTRUE(
