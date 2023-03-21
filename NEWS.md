@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9036 (2023-03-21)
+
+## Features
+
+- Add ability to parse two-line headers (#654).
+
+## Refactoring
+
+- Use the full power of {cli} (#640).
+
+
 # fledge 0.1.0.9035 (2023-03-15)
 
 ## Features
