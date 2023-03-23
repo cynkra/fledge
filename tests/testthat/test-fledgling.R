@@ -85,3 +85,16 @@ test_that("correct handling of the preamble", {
   )
   expect_equal(read_news(news_lines)[["preamble"]], fancy)
 })
+
+test_that("read_news() works with two-lines headers", {
+  news_lines <- c(
+    "fledge v2.0.0",
+    "=============", "",
+    "* blop", "",
+    "* lala", "",
+    "# fledge v1.0.0", "",
+    "* blip", "",
+    "* lili", ""
+  )
+  expect_snapshot_tibble(read_news(news_lines))
+})

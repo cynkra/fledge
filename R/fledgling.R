@@ -58,14 +58,14 @@ read_news <- function(news_lines = NULL) {
 
   # NEWS content under no version
   if (length(news) == 1 && !nzchar(names(news))) {
-    rlang::abort("NEWS content not under a version header")
+    cli::cli_abort("All {.file NEWS.md} content must be under version headers.")
   }
 
   # match parsed headers to the Markdown
   get_section_start <- function(section_title, news_lines) {
     escaped_section_title <- sub("\\(", "\\\\(", section_title)
     escaped_section_title <- sub("\\)", "\\\\)", escaped_section_title)
-    section_start <- which(grepl(sprintf("^#+ +%s[:space:]?$", escaped_section_title), news_lines))
+    section_start <- which(grepl(sprintf("^(#+ +)?%s[:space:]?$", escaped_section_title), news_lines))
 
     if (length(section_start) == 0) {
       # what to do

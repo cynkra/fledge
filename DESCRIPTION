@@ -1,7 +1,7 @@
 Package: fledge
 Title: Smoother Change Tracking and Versioning for R Packages
-Version: 0.1.0.9035
-Date: 2023-03-15
+Version: 0.1.0.9036
+Date: 2023-03-21
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
@@ -28,6 +28,7 @@ Imports:
     brio,
     callr,
     cli,
+    curl,
     desc (>= 1.4.1),
     devtools,
     glue,
@@ -44,7 +45,6 @@ Imports:
 Suggests: 
     clipr,
     covr,
-    curl,
     digest,
     fansi,
     foghorn,

@@ -7,11 +7,11 @@ bump_version_impl <- function(which, no_change_behavior, fledgeling = NULL) {
   #' 1. Check if there were changes since the last version.
   if (no_change()) {
     if (no_change_behavior == "fail") {
-      rlang::abort(
+      cli::cli_abort(
         message = c(
           x = "No change since last version.",
-          i = 'Use `no_change_behavior = "bump"` to force a version bump, or
-          `no_change_behavior = "noop"` to do nothing.'
+          i = 'Use {.code no_change_behavior = "bump"} to force a version bump, or
+          {.code no_change_behavior = "noop"} to do nothing.'
         )
       )
     }
@@ -55,10 +55,10 @@ bump_version_to_dev_with_force <- function(force, which) {
 
 check_main_branch <- function() {
   if (gert::git_branch() != get_main_branch()) {
-    rlang::abort(
+    cli::cli_abort(
       c(
-        x = sprintf("Must be on the main branch (%s) for running fledge functions.", get_main_branch()),
-        i = sprintf("Currently on branch %s.", gert::git_branch())
+        x = "Must be on the main branch ({.val {get_main_branch()}}) for running fledge functions.",
+        i = "Currently on branch {.val {gert::git_branch()}}."
       )
     )
   }

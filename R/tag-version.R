@@ -20,7 +20,7 @@ tag_version_impl <- function(force) {
 
     # Tagging would fail
     if (!force) {
-      abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
+      cli::cli_abort("Tag {.val {tag}} exists, use {.code force = TRUE} to overwrite.")
     }
 
     if (fledge_chatty()) {

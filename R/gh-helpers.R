@@ -22,7 +22,7 @@ extract_repo <- function(url) {
   match <- regmatches(url, m)[[1]]
 
   if (length(match) == 0) {
-    abort(paste0("Unrecognized repo format: ", url))
+    cli::cli_abort("Unrecognized repo format: {.val {url}}.")
   }
 
   paste0(match[2], "/", match[3])

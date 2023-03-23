@@ -102,3 +102,12 @@ test_that("Can update dev version news item", {
     name = "samedev-updated.md"
   )
 })
+
+test_that("Message when creating the news file", {
+  local_demo_project(news = FALSE)
+  update_news()
+  expect_snapshot_file(
+    "NEWS.md",
+    name = "newchangelog.md"
+  )
+})
