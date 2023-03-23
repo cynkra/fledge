@@ -17,15 +17,16 @@
       
       $news
       # A tibble: 1 x 10
-        start   end h2    raw                                                     
-        <int> <int> <lgl> <chr>                                                   
-      1     3     6 FALSE "# tea 0.0.1 (2023-01-23)\n\n- Internal changes only.\n"
-        news             section_state title                  version date        
-        <named list>     <chr>         <chr>                  <chr>   <chr>       
-      1 <named list [1]> keep          tea 0.0.1 (2023-01-23) 0.0.1   (2023-01-23)
-        nickname
-        <chr>   
-      1 <NA>    
+        start   end h2   
+        <int> <int> <lgl>
+      1     3     6 FALSE
+        raw                                                                           
+        <chr>                                                                         
+      1 "# tea 0.0.1 (2023-01-23)\n\n- Added a `NEWS.md` file to track changes to the~
+        news             section_state title                  version date     nickn~1
+        <named list>     <chr>         <chr>                  <chr>   <chr>    <chr>  
+      1 <named list [1]> keep          tea 0.0.1 (2023-01-23) 0.0.1   (2023-0~ <NA>   
+      # ... with abbreviated variable name 1: nickname
       
       attr(,"class")
       [1] "fledgling"
