@@ -75,7 +75,7 @@ nrow(gert::git_log())
 # Anything staged?
 gert::git_status()
 ## # A tibble: 0 x 3
-## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
+## # i 3 variables: file <chr>, status <chr>, staged <lgl>
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
@@ -366,7 +366,7 @@ Note that it should be called after `fledge::bump_version()`, an error is raised
 ```r
 show_tags(remote_url)
 ## # A tibble: 0 x 2
-## # ... with 2 variables: name <chr>, ref <chr>
+## # i 2 variables: name <chr>, ref <chr>
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
