@@ -1,4 +1,61 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# fledge 0.1.0.9037 (2023-03-24)
+
+## Features
+
+- Do not write "Same as previous version" as first thing in a brand-new changelog (#655).
+
+- New internal `release_after_cran_built_binaries()` to support automated CRAN release from GHA (#651).
+
+## Documentation
+
+- Update pitch (#656).
+
+
+# fledge 0.1.0.9036 (2023-03-21)
+
+## Features
+
+- Add ability to parse two-line headers (#654).
+
+## Refactoring
+
+- Use the full power of {cli} (#640).
+
+
+# fledge 0.1.0.9035 (2023-03-15)
+
+## Features
+
+- Add special CRAN release label to release PRs (#649).
+
+
+# fledge 0.1.0.9034 (2023-03-08)
+
+## tests
+
+- Replace httptest with httptest2 as gh now uses httr2 instead of httr (#646).
+
+
+# fledge 0.1.0.9033 (2023-02-17)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9032 (2023-02-12)
+
+## Bug fixes
+
+- Bump to dev version in `pre_release()`.
+
+
+# fledge 0.1.0.9031 (2023-02-09)
+
+## Refactoring
+
+- Update fledge URL in NEWS preamble (#622).
+
 
 # fledge 0.1.0.9030 (2023-02-05)
 

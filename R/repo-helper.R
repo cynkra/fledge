@@ -132,10 +132,10 @@ local_demo_project <- function(dir = NULL, news = TRUE, quiet = FALSE, .local_en
   }
 
   if (!dir.exists(dir)) {
-    rlang::abort(message = c(x = sprintf("Can't find the directory `%s`.", dir)))
+    cli::cli_abort(c(x = "Can't find the directory {.file {dir}}."))
   }
 
-  repo <- create_demo_project(dir = dir, news = TRUE)
+  repo <- create_demo_project(dir = dir, news = news)
   usethis::local_project(
     path = repo,
     quiet = quiet,

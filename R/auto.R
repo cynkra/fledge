@@ -85,7 +85,7 @@ pre_release_impl <- function(which, force) {
 
   cli_h1("2. Bumping main branch to dev version and updating NEWS")
   # manual implementation of bump_version(), it doesn't expose `force` yet
-  bump_version_to_dev_with_force(force, which = which)
+  bump_version_to_dev_with_force(force, which = "dev")
 
   cli_h1("3. Opening Pull Request for release branch")
   # switch to release branch and init pre_release actions
@@ -390,19 +390,20 @@ create_github_release <- function() {
     glue("POST /repos/{slug}/releases"),
     tag_name = tag$name,
     name = tag$header,
-    body = tag$body,
-    draft = TRUE
+    body = tag$body
   )
 
-  url <- out$html_url
+  if (rlang::is_interactive()) {
+    url <- out$html_url
 
-  cli_alert("Opening release URL {.url {url}}.")
-  utils::browseURL(url)
+    cli_alert("Opening release URL {.url {url}}.")
+    utils::browseURL(url)
 
-  edit_url <- gsub("/tag/", "/edit/", url)
+    edit_url <- gsub("/tag/", "/edit/", url)
 
-  cli_alert("Opening release edit URL {.url {edit_url}}.")
-  utils::browseURL(edit_url)
+    cli_alert("Opening release edit URL {.url {edit_url}}.")
+    utils::browseURL(edit_url)
+  }
 }
 
 merge_branch <- function(other_branch) {
@@ -432,7 +433,7 @@ check_gitignore <- function(files) {
     cli::cli_alert_warning("The following files are listed in {.file .gitignore}:")
     cli::cli_ul("{files_ignored}")
     cli::cli_text("Certain {.pkg fledge} automation steps might fail due to this.")
-    abort(paste0("Remove ", glue_collapse(files_ignored, ", "), " from .gitignore."))
+    cli::cli_abort('Remove {glue_collapse(files_ignored, ", ")} from .gitignore.')
   }
 }
 
@@ -446,10 +447,12 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 
   if (create) {
     info <- github_info(remote = remote_name)
+    ## create PR ----
     template_path <- system.file("templates", "pr.md", package = "fledge")
     body <- glue_collapse(readLines(template_path), sep = "\n")
 
-    gh::gh("POST /repos/:owner/:repo/pulls",
+    pr <- gh::gh(
+      "POST /repos/:owner/:repo/pulls",
       owner = info$owner$login,
       repo = info$name,
       title = sprintf(
@@ -462,8 +465,116 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       draft = TRUE,
       body = body
     )
+
+    ## ensure that label exists ----
+    labels <- gh::gh(
+      "GET /repos/:owner/:repo/labels",
+      owner = info$owner$login,
+      repo = info$name
+    )
+    label_names <- purrr::map_chr(labels, "name")
+    cran_release_label <- label_names[grepl("^cran release", tolower(label_names))]
+    no_cran_release_label <- (length(cran_release_label) == 0)
+    if (no_cran_release_label) {
+      cran_release_label <- "CRAN release :station:"
+      gh::gh(
+        "POST /repos/:owner/:repo/labels",
+        owner = info[["owner"]][["login"]],
+        repo = info[["name"]],
+        color = "d3d3d3",
+        name = cran_release_label
+      )
+    }
+
+    ## add label to PR ----
+    gh::gh(
+      "PATCH /repos/:owner/:repo/issues/:issue_number",
+      owner = info[["owner"]][["login"]],
+      repo = info[["name"]],
+      issue_number = pr[["number"]],
+      labels = as.list(cran_release_label)
+    )
   }
 
   # FIXME: Use response from gh() call to open URL
   usethis::pr_view()
+}
+
+release_after_cran_built_binaries <- function() {
+  # look for PR branch
+  remote <- "origin"
+  github_info <- github_info(remote)
+
+  prs <- gh::gh(
+    "GET /repos/:owner/:repo/pulls",
+    owner = github_info[["owner"]][["login"]],
+    repo = github_info[["name"]],
+    .limit = Inf
+  )
+  cran_pr <- purrr::keep(
+    prs,
+    ~ any(grepl("^cran release", tolower(purrr::map_chr(.x[["labels"]], "name"))))
+  )
+
+  if (length(cran_pr) == 0) {
+    cli::cli_alert_info("Can't find a 'CRAN release'-labelled PR")
+    return(invisible(FALSE))
+  }
+
+  if (length(cran_pr) > 1) {
+    cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PRs")
+  }
+
+  cran_pr <- cran_pr[[1]]
+  gert::git_branch_checkout(cran_pr[["head"]][["ref"]])
+
+  # get info from CRAN page ----
+
+  pkg <- read_package()
+
+  temp_file <- withr::local_tempfile()
+
+  curl::curl_download(
+    sprintf("https://cran.r-project.org/package=%s", pkg),
+    temp_file
+  )
+
+  pkg_cran_page <- xml2::read_html(temp_file)
+  pkg_version_pre <- xml2::xml_find_first(pkg_cran_page, ".//td[text()='Version:']")
+  pkg_version <- xml2::xml_siblings(pkg_version_pre)[[1]] %>%
+    xml2::xml_text()
+
+  # treat binaries link
+  tibblify_binary_link <- function(link) {
+    rematch2::re_match(
+      link,
+      "/bin/(?<flavor>.+)/contrib/(?<r_version>[^/]+)/[^_]+_(?<binary_version>[-0-9.]+)[.][a-z]+$"
+    )
+  }
+
+  # binaries
+  binaries <- xml2::xml_find_all(
+    pkg_cran_page,
+    ".//a[starts-with(@href, '../../../bin/')]"
+  ) %>%
+    xml2::xml_attr("href") %>%
+    map_dfr(tibblify_binary_link)
+
+  # put it together
+  binaries[["up_to_date"]] <- (binaries[["binary_version"]] == pkg_version)
+
+  all_ok <- all(binaries[["up_to_date"]])
+
+  if (all_ok) {
+    if (fledge_chatty()) {
+      cli_alert_info("All binaries match the most recent version, releasing.")
+    }
+    post_release()
+    return(invisible(TRUE))
+  } else {
+    if (fledge_chatty()) {
+      cli_alert_info("Some binaries don't match the most recent version.")
+    }
+    return(invisible(FALSE))
+  }
 }

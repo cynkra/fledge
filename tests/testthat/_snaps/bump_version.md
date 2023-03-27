@@ -24,8 +24,7 @@
 ---
 
     x No change since last version.
-    i Use `no_change_behavior = "bump"` to force a version bump, or
-              `no_change_behavior = "noop"` to do nothing.
+    i Use `no_change_behavior = "bump"` to force a version bump, or `no_change_behavior = "noop"` to do nothing.
 
 ---
 
@@ -86,8 +85,8 @@
 
 # bump_version() errors informatively for wrong branch
 
-    x Must be on the main branch (main) for running fledge functions.
-    i Currently on branch bla.
+    x Must be on the main branch ("main") for running fledge functions.
+    i Currently on branch "bla".
 
 # bump_version() errors well for wrong arguments
 
