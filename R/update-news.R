@@ -27,7 +27,7 @@ update_news_impl <- function(commits, which) {
       which <- "dev"
     }
   }
-  no_news.md_yet <- is.null(fledgeling[["news"]])
+  initializing <- is.null(fledgeling[["news"]])
 
   if (which == "samedev") {
     if (!dev_header_present) {
@@ -36,7 +36,7 @@ update_news_impl <- function(commits, which) {
 
     # Append and regroup
 
-    if (no_news.md_yet) {
+    if (initializing) {
       fledgeling[["news"]] <- tibble::tibble(
         start = 3,
         h2 = FALSE,
@@ -77,7 +77,7 @@ update_news_impl <- function(commits, which) {
     no_actual_commit <- (nrow(news_items) == 1) &&
       (news_items[["description"]] == same_as_previous())
 
-    if (no_actual_commit && no_news.md_yet) {
+    if (no_actual_commit && initializing) {
       news_lines <- sprintf("## Uncategorized\n\n- %s", added_changelog())
     }
     section_df <- tibble::tibble(
@@ -93,7 +93,7 @@ update_news_impl <- function(commits, which) {
       section_state = "new"
     )
 
-    if (no_news.md_yet) {
+    if (initializing) {
       fledgeling[["news"]] <- section_df
     } else {
       fledgeling[["news"]] <- rbind(
