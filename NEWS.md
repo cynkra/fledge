@@ -1,5 +1,23 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9038 (2023-03-28)
+
+- Internal changes only.
+
+
+# fledge 0.1.0.9037 (2023-03-24)
+
+## Features
+
+- Do not write "Same as previous version" as first thing in a brand-new changelog (#655).
+
+- New internal `release_after_cran_built_binaries()` to support automated CRAN release from GHA (#651).
+
+## Documentation
+
+- Update pitch (#656).
+
+
 # fledge 0.1.0.9036 (2023-03-21)
 
 ## Features
