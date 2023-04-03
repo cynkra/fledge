@@ -456,7 +456,8 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       owner = info$owner$login,
       repo = info$name,
       title = sprintf(
-        "CRAN release v%s",
+        "%s%s",
+        cran_release_pr_title(),
         strsplit(gert::git_branch(), "cran-")[[1]][2]
       ),
       head = release_branch,
@@ -540,9 +541,7 @@ release_after_cran_built_binaries <- function() {
   )
 
   pkg_cran_page <- xml2::read_html(temp_file)
-  pkg_version_pre <- xml2::xml_find_first(pkg_cran_page, ".//td[text()='Version:']")
-  pkg_version <- xml2::xml_siblings(pkg_version_pre)[[1]] %>%
-    xml2::xml_text()
+  pkg_version <- sub(cran_release_pr_title(), "", cran_pr[["title"]])
 
   # treat binaries link
   tibblify_binary_link <- function(link) {
@@ -577,4 +576,8 @@ release_after_cran_built_binaries <- function() {
     }
     return(invisible(FALSE))
   }
+}
+
+cran_release_pr_title <- function() {
+  "CRAN release v"
 }
