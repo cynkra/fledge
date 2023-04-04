@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9039 (2023-04-04)
+
+## Bug fixes
+
+- Use pkg version from open PR, not from CRAN page (#662).
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#660).
+
+- Snapshot updates for rcc-smoke (null) (#647).
+
+- Fix snapshots after updates of upstream dependencies (#657).
+
+
 # fledge 0.1.0.9038 (2023-03-28)
 
 - Internal changes only.
