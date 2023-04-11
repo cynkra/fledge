@@ -179,6 +179,7 @@
           "nickname": "NA"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [false]
     } 
 
