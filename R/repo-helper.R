@@ -67,6 +67,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
       {
         rlang::with_interactive(
           {
+            # we now have to create a demo project with a preambled NEWS.md for tests to pass
             usethis::use_news_md()
             news_lines <- readLines("NEWS.md")
             news_lines <- c(news_preamble(), "", news_lines)
