@@ -187,9 +187,9 @@ read_fledgling <- function() {
     package,
     version,
     date,
-    news_and_preamble[["preamble"]],
-    news_and_preamble[["section_df"]],
-    news_and_preamble[["preamble_in_file"]]
+    preamble = news_and_preamble[["preamble"]],
+    news = news_and_preamble[["section_df"]],
+    preamble_in_file = news_and_preamble[["preamble_in_file"]]
   )
 }
 
