@@ -96,3 +96,10 @@
 
     `which` must be one of "dev", "patch", "pre-minor", "minor", "pre-major", or "major", not "blabla".
 
+# bump_version() does nothing if no preamble and not interactive
+
+    Code
+      bump_version()
+    Message
+      i Can't act non-interactively on a 'NEWS.md' with no fledge-like preamble (HTML comment).
+

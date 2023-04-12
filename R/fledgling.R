@@ -9,14 +9,15 @@
 #' @param preamble The text that appears before the first section header
 #' @param news A data frame FIXME
 #' @noRd
-new_fledgling <- function(name, version, date, preamble, news) {
+new_fledgling <- function(name, version, date, preamble, news, preamble_in_file) {
   structure(
     list(
       name = name,
       version = version,
       date = date,
       preamble = preamble,
-      news = news
+      news = news,
+      preamble_in_file = preamble_in_file
     ),
     class = "fledgling"
   )
@@ -49,7 +50,8 @@ read_news <- function(news_lines = NULL) {
     return(
       list(
         section_df = NULL,
-        preamble = news_preamble()
+        preamble = news_preamble(),
+        preamble_in_file = FALSE
       )
     )
   }
@@ -156,8 +158,10 @@ read_news <- function(news_lines = NULL) {
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
   if (is_preamble_absent) {
+    preamble_in_file <- FALSE
     preamble <- news_preamble()
   } else {
+    preamble_in_file <- TRUE
     preamble <- trim_empty_lines(news_lines[seq2(1, section_df[["start"]][[1]] - 1)])
 
     is_outdated_fledge_preamble <- (trimws(preamble) %in% old_news_preambles())
@@ -167,7 +171,8 @@ read_news <- function(news_lines = NULL) {
   }
   list(
     section_df = section_df,
-    preamble = if (!is.null(preamble)) paste(preamble, collapse = "\n")
+    preamble = if (!is.null(preamble)) paste(preamble, collapse = "\n"),
+    preamble_in_file = preamble_in_file
   )
 }
 
@@ -178,7 +183,14 @@ read_fledgling <- function() {
 
   news_and_preamble <- read_news()
 
-  new_fledgling(package, version, date, news_and_preamble$preamble, news_and_preamble$section_df)
+  new_fledgling(
+    package,
+    version,
+    date,
+    preamble = news_and_preamble[["preamble"]],
+    news = news_and_preamble[["section_df"]],
+    preamble_in_file = news_and_preamble[["preamble_in_file"]]
+  )
 }
 
 trim_empty_lines <- function(x) {

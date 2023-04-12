@@ -1,5 +1,6 @@
 test_that("read_news() works with usual format", {
   news_lines <- c(
+    news_preamble(), "",
     "# fledge v2.0.0", "",
     "* blop", "",
     "* lala", "",
@@ -27,6 +28,7 @@ test_that("read_news() works with other formats", {
 
 test_that("read_news() works with nicknames", {
   news_lines <- c(
+    news_preamble(), "",
     '# Changes in v2.0.0 "Vigorous Calisthenics"', "",
     "* blop", "",
     "* lala", "",
@@ -39,6 +41,7 @@ test_that("read_news() works with nicknames", {
 
 test_that("read_news() works with h2", {
   news_lines <- c(
+    news_preamble(), "",
     '## Changes in v2.0.0 "Vigorous Calisthenics"', "",
     "* blop", "",
     "* lala", "",
