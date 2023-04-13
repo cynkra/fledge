@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9040 (2023-04-13)
+
+## Features
+
+- `bump_version()` only works in interactive sessions or if `NEWS.md` has a preamble (or both) (#638).
+
+
 # fledge 0.1.0.9039 (2023-04-04)
 
 ## Bug fixes
