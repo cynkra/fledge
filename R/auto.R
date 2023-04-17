@@ -26,25 +26,31 @@
 pre_release <- function(which = "next", force = FALSE) {
   check_main_branch()
   check_only_modified(character())
-
   check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("next", "patch", "minor", "major"))
-  desc <- desc::desc(file = "DESCRIPTION")
-  version_components <- get_version_components(desc$get_version())
   if (which == "next") {
-    if (version_components[["patch"]] == 99) {
-      if (version_components[["minor"]] == 99) {
-        which <- "pre-major"
-      } else {
-        which <- "pre-minor"
-      }
-    } else {
-      which <- "patch"
-    }
+    which <- guess_next()
   }
+
   local_options(usethis.quiet = TRUE)
   with_repo(pre_release_impl(which, force))
+}
+
+guess_next <- function() {
+  desc <- desc::desc(file = "DESCRIPTION")
+  version_components <- get_version_components(desc$get_version())
+  if (version_components[["patch"]] == 99) {
+    if (version_components[["minor"]] == 99) {
+      which <- "pre-major"
+    } else {
+      which <- "pre-minor"
+    }
+  } else {
+    which <- "patch"
+  }
+
+  return(which)
 }
 
 pre_release_impl <- function(which, force) {
