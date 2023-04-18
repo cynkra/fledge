@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9041 (2023-04-18)
+
+## Refactoring
+
+- Slightly simplify pre_release() (#669).
+
+
 # fledge 0.1.0.9040 (2023-04-13)
 
 ## Features
