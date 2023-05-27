@@ -183,3 +183,12 @@
       "preamble_in_file": [false]
     } 
 
+# read_news() reports duplicated version names
+
+    Code
+      read_news(news_lines)
+    Condition
+      Error in `read_news()`:
+      ! Can't deal with duplicate version names: fledge v2.0.0.
+      i Fix the duplication then retry.
+

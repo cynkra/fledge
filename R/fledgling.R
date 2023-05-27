@@ -77,6 +77,17 @@ read_news <- function(news_lines = NULL) {
     section_start
   }
 
+  duplicate_version_names_present <- anyDuplicated(names(news))
+  if (duplicate_version_names_present) {
+    duplicated_version_names <- toString(names(news)[duplicated(names(news))])
+    cli::cli_abort(
+      c(
+        "Can't deal with duplicate version names: {duplicated_version_names}.",
+        i = "Fix the duplication then retry."
+      )
+    )
+  }
+
   starts <- purrr::map_int(names(news), get_section_start, news_lines)
 
   ends <- if (length(starts) == 1) {

@@ -98,3 +98,16 @@ test_that("read_news() works with two-lines headers", {
   )
   expect_snapshot_tibble(read_news(news_lines))
 })
+
+test_that("read_news() reports duplicated version names", {
+  news_lines <- c(
+    "fledge v2.0.0",
+    "=============", "",
+    "* blop", "",
+    "* lala", "",
+    "# fledge v2.0.0", "",
+    "* blip", "",
+    "* lili", ""
+  )
+  expect_snapshot(read_news(news_lines), error = TRUE)
+})
