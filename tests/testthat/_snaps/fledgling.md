@@ -160,7 +160,7 @@
           },
           "section_state": "keep",
           "title": "fledge v2.0.0",
-          "version": "2.0.0",
+          "version": "v2.0.0",
           "date": "NA",
           "nickname": "NA"
         },
@@ -174,7 +174,7 @@
           },
           "section_state": "keep",
           "title": "fledge v1.0.0",
-          "version": "1.0.0",
+          "version": "v1.0.0",
           "date": "NA",
           "nickname": "NA"
         }
