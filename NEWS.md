@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9042 (2023-05-28)
+
+## Bug fixes
+
+- Better error message when duplicate version name (#673).
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#677).
+
+
 # fledge 0.1.0.9041 (2023-04-18)
 
 ## Refactoring
