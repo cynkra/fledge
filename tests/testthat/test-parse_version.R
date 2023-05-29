@@ -7,7 +7,7 @@ test_that("parse_version() works", {
 
   parsed2 <- parse_version("fledge v1.0.1 'the one with new stuff'")
   expect_equal(parsed2[["prefix"]], "fledge")
-  expect_equal(parsed2[["version"]], "v1.0.1")
+  expect_equal(parsed2[["version"]], "1.0.1")
   expect_true(is.na(parsed2[["date"]]))
   expect_equal(parsed2[["nickname"]], "'the one with new stuff'")
 

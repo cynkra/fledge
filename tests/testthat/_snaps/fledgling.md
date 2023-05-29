@@ -12,7 +12,7 @@
           },
           "section_state": "keep",
           "title": "fledge v2.0.0",
-          "version": "v2.0.0",
+          "version": "2.0.0",
           "date": "NA",
           "nickname": "NA"
         },
@@ -26,7 +26,7 @@
           },
           "section_state": "keep",
           "title": "fledge v1.0.0",
-          "version": "v1.0.0",
+          "version": "1.0.0",
           "date": "NA",
           "nickname": "NA"
         }
@@ -49,7 +49,7 @@
           },
           "section_state": "keep",
           "title": "Changes in v2.0.0",
-          "version": "v2.0.0",
+          "version": "2.0.0",
           "date": "NA",
           "nickname": "NA"
         },
@@ -63,7 +63,7 @@
           },
           "section_state": "keep",
           "title": "Changes in v1.0.0",
-          "version": "v1.0.0",
+          "version": "1.0.0",
           "date": "NA",
           "nickname": "NA"
         }
@@ -86,7 +86,7 @@
           },
           "section_state": "keep",
           "title": "Changes in v2.0.0 \"Vigorous Calisthenics\"",
-          "version": "v2.0.0",
+          "version": "2.0.0",
           "date": "NA",
           "nickname": "\"Vigorous Calisthenics\""
         },
@@ -100,7 +100,7 @@
           },
           "section_state": "keep",
           "title": "Changes in v1.0.0 \"Pumpkin Helmet\"",
-          "version": "v1.0.0",
+          "version": "1.0.0",
           "date": "NA",
           "nickname": "\"Pumpkin Helmet\""
         }
@@ -123,7 +123,7 @@
           },
           "section_state": "keep",
           "title": "Changes in v2.0.0 \"Vigorous Calisthenics\"",
-          "version": "v2.0.0",
+          "version": "2.0.0",
           "date": "NA",
           "nickname": "\"Vigorous Calisthenics\""
         },
@@ -137,7 +137,7 @@
           },
           "section_state": "keep",
           "title": "Changes in v1.0.0 \"Pumpkin Helmet\"",
-          "version": "v1.0.0",
+          "version": "1.0.0",
           "date": "NA",
           "nickname": "\"Pumpkin Helmet\""
         }
@@ -160,7 +160,7 @@
           },
           "section_state": "keep",
           "title": "fledge v2.0.0",
-          "version": "v2.0.0",
+          "version": "2.0.0",
           "date": "NA",
           "nickname": "NA"
         },
@@ -174,7 +174,7 @@
           },
           "section_state": "keep",
           "title": "fledge v1.0.0",
-          "version": "v1.0.0",
+          "version": "1.0.0",
           "date": "NA",
           "nickname": "NA"
         }
