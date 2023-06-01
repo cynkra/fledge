@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9043 (2023-06-01)
+
+## Bug fixes
+
+- `post_release()` works if the release branch doesn't change files in the main branch.
+
+
 # fledge 0.1.0.9042 (2023-05-28)
 
 ## Bug fixes
