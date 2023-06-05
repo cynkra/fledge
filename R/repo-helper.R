@@ -7,6 +7,8 @@
 #' @param date String of time for DESCRIPTION and git.
 #' @param dir Directory within which to create the mock package folder.
 #' @param news If TRUE, create a NEWS.md file.
+#' @param dev_md Whether to use "(development version)" (with `dev_md = TRUE`) or the current version
+#' number, in the first NEWS.md header.
 #'
 #' @return The path to the newly created mock package.
 #' @export
