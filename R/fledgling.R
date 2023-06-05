@@ -235,7 +235,7 @@ write_fledgling <- function(fledgeling) {
 
   news_df <- fledgeling$news
   news_lines <- purrr::map_chr(
-    split(news_df, sort(as.numeric(rownames(news_df)))),
+    split(news_df, seq_len(nrow(news_df))),
     write_news_section
   )
   news_lines <- unprotect_hashtag(news_lines)
@@ -248,14 +248,14 @@ write_fledgling <- function(fledgeling) {
 }
 
 write_news_section <- function(df) {
-  # isTRUE as sometimes there is no previous header
-  # so h2 is NULL not FALSE
   if (df$section_state == "keep") {
     # remove the lines that will be re-added
     raw <- sub("\n$", "", df$raw)
     return(raw)
   }
 
+  # isTRUE as sometimes there is no previous header
+  # so h2 is NULL not FALSE
   if (isTRUE(df$h2)) {
     header_sign <- "##"
   } else {

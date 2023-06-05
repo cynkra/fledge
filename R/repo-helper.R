@@ -17,7 +17,8 @@ create_demo_project <- function(open = rlang::is_interactive(),
                                 email = NULL,
                                 date = "2021-09-27",
                                 dir = file.path(tempdir(), "fledge"),
-                                news = FALSE) {
+                                news = FALSE,
+                                dev_md = FALSE) {
   if (is.null(maintainer)) {
     maintainer <- whoami::fullname(fallback = "Kirill M\u00fcller")
   }
@@ -70,6 +71,9 @@ create_demo_project <- function(open = rlang::is_interactive(),
             # we now have to create a demo project with a preambled NEWS.md for tests to pass
             usethis::use_news_md()
             news_lines <- readLines("NEWS.md")
+            if (!dev_md) {
+              news_lines <- sub("\\(development version\\)", desc::desc_get_version(), news_lines)
+            }
             news_lines <- c(news_preamble(), "", news_lines)
             writeLines(news_lines, "NEWS.md")
           },
