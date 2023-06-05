@@ -417,7 +417,7 @@ merge_branch <- function(other_branch) {
   cli_alert_info("If this fails, resolve the conflict manually and push.")
 
   # https://github.com/r-lib/gert/issues/198
-  stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit")) == 0)
+  stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
 }
 
 check_post_release <- function() {
