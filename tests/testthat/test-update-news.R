@@ -77,9 +77,11 @@ test_that("Can update dev version news item", {
         fields = list(Package = "fledge", Version = "0.1.0")
       )
       withr::with_options(
-        list(repos = c("CRAN" = "https://cloud.r-project.org")), {
+        list(repos = c("CRAN" = "https://cloud.r-project.org")),
+        {
           usethis::use_news_md()
-        })
+        }
+      )
       usethis::use_dev_version()
     },
     force = TRUE
