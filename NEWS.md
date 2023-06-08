@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9044 (2023-06-06)
+
+## Chore
+
+- Tell it what to merge.
+
+
 # fledge 0.1.0.9043 (2023-06-01)
 
 ## Bug fixes
