@@ -19,6 +19,7 @@ test_that("Can parse conventional commits", {
 })
 
 test_that("Will use commits", {
+  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   withr::local_envvar("FLEDGE_EMPTY_DATE" = "true")
 
   local_demo_project(quiet = TRUE)

@@ -62,6 +62,7 @@ test_that("regroup_news() works", {
 })
 
 test_that("Can update dev version news item", {
+  testthat::skip_if_offline()
   withr::local_options("usethis.quiet" = TRUE)
   repo <- withr::local_tempdir(pattern = "devpkg")
 
