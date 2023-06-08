@@ -10,7 +10,7 @@
     <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-nav" alt="cynkra"></a>
     <a class="navbar-brand me-2" href="../index.html">fledge</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.0.9043</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.0.9044</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,8 @@
 <span>  email <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  date <span class="op">=</span> <span class="st">"2021-09-27"</span>,</span>
 <span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"fledge"</span><span class="op">)</span>,</span>
-<span>  news <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  news <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  dev_md <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -101,6 +102,11 @@
 
 <dt>news</dt>
 <dd><p>If TRUE, create a NEWS.md file.</p></dd>
+
+
+<dt>dev_md</dt>
+<dd><p>Whether to use "(development version)" (with <code>dev_md = TRUE</code>) or the current version
+number, in the first NEWS.md header.</p></dd>
 
 </dl></div>
     <div class="section level2">
