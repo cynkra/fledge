@@ -1,4 +1,5 @@
 test_that("Can parse conventional commits", {
+  withr::local_envvar("FLEDGE.EMPTY.DATE" = "blabla")
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
 

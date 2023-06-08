@@ -108,46 +108,9 @@ read_news <- function(news_lines = NULL) {
 
   section_df$title <- names(news)
 
-  find_version <- function(text) {
-    m <- regmatches(
-      text,
-      regexpr("[0-9]*\\.[0-9]*\\.[0-9]*(\\.[0-9]*)*", text)
-    )
-    if (length(m) == 0) {
-      if (grepl("(development version)", text)) {
-        return("(development version)")
-      } else {
-        return(NA_character_)
-      }
-    }
-    m
-  }
-  section_df$version <- purrr::map_chr(names(news), find_version)
+  parsed_titles <- parse_versions(names(news))[, c("version", "date", "nickname")]
 
-  find_date <- function(text) {
-    m <- regmatches(
-      text,
-      regexpr('\\(....-..-..\\)', text)
-    )
-    if (length(m) == 0) {
-      return(NA_character_)
-    }
-    m
-  }
-  section_df$date <- purrr::map_chr(names(news), find_date)
-
-  find_nickname <- function(text) {
-    m <- regmatches(
-      text,
-      regexpr('".*"', text)
-    )
-    if (length(m) == 0) {
-      return(NA_character_)
-    }
-    m
-  }
-  section_df$nickname <- purrr::map_chr(names(news), find_nickname)
-
+  section_df <- tibble::as_tibble(cbind(section_df, parsed_titles))
 
   fix_name_and_level <- function(news_list) {
     if (is.null(news_list)) {
