@@ -66,6 +66,7 @@ update_news_impl <- function(commits, which, fledgeling = NULL) {
     }
   } else {
     current_version <- desc::desc_get_version()
+
     new_version <- fledge_guess_version(current_version, which)
     fledgeling[["version"]] <- new_version
 
@@ -80,6 +81,19 @@ update_news_impl <- function(commits, which, fledgeling = NULL) {
     if (no_actual_commit && initializing) {
       news_lines <- sprintf("## Uncategorized\n\n- %s", added_changelog())
     }
+
+    if (dev_header_present) {
+      combined <- c(
+        parse_news_md(news_lines),
+        fledgeling[["news"]][1, ]$news[[1]]
+      )
+      combined <- purrr::discard(combined, purrr::is_empty)
+      news <- regroup_news(combined)
+      fledgeling[["news"]] <- fledgeling[["news"]][-1, ]
+    } else {
+      news <- parse_news_md(news_lines)
+    }
+
     section_df <- tibble::tibble(
       start = 3,
       end = NA,
@@ -87,7 +101,7 @@ update_news_impl <- function(commits, which, fledgeling = NULL) {
       version = new_version,
       date = maybe_date(fledgeling[["news"]]),
       nickname = NA,
-      news = list(parse_news_md(news_lines)),
+      news = list(news),
       raw = "",
       title = "",
       section_state = "new"
