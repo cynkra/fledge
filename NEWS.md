@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9045 (2023-06-09)
+
+## Bug fixes
+
+- Adapt to new behavior of usethis::use_news_md() (#680).
+
+## Chore
+
+- Clean version header parsing (#610).
+
+
 # fledge 0.1.0.9044 (2023-06-06)
 
 ## Chore
