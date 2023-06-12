@@ -22,6 +22,7 @@ Calls the following functions:
 \item \code{\link[=commit_version]{commit_version()}}
 \item \code{\link[=tag_version]{tag_version()}}, setting \code{force = TRUE} if and only if \code{commit_version()}
 amended a commit.
+\item git pull with rebase if \code{pull = TRUE}.
 \item Force-pushes the created tag to the \code{"origin"} remote, if \code{push = TRUE}.
 }
 }

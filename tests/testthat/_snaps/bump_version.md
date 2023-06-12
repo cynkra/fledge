@@ -10,6 +10,18 @@
     Message
       i No change since last version.
 
+---
+
+    x No change since last version.
+    i Use `no_change_behavior = "bump"` to force a version bump, or `no_change_behavior = "noop"` to do nothing.
+
+---
+
+    Code
+      bump_version(no_change_behavior = "noop")
+    Message
+      i No change since last version.
+
 # bump_version() works -- not dev
 
     Code
