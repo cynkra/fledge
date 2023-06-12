@@ -548,7 +548,7 @@ release_after_cran_built_binaries <- function() {
   )
 
   pkg_cran_page <- xml2::read_html(temp_file)
-  pkg_version <- sub(cran_release_pr_title(), "", cran_pr[["title"]])
+  pkg_version <- extract_version_pr(cran_pr[["title"]])
 
   # treat binaries link
   tibblify_binary_link <- function(link) {
@@ -587,4 +587,13 @@ release_after_cran_built_binaries <- function() {
 
 cran_release_pr_title <- function() {
   "CRAN release v"
+}
+
+extract_version_pr <- function(title) {
+  if (grepl(cran_release_pr_title(), title)) {
+    return(sub(cran_release_pr_title(), "", title))
+  }
+
+  matches <- regexpr("[0-9]*\\.[0-9]*\\.[0-9]*", title)
+  regmatches(title, matches)
 }
