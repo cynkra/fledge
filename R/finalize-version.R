@@ -1,12 +1,20 @@
 #' @rdname finalize_version
 #' @usage NULL
-finalize_version_impl <- function(push, suggest_finalize = TRUE) {
+finalize_version_impl <- function(push, suggest_finalize = TRUE, pull) {
   #' @description
   #' 1. [commit_version()]
   force <- commit_version()
   #' 1. [tag_version()], setting `force = TRUE` if and only if `commit_version()`
   #'   amended a commit.
   tag <- tag_version(force)
+  #' 1. git pull with rebase if `pull = TRUE`.
+  if (has_remote_branch(gert::git_branch()) && pull) {
+    # is the local branch behind?
+    if (gert::git_ahead_behind()$behind > 0) {
+      # With pull = TRUE we would fetch always and always uncommit + commit if behind master
+      gert::git_pull(rebase = TRUE)
+    }
+  }
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
     push_tag(tag, force = TRUE)

@@ -4,7 +4,10 @@
 \alias{commit_version}
 \title{Commits NEWS.md and DESCRIPTION to Git}
 \usage{
-commit_version()
+commit_version(pull = TRUE)
+}
+\arguments{
+\item{pull}{whether to fetch the remote (if it exists).}
 }
 \value{
 Invisibly: \code{TRUE} if a previous commit for that version has been

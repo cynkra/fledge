@@ -5,10 +5,12 @@
 \alias{finalize_version_impl}
 \title{Finalize package version}
 \usage{
-finalize_version(push = FALSE)
+finalize_version(push = FALSE, pull = push)
 }
 \arguments{
 \item{push}{If \code{TRUE}, push the created tag.}
+
+\item{pull}{whether to fetch the remote (if it exists).}
 }
 \value{
 None
@@ -20,6 +22,7 @@ Calls the following functions:
 \item \code{\link[=commit_version]{commit_version()}}
 \item \code{\link[=tag_version]{tag_version()}}, setting \code{force = TRUE} if and only if \code{commit_version()}
 amended a commit.
+\item git pull with rebase if \code{pull = TRUE}.
 \item Force-pushes the created tag to the \code{"origin"} remote, if \code{push = TRUE}.
 }
 }

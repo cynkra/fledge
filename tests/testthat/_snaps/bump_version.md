@@ -1,28 +1,5 @@
 # bump_version() works -- dev
 
-    Code
-      bump_version()
-    Message
-      > Digesting messages from 3 commits.
-      v Found 1 NEWS-worthy entry.
-      
-      -- Updating NEWS --
-      
-      > Adding new entries to 'NEWS.md'.
-      
-      -- Updating Version --
-      
-      v Package version bumped to 0.0.0.9001.
-      > Added header to 'NEWS.md'.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version(push = TRUE)`.
-
----
-
     x No change since last version.
     i Use `no_change_behavior = "bump"` to force a version bump, or `no_change_behavior = "noop"` to do nothing.
 
@@ -35,26 +12,15 @@
 
 ---
 
+    x No change since last version.
+    i Use `no_change_behavior = "bump"` to force a version bump, or `no_change_behavior = "noop"` to do nothing.
+
+---
+
     Code
-      bump_version(no_change_behavior = "bump")
+      bump_version(no_change_behavior = "noop")
     Message
-      > Digesting messages from 1 commits.
-      i Same as previous version.
-      
-      -- Updating NEWS --
-      
-      > Adding new entries to 'NEWS.md'.
-      
-      -- Updating Version --
-      
-      v Package version bumped to 0.0.0.9002.
-      > Added header to 'NEWS.md'.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version(push = TRUE)`.
+      i No change since last version.
 
 # bump_version() works -- not dev
 

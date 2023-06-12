@@ -1,4 +1,4 @@
-commit_version_impl <- function() {
+commit_version_impl <- function(pull) {
   check_only_staged(c("DESCRIPTION", news_path()))
 
   if (is_last_commit_bump()) {
