@@ -317,7 +317,7 @@ auto_confirm <- function() {
 
   tryCatch(
     repeat {
-      url <- clipr::read_clip()
+      suppressWarnings(url <- clipr::read_clip())
       if (has_length(url, 1) && grepl("^https://xmpalantir\\.wu\\.ac\\.at/cransubmit/conf_mail\\.php[?]code=", url)) {
         break
       }
