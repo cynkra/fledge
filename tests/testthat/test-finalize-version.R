@@ -1,4 +1,5 @@
 test_that("finalize_version(push = FALSE)", {
+  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   skip_if_not_installed("rlang", "1.0.1")
   skip_if_not_installed("testthat", "3.1.2")
 
@@ -19,6 +20,7 @@ test_that("finalize_version(push = FALSE)", {
 })
 
 test_that("finalize_version(push = TRUE)", {
+  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   skip_if_not_installed("rlang", "1.0.1")
   skip_if_not_installed("testthat", "3.1.2")
 

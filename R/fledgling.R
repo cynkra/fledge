@@ -9,14 +9,15 @@
 #' @param preamble The text that appears before the first section header
 #' @param news A data frame FIXME
 #' @noRd
-new_fledgling <- function(name, version, date, preamble, news) {
+new_fledgling <- function(name, version, date, preamble, news, preamble_in_file) {
   structure(
     list(
       name = name,
       version = version,
       date = date,
       preamble = preamble,
-      news = news
+      news = news,
+      preamble_in_file = preamble_in_file
     ),
     class = "fledgling"
   )
@@ -49,7 +50,8 @@ read_news <- function(news_lines = NULL) {
     return(
       list(
         section_df = NULL,
-        preamble = news_preamble()
+        preamble = news_preamble(),
+        preamble_in_file = FALSE
       )
     )
   }
@@ -75,6 +77,17 @@ read_news <- function(news_lines = NULL) {
     section_start
   }
 
+  duplicate_version_names_present <- anyDuplicated(names(news))
+  if (duplicate_version_names_present) {
+    duplicated_version_names <- toString(names(news)[duplicated(names(news))])
+    cli::cli_abort(
+      c(
+        "Can't deal with duplicate version names: {duplicated_version_names}.",
+        i = "Fix the duplication then retry."
+      )
+    )
+  }
+
   starts <- purrr::map_int(names(news), get_section_start, news_lines)
 
   ends <- if (length(starts) == 1) {
@@ -95,46 +108,9 @@ read_news <- function(news_lines = NULL) {
 
   section_df$title <- names(news)
 
-  find_version <- function(text) {
-    m <- regmatches(
-      text,
-      regexpr("[0-9]*\\.[0-9]*\\.[0-9]*(\\.[0-9]*)*", text)
-    )
-    if (length(m) == 0) {
-      if (grepl("(development version)", text)) {
-        return("(development version)")
-      } else {
-        return(NA_character_)
-      }
-    }
-    m
-  }
-  section_df$version <- purrr::map_chr(names(news), find_version)
+  parsed_titles <- parse_versions(names(news))[, c("version", "date", "nickname")]
 
-  find_date <- function(text) {
-    m <- regmatches(
-      text,
-      regexpr('\\(....-..-..\\)', text)
-    )
-    if (length(m) == 0) {
-      return(NA_character_)
-    }
-    m
-  }
-  section_df$date <- purrr::map_chr(names(news), find_date)
-
-  find_nickname <- function(text) {
-    m <- regmatches(
-      text,
-      regexpr('".*"', text)
-    )
-    if (length(m) == 0) {
-      return(NA_character_)
-    }
-    m
-  }
-  section_df$nickname <- purrr::map_chr(names(news), find_nickname)
-
+  section_df <- tibble::as_tibble(cbind(section_df, parsed_titles))
 
   fix_name_and_level <- function(news_list) {
     if (is.null(news_list)) {
@@ -156,8 +132,10 @@ read_news <- function(news_lines = NULL) {
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
   if (is_preamble_absent) {
+    preamble_in_file <- FALSE
     preamble <- news_preamble()
   } else {
+    preamble_in_file <- TRUE
     preamble <- trim_empty_lines(news_lines[seq2(1, section_df[["start"]][[1]] - 1)])
 
     is_outdated_fledge_preamble <- (trimws(preamble) %in% old_news_preambles())
@@ -167,7 +145,8 @@ read_news <- function(news_lines = NULL) {
   }
   list(
     section_df = section_df,
-    preamble = if (!is.null(preamble)) paste(preamble, collapse = "\n")
+    preamble = if (!is.null(preamble)) paste(preamble, collapse = "\n"),
+    preamble_in_file = preamble_in_file
   )
 }
 
@@ -178,7 +157,14 @@ read_fledgling <- function() {
 
   news_and_preamble <- read_news()
 
-  new_fledgling(package, version, date, news_and_preamble$preamble, news_and_preamble$section_df)
+  new_fledgling(
+    package,
+    version,
+    date,
+    preamble = news_and_preamble[["preamble"]],
+    news = news_and_preamble[["section_df"]],
+    preamble_in_file = news_and_preamble[["preamble_in_file"]]
+  )
 }
 
 trim_empty_lines <- function(x) {
@@ -212,7 +198,7 @@ write_fledgling <- function(fledgeling) {
 
   news_df <- fledgeling$news
   news_lines <- purrr::map_chr(
-    split(news_df, sort(as.numeric(rownames(news_df)))),
+    split(news_df, seq_len(nrow(news_df))),
     write_news_section
   )
   news_lines <- unprotect_hashtag(news_lines)
@@ -225,14 +211,14 @@ write_fledgling <- function(fledgeling) {
 }
 
 write_news_section <- function(df) {
-  # isTRUE as sometimes there is no previous header
-  # so h2 is NULL not FALSE
   if (df$section_state == "keep") {
     # remove the lines that will be re-added
     raw <- sub("\n$", "", df$raw)
     return(raw)
   }
 
+  # isTRUE as sometimes there is no previous header
+  # so h2 is NULL not FALSE
   if (isTRUE(df$h2)) {
     header_sign <- "##"
   } else {

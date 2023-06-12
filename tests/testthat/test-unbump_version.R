@@ -1,4 +1,5 @@
 test_that("unbump_version() works", {
+  testthat::skip_if_offline()
   skip_if_not_installed("rlang", "1.0.1")
 
   tempdir <- withr::local_tempdir(pattern = "fledge-unbump")

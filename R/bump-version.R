@@ -1,6 +1,6 @@
 #' @rdname bump_version
 #' @usage NULL
-bump_version_impl <- function(which, no_change_behavior) {
+bump_version_impl <- function(which, no_change_behavior, fledgeling = NULL) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
   check_main_branch()
@@ -21,7 +21,7 @@ bump_version_impl <- function(which, no_change_behavior) {
     }
   }
   #' 1. [update_news()], using the `which` argument
-  update_news(which = which)
+  update_news_impl(default_commit_range(), which = which, fledgeling = fledgeling)
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`

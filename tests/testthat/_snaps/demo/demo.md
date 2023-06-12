@@ -75,7 +75,7 @@ nrow(gert::git_log())
 # Anything staged?
 gert::git_status()
 ## # A tibble: 0 x 3
-## # ... with 3 variables: file <chr>, status <chr>, staged <lgl>
+## # i 3 variables: file <chr>, status <chr>, staged <lgl>
 ```
 
 For working in branches, it is recommended to turn off fast-forward merging:
@@ -136,7 +136,7 @@ Let's take a look at the contents:
 ```r
 news <- readLines(usethis::proj_path("NEWS.md"))
 cat(news, sep = "\n")
-## # tea 0.0.0.9000
+## # tea (development version)
 ## 
 ## * Added a `NEWS.md` file to track changes to the package.
 ```
@@ -171,7 +171,6 @@ We start by creating the new R file called `cup.R` and adding code (well only a 
 ```r
 usethis::use_r("cup")
 ## * Edit 'R/cup.R'
-## * Call `use_test()` to create a matching test file
 writeLines("# cup", "R/cup.R")
 ```
 
@@ -208,7 +207,7 @@ The code in `cup.R` warrants a test (at least it would if it were actual code!):
 ```r
 usethis::use_test("cup")
 ## v Adding 'testthat' to Suggests field in DESCRIPTION
-## v Setting Config/testthat/edition field in DESCRIPTION to '3'
+## v Adding '3' to Config/testthat/edition
 ## v Creating 'tests/testthat/'
 ## v Writing 'tests/testthat.R'
 ## v Writing 'tests/testthat/test-cup.R'
@@ -261,6 +260,8 @@ knitr::kable(gert::git_log()[-(1:3)])
 |     1|FALSE |Initial NEWS.md .                                                |
 |     5|FALSE |First commit                                                     |
 
+
+
 We have two "bulletted" messages which for fledge means two NEWS-worthy messages.
 
 Let us update `NEWS.md`!
@@ -312,13 +313,8 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
-## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tee.
-## 
-## 
-## # tea 0.0.0.9000
-## 
-## * Added a `NEWS.md` file to track changes to the package.
+## - Added a `NEWS.md` file to track changes to the package.
 ```
 
 While reviewing we notice that there was a typo in one of the comments (congrats if you noticed right away that we typed "tee" instead of "tea"!).
@@ -338,13 +334,8 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
-## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
-## 
-## 
-## # tea 0.0.0.9000
-## 
-## * Added a `NEWS.md` file to track changes to the package.
+## - Added a `NEWS.md` file to track changes to the package.
 writeLines(news, "NEWS.md")
 ```
 
@@ -366,7 +357,7 @@ Note that it should be called after `fledge::bump_version()`, an error is raised
 ```r
 show_tags(remote_url)
 ## # A tibble: 0 x 2
-## # ... with 2 variables: name <chr>, ref <chr>
+## # i 2 variables: name <chr>, ref <chr>
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
@@ -395,13 +386,8 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
-## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
-## 
-## 
-## # tea 0.0.0.9000
-## 
-## * Added a `NEWS.md` file to track changes to the package.
+## - Added a `NEWS.md` file to track changes to the package.
 ```
 
 The version of the package is 0.0.0.9001.
@@ -442,7 +428,6 @@ gert::git_commit("Add bowl tests.")
 ```r
 usethis::use_r("bowl")
 ## * Edit 'R/bowl.R'
-## * Call `use_test()` to create a matching test file
 writeLines("# bowl of tea", "R/bowl.R")
 ```
 
@@ -503,13 +488,8 @@ writeLines(news)
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
-## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
-## 
-## 
-## # tea 0.0.0.9000
-## 
-## * Added a `NEWS.md` file to track changes to the package.
+## - Added a `NEWS.md` file to track changes to the package.
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
@@ -582,13 +562,8 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
-## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
-## 
-## 
-## # tea 0.0.0.9000
-## 
-## * Added a `NEWS.md` file to track changes to the package.
+## - Added a `NEWS.md` file to track changes to the package.
 ```
 
 Some of the intermediate commit messages are not relevant in the release notes for this release.

@@ -35,7 +35,10 @@ update_news <- function(messages = NULL,
 
   local_repo()
 
-  update_news_impl(commits, which)
+  update_news_impl(
+    commits = commits,
+    which = which
+  )
 
   invisible(NULL)
 }

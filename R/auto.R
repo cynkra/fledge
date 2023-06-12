@@ -26,25 +26,31 @@
 pre_release <- function(which = "next", force = FALSE) {
   check_main_branch()
   check_only_modified(character())
-
   check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("next", "patch", "minor", "major"))
-  desc <- desc::desc(file = "DESCRIPTION")
-  version_components <- get_version_components(desc$get_version())
   if (which == "next") {
-    if (version_components[["patch"]] == 99) {
-      if (version_components[["minor"]] == 99) {
-        which <- "pre-major"
-      } else {
-        which <- "pre-minor"
-      }
-    } else {
-      which <- "patch"
-    }
+    which <- guess_next()
   }
+
   local_options(usethis.quiet = TRUE)
   with_repo(pre_release_impl(which, force))
+}
+
+guess_next <- function() {
+  desc <- desc::desc(file = "DESCRIPTION")
+  version_components <- get_version_components(desc$get_version())
+  if (version_components[["patch"]] == 99) {
+    if (version_components[["minor"]] == 99) {
+      which <- "pre-major"
+    } else {
+      which <- "pre-minor"
+    }
+  } else {
+    which <- "patch"
+  }
+
+  return(which)
 }
 
 pre_release_impl <- function(which, force) {
@@ -311,7 +317,7 @@ auto_confirm <- function() {
 
   tryCatch(
     repeat {
-      url <- clipr::read_clip()
+      suppressWarnings(url <- clipr::read_clip())
       if (has_length(url, 1) && grepl("^https://xmpalantir\\.wu\\.ac\\.at/cransubmit/conf_mail\\.php[?]code=", url)) {
         break
       }
@@ -410,7 +416,8 @@ merge_branch <- function(other_branch) {
   cli_alert("Merging release branch.")
   cli_alert_info("If this fails, resolve the conflict manually and push.")
 
-  gert::git_merge(other_branch)
+  # https://github.com/r-lib/gert/issues/198
+  stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
 }
 
 check_post_release <- function() {
@@ -456,7 +463,8 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       owner = info$owner$login,
       repo = info$name,
       title = sprintf(
-        "CRAN release v%s",
+        "%s%s",
+        cran_release_pr_title(),
         strsplit(gert::git_branch(), "cran-")[[1]][2]
       ),
       head = release_branch,
@@ -540,9 +548,7 @@ release_after_cran_built_binaries <- function() {
   )
 
   pkg_cran_page <- xml2::read_html(temp_file)
-  pkg_version_pre <- xml2::xml_find_first(pkg_cran_page, ".//td[text()='Version:']")
-  pkg_version <- xml2::xml_siblings(pkg_version_pre)[[1]] %>%
-    xml2::xml_text()
+  pkg_version <- extract_version_pr(cran_pr[["title"]])
 
   # treat binaries link
   tibblify_binary_link <- function(link) {
@@ -577,4 +583,17 @@ release_after_cran_built_binaries <- function() {
     }
     return(invisible(FALSE))
   }
+}
+
+cran_release_pr_title <- function() {
+  "CRAN release v"
+}
+
+extract_version_pr <- function(title) {
+  if (grepl(cran_release_pr_title(), title)) {
+    return(sub(cran_release_pr_title(), "", title))
+  }
+
+  matches <- regexpr("[0-9]*\\.[0-9]*\\.[0-9]*", title)
+  regmatches(title, matches)
 }

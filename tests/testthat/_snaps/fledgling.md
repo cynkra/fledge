@@ -3,8 +3,8 @@
     {
       "section_df": [
         {
-          "start": 1,
-          "end": 6,
+          "start": 3,
+          "end": 8,
           "h2": false,
           "raw": "# fledge v2.0.0\n\n* blop\n\n* lala\n",
           "news": {
@@ -17,8 +17,8 @@
           "nickname": "NA"
         },
         {
-          "start": 7,
-          "end": 12,
+          "start": 9,
+          "end": 14,
           "h2": false,
           "raw": "# fledge v1.0.0\n\n* blip\n\n* lili\n",
           "news": {
@@ -31,7 +31,8 @@
           "nickname": "NA"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with other formats
@@ -67,7 +68,8 @@
           "nickname": "NA"
         }
       ],
-      "preamble": ["<!-- Hands off, please -->"]
+      "preamble": ["<!-- Hands off, please -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with nicknames
@@ -75,8 +77,8 @@
     {
       "section_df": [
         {
-          "start": 1,
-          "end": 6,
+          "start": 3,
+          "end": 8,
           "h2": false,
           "raw": "# Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n",
           "news": {
@@ -89,8 +91,8 @@
           "nickname": "\"Vigorous Calisthenics\""
         },
         {
-          "start": 7,
-          "end": 12,
+          "start": 9,
+          "end": 14,
           "h2": false,
           "raw": "# Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n",
           "news": {
@@ -103,7 +105,8 @@
           "nickname": "\"Pumpkin Helmet\""
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with h2
@@ -111,8 +114,8 @@
     {
       "section_df": [
         {
-          "start": 1,
-          "end": 6,
+          "start": 3,
+          "end": 8,
           "h2": true,
           "raw": "## Changes in v2.0.0 \"Vigorous Calisthenics\"\n\n* blop\n\n* lala\n",
           "news": {
@@ -125,8 +128,8 @@
           "nickname": "\"Vigorous Calisthenics\""
         },
         {
-          "start": 7,
-          "end": 12,
+          "start": 9,
+          "end": 14,
           "h2": true,
           "raw": "## Changes in v1.0.0 \"Pumpkin Helmet\"\n\n* blip\n\n* lili\n",
           "news": {
@@ -139,7 +142,8 @@
           "nickname": "\"Pumpkin Helmet\""
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [true]
     } 
 
 # read_news() works with two-lines headers
@@ -175,6 +179,16 @@
           "nickname": "NA"
         }
       ],
-      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"]
+      "preamble": ["<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->"],
+      "preamble_in_file": [false]
     } 
+
+# read_news() reports duplicated version names
+
+    Code
+      read_news(news_lines)
+    Condition
+      Error in `read_news()`:
+      ! Can't deal with duplicate version names: fledge v2.0.0.
+      i Fix the duplication then retry.
 

@@ -1,5 +1,75 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9045 (2023-06-09)
+
+## Bug fixes
+
+- Adapt to new behavior of usethis::use_news_md() (#680).
+
+## Chore
+
+- Clean version header parsing (#610).
+
+
+# fledge 0.1.0.9044 (2023-06-06)
+
+## Chore
+
+- Tell it what to merge.
+
+
+# fledge 0.1.0.9043 (2023-06-01)
+
+## Bug fixes
+
+- `post_release()` works if the release branch doesn't change files in the main branch.
+
+
+# fledge 0.1.0.9042 (2023-05-28)
+
+## Bug fixes
+
+- Better error message when duplicate version name (#673).
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#677).
+
+
+# fledge 0.1.0.9041 (2023-04-18)
+
+## Refactoring
+
+- Slightly simplify pre_release() (#669).
+
+
+# fledge 0.1.0.9040 (2023-04-13)
+
+## Features
+
+- `bump_version()` only works in interactive sessions or if `NEWS.md` has a preamble (or both) (#638).
+
+
+# fledge 0.1.0.9039 (2023-04-04)
+
+## Bug fixes
+
+- Use pkg version from open PR, not from CRAN page (#662).
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#660).
+
+- Snapshot updates for rcc-smoke (null) (#647).
+
+- Fix snapshots after updates of upstream dependencies (#657).
+
+
+# fledge 0.1.0.9038 (2023-03-28)
+
+- Internal changes only.
+
+
 # fledge 0.1.0.9037 (2023-03-24)
 
 ## Features
