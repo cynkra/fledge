@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9046 (2023-06-13)
+
+## Bug fixes
+
+- Suppress clipr warnings.
+
+## Features
+
+- More flexible version extraction from release PR title (#678).
+
+
 # fledge 0.1.0.9045 (2023-06-09)
 
 ## Bug fixes
