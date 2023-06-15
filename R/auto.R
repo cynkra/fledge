@@ -39,12 +39,16 @@ pre_release <- function(which = "next", force = FALSE) {
 
 guess_next <- function() {
   desc <- desc::desc(file = "DESCRIPTION")
-  version_components <- get_version_components(desc$get_version())
+  guess_next_impl(desc$get_version())
+}
+
+guess_next_impl <- function(version) {
+  version_components <- get_version_components(version)
   if (version_components[["patch"]] == 99) {
     if (version_components[["minor"]] == 99) {
-      which <- "pre-major"
+      which <- "major"
     } else {
-      which <- "pre-minor"
+      which <- "minor"
     }
   } else {
     which <- "patch"
