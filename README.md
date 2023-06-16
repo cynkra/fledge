@@ -10,7 +10,7 @@
 
 <!-- badges: end -->
 
-Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd)) more informative than [“bug fixes and performance improvements”](https://twitter.com/EmilyKager/status/1413628436984188933) to the users of your package?
+Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd)) more informative than “bug fixes and performance improvements” (`https://twitter.com/EmilyKager/status/1413628436984188933`) to the users of your package?
 
 Ways to achieve that are:
 
