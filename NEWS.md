@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.0.9047 (2023-06-16)
+
+## Bug fixes
+
+- Guess_next() works as expected for *.99.* versions.
+
+
 # fledge 0.1.0.9046 (2023-06-13)
 
 ## Bug fixes
