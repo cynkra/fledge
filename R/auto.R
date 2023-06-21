@@ -172,8 +172,22 @@ merge_dev_news <- function(fledgeling, new_version) {
   fledgeling
 }
 
-create_release_branch <- function(version, force, ref = "HEAD") {
-  branch_name <- paste0("cran-", version)
+check_release_branch <- function(new_version) {
+  # FIXME: deduplicate
+  branch_name <- paste0("cran-", new_version)
+
+  if (gert::git_branch_exists(branch_name)) {
+    cli_abort(c(
+      x = "The branch {.val {branch_name}} already exists.",
+      i = "Do you need {.code init_release(force = TRUE)}?"
+    ))
+  }
+}
+
+create_release_branch <- function(fledgeling,
+                                  force,
+                                  ref = "HEAD") {
+  branch_name <- paste0("cran-", fledgeling$version)
 
   if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")
 
