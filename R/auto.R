@@ -143,6 +143,33 @@ get_remote_name <- function(branch = get_main_branch()) {
   remote
 }
 
+merge_dev_news <- function(fledgeling, new_version) {
+  dev_idx <- grepl("^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$", fledgeling$news$version)
+  stopifnot(dev_idx[[1]])
+
+  n_dev <- rle(dev_idx)$lengths[[1]]
+
+  news <- regroup_news(unlist(fledgeling$news$news[seq_len(n_dev)], recursive = FALSE))
+
+  new_section <- tibble::tibble(
+    start = 3,
+    end = NA,
+    h2 = any(fledgeling[["news"]][["h2"]][seq_len(n_dev)]),
+    version = new_version,
+    date = maybe_date(fledgeling[["news"]]),
+    nickname = NA,
+    news = list(news),
+    raw = "",
+    title = "",
+    section_state = "new"
+  )
+
+  fledgeling$version <- as.package_version(new_version)
+  fledgeling$news <- vctrs::vec_rbind(new_section, fledgeling$news[-seq_len(n_dev), ])
+
+  fledgeling
+}
+
 create_release_branch <- function(version, force, ref = "HEAD") {
   branch_name <- paste0("cran-", version)
 
