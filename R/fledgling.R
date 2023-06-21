@@ -179,6 +179,8 @@ trim_empty_lines <- function(x) {
 }
 
 write_fledgling <- function(fledgeling) {
+  force(fledgeling)
+
   # store version
   desc::desc_set_version(
     fledgeling$version,

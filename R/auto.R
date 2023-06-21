@@ -78,18 +78,25 @@ pre_release_impl <- function(which, force) {
 
   cli_h1("1. Creating a release branch and getting ready")
 
+  fledgeling <- read_fledgling()
+
   # bump version on main branch to version set by user
   # Avoid `bump_version()` to avoid showing `NEWS.md` at this stage,
   # because it changes as we jump between branches.
   update_news(which = which)
   commit_version()
 
-  # FIXME: This will be obsolete later
-  fledgeling <- read_fledgling()
+  new_version <- fledge_guess_version(fledgeling[["version"]], which)
 
   # switch to release branch and update cran-comments
-  release_branch <- create_release_branch(fledgeling$version, force)
+  release_branch <- create_release_branch(new_version, force)
   switch_branch(release_branch)
+
+  fledgeling <- merge_dev_news(fledgeling, new_version)
+  write_fledgling(fledgeling)
+  gert::git_add(files = c("NEWS.md"))
+  gert::git_commit(message = "Update NEWS")
+
   update_cran_comments()
 
   # push main branch, bump to devel version and push again
@@ -143,6 +150,33 @@ get_remote_name <- function(branch = get_main_branch()) {
   remote <- gsub("^refs/remotes/([^/]+)/.*$", "\\1", upstream)
   stopifnot(remote != upstream)
   remote
+}
+
+merge_dev_news <- function(fledgeling, new_version) {
+  dev_idx <- grepl("^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$", fledgeling$news$version)
+  stopifnot(dev_idx[[1]])
+
+  n_dev <- rle(dev_idx)$lengths[[1]]
+
+  news <- regroup_news(unlist(fledgeling$news$news[seq_len(n_dev)], recursive = FALSE))
+
+  new_section <- tibble::tibble(
+    start = 3,
+    end = NA,
+    h2 = any(fledgeling[["news"]][["h2"]][seq_len(n_dev)]),
+    version = new_version,
+    date = maybe_date(fledgeling[["news"]]),
+    nickname = NA,
+    news = list(news),
+    raw = "",
+    title = "",
+    section_state = "new"
+  )
+
+  fledgeling$version <- as.package_version(new_version)
+  fledgeling$news <- vctrs::vec_rbind(new_section, fledgeling$news[-seq_len(n_dev), ])
+
+  fledgeling
 }
 
 create_release_branch <- function(version, force, ref = "HEAD") {
@@ -310,11 +344,6 @@ release_impl <- function() {
 }
 
 is_news_consistent <- function() {
-  # FIXME: For tests, no longer needed after #658
-  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
-    return(TRUE)
-  }
-
   headers <- with_repo(get_news_headers())
 
   # One entry is fine, zero entries are an error
