@@ -85,7 +85,7 @@ pre_release_impl <- function(which, force) {
   commit_version()
 
   # switch to release branch and update cran-comments
-  release_branch <- create_release_branch(force)
+  release_branch <- create_release_branch(fledgeling, force)
   switch_branch(release_branch)
   update_cran_comments()
 
@@ -140,9 +140,10 @@ get_remote_name <- function(branch = get_main_branch()) {
   remote
 }
 
-create_release_branch <- function(force,
+create_release_branch <- function(fledgeling,
+                                  force,
                                   ref = "HEAD") {
-  branch_name <- paste0("cran-", desc::desc_get_version())
+  branch_name <- paste0("cran-", fledgeling$version)
 
   cli_alert("Creating branch {.field {branch_name}}.")
 
