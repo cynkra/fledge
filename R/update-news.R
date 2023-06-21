@@ -65,7 +65,7 @@ update_news_impl <- function(commits, which, fledgeling = NULL) {
       cli_alert("Added items to {.file {news_path()}}.")
     }
   } else {
-    current_version <- desc::desc_get_version()
+    current_version <- fledgeling[["version"]]
 
     new_version <- fledge_guess_version(current_version, which)
     fledgeling[["version"]] <- new_version
