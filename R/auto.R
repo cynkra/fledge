@@ -147,17 +147,13 @@ create_release_branch <- function(fledgeling,
 
   cli_alert("Creating branch {.field {branch_name}}.")
 
-  # FIXME: Obey `force` argument
-  stopifnot(!force)
+  if (gert::git_branch_exists(branch_name) && force) {
+    gert::git_branch_delete(branch_name)
+  }
 
-  # if (gert::git_branch_exists(branch_name)) {
-  #   if (force) {
-  #     gert::git_branch_delete(branch_name)
-  #   } else {
-  #     abort(...)
-  #   }
-  # }
+  # Fails if not force and branch exists
   gert::git_branch_create(branch = branch_name, ref = ref)
+
   branch_name
 }
 
