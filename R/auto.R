@@ -85,7 +85,7 @@ pre_release_impl <- function(which, force) {
   commit_version()
 
   # switch to release branch and update cran-comments
-  release_branch <- create_release_branch(force)
+  release_branch <- create_release_branch(fledgeling, force)
   switch_branch(release_branch)
   update_cran_comments()
 
@@ -140,22 +140,20 @@ get_remote_name <- function(branch = get_main_branch()) {
   remote
 }
 
-create_release_branch <- function(force) {
-  branch_name <- paste0("cran-", desc::desc_get_version())
+create_release_branch <- function(fledgeling,
+                                  force,
+                                  ref = "HEAD") {
+  branch_name <- paste0("cran-", fledgeling$version)
 
   cli_alert("Creating branch {.field {branch_name}}.")
 
-  # FIXME: Obey `force` argument
-  stopifnot(!force)
+  if (gert::git_branch_exists(branch_name) && force) {
+    gert::git_branch_delete(branch_name)
+  }
 
-  # if (gert::git_branch_exists(branch_name)) {
-  #   if (force) {
-  #     gert::git_branch_delete(branch_name)
-  #   } else {
-  #     abort(...)
-  #   }
-  # }
-  gert::git_branch_create(branch = branch_name)
+  # Fails if not force and branch exists
+  gert::git_branch_create(branch = branch_name, ref = ref)
+
   branch_name
 }
 
