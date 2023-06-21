@@ -464,6 +464,10 @@ Closes #525.
 - Same as previous version.
 
 
+# fledge 0.1.1 (2023-06-16)
+
+- Compatibility release for usethis 2.2.0.
+
 # fledge 0.1.0 (2021-12-07)
 
 Change log management utility, initial release.
