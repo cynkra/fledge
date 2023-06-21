@@ -3,6 +3,7 @@
 bump_version_impl <- function(which,
                               no_change_behavior,
                               fledgeling = NULL,
+                              edit = TRUE,
                               no_change_message = NULL) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
@@ -33,7 +34,7 @@ bump_version_impl <- function(which,
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
-    finalize_version_impl(push = FALSE)
+    finalize_version_impl(push = FALSE, suggest_finalize = edit)
   } else {
     #'     - Otherwise, [commit_version()].
     commit_version()
@@ -42,10 +43,12 @@ bump_version_impl <- function(which,
       cli_h2("Preparing package for CRAN release")
     }
 
-    edit_news()
+    if (edit) {
+      edit_news()
 
-    if (fledge_chatty()) {
-      cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+      if (fledge_chatty()) {
+        cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+      }
     }
   }
 
