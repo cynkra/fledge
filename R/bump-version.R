@@ -1,8 +1,8 @@
 #' @rdname bump_version
 #' @usage NULL
-bump_version_impl <- function(which,
+bump_version_impl <- function(fledgeling,
+                              which,
                               no_change_behavior,
-                              fledgeling = NULL,
                               edit = TRUE,
                               no_change_message = NULL) {
   #' @description
@@ -21,11 +21,11 @@ bump_version_impl <- function(which,
     }
     if (no_change_behavior == "noop") {
       cli::cli_alert_info("No change since last version.")
-      return(invisible(FALSE))
+      return(invisible(fledgeling))
     }
   }
   #' 1. [update_news()], using the `which` argument
-  update_news_impl(
+  out <- update_news_impl(
     default_commit_range(),
     which = which,
     fledgeling = fledgeling,
@@ -52,7 +52,7 @@ bump_version_impl <- function(which,
     }
   }
 
-  invisible(TRUE)
+  invisible(out)
 }
 
 bump_version_to_dev_with_force <- function(force, which) {
