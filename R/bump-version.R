@@ -7,7 +7,7 @@ bump_version_impl <- function(fledgeling,
                               no_change_message = NULL) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
-  check_main_branch()
+  check_main_branch("bump_version()")
   #' 1. Check if there were changes since the last version.
   if (no_change()) {
     if (no_change_behavior == "fail") {
@@ -64,12 +64,12 @@ bump_version_to_dev_with_force <- function(force, which) {
   push_head()
 }
 
-check_main_branch <- function() {
-  if (gert::git_branch() != get_main_branch()) {
+check_main_branch <- function(reason) {
+  if (get_branch_name() != get_main_branch()) {
     cli::cli_abort(
       c(
-        x = "Must be on the main branch ({.val {get_main_branch()}}) for running fledge functions.",
-        i = "Currently on branch {.val {gert::git_branch()}}."
+        x = "Must be on the main branch ({.val {get_main_branch()}}) for running {.code {reason}}.",
+        i = "Currently on branch {.val {get_branch_name()}}."
       )
     )
   }
