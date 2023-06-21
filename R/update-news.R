@@ -278,6 +278,8 @@ add_scope <- function(row) {
 }
 add_hyphen <- function(row) {
   row$description <- sprintf("- %s", row$description)
+  # FIXME: When using four spaces, why is it normalized to two spaces?
+  row$description <- gsub("\n", "\n  ", row$description)
   row
 }
 
