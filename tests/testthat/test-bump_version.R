@@ -1,8 +1,8 @@
 test_that("bump_version() works -- dev", {
-  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   skip_if_not_installed("rlang", "1.0.1")
   skip_if_not_installed("testthat", "3.1.2")
 
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   create_remote()
@@ -27,10 +27,10 @@ test_that("bump_version() works -- dev", {
 })
 
 test_that("bump_version() works -- not dev", {
-  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   skip_if_not_installed("rlang", "1.0.1")
   skip_if_not_installed("testthat", "3.1.2")
 
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   create_remote()
@@ -44,9 +44,9 @@ test_that("bump_version() works -- not dev", {
 })
 
 test_that("bump_version() errors informatively for forbidden notifications", {
-  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   skip_if_not_installed("rlang", "1.0.1")
 
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -57,9 +57,9 @@ test_that("bump_version() errors informatively for forbidden notifications", {
 })
 
 test_that("bump_version() errors informatively for wrong branch", {
-  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   skip_if_not_installed("rlang", "1.0.1")
 
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -78,11 +78,12 @@ test_that("bump_version() errors well for wrong arguments", {
 })
 
 test_that("bump_version() does nothing if no preamble and not interactive", {
-  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
   skip_if_not_installed("rlang", "1.0.1")
   skip_if_not_installed("testthat", "3.1.2")
 
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
+
   # remove preamble
   news_lines <- readLines("NEWS.md")
   writeLines(news_lines[3:length(news_lines)], "NEWS.md")

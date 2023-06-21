@@ -1,5 +1,5 @@
 test_that("tag_version() works", {
-  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   use_r("bla")

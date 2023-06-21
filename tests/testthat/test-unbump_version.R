@@ -1,7 +1,7 @@
 test_that("unbump_version() works", {
-  skip_if_offline()
   skip_if_not_installed("rlang", "1.0.1")
 
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   tempdir <- withr::local_tempdir(pattern = "fledge-unbump")
   rlang::local_interactive(value = FALSE)
   repo <- create_demo_project(
