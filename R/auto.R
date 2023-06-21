@@ -140,7 +140,8 @@ get_remote_name <- function(branch = get_main_branch()) {
   remote
 }
 
-create_release_branch <- function(force) {
+create_release_branch <- function(force,
+                                  ref = "HEAD") {
   branch_name <- paste0("cran-", desc::desc_get_version())
 
   cli_alert("Creating branch {.field {branch_name}}.")
@@ -155,7 +156,7 @@ create_release_branch <- function(force) {
   #     abort(...)
   #   }
   # }
-  gert::git_branch_create(branch = branch_name)
+  gert::git_branch_create(branch = branch_name, ref = ref)
   branch_name
 }
 
