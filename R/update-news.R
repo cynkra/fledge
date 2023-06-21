@@ -297,6 +297,10 @@ fledge_guess_version <- function(version, which) {
   minor <- version_components[["minor"]]
   major <- version_components[["major"]]
 
+  if (grepl("^[0-9]+[.][0-9]+[.][0-9]+(?:[.][0-9]+)?$", as.character(which))) {
+    return(which)
+  }
+
   if (which %in% c("patch", "minor", "major", "dev")) {
     dev <- switch(which,
       dev = {
@@ -366,6 +370,8 @@ fledge_guess_version <- function(version, which) {
     # pre-major: make both minor and patch 99
     if (which == "pre-major") {
       minor <- "99"
+    } else {
+      stopifnot(which == "pre-minor")
     }
   }
 
