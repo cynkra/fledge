@@ -3,14 +3,17 @@ test_that("Can parse conventional commits", {
   withr::local_options(usethis.quiet = TRUE)
 
   repo <- withr::local_tempdir()
+  local_options(repos = NULL)
   withr::local_dir(repo)
 
   create_cc_repo()
   messages <- get_top_level_commits_impl(since = NULL)[["message"]]
 
-  usethis::with_project(
-    repo,
-    usethis::use_description(fields = list(Package = "fledge")),
+  usethis::with_project(repo,
+    {
+      usethis::use_description(fields = list(Package = "fledge"))
+      usethis::use_news_md()
+    },
     force = TRUE
   )
 

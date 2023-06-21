@@ -198,11 +198,10 @@ write_fledgling <- function(fledgeling) {
     split(news_df, seq_len(nrow(news_df))),
     write_news_section
   )
-  news_lines <- unprotect_hashtag(news_lines)
 
   lines <- c(
     fledgeling[["preamble"]], "",
-    paste0(news_lines, collapse = "\n\n")
+    paste_n_lines_only(news_lines, n = 2)
   )
   brio::write_lines(lines, news_path())
 }
@@ -210,7 +209,7 @@ write_fledgling <- function(fledgeling) {
 write_news_section <- function(df) {
   if (df$section_state == "keep") {
     # remove the lines that will be re-added
-    raw <- sub("\n$", "", df$raw)
+    raw <- sub("\n$", "", df$raw) %>% unprotect_hashtag()
     return(raw)
   }
 
@@ -237,7 +236,7 @@ write_news_section <- function(df) {
   if (length(df$news[[1]]) == 1 && names(df$news[[1]]) == default_type()) {
     section_lines <- c(
       version_header, "",
-      paste(df$news[[1]][[1]], collapse = "\n"), ""
+      paste(unprotect_hashtag(df$news[[1]][[1]]), collapse = "\n"), ""
     )
   } else {
     if (isTRUE(df$h2)) {
@@ -267,30 +266,45 @@ format_news_subsections <- function(news_list, header_level) {
     ),
   )
 
-  paste(lines, collapse = "\n\n")
+  paste_n_lines_only(lines, n = 1)
 }
 
 paste_news_lines <- function(lines, header_level) {
   lines <- unlist(lines, recursive = FALSE)
-  if (is_any_named(lines)) {
-    header_sign <- paste(rep("#", header_level), collapse = "")
-    sub_header <- function(x, header_sign) {
-      if (!nzchar(x)) {
-        ""
-      } else {
-        paste(header_sign, x, "\n\n")
-      }
-    }
-    lines <- purrr::imap_chr(
-      lines,
-      ~ sprintf(
-        "%s%s",
-        sub_header(.y, header_sign),
-        paste_news_lines(.x, header_level = header_level + 1)
-      )
+  lines <- unprotect_hashtag(lines)
+
+  subsections_present <- (is_any_named(lines))
+
+  if (!subsections_present) {
+    lines <- gsub("^- ", "\n- ", lines)
+    lines <- gsub("^#", "\n#", lines)
+    return(paste(lines, collapse = "\n"))
+  }
+
+  header_sign <- paste(rep("#", header_level), collapse = "")
+
+  lines <- purrr::imap_chr(
+    lines,
+    ~ sprintf(
+      "%s%s",
+      append_sub_header(.y, header_sign),
+      paste_news_lines(.x, header_level = header_level + 1)
     )
-    paste(lines, collapse = "\n\n")
+  )
+  # Always separate lines with an empty line only
+  paste_n_lines_only(lines, n = 1)
+}
+
+paste_n_lines_only <- function(x, n = 1) {
+  separator <- paste(rep("\n", n + 1), collapse = "")
+  string <- paste(x, collapse = separator)
+  gsub(sprintf(sprintf("\n{%s,}", n + 2)), separator, string)
+}
+
+append_sub_header <- function(x, header_sign) {
+  if (!nzchar(x)) {
+    ""
   } else {
-    paste(lines, collapse = "\n")
+    paste(header_sign, x, "\n\n")
   }
 }
