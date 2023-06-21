@@ -75,11 +75,13 @@ update_news_impl <- function(commits, which, fledgeling = NULL) {
       fledgeling[["date"]] <- as.character(get_date())
     }
 
-    no_actual_commit <- (nrow(news_items) == 1) &&
-      (news_items[["description"]] == same_as_previous())
+    if (initializing) {
+      no_actual_commit <- (nrow(news_items) == 1) &&
+        (news_items[["description"]] == same_as_previous())
 
-    if (no_actual_commit && initializing) {
-      news_lines <- sprintf("## Uncategorized\n\n- %s", added_changelog())
+      if (no_actual_commit) {
+        news_lines <- sprintf("## Uncategorized\n\n- %s", added_changelog())
+      }
     }
 
     if (dev_header_present) {
