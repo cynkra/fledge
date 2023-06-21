@@ -75,6 +75,18 @@ check_main_branch <- function(reason) {
   }
 }
 
+check_cran_branch <- function(reason) {
+  if (!grepl("^cran-", get_branch_name())) {
+    cli::cli_abort(
+      c(
+        x = "Must be on the a release branch that starts with {.val cran-} for running {.code {reason}}.",
+        i = "Currently on branch {.val {get_branch_name()}}.",
+        i = if (reason == "pre_release()") "Do you need to call {.code init_release()} first?"
+      )
+    )
+  }
+}
+
 get_main_branch <- function() {
   remote <- "origin"
   if (remote %in% gert::git_remote_list()$name) {
