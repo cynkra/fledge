@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9000 (2023-06-21)
+
+- Merge branch 'cran-0.1.1'.
+
+
 # fledge 0.1.0.9047 (2023-06-16)
 
 ## Bug fixes
