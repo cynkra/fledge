@@ -61,13 +61,13 @@ pre_release_impl <- function(which, force) {
   # FIXME: Needs repair in create_release_branch()
   stopifnot(!force)
 
-  cat(boxx("pre-release", border_style = "double"))
-
   # https://github.com/r-lib/gert/issues/139
   stopifnot(gert::git_branch() != "HEAD")
 
   # check PAT scopes for PR for early abort
   check_gh_pat("repo")
+
+  cat(boxx("pre-release", border_style = "double"))
 
   # Begin extension points
   # End extension points
