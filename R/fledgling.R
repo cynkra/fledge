@@ -89,19 +89,14 @@ read_news <- function(news_lines = NULL) {
   }
 
   starts <- purrr::map_int(names(news), get_section_start, news_lines)
-
-  ends <- if (length(starts) == 1) {
-    length(news_lines)
-  } else {
-    c(starts[seq_along(starts[-1]) + 1] - 1, length(news_lines))
-  }
+  ends <- c(starts[seq_along(starts[-1]) + 1] - 1L, length(news_lines))
 
   section_df <- tibble::tibble(
     start = starts,
     end = ends,
     h2 = grepl("##", news_lines[starts]), # TODO does not account for all syntaxes,
     raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
-    news = split(news, seq_len(length(news)))
+    news = unname(split(news, seq_len(length(news))))
   )
 
   section_df$section_state <- "keep"
