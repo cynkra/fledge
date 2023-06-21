@@ -1,7 +1,10 @@
 # File editing ------
 
-update_news_impl <- function(commits, which, fledgeling = NULL) {
-  news_items <- collect_news(commits)
+update_news_impl <- function(commits,
+                             which,
+                             fledgeling = NULL,
+                             no_change_message = NULL) {
+  news_items <- collect_news(commits, no_change_message)
   news_items <- normalize_news(news_items)
   news_lines <- organize_news(news_items)
 
