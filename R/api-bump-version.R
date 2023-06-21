@@ -40,9 +40,11 @@ bump_version <- function(
 
   local_repo()
 
-  bump_version_impl(
+  new_fledgeling <- bump_version_impl(
+    fledgeling,
     which = which,
-    no_change_behavior = no_change_behavior,
-    fledgeling = fledgeling
+    no_change_behavior = no_change_behavior
   )
+
+  invisible(!identical(new_fledgeling, fledgeling))
 }

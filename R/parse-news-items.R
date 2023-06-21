@@ -1,6 +1,6 @@
 # General --------------------
 
-collect_news <- function(commits) {
+collect_news <- function(commits, no_change_message = NULL) {
   if (fledge_chatty()) {
     cli_alert("Digesting messages from {.field {nrow(commits)}} commits.")
   }
@@ -34,13 +34,16 @@ collect_news <- function(commits) {
     bind_rows()
 
   if (is.null(newsworthy_items)) {
-    if (nrow(commits) <= 1) {
-      newsworthy_items <- parse_bullet_commit(sprintf("- %s", same_as_previous()))
-      if (fledge_chatty()) cli_alert_info(same_as_previous())
-    } else {
-      newsworthy_items <- parse_bullet_commit(sprintf("- %s", internal_changes_only()))
-      if (fledge_chatty()) cli_alert_info(internal_changes_only())
+    if (is.null(no_change_message)) {
+      if (nrow(commits) <= 1) {
+        no_change_message <- same_as_previous()
+      } else {
+        no_change_message <- internal_changes_only()
+      }
     }
+
+    newsworthy_items <- parse_bullet_commit(sprintf("- %s", no_change_message))
+    if (fledge_chatty()) cli_alert_info(no_change_message)
   } else {
     if (fledge_chatty()) {
       no <- nrow(newsworthy_items)
