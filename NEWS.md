@@ -1,5 +1,36 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9001 (2023-06-22)
+
+## Bug fixes
+
+- Ask fledgeling for version.
+
+- Bad merge conflict resolution from v0.1.1.
+
+## Features
+
+- Indent multiline NEWS items.
+
+- More skip_if_offline() calls.
+
+- Type stability of fledgeling object.
+
+## Chore
+
+- Avoid useless computation.
+
+## Testing
+
+- Prefer `local_options(repos = NULL)` over `skip_if_offline()`.
+
+- Test order.
+
+## Uncategorized
+
+- Merge branch 'cran-0.1.1'.
+
+
 # fledge 0.1.99.9000 (2023-06-21)
 
 - Merge branch 'cran-0.1.1'.
