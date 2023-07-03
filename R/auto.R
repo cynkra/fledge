@@ -28,7 +28,7 @@
 #' @name release
 #' @export
 init_release <- function(which = "next", force = FALSE) {
-  check_main_branch("pre_release()")
+  check_main_branch("init_release()")
   check_only_modified(character())
   check_gitignore("cran-comments.md")
 
