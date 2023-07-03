@@ -36,11 +36,11 @@ fledge_guess_version <- function(version, which) {
   major <- version_components[["major"]]
 
   if (grepl("^[0-9]+[.][0-9]+[.][0-9]+(?:[.][0-9]+)?$", as.character(which))) {
-
     if (as.character(which) < version) {
       cli_abort(
         "Can't release a version ({.val {which}}) higher
-        than the current version ({.val {version}}).")
+        than the current version ({.val {version}})."
+      )
     }
 
     return(which)
