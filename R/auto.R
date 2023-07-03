@@ -90,7 +90,7 @@ init_release_impl <- function(which, force) {
 
   fledgeling <- read_fledgling()
 
-  new_version <- fledge_guess_version(fledgeling$version, which)
+  new_version <- fledge_guess_version(fledgeling[["version"]], which)
 
   if (!force) {
     check_release_branch(new_version)
