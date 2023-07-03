@@ -64,17 +64,6 @@ bump_version_to_dev_with_force <- function(force, which) {
   push_head()
 }
 
-check_main_branch <- function(reason) {
-  if (get_branch_name() != get_main_branch()) {
-    cli::cli_abort(
-      c(
-        x = "Must be on the main branch ({.val {get_main_branch()}}) for running {.code {reason}}.",
-        i = "Currently on branch {.val {get_branch_name()}}."
-      )
-    )
-  }
-}
-
 check_cran_branch <- function(reason) {
   if (!grepl("^cran-", get_branch_name())) {
     cli::cli_abort(

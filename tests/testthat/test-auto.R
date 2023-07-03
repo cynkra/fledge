@@ -12,17 +12,25 @@ test_that("guess_next_impl() works", {
   })
 })
 
-test_that("pre_release() pre-flight checks", {
+test_that("merge_dev_news() works", {
   skip_if_not_installed("rlang", "1.0.1")
 
   local_options("fledge.quiet" = TRUE)
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
+
+  use_r("bla")
+  gert::git_add("R/bla.R")
+  gert::git_commit("* Add cool bla.")
   bump_version()
 
-  expect_snapshot(pre_release(), error = TRUE)
-
-  expect_output(init_release())
   use_r("blop")
-  expect_snapshot(pre_release(), error = TRUE)
+  gert::git_add("R/blop.R")
+  gert::git_commit("* Add cool blop.")
+  bump_version()
+
+  fledgeling <- read_fledgling()
+  fledgeling <- merge_dev_news(fledgeling, "2.0.0")
+  write_fledgling(fledgeling)
+  expect_snapshot_file("NEWS.md")
 })
