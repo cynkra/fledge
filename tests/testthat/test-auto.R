@@ -22,7 +22,10 @@ test_that("create_release_branch() works", {
   })
 
   gert::git_branch_checkout("main")
-  expect_snapshot({
-    create_release_branch(fledgeling, ref = "blop", force = TRUE)
-  }, error = TRUE)
+  expect_snapshot(
+    {
+      create_release_branch(fledgeling, ref = "blop", force = TRUE)
+    },
+    error = TRUE
+  )
 })
