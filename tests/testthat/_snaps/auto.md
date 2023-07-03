@@ -13,3 +13,22 @@
     Output
       [1] "major"
 
+# create_release_branch() works
+
+    Code
+      create_release_branch(fledgeling, ref = "bla")
+    Message
+      > Creating branch cran-0.0.0.9000.
+    Output
+      [1] "cran-0.0.0.9000"
+
+---
+
+    Code
+      create_release_branch(fledgeling, ref = "blop", force = TRUE)
+    Message
+      > Creating branch cran-0.0.0.9000.
+    Condition
+      Error in `gert::git_branch_create()`:
+      ! Failed to find git reference 'blop'
+

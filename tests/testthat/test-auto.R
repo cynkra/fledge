@@ -34,3 +34,21 @@ test_that("merge_dev_news() works", {
   write_fledgling(fledgeling)
   expect_snapshot_file("NEWS.md")
 })
+
+test_that("create_release_branch() works", {
+  local_demo_project()
+  gert::git_branch_create("bla")
+  gert::git_branch_checkout("main")
+  fledgeling <- read_fledgling()
+  expect_snapshot({
+    create_release_branch(fledgeling, ref = "bla")
+  })
+
+  gert::git_branch_checkout("main")
+  expect_snapshot(
+    {
+      create_release_branch(fledgeling, ref = "blop", force = TRUE)
+    },
+    error = TRUE
+  )
+})
