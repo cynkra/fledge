@@ -21,3 +21,16 @@ test_that("init_release() works", {
   expect_snapshot(init_release())
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
+
+test_that("init_release() -- force", {
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
+  local_demo_project(quiet = TRUE)
+
+  expect_snapshot(bump_version())
+
+  gert::git_branch_create("cran-0.0.1", checkout = FALSE)
+
+  expect_snapshot(init_release(), error = TRUE)
+  expect_snapshot(init_release(force = TRUE))
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+})
