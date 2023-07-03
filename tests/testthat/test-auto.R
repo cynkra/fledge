@@ -11,3 +11,13 @@ test_that("guess_next_impl() works", {
     guess_next_impl("1.99.99.9009")
   })
 })
+
+test_that("init_release() works", {
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
+  local_demo_project(quiet = TRUE)
+
+  # TODO: add test for bump_version() not run?
+  expect_snapshot(bump_version())
+  expect_snapshot(init_release())
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+})
