@@ -34,3 +34,15 @@ test_that("merge_dev_news() works", {
   write_fledgling(fledgeling)
   expect_snapshot_file("NEWS.md")
 })
+
+test_that("pre_release() pre-flight checks", {
+  skip_if_not_installed("rlang", "1.0.1")
+  local_options("fledge.quiet" = TRUE)
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
+  local_demo_project(quiet = TRUE)
+  bump_version()
+  expect_snapshot(pre_release(), error = TRUE)
+  expect_output(init_release())
+  use_r("blop")
+  expect_snapshot(pre_release(), error = TRUE)
+})
