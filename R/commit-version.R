@@ -66,7 +66,7 @@ check_clean <- function(forbidden_modifications) {
 
 check_only_modified <- function(allowed_modifications) {
   status <- gert::git_status()
-    forbidden_modifications <- setdiff(status$file, allowed_modifications)
+  forbidden_modifications <- setdiff(status$file, allowed_modifications)
   if (length(forbidden_modifications) > 0) {
     cli_abort(c(
       x = "Found untracked/unstaged/staged files in the git index: {.file {forbidden_modifications}}.",

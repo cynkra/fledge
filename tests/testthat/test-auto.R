@@ -25,5 +25,4 @@ test_that("pre_release() pre-flight checks", {
   expect_output(init_release())
   use_r("blop")
   expect_snapshot(pre_release(), error = TRUE)
-
 })
