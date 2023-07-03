@@ -27,3 +27,104 @@ parse_version <- function(version_header) {
     dev_df
   }
 }
+
+fledge_guess_version <- function(version, which) {
+  version_components <- get_version_components(version)
+  dev <- version_components[["dev"]]
+  patch <- version_components[["patch"]]
+  minor <- version_components[["minor"]]
+  major <- version_components[["major"]]
+
+  if (grepl("^[0-9]+[.][0-9]+[.][0-9]+(?:[.][0-9]+)?$", as.character(which))) {
+
+    if (as.character(which) < version) {
+      cli_abort(
+        "Can't release a version ({.val {which}}) higher
+        than the current version ({.val {version}}).")
+    }
+
+    return(which)
+  }
+
+  if (which %in% c("patch", "minor", "major", "dev")) {
+    dev <- switch(which,
+      dev = {
+        if (!is.na(dev) && dev >= 9999) {
+          cli::cli_abort(
+            "Can't increase version dev component ({.val {dev}}) that is >= 9999."
+          )
+        }
+        if (is.na(dev)) {
+          9000
+        } else {
+          dev + 1
+        }
+      },
+      NA
+    )
+
+    patch <- switch(which,
+      dev = patch,
+      patch = {
+        if (patch >= 99) {
+          cli::cli_abort(
+            "Can't increase version patch component {.val {patch}} that is >= 99."
+          )
+        }
+        patch + 1
+      },
+      0
+    )
+
+    minor <- switch(which,
+      dev = minor,
+      patch = minor,
+      minor = {
+        if (minor >= 99) {
+          cli::cli_abort(
+            "Can't increase version minor component ({.val {minor}}) that is >= 99."
+          )
+        }
+        minor + 1
+      },
+      major = 0
+    )
+
+    major <- switch(which,
+      major = major + 1,
+      major
+    )
+  } else {
+    # pre-minor and pre-major
+
+    if (is.na(dev)) {
+      cli::cli_abort("Can't update version from not dev to {.val {which}}.")
+    }
+
+    if (patch >= 99) {
+      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (patch >= 99).")
+    }
+
+    if (minor >= 99) {
+      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (minor >= 99).")
+    }
+
+    dev <- "9000"
+    patch <- "99"
+    # pre-minor: make patch 99
+    # pre-major: make both minor and patch 99
+    if (which == "pre-major") {
+      minor <- "99"
+    } else {
+      stopifnot(which == "pre-minor")
+    }
+  }
+
+  version_components <- c(
+    major = major,
+    minor = minor,
+    patch = patch,
+    dev = dev
+  )
+  paste(version_components[!is.na(version_components)], collapse = ".")
+}
