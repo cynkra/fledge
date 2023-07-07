@@ -19,13 +19,31 @@ test_that("parse_version() works", {
 })
 
 test_that("fledge_guess_version() works", {
-  expect_error(fledge_guess_version("1.1.1", "1.0.0"))
+  expect_snapshot(error = TRUE, {
+    fledge_guess_version("1.1.1", "1.0.0")
+  })
+
+  # FIXME: Should this really be an error?
+  expect_snapshot(error = TRUE, {
+    fledge_guess_version("1.1.1", "pre-minor")
+  })
+
+  # FIXME: Should this really be an error?
+  expect_snapshot(error = TRUE, {
+    fledge_guess_version("1.1.1", "pre-major")
+  })
+
+  expect_snapshot(error = TRUE, {
+    fledge_guess_version("1.1.1", "boo")
+  })
 
   expect_equal(fledge_guess_version("1.0.0", "2.0.0"), "2.0.0")
 
   expect_equal(fledge_guess_version("1.0.0", "dev"), "1.0.0.9000")
   expect_equal(fledge_guess_version("1.0.0.9000", "dev"), "1.0.0.9001")
   expect_equal(fledge_guess_version("1.0.0.9000", "patch"), "1.0.1")
-  expect_equal(fledge_guess_version("1.0.0.9000", "minor"), "1.1.0")
-  expect_equal(fledge_guess_version("1.0.0.9000", "major"), "2.0.0")
+  expect_equal(fledge_guess_version("1.0.0.9001", "pre-minor"), "1.0.99.9000")
+  expect_equal(fledge_guess_version("1.0.0.9001", "minor"), "1.1.0")
+  expect_equal(fledge_guess_version("1.0.0.9001", "pre-major"), "1.99.99.9000")
+  expect_equal(fledge_guess_version("1.0.0.9001", "major"), "2.0.0")
 })

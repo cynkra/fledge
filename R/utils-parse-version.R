@@ -38,8 +38,7 @@ fledge_guess_version <- function(version, which) {
   if (grepl("^[0-9]+[.][0-9]+[.][0-9]+(?:[.][0-9]+)?$", as.character(which))) {
     if (as.character(which) < version) {
       cli_abort(
-        "Can't release a version ({.val {which}}) higher
-        than the current version ({.val {version}})."
+        "Can't release a version ({.val {which}}) lower than the current version ({.val {version}})."
       )
     }
 
@@ -94,7 +93,7 @@ fledge_guess_version <- function(version, which) {
       major = major + 1,
       major
     )
-  } else {
+  } else if (which %in% c("pre-minor", "pre-major")) {
     # pre-minor and pre-major
 
     if (is.na(dev)) {
@@ -118,6 +117,8 @@ fledge_guess_version <- function(version, which) {
     } else {
       stopifnot(which == "pre-minor")
     }
+  } else {
+    cli::cli_abort("Unknown version specifier {.val {which}}.")
   }
 
   version_components <- c(
