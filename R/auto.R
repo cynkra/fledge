@@ -157,7 +157,8 @@ init_release_impl <- function(which, force) {
 pre_release_impl <- function(force) {
   cli_h1("1. Opening Pull Request for release branch")
 
-  if (nrow(gert::git_status()) > 0) {
+  changes_made <- nrow(gert::git_status()) > 0
+  if (changes_made) {
     gert::git_add(files = c(
       "DESCRIPTION",
       "NEWS.md",
