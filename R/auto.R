@@ -86,7 +86,7 @@ init_release_impl <- function(which, force) {
   stopifnot(get_branch_name() != "HEAD")
 
   # check PAT scopes for PR for early abort
-  check_gh_pat("repo")
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
 
   fledgeling <- read_fledgling()
 
@@ -551,7 +551,7 @@ check_post_release <- function() {
   cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
 
   # FIXME: Distinguish between public and private repo?
-  check_gh_pat("repo")
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
 
   # FIXME: release() should (force-)create and (force-)push a tag vx.y.z-rc
   # This can be taken as a reference for the new tag.
