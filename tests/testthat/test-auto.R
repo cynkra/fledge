@@ -5,17 +5,13 @@ test_that("extract_version_pr() works", {
 })
 
 test_that("guess_next_impl() works", {
-  expect_snapshot({
-    guess_next_impl("1.2.3.9007")
-    guess_next_impl("1.2.99.9008")
-    guess_next_impl("1.99.99.9009")
-  })
+  expect_equal(guess_next_impl("1.2.3.9007"), "patch")
+  expect_equal(guess_next_impl("1.2.99.9008"), "minor")
+  expect_equal(guess_next_impl("1.99.99.9009"), "major")
 })
 
 test_that("merge_dev_news() works", {
   skip_if_not_installed("rlang", "1.0.1")
-
-  local_options("fledge.quiet" = TRUE)
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
@@ -38,7 +34,7 @@ test_that("merge_dev_news() works", {
 })
 
 test_that("create_release_branch() works", {
-  local_demo_project()
+  local_demo_project(quiet = TRUE)
   gert::git_branch_create("bla")
   gert::git_branch_checkout("main")
 
@@ -49,5 +45,73 @@ test_that("create_release_branch() works", {
   gert::git_branch_checkout("main")
   expect_snapshot(error = TRUE, {
     create_release_branch("0.0.1", ref = "blop", force = TRUE)
+  })
+})
+
+test_that("init_release() works", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
+  withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
+  local_demo_project(quiet = TRUE)
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
+
+  shut_up_fledge(bump_version())
+  expect_snapshot(init_release())
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+})
+
+test_that("init_release() -- force", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
+  withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
+  local_demo_project(quiet = TRUE)
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
+
+  shut_up_fledge(bump_version())
+
+  gert::git_branch_create("cran-0.0.1", checkout = FALSE)
+
+  expect_snapshot(init_release(), error = TRUE)
+  expect_snapshot(init_release(force = TRUE))
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+})
+
+test_that("pre_release() pre-flight checks", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
+  withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
+
+  local_demo_project(quiet = TRUE)
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
+
+  shut_up_fledge(bump_version())
+
+  expect_snapshot(pre_release(), error = TRUE)
+
+  shut_up_fledge(init_release())
+  use_r("blop")
+  expect_snapshot(error = TRUE, pre_release())
+})
+
+test_that("pre_release() works", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
+  withr::local_envvar("FLEDGE_FORCE_NEWS_MD" = "bla")
+  withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
+
+  local_demo_project(quiet = TRUE)
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
+
+  # TODO: add test for bump_version() not run?
+  shut_up_fledge(bump_version())
+  shut_up_fledge(init_release())
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+
+  with_mock_dir("prerelease", {
+    expect_snapshot(pre_release())
   })
 })
