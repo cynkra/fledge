@@ -54,6 +54,7 @@ test_that("create_release_branch() works", {
 })
 
 test_that("init_release() works", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
