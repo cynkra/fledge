@@ -49,3 +49,27 @@ test_that("create_release_branch() works", {
     create_release_branch("0.0.1", ref = "blop", force = TRUE)
   })
 })
+
+test_that("init_release() works", {
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
+  local_demo_project(quiet = TRUE)
+
+  # TODO: add test for bump_version() not run?
+  expect_snapshot(bump_version())
+  expect_snapshot(init_release())
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+})
+
+test_that("init_release() -- force", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
+  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
+  local_demo_project(quiet = TRUE)
+
+  expect_snapshot(bump_version())
+
+  gert::git_branch_create("cran-0.0.1", checkout = FALSE)
+
+  expect_snapshot(init_release(), error = TRUE)
+  expect_snapshot(init_release(force = TRUE))
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+})
