@@ -86,7 +86,7 @@ init_release_impl <- function(which, force) {
   stopifnot(get_branch_name() != "HEAD")
 
   # check PAT scopes for PR for early abort
-  check_gh_pat("repo")
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
 
   fledgeling <- read_fledgling()
 
@@ -604,7 +604,7 @@ check_post_release <- function() {
   }
 
   # FIXME: Distinguish between public and private repo?
-  check_gh_pat("repo")
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
 
   if (!no_change(main_branch)) {
     cli_abort(c(
