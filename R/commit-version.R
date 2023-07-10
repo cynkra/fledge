@@ -66,13 +66,11 @@ check_clean <- function(forbidden_modifications) {
 
 check_only_modified <- function(allowed_modifications) {
   status <- gert::git_status()
-  if (!all(status$file %in% allowed_modifications)) {
-    problematic_files <- setdiff(status$file, allowed_modifications)
-    nfiles <- length(problematic_files)
-    cli_abort(c(
-      x = "Found untracked/unstaged/staged {qty(nfiles)} file{?s} in the git index: {.file {problematic_files}}.",
-      i = "Please commit or discard {qty(nfiles)} {?it/them} and try again."
-    ))
+  forbidden_modifications <- setdiff(status$file, allowed_modifications)
+  if (length(forbidden_modifications) > 0) {
+    cli::cli_abort("Found untracked/unstaged/staged files in the git index:
+    {.file {forbidden_modifications}}. Please commit or discard them and
+    try again.", wrap = TRUE)
   }
 }
 
