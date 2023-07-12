@@ -78,7 +78,7 @@ upload_cran <- function(pkg, built_path) {
     email = maint_email,
     uploaded_file = curl::form_file(built_path, type = "application/x-gzip"),
     comment = comments,
-    upload = "Upload package"
+    upload = "Upload the package"
   )
   r <- httr2::request(cran_submission_url) %>%
     httr2::req_body_multipart(!!!body) %>%
@@ -86,17 +86,29 @@ upload_cran <- function(pkg, built_path) {
 
   # If a 404 likely CRAN is closed for maintenance, try to get the message
   if (httr2::resp_status(r) == 404) {
-    msg <- ""
+    msg <- "<Can't extract error message>"
     try({
       r2 <- httr2::request(sub("index2", "index", cran_submission_url)) %>%
         httr2::req_perform()
       msg <- extract_cran_msg(httr2::resp_body_string(r2))
     })
-    stop("Submission failed:", msg, call. = FALSE)
+    stop("Submission failed: ", msg, call. = FALSE)
   }
 
   httr2::resp_check_status(r)
   new_url <- httr2::url_parse(r$url)
+
+  if (!is.null(new_url$query$strErr)) {
+    msg <- "<Can't extract error message>"
+    try({
+      msg <- httr2::request(r[["url"]]) %>%
+        httr2::req_perform() %>%
+        httr2::resp_body_html() %>%
+        xml2::xml_find_all('./body//font[@color="red"]') %>%
+        xml2::xml_text()
+    })
+    stop("Submission failed: ", msg, call. = FALSE)
+  }
 
   # Confirmation -----------
   cli::cli_alert_info("Confirming submission")
