@@ -321,7 +321,7 @@ is_news_consistent <- function() {
 }
 
 get_cran_comments_text <- function() {
-  readLines("cran-comments.md")
+  brio::read_lines("cran-comments.md")
 }
 
 is_cran_comments_good <- function() {
