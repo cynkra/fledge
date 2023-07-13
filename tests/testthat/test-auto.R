@@ -76,6 +76,7 @@ test_that("init_release() -- force", {
 })
 
 test_that("pre_release() pre-flight checks", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   skip_if_not_installed("rlang", "1.0.1")
 
   local_options("fledge.quiet" = TRUE)
