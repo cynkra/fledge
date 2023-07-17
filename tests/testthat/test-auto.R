@@ -12,20 +12,18 @@ test_that("guess_next_impl() works", {
 
 test_that("merge_dev_news() works", {
   skip_if_not_installed("rlang", "1.0.1")
-
-  shut_up_fledge()
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
   gert::git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
-  bump_version()
+  shut_up_fledge(bump_version())
 
   use_r("blop")
   gert::git_add("R/blop.R")
   gert::git_commit("* Add cool blop.")
-  bump_version()
+  shut_up_fledge(bump_version())
 
   fledgeling <- read_fledgling()
   fledgeling <- merge_dev_news(fledgeling, "2.0.0")
@@ -56,8 +54,7 @@ test_that("init_release() works", {
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
-  # TODO: add test for bump_version() not run?
-  expect_snapshot(bump_version())
+  shut_up_fledge(bump_version())
   expect_snapshot(init_release())
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
@@ -67,7 +64,7 @@ test_that("init_release() -- force", {
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
-  expect_snapshot(bump_version())
+  shut_up_fledge(bump_version())
 
   gert::git_branch_create("cran-0.0.1", checkout = FALSE)
 
@@ -79,15 +76,13 @@ test_that("init_release() -- force", {
 test_that("pre_release() pre-flight checks", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   skip_if_not_installed("rlang", "1.0.1")
-
-  local_options("fledge.quiet" = TRUE)
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
-  bump_version()
+  shut_up_fledge(bump_version())
 
   expect_snapshot(pre_release(), error = TRUE)
 
-  expect_output(init_release())
+  shut_up_fledge(init_release())
   use_r("blop")
   expect_snapshot(pre_release(), error = TRUE)
 })
@@ -96,7 +91,6 @@ test_that("pre_release() works", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_FORCE_NEWS_MD" = "bla")
   withr::local_envvar("FLEDGE_TEST_NOPUSH_PRERELEASE" = "blop")
-  withr::local_options(list(usethis.quiet = TRUE))
   withr::local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
 
   local_demo_project(quiet = TRUE)
@@ -108,7 +102,7 @@ test_that("pre_release() works", {
   gert::git_commit(message = "desc")
 
   # TODO: add test for bump_version() not run?
-  expect_snapshot(bump_version())
+  shut_up_fledge(bump_version())
   expect_snapshot(init_release())
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 
