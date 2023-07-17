@@ -96,7 +96,9 @@ init_release_impl <- function(which, force) {
     check_release_branch(new_version)
   }
 
-  cat(boxx("pre-release", border_style = "double"))
+  if (fledge_chatty()) {
+    cat(boxx("pre-release", border_style = "double"))
+  }
 
   # Begin extension points
   # End extension points
@@ -173,14 +175,18 @@ pre_release_impl <- function(force) {
   # push main branch, bump to devel version and push again
   push_to_new(remote_name, force)
 
-  cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
+  if (fledge_chatty()) {
+    cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
+  }
   create_pull_request(get_branch_name(), main_branch, remote_name, force)
 
   # user action items
-  cli_h1("2. User Action Items")
-  cli_div(theme = list(ul = list(color = "magenta")))
-  cli_ul("Run {.code fledge::release()}.")
-  cli_end()
+  if (fledge_chatty()) {
+    cli_h1("2. User Action Items")
+    cli_div(theme = list(ul = list(color = "magenta")))
+    cli_ul("Run {.code fledge::release()}.")
+    cli_end()
+  }
 
   # Begin extension points
   # End extension points
@@ -246,7 +252,7 @@ create_release_branch <- function(fledgeling,
                                   ref = "HEAD^") {
   branch_name <- paste0("cran-", fledgeling$version)
 
-  cli_alert("Creating branch {.field {branch_name}}.")
+  if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")
 
   if (gert::git_branch_exists(branch_name) && force) {
     gert::git_branch_delete(branch_name)
@@ -259,7 +265,7 @@ create_release_branch <- function(fledgeling,
 }
 
 switch_branch <- function(name) {
-  cli_alert("Switching to branch {.field {name}}.")
+  if (fledge_chatty()) cli_alert("Switching to branch {.field {name}}.")
   gert::git_branch_checkout(branch = name)
 }
 
@@ -349,7 +355,7 @@ get_cransplainer_update <- function(package) {
   }
 
   url <- foghorn::visit_cran_check(package)
-  cli_ul("Review {.url {url}}.")
+  if (fledge_chatty()) cli_ul("Review {.url {url}}.")
 
   cransplainer <- paste0(
     "- [x] ", checked_on, ", problems found: ", url, "\n",
@@ -412,8 +418,10 @@ is_cran_comments_good <- function() {
 }
 
 auto_confirm <- function() {
-  cli_alert_info("Check your inbox for a confirmation e-mail from CRAN.")
-  cli_alert("Copy the URL to the clipboard.")
+  if (fledge_chatty()) {
+    cli_alert_info("Check your inbox for a confirmation e-mail from CRAN.")
+  }
+  if (fledge_chatty()) cli_alert("Copy the URL to the clipboard.")
 
   tryCatch(
     repeat {
@@ -430,14 +438,14 @@ auto_confirm <- function() {
   )
 
   code <- paste0('browseURL("', get_confirm_url(url), '")')
-  cli_ul("Run {.code {code}}.")
+  if (fledge_chatty()) cli_ul("Run {.code {code}}.")
   send_to_console(code)
 }
 
 confirm_submission <- function(url) {
   url <- get_confirm_url(url)
 
-  cli_alert("Visiting {.url {url}}.")
+  if (fledge_chatty()) cli_alert("Visiting {.url {url}}.")
   utils::browseURL(url)
 }
 
@@ -487,7 +495,7 @@ post_release_impl <- function() {
 }
 
 create_github_release <- function() {
-  cli_alert("Creating GitHub release.")
+  if (fledge_chatty()) cli_alert("Creating GitHub release.")
 
   slug <- github_slug()
   tag <- get_tag_info()
@@ -502,26 +510,30 @@ create_github_release <- function() {
   if (rlang::is_interactive()) {
     url <- out$html_url
 
-    cli_alert("Opening release URL {.url {url}}.")
+    if (fledge_chatty()) cli_alert("Opening release URL {.url {url}}.")
     utils::browseURL(url)
 
     edit_url <- gsub("/tag/", "/edit/", url)
 
-    cli_alert("Opening release edit URL {.url {edit_url}}.")
+    if (fledge_chatty()) cli_alert("Opening release edit URL {.url {edit_url}}.")
     utils::browseURL(edit_url)
   }
 }
 
 merge_branch <- function(other_branch) {
-  cli_alert("Merging release branch.")
-  cli_alert_info("If this fails, resolve the conflict manually and push.")
+  if (fledge_chatty()) cli_alert("Merging release branch.")
+  if (fledge_chatty()) {
+    cli_alert_info("If this fails, resolve the conflict manually and push.")
+  }
 
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
 }
 
 check_post_release <- function() {
-  cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
+  if (fledge_chatty()) {
+    cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
+  }
 
   # FIXME: Distinguish between public and private repo?
   if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
@@ -625,12 +637,16 @@ release_after_cran_built_binaries <- function() {
   )
 
   if (length(cran_pr) == 0) {
-    cli::cli_alert_info("Can't find a 'CRAN release'-labelled PR")
+    if (fledge_chatty()) {
+      cli::cli_alert_info("Can't find a 'CRAN release'-labelled PR")
+    }
     return(invisible(FALSE))
   }
 
   if (length(cran_pr) > 1) {
-    cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PRs")
+    if (fledge_chatty()) {
+      cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PRs")
+    }
   }
 
   cran_pr <- cran_pr[[1]]

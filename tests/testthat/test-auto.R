@@ -54,7 +54,7 @@ test_that("init_release() works", {
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
-  expect_snapshot(bump_version())
+  shut_up_fledge(bump_version())
   expect_snapshot(init_release())
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
@@ -64,7 +64,7 @@ test_that("init_release() -- force", {
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
-  expect_snapshot(bump_version())
+  shut_up_fledge(bump_version())
 
   gert::git_branch_create("cran-0.0.1", checkout = FALSE)
 
@@ -82,7 +82,7 @@ test_that("pre_release() pre-flight checks", {
 
   expect_snapshot(pre_release(), error = TRUE)
 
-  expect_output(init_release())
+  shut_up_fledge(init_release())
   use_r("blop")
   expect_snapshot(pre_release(), error = TRUE)
 })
