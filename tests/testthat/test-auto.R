@@ -93,3 +93,28 @@ test_that("pre_release() pre-flight checks", {
   use_r("blop")
   expect_snapshot(pre_release(), error = TRUE)
 })
+
+test_that("pre_release() works", {
+  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
+  withr::local_envvar("FLEDGE_FORCE_NEWS_MD" = "bla")
+  withr::local_envvar("FLEDGE_TEST_NOPUSH_PRERELEASE" = "blop")
+  withr::local_options(list(usethis.quiet = TRUE))
+  withr::local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
+
+  local_demo_project(quiet = TRUE)
+  with_mock_dir("repo-creation", {
+    use_github(protocol = "ssh")
+  })
+
+  gert::git_add("DESCRIPTION")
+  gert::git_commit(message = "desc")
+
+  # TODO: add test for bump_version() not run?
+  expect_snapshot(bump_version())
+  expect_snapshot(init_release())
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
+
+  with_mock_dir("prerelease", {
+    expect_snapshot(pre_release())
+  })
+})
