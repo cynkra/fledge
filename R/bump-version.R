@@ -20,7 +20,7 @@ bump_version_impl <- function(fledgeling,
       )
     }
     if (no_change_behavior == "noop") {
-      cli::cli_alert_info("No change since last version.")
+      if (fledge_chatty()) cli::cli_alert_info("No change since last version.")
       return(invisible(fledgeling))
     }
   }
