@@ -5,17 +5,13 @@ test_that("extract_version_pr() works", {
 })
 
 test_that("guess_next_impl() works", {
-  expect_snapshot({
-    guess_next_impl("1.2.3.9007")
-    guess_next_impl("1.2.99.9008")
-    guess_next_impl("1.99.99.9009")
-  })
+  expect_equal(guess_next_impl("1.2.3.9007"), "patch")
+  expect_equal(guess_next_impl("1.2.99.9008"), "minor")
+  expect_equal(guess_next_impl("1.99.99.9009"), "major")
 })
 
 test_that("merge_dev_news() works", {
   skip_if_not_installed("rlang", "1.0.1")
-
-  local_options("fledge.quiet" = TRUE)
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 

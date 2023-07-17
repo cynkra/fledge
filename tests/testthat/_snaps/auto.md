@@ -1,18 +1,3 @@
-# guess_next_impl() works
-
-    Code
-      guess_next_impl("1.2.3.9007")
-    Output
-      [1] "patch"
-    Code
-      guess_next_impl("1.2.99.9008")
-    Output
-      [1] "minor"
-    Code
-      guess_next_impl("1.99.99.9009")
-    Output
-      [1] "major"
-
 # create_release_branch() works
 
     Code
@@ -150,29 +135,6 @@
       ! Found untracked/unstaged/staged files in the git index: 'R/'. Please commit or discard them and try again.
 
 # pre_release() works
-
-    Code
-      bump_version()
-    Message
-      > Digesting messages from 3 commits.
-      i Internal changes only.
-      
-      -- Updating NEWS --
-      
-      > Adding new entries to 'NEWS.md'.
-      
-      -- Updating Version --
-      
-      v Package version bumped to 0.0.0.9001.
-      > Added header to 'NEWS.md'.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version(push = TRUE)`.
-
----
 
     Code
       init_release()
