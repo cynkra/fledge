@@ -341,10 +341,7 @@ auto_confirm <- function() {
     cli_alert_info("Check your inbox for a confirmation e-mail from CRAN.")
   }
   if (fledge_chatty()) cli_alert("Copy the URL to the clipboard.")
-  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
-    cli::cli_inform("Not submitting for real o:-)")
-    return(invisible(NULL))
-  }
+
   tryCatch(
     repeat {
       suppressWarnings(url <- clipr::read_clip())
@@ -472,41 +469,6 @@ merge_branch <- function(other_branch) {
 }
 
 check_post_release <- function() {
-  check_only_modified(character())
-  check_cran_branch("post_release()")
-
-  # Check that this and the main branch are in sync
-  # FIXME add the conflict resolution
-  gert::git_fetch(get_remote_name())
-  ab_this <- gert::git_ahead_behind()
-  if (ab_this[["behind"]] != 0) {
-    cli::cli_abort(c(
-      "Local release branch behind by {ab_this[['behind']]} commit{?s}."
-    ))
-  }
-  if (ab_this[["ahead"]] != 0) {
-    ncommit <- ab_this[['ahead']]
-    cli::cli_abort(c(
-      "Local release branch ahead by {ncommit} commit{?s}."
-    ))
-  }
-  main_branch <- get_main_branch()
-  remote_name <- get_remote_name(main_branch)
-  remote_main <- paste0(remote_name, "/", main_branch)
-  ab_main <- gert::git_ahead_behind(remote_main, main_branch)
-  if (ab_main[["behind"]] != 0) {
-    ncommit <- ab_main[['behind']]
-    cli::cli_abort(c(
-      "Local main branch behind by {ncommit} commit{?s}."
-    ))
-  }
-  if (ab_main[["ahead"]] != 0) {
-    ncommit <- ab_main[["ahead"]]
-    cli::cli_abort(c(
-      "Local main branch ahead by {ncommit} commit{?s}."
-    ))
-  }
-
   if (fledge_chatty()) {
     cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
   }
