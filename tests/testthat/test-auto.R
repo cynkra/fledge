@@ -103,7 +103,7 @@ test_that("pre_release() works", {
 
   # TODO: add test for bump_version() not run?
   shut_up_fledge(bump_version())
-  expect_snapshot(init_release())
+  shut_up_fledge(init_release())
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 
   with_mock_dir("prerelease", {
