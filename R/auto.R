@@ -101,7 +101,7 @@ init_release_impl <- function(which, force) {
   # Begin extension points
   # End extension points
 
-  cli_h1("1. Wrapping up development")
+  if (fledge_chatty()) cli_h1("1. Wrapping up development")
 
   # Bump dev if needed, bail out if bumped
   new_fledgeling <- bump_version_impl(fledgeling, "dev", no_change_behavior = "noop")
@@ -124,7 +124,7 @@ init_release_impl <- function(which, force) {
     )
   )
 
-  cli_h1("2. Creating a release branch and getting ready")
+  if (fledge_chatty()) cli_h1("2. Creating a release branch and getting ready")
 
   # regroup dev news
   fledgeling <- merge_dev_news(fledgeling, new_version)
@@ -139,16 +139,17 @@ init_release_impl <- function(which, force) {
   edit_news()
   edit_cran_comments()
 
-  cli_h1("3. User Action Items")
-  cli_div(theme = list(ul = list(color = "magenta")))
-  cli_ul("Run {.code devtools::check_win_devel()}.")
-  cli_ul("Run {.code rhub::check_for_cran()}.")
-  cli_ul("Run {.code urlchecker::url_update()}.")
-  cli_ul("Check all items in {.file cran-comments.md}.")
-  cli_ul("Review {.file NEWS.md}.")
-  cli_ul("Call {.code pre_release()}.")
-
-  send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
+  if (fledge_chatty()) {
+    cli_h1("3. User Action Items")
+    cli_div(theme = list(ul = list(color = "magenta")))
+    cli_ul("Run {.code devtools::check_win_devel()}.")
+    cli_ul("Run {.code rhub::check_for_cran()}.")
+    cli_ul("Run {.code urlchecker::url_update()}.")
+    cli_ul("Check all items in {.file cran-comments.md}.")
+    cli_ul("Review {.file NEWS.md}.")
+    cli_ul("Call {.code pre_release()}.")
+    send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
+  }
 }
 
 pre_release_impl <- function(force) {
