@@ -98,7 +98,7 @@ upload_cran <- function(pkg, built_path) {
   httr2::resp_check_status(r)
   new_url <- httr2::url_parse(r$url)
 
-  if (!is.null(new_url$query$strErr)) {
+  if (!is.null(new_url$query$strErr) && new_url$query$strErr != "99") {
     msg <- "<Can't extract error message>"
     try({
       msg <- httr2::request(r[["url"]]) %>%
