@@ -121,6 +121,7 @@ init_release_impl <- function(which, force) {
       fledgeling$version
     )
   )
+  finalize_version_impl(push = TRUE)
 
   if (fledge_chatty()) cli_h1("2. Creating a release branch and getting ready")
 
