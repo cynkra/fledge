@@ -1,12 +1,12 @@
 pandoc: 2.19.2
 pkgdown: 2.0.7.9000
-pkgdown_sha: 39083f38bbb2de2e1126529392bddf3e6e262ab4
+pkgdown_sha: c9206802f2888992de92aa41f517ba7812f05331
 articles:
   cran-automation: cran-automation.html
   demo: demo.html
   fledge: fledge.html
   internals: internals.html
-last_built: 2023-07-10T07:37Z
+last_built: 2023-09-25T09:22Z
 urls:
   reference: https://fledge.cynkra.com/reference
   article: https://fledge.cynkra.com/articles
