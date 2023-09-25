@@ -41,7 +41,7 @@ Also tweak the CI workflow accordingly. :sweat_smile:",
     "upkeep: update rlang usage.",
 
     # NOT conventional commit
-    "upkeep:update",
+    "UPKEEP:update",
     "use cool::blop()"
   )
 }
