@@ -357,7 +357,7 @@ get_confirm_url <- function(url) {
   }
   parsed$query$confirm_submit <- utils::URLencode("Upload Package to CRAN")
 
-  httr::url_build(parsed)
+  httr2::url_build(parsed)
 }
 
 #' @description
