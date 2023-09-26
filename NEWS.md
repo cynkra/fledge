@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9003 (2023-09-26)
+
+## Testing
+
+- Add a test for upper case conventional commit type (#711).
+
+
 # fledge 0.1.99.9002 (2023-07-11)
 
 - Internal changes only.
