@@ -561,6 +561,19 @@ merge_branch <- function(other_branch) {
 }
 
 check_post_release <- function() {
+  check_only_modified(character())
+  check_cran_branch("post_release()")
+
+  # Check that this and the main branch are in sync
+  gert::git_fetch(get_remote_name())
+  ab_this <- gert::git_ahead_behind()
+  stopifnot(ab_this$behind == 0 && ab_this$ahead == 0)
+  main_branch <- get_main_branch()
+  remote_name <- get_remote_name(main_branch)
+  remote_main <- paste0(remote_name, "/", main_branch)
+  ab_main <- gert::git_ahead_behind(remote_main, main_branch)
+  stopifnot(ab_main$behind == 0 && ab_main$ahead == 0)
+
   if (fledge_chatty()) {
     cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
   }
@@ -568,10 +581,25 @@ check_post_release <- function() {
   # FIXME: Distinguish between public and private repo?
   if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
 
-  # FIXME: release() should (force-)create and (force-)push a tag vx.y.z-rc
-  # This can be taken as a reference for the new tag.
-  repo_head_sha <- gert::git_log(max = 1)$commit
-  repo_head_sha
+  if (!no_change(main_branch)) {
+    cli_abort(c(
+      "The main branch contains newsworthy commits.",
+      i = "Run {.run fledge::bump_version()} on the main branch."
+    ))
+  }
+
+  if (gert::git_ahead_behind(main_branch)$behind != 0) {
+    if (system2("git", c("merge", "--no-ff", "--no-commit", main_branch)) != 0) {
+      cli_abort(c(
+        "Merging the main branch into the release branch failed.",
+        i = "Resolve the conflict manually and push."
+      ))
+    }
+
+    stopifnot(system2("git", c("merge", "--abort")) == 0)
+  }
+
+  invisible()
 }
 
 check_gitignore <- function(files) {
