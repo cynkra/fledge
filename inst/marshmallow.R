@@ -46,34 +46,6 @@ fs::dir_tree()
 # post release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 post_release()
-# why conflict?
-brio::write_lines(
-  c(
-  "#", "",
-  "- Add cool bla.", "",
-  "- Added a `NEWS.md` file to track changes to the package."
-  ),
-  "NEWS.md"
-)
-
-desc_lines <- brio::read_lines("DESCRIPTION")
-which_date <- grep("Date: ", desc_lines)
-desc_lines <- desc_lines[-(1:which_date)]
-desc_lines <- c(
-  "Package: tea",
-  "Title: What the Package Does (One Line, Title Case)",
-  "Version: 0.0.1",
-  desc_lines
-)
-brio::write_lines(desc_lines, "DESCRIPTION")
-
-gert::git_add(c("NEWS.md", "DESCRIPTION"))
-gert::git_commit("Fix conflicts in changelog & DESCRIPTION")
-gert::git_push()
-
-gert::git_branch()
-desc::desc_get_version()
-gert::git_tag_list()
 
 # back to fledge directory and project ----
 back_to_start()
