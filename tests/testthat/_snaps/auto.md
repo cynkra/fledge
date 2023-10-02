@@ -59,6 +59,7 @@
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
+      > Committing changes.
       
       -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
@@ -121,6 +122,7 @@
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
+      > Committing changes.
       
       -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
@@ -206,6 +208,7 @@
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
+      > Committing changes.
       
       -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.

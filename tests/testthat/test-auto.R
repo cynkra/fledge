@@ -148,7 +148,7 @@ test_that("full cycle", {
     c("cran-0.0.1", "main")
   )
   expect_equal(as.character(desc::desc_get_version()), "0.0.1")
-  expect_equal(nrow(gert::git_status()), 4)
+  expect_equal(nrow(gert::git_status()), 0)
 
   # prep release ----
   expect_snapshot(pre_release())
