@@ -487,7 +487,9 @@ post_release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  create_github_release()
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    create_github_release()
+  }
 
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()

@@ -39,6 +39,12 @@ gert::git_add("cran-comments.md")
 gert::git_commit("this is how we check boxes")
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
 release()
+gert::git_status()
+fs::dir_tree()
+
+# post release ----
+withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
+post_release()
 
 # back to fledge directory and project ----
 back_to_start()
