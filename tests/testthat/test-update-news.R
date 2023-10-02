@@ -62,7 +62,6 @@ test_that("regroup_news() works", {
 })
 
 test_that("Can update dev version news item", {
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
 
   withr::local_options("usethis.quiet" = TRUE)
   repo <- withr::local_tempdir(pattern = "devpkg")

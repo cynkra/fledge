@@ -7,8 +7,6 @@
 #' @param date String of time for DESCRIPTION and git.
 #' @param dir Directory within which to create the mock package folder.
 #' @param news If TRUE, create a NEWS.md file.
-#' @param dev_md Whether to use "(development version)" (with `dev_md = TRUE`) or the current version
-#' number, in the first NEWS.md header.
 #'
 #' @return The path to the newly created mock package.
 #' @export
@@ -19,8 +17,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
                                 email = NULL,
                                 date = "2021-09-27",
                                 dir = file.path(tempdir(), "fledge"),
-                                news = FALSE,
-                                dev_md = FALSE) {
+                                news = FALSE) {
   if (is.null(maintainer)) {
     maintainer <- whoami::fullname(fallback = "Kirill M\u00fcller")
   }
@@ -65,35 +62,17 @@ create_demo_project <- function(open = rlang::is_interactive(),
   gert::git_config_set(name = "init.defaultbranch", value = "main")
 
   if (news) {
-    usethis::with_project(
-      path = pkg,
-      {
-        rlang::with_interactive(
-          {
-            # we now have to create a demo project with a preambled NEWS.md for tests to pass
-            withr::with_options(
-              list(repos = c("CRAN" = "https://cloud.r-project.org")),
-              {
-                usethis::use_news_md()
-              }
-            )
-
-            news_lines <- readLines("NEWS.md")
-            if (!dev_md) {
-              news_lines <- sub("\\(development version\\)", desc::desc_get_version(), news_lines)
-            }
-            news_lines <- c(news_preamble(), "", news_lines)
-            writeLines(news_lines, "NEWS.md")
-          },
-          value = FALSE
-        )
-        gert::git_add("NEWS.md")
-        gert::git_commit(
-          "Add NEWS.md to track changes.",
-          author = default_gert_author(),
-          committer = default_gert_committer()
-        )
-      }
+    news_lines <- c(
+      news_preamble(), "",
+      sprintf("# %s %s", name, as.character(desc::desc_get_version())), "",
+      "* Added a `NEWS.md` file to track changes to the package."
+    )
+    brio::write_lines(news_lines, "NEWS.md")
+    gert::git_add("NEWS.md")
+    gert::git_commit(
+      "Add NEWS.md to track changes.",
+      author = default_gert_author(),
+      committer = default_gert_committer()
     )
   }
 
@@ -142,16 +121,20 @@ with_demo_project <- function(code, dir = NULL, news = TRUE, quiet = FALSE) {
 #' @return `local_demo_project()` is called for its side effect and returns `NULL`, invisibly.
 #' @rdname with_demo_project
 #' @export
-local_demo_project <- function(dir = NULL, news = TRUE, quiet = FALSE, .local_envir = parent.frame()) {
-  if (is.null(dir)) {
-    dir <- withr::local_tempdir(pattern = "fledge", .local_envir = .local_envir)
-  }
+local_demo_project <- function(dir = NULL,
+                               news = TRUE,
+                               quiet = FALSE,
+                              .local_envir = parent.frame()) {
+
+    dir <- dir %||%
+      withr::local_tempdir(pattern = "fledge", .local_envir = .local_envir)
 
   if (!dir.exists(dir)) {
     cli::cli_abort(c(x = "Can't find the directory {.file {dir}}."))
   }
 
   repo <- create_demo_project(dir = dir, news = news)
+
   usethis::local_project(
     path = repo,
     quiet = quiet,

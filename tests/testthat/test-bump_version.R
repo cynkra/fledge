@@ -1,6 +1,5 @@
 test_that("bump_version() works -- dev", {
 
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -33,7 +32,6 @@ test_that("bump_version() works -- dev", {
 
 test_that("bump_version() works -- not dev", {
 
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -52,7 +50,6 @@ test_that("bump_version() works -- not dev", {
 
 test_that("bump_version() errors informatively for forbidden notifications", {
 
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -66,7 +63,6 @@ test_that("bump_version() errors informatively for forbidden notifications", {
 
 test_that("bump_version() errors informatively for wrong branch", {
 
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -88,7 +84,6 @@ test_that("bump_version() errors well for wrong arguments", {
 
 test_that("bump_version() does nothing if no preamble and not interactive", {
 
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   news_lines <- readLines("NEWS.md")
