@@ -51,12 +51,10 @@ update_news_impl <- function(commits, which, fledgeling = NULL) {
     } else {
       combined <- c(
         parse_news_md(news_lines),
-        fledgeling[["news"]][1, ]$news[[1]]
+        fledgeling[["news"]]$news[[1]]
       )
       combined <- purrr::discard(combined, purrr::is_empty)
-      fledgeling[["news"]][1, ]$news <- list(
-        regroup_news(combined)
-      )
+      fledgeling[["news"]]$news[[1]] <- regroup_news(combined)
       fledgeling[["news"]][1, ]$section_state <- "new"
     }
     write_fledgling(fledgeling)
@@ -217,7 +215,7 @@ regroup_news <- function(list) {
   unique_names <- unique(names(list))
   # merge groups with the same name
   groups <- purrr::map(unique_names, merge_news_group, list)
-  groups <- stats::setNames(groups, unique_names)
+  groups <- set_names(groups, unique_names)
   # put custom first
   not_custom <- c(names(conventional_commit_types()), default_type())
   custom_names <- unique_names[!(unique_names %in% not_custom)]
