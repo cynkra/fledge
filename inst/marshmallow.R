@@ -3,7 +3,16 @@ pkgload::load_all()
 rlang::local_options(rlang_interactive = FALSE)
 
 # initial state ----
-local_demo_project(quiet = TRUE)
+# Avoid cleanup
+project_dir <- tempfile(pattern = "fledge")
+dir.create(project_dir)
+local_demo_project(project_dir, quiet = TRUE)
+# local_demo_project(quiet = TRUE)
+
+term <- rstudioapi::terminalCreate()
+rstudioapi::terminalSend(term, paste0("cd ", getwd(), "\n"))
+
+# create remote ----
 tempdir_remote <- withr::local_tempdir(pattern = "remote")
 create_remote(tempdir_remote)
 
