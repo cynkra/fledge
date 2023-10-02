@@ -40,7 +40,6 @@ test_that("normalize_news() works", {
 })
 
 test_that("regroup_news() works", {
-
   news_list1 <- list(
     Uncategorized = c("- blop", "- etc"),
     Documentation = c("- stuff", "- other")

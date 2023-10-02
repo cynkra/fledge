@@ -11,8 +11,7 @@ create_demo_project(
   email = NULL,
   date = "2021-09-27",
   dir = file.path(tempdir(), "fledge"),
-  news = FALSE,
-  dev_md = FALSE
+  news = FALSE
 )
 }
 \arguments{
@@ -29,9 +28,6 @@ create_demo_project(
 \item{dir}{Directory within which to create the mock package folder.}
 
 \item{news}{If TRUE, create a NEWS.md file.}
-
-\item{dev_md}{Whether to use "(development version)" (with \code{dev_md = TRUE}) or the current version
-number, in the first NEWS.md header.}
 }
 \value{
 The path to the newly created mock package.

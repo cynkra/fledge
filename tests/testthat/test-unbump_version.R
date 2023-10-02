@@ -1,5 +1,4 @@
 test_that("unbump_version() works", {
-
   rlang::local_interactive(value = FALSE)
   withr::local_options(usethis.quiet = TRUE)
   withr::local_envvar(FLEDGE_UNBUMP_TEST_COMMIT = "42")

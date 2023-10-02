@@ -19,7 +19,6 @@ test_that("Can parse conventional commits", {
 })
 
 test_that("Will use commits", {
-
   local_demo_project(quiet = TRUE)
   commits_df <- tibble::tibble(
     message = c("one", "two"),
@@ -65,7 +64,7 @@ test_that("Can parse PR merge commits", {
     expect_snapshot_tibble(
       extract_newsworthy_items(
         "Merge pull request #332 from cynkra/conventional-parsing"
-        )
+      )
     )
   })
 })
@@ -92,7 +91,8 @@ test_that("Can parse PR merge commits - linked issues", {
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot_tibble(
-      extract_newsworthy_items("Merge pull request #328 from cynkra/blop"))
+      extract_newsworthy_items("Merge pull request #328 from cynkra/blop")
+    )
   })
 })
 

@@ -1,5 +1,4 @@
 create_remote <- function(tempdir_remote) {
-
   gert::git_init(tempdir_remote, bare = TRUE)
 
   current_remotes <- gert::git_remote_list()
@@ -18,7 +17,6 @@ create_remote <- function(tempdir_remote) {
 }
 
 show_tags <- function(remote_url) {
-
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
 
   withr::with_dir(tempdir_remote, {

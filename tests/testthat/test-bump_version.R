@@ -1,5 +1,4 @@
 test_that("bump_version() works -- dev", {
-
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -31,7 +30,6 @@ test_that("bump_version() works -- dev", {
 })
 
 test_that("bump_version() works -- not dev", {
-
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -49,7 +47,6 @@ test_that("bump_version() works -- not dev", {
 })
 
 test_that("bump_version() errors informatively for forbidden notifications", {
-
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -62,7 +59,6 @@ test_that("bump_version() errors informatively for forbidden notifications", {
 })
 
 test_that("bump_version() errors informatively for wrong branch", {
-
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -76,14 +72,12 @@ test_that("bump_version() errors informatively for wrong branch", {
 
 
 test_that("bump_version() errors well for wrong arguments", {
-
   expect_snapshot_error(bump_version(no_change_behavior = "blabla"))
 
   expect_snapshot_error(bump_version(which = "blabla"))
 })
 
 test_that("bump_version() does nothing if no preamble and not interactive", {
-
   local_demo_project(quiet = TRUE)
 
   news_lines <- readLines("NEWS.md")

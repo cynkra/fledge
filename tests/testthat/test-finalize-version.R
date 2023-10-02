@@ -1,5 +1,4 @@
 test_that("finalize_version(push = FALSE)", {
-
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -21,7 +20,6 @@ test_that("finalize_version(push = FALSE)", {
 })
 
 test_that("finalize_version(push = TRUE)", {
-
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")

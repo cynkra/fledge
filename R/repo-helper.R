@@ -124,10 +124,9 @@ with_demo_project <- function(code, dir = NULL, news = TRUE, quiet = FALSE) {
 local_demo_project <- function(dir = NULL,
                                news = TRUE,
                                quiet = FALSE,
-                              .local_envir = parent.frame()) {
-
-    dir <- dir %||%
-      withr::local_tempdir(pattern = "fledge", .local_envir = .local_envir)
+                               .local_envir = parent.frame()) {
+  dir <- dir %||%
+    withr::local_tempdir(pattern = "fledge", .local_envir = .local_envir)
 
   if (!dir.exists(dir)) {
     cli::cli_abort(c(x = "Can't find the directory {.file {dir}}."))
