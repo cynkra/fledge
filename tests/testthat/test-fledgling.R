@@ -52,31 +52,33 @@ test_that("read_news() works with h2", {
   expect_snapshot_tibble(read_news(news_lines))
 })
 
-test_that("correct handling of the preamble", {
-  # no preamble ----
+test_that("correct handling of no preamble", {
   news_lines <- c(
     "# fledge v2.0.0", "",
     "* blop", ""
   )
   expect_equal(read_news(news_lines)[["preamble"]], news_preamble())
+})
 
-  # old preamble ----
+test_that("correct handling of old preamble", {
   news_lines <- c(
     "<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->", "",
     "# fledge v2.0.0", "",
     "* blop", ""
   )
   expect_equal(read_news(news_lines)[["preamble"]], news_preamble())
+})
 
-  # current preamble ----
+test_that("correct handling of current preamble", {
   news_lines <- c(
     news_preamble(), "",
     "# fledge v2.0.0", "",
     "* blop", ""
   )
   expect_equal(read_news(news_lines)[["preamble"]], news_preamble())
+})
 
-  # custom preamble ----
+test_that("correct handling of custom preamble", {
   fancy <- "<!-- NEWS.md is maintained by a fancy package, do not edit -->"
   news_lines <- c(
     fancy, "",
