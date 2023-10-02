@@ -274,5 +274,21 @@
       Resetting main to origin/main
       > Merging release branch.
       i If this fails, resolve the conflict manually and push.
+      > Digesting messages from 2 commits.
+      v Found 1 NEWS-worthy entry.
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.1.9000.
+      > Added header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
       > Pushing main.
 

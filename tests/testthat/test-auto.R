@@ -176,6 +176,6 @@ test_that("full cycle", {
   expect_equal(gert::git_branch(), "main")
   expect_setequal(
     gert::git_tag_list()[["name"]],
-    c("v0.0.0.9001", "v0.0.0.9002", "v0.0.1")
+    c("v0.0.0.9001", "v0.0.0.9002", "v0.0.1", "v0.0.1.9000")
   )
 })
