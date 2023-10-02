@@ -20,7 +20,7 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
       command <- "fledge::finalize_version()"
     }
     if (fledge_chatty()) {
-      cli_alert_warning("Call {.code {command}}.")
+      cli_alert_warning("Run {.run {command}}.")
     }
     send_to_console(command)
   }
