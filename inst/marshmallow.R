@@ -1,4 +1,4 @@
-load_all()
+pkgload::load_all()
 # not opening anything ----
 rlang::local_options(rlang_interactive = FALSE)
 
@@ -18,6 +18,8 @@ gert::git_commit("* Add cool bla.")
 bump_version()
 
 # init release ----
+withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
+withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
 init_release()
 gert::git_branch()
 gert::git_branch_list()
@@ -28,7 +30,6 @@ gert::git_diff()$patch[[2]] |> cat()
 gert::git_diff()$patch[[3]] |> cat()
 
 # prep release ----
-withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 pre_release()
 
 # release ----
