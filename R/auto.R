@@ -179,8 +179,10 @@ pre_release_impl <- function(force) {
   if (fledge_chatty()) {
     cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   }
-  create_pull_request(get_branch_name(), main_branch, remote_name, force)
 
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    create_pull_request(get_branch_name(), main_branch, remote_name, force)
+  }
   # user action items
   if (fledge_chatty()) {
     cli_h1("2. User Action Items")
