@@ -502,7 +502,9 @@ post_release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  create_github_release()
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    create_github_release()
+  }
 
   merge_main_into_post_release()
 
