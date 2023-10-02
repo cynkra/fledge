@@ -515,8 +515,6 @@ post_release_impl <- function() {
 
   merge_main_into_post_release()
 
-  merge_main_into_post_release()
-
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
