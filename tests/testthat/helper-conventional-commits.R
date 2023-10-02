@@ -46,7 +46,7 @@ Also tweak the CI workflow accordingly. :sweat_smile:",
   )
 }
 
-sort_of_commit <- function(commit_message, repo) {
+sort_of_commit <- function(commit_message, repo = ".") {
   file <- digest::sha1(commit_message)
   file.create(file.path(repo, file))
   gert::git_add(file, repo = repo)
