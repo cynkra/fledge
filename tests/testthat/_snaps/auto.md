@@ -47,6 +47,14 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+      > Resetting to previous commit.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      i Tag v0.0.0.9002 exists and points to the current commit.
+      > Force-pushing tag v0.0.0.9002.
+      > Pushing main.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
@@ -101,6 +109,14 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+      > Resetting to previous commit.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      i Tag v0.0.0.9002 exists and points to the current commit.
+      > Force-pushing tag v0.0.0.9002.
+      > Pushing main.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
@@ -134,17 +150,4 @@
       Error in `check_only_modified()`:
       x Found untracked/unstaged/staged file in the git index: 'R/'.
       i Please commit or discard it and try again.
-
-# pre_release() works
-
-    Code
-      pre_release()
-    Message
-      
-      -- 1. Opening Pull Request for release branch ----------------------------------
-      > Pushing cran-0.0.1 to remote origin.
-      > Opening draft pull request with contents from 'cran-comments.md'.
-      
-      -- 2. User Action Items --------------------------------------------------------
-      * Run `fledge::release()`.
 
