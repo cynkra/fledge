@@ -25,6 +25,8 @@ update_news <- function(
     which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
   which <- arg_match(which)
 
+  local_repo()
+
   if (is.null(messages)) {
     commits <- default_commit_range()
   } else {
@@ -34,8 +36,6 @@ update_news <- function(
     )
   }
 
-  local_repo()
-
   update_news_impl(
     commits = commits,
     which = which
@@ -44,6 +44,6 @@ update_news <- function(
   invisible(NULL)
 }
 
-default_commit_range <- function() {
-  get_top_level_commits(since = get_last_tag()$commit)
+default_commit_range <- function(ref = "HEAD") {
+  get_top_level_commits_impl(since = get_last_tag_impl(ref)$commit, ref)
 }

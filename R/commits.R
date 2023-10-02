@@ -6,8 +6,8 @@ local_repo <- function(.local_envir = caller_env()) {
   withr::local_dir(usethis::proj_get(), .local_envir = .local_envir)
 }
 
-get_top_level_commits_impl <- function(since) {
-  commit <- gert::git_log(max = 1)$commit
+get_top_level_commits_impl <- function(since, ref = "HEAD") {
+  commit <- gert::git_log(ref, max = 1)$commit
 
   if (!is.null(since)) {
     ab <- gert::git_ahead_behind(since, commit)
@@ -51,8 +51,8 @@ get_parent_since <- function(all_parents, since) {
   purrr::detect(all_parents, ~ gert::git_ahead_behind(since, .x)$behind == 0)
 }
 
-get_last_tag_impl <- function() {
-  repo_head <- gert::git_log(max = 1)
+get_last_tag_impl <- function(ref = "HEAD") {
+  repo_head <- gert::git_log(ref, max = 1)
 
   all_tags <- gert::git_tag_list()
 
