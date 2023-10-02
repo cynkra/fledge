@@ -106,7 +106,8 @@ get_main_branch_config <- function() {
   return(global$value)
 }
 
-no_change <- function() {
+no_change <- function(ref = "HEAD") {
   # At most, one commit from the latest bump_version() run
-  nrow(default_commit_range()) <= 1
+  # FIXME: Should be <= 0?
+  nrow(default_commit_range(ref)) <= 1
 }
