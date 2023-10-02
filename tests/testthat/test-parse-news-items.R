@@ -1,4 +1,6 @@
 test_that("Can parse conventional commits", {
+  local_options(repos = NULL)
+
   withr::local_envvar("FLEDGE.EMPTY.DATE" = "blabla")
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
@@ -6,9 +8,11 @@ test_that("Can parse conventional commits", {
   create_cc_repo(repo)
   messages <- get_top_level_commits_impl(since = NULL)$message
 
-  usethis::with_project(
-    repo,
-    usethis::use_description(fields = list(Package = "fledge")),
+  usethis::with_project(repo,
+    {
+      usethis::use_description(fields = list(Package = "fledge"))
+      usethis::use_news_md()
+    },
     force = TRUE
   )
 
