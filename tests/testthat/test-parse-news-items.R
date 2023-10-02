@@ -1,5 +1,6 @@
 test_that("Can parse conventional commits", {
   withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
+  withr::local_options(usethis.quiet = TRUE)
 
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
@@ -13,7 +14,7 @@ test_that("Can parse conventional commits", {
     force = TRUE
   )
 
-  update_news(messages, which = "patch")
+  shut_up_fledge(update_news(messages, which = "patch"))
 
   expect_snapshot_file("NEWS.md")
 })
@@ -29,7 +30,7 @@ test_that("Will use commits", {
     default_commit_range = function() commits_df
   )
 
-  update_news(which = "minor")
+  shut_up_fledge(update_news(which = "minor"))
 
   expect_snapshot_file("NEWS.md", "NEWS-merge.md")
 })
