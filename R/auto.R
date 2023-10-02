@@ -72,10 +72,6 @@ guess_next_impl <- function(version) {
 }
 
 init_release_impl <- function(which, force) {
-  # FIXME: Slightly different process for releasing from the non-main branch
-  # - Don't bump
-  # - Use HEAD instead of HEAD^ for creating the release branch
-
   # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
   stopifnot(get_branch_name() != "HEAD")
 
