@@ -32,7 +32,7 @@ test_that("merge_dev_news() works", {
 })
 
 test_that("create_release_branch() works", {
-  local_demo_project()
+  local_demo_project(quiet = TRUE)
   gert::git_branch_create("bla")
   gert::git_branch_checkout("main")
   fledgeling <- read_fledgling()
@@ -41,18 +41,17 @@ test_that("create_release_branch() works", {
   })
 
   gert::git_branch_checkout("main")
-  expect_snapshot(
-    {
-      create_release_branch(fledgeling, ref = "blop", force = TRUE)
-    },
-    error = TRUE
-  )
+  expect_snapshot(error = TRUE, {
+    create_release_branch(fledgeling, ref = "blop", force = TRUE)
+  })
 })
 
 test_that("init_release() works", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
 
   shut_up_fledge(bump_version())
   expect_snapshot(init_release())
@@ -61,8 +60,10 @@ test_that("init_release() works", {
 
 test_that("init_release() -- force", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
 
   shut_up_fledge(bump_version())
 
@@ -75,31 +76,31 @@ test_that("init_release() -- force", {
 
 test_that("pre_release() pre-flight checks", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
-  skip_if_not_installed("rlang", "1.0.1")
-  local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
+
   local_demo_project(quiet = TRUE)
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
+
   shut_up_fledge(bump_version())
 
   expect_snapshot(pre_release(), error = TRUE)
 
   shut_up_fledge(init_release())
   use_r("blop")
-  expect_snapshot(pre_release(), error = TRUE)
+  expect_snapshot(error = TRUE, pre_release())
 })
 
 test_that("pre_release() works", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_FORCE_NEWS_MD" = "bla")
   withr::local_envvar("FLEDGE_TEST_NOPUSH_PRERELEASE" = "blop")
-  withr::local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
 
   local_demo_project(quiet = TRUE)
+
   with_mock_dir("repo-creation", {
     use_github(protocol = "ssh")
   })
-
-  gert::git_add("DESCRIPTION")
-  gert::git_commit(message = "desc")
 
   # TODO: add test for bump_version() not run?
   shut_up_fledge(bump_version())
