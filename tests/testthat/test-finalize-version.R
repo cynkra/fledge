@@ -26,8 +26,8 @@ test_that("finalize_version(push = TRUE)", {
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
-
-  remote_url <- create_remote()
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  remote_url <- create_remote(tempdir_remote)
   use_r("bla")
   gert::git_add("R/bla.R")
   gert::git_commit("* Ad cool bla.")
