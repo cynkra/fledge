@@ -45,13 +45,7 @@ init_release <- function(which = "next", force = FALSE) {
 #' @export
 pre_release <- function(force = FALSE) {
   check_cran_branch("pre_release()")
-  check_only_modified(c(
-    "DESCRIPTION",
-    "NEWS.md",
-    "cran-comments.md",
-    # Sometimes need to build-ignore cran-comments.md
-    ".Rbuildignore"
-  ))
+  check_only_modified(character())
 
   local_options(usethis.quiet = TRUE)
   with_repo(pre_release_impl(force))
@@ -136,8 +130,12 @@ init_release_impl <- function(which, force) {
   release_branch <- create_release_branch(fledgeling, force)
   switch_branch(release_branch)
 
-  write_fledgling(fledgeling)
   update_cran_comments()
+  gert::git_add(c("cran-comments.md", ".Rbuildignore"))
+  gert::git_commit("CRAN comments")
+
+  write_fledgling(fledgeling)
+  commit_version_impl()
 
   edit_news()
   edit_cran_comments()
@@ -157,18 +155,6 @@ init_release_impl <- function(which, force) {
 
 pre_release_impl <- function(force) {
   cli_h1("1. Opening Pull Request for release branch")
-
-  changes_made <- nrow(gert::git_status()) > 0
-  if (changes_made) {
-    gert::git_add(files = c(
-      "DESCRIPTION",
-      "NEWS.md",
-      "cran-comments.md",
-      # Sometimes need to build-ignore cran-comments.md
-      ".Rbuildignore"
-    ))
-    gert::git_commit(message = "Prepare CRAN release")
-  }
 
   main_branch <- get_main_branch()
   remote_name <- get_remote_name(main_branch)

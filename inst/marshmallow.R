@@ -35,9 +35,6 @@ gert::git_branch()
 gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
 gert::git_status()
-gert::git_diff()$patch[[1]] |> cat()
-gert::git_diff()$patch[[2]] |> cat()
-gert::git_diff()$patch[[3]] |> cat()
 
 # prep release ----
 pre_release()
