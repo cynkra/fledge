@@ -17,7 +17,7 @@ test_that("bump_version() works -- dev", {
   expect_snapshot_file("NEWS.md", compare = compare_file_text)
 
   ## no changes ----
-  expect_snapshot_error(bump_version(no_change_behavior = "fail"))
+  expect_snapshot(error = TRUE, bump_version(no_change_behavior = "fail"))
 
   expect_snapshot(bump_version(no_change_behavior = "noop"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
@@ -55,7 +55,7 @@ test_that("bump_version() errors informatively for forbidden notifications", {
 
   desc::desc_set_dep("bla")
 
-  expect_snapshot_error(bump_version())
+  expect_snapshot(error = TRUE, bump_version())
 })
 
 test_that("bump_version() errors informatively for wrong branch", {
@@ -67,14 +67,15 @@ test_that("bump_version() errors informatively for wrong branch", {
 
   gert::git_branch_create("bla", checkout = TRUE)
 
-  expect_snapshot_error(bump_version())
+  expect_snapshot(error = TRUE, bump_version())
 })
 
 
 test_that("bump_version() errors well for wrong arguments", {
-  expect_snapshot_error(bump_version(no_change_behavior = "blabla"))
 
-  expect_snapshot_error(bump_version(which = "blabla"))
+  expect_snapshot(error = TRUE, bump_version(no_change_behavior = "blabla"))
+
+  expect_snapshot(error = TRUE, bump_version(which = "blabla"))
 })
 
 test_that("bump_version() does nothing if no preamble and not interactive", {

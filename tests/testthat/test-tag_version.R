@@ -19,7 +19,7 @@ test_that("tag_version() works", {
   gert::git_add("R/pof.R")
   gert::git_commit("* Add cool pof.")
 
-  expect_snapshot_error(shut_up_fledge(tag_version(force = FALSE)))
+  expect_snapshot(error = TRUE, shut_up_fledge(tag_version(force = FALSE)))
 
   ## Same, but forcing ----
   expect_snapshot({
