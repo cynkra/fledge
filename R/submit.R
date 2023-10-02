@@ -80,9 +80,15 @@ upload_cran <- function(pkg, built_path) {
     comment = comments,
     upload = "Upload the package"
   )
-  r <- httr2::request(cran_submission_url) %>%
-    httr2::req_body_multipart(!!!body) %>%
-    httr2::req_perform()
+  request <- httr2::request(cran_submission_url) %>%
+    httr2::req_body_multipart(!!!body)
+
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    cli::cli_inform("Not submitting for real o:-)")
+    return(invisible(NULL))
+  }
+
+  r <- httr2::req_perform(request)
 
   # If a 404 likely CRAN is closed for maintenance, try to get the message
   if (httr2::resp_status(r) == 404) {
