@@ -252,7 +252,7 @@ check_release_branch <- function(new_version) {
 
 create_release_branch <- function(fledgeling,
                                   force,
-                                  ref = "HEAD^") {
+                                  ref = "HEAD") {
   branch_name <- paste0("cran-", fledgeling$version)
 
   if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")
