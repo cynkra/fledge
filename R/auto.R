@@ -145,12 +145,12 @@ init_release_impl <- function(which, force) {
   if (fledge_chatty()) {
     cli_h1("3. User Action Items")
     cli_div(theme = list(ul = list(color = "magenta")))
-    cli_ul("Run {.code devtools::check_win_devel()}.")
-    cli_ul("Run {.code rhub::check_for_cran()}.")
-    cli_ul("Run {.code urlchecker::url_update()}.")
+    cli_ul("Run {.run devtools::check_win_devel()}.")
+    cli_ul("Run {.run rhub::check_for_cran()}.")
+    cli_ul("Run {.run urlchecker::url_update()}.")
     cli_ul("Check all items in {.file cran-comments.md}.")
     cli_ul("Review {.file NEWS.md}.")
-    cli_ul("Call {.code pre_release()}.")
+    cli_ul("Run {.run fledge::pre_release()}.")
     send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
   }
 }
@@ -458,8 +458,8 @@ auto_confirm <- function() {
     }
   )
 
-  code <- paste0('browseURL("', get_confirm_url(url), '")')
-  if (fledge_chatty()) cli_ul("Run {.code {code}}.")
+  code <- paste0('utils::browseURL("', get_confirm_url(url), '")')
+  if (fledge_chatty()) cli_ul("Run {.run {code}}.")
   send_to_console(code)
 }
 
