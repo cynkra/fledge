@@ -132,7 +132,7 @@ local_demo_project <- function(dir = NULL,
     cli::cli_abort(c(x = "Can't find the directory {.file {dir}}."))
   }
 
-  repo <- create_demo_project(dir = dir, news = news)
+  repo <- create_demo_project(dir = dir, news = news, open = FALSE)
 
   usethis::local_project(
     path = repo,
