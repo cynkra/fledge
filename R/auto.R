@@ -195,7 +195,7 @@ update_cran_comments <- function() {
       crp_cross = crp_cross,
       crp_changes = crp_changes,
       rversion = glue("{version$major}.{version$minor}"),
-      latest_rversion = rversions::r_release()[["version"]],
+      latest_rversion = get_latest_rversion(),
       cransplainer = cransplainer
     ),
     ignore = TRUE
@@ -206,6 +206,10 @@ update_cran_comments <- function() {
 }
 
 get_crp_date <- function() {
+  if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    return(as.Date(NA))
+  }
+
   cmt <- gh("/repos/eddelbuettel/crp/commits")[[1]]
   date <- cmt$commit$committer$date
   as.Date(date)
@@ -213,7 +217,7 @@ get_crp_date <- function() {
 
 get_old_crp_date <- function() {
   if (!file.exists("cran-comments.md")) {
-    return(NA)
+    return(as.Date(NA))
   }
   text <- get_cran_comments_text()
 
@@ -221,7 +225,7 @@ get_old_crp_date <- function() {
 
   crp <- grep(rx, text)
   if (length(crp) == 0) {
-    return(NA)
+    return(as.Date(NA))
   }
   crp <- crp[[1]]
   date <- gsub(rx, "\\1", text[[crp]])
@@ -237,6 +241,10 @@ get_cransplainer <- function(package) {
 }
 
 is_new_submission <- function(package) {
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    return(TRUE)
+  }
+
   !(package %in% rownames(utils::available.packages(repos = c(CRAN = "https://cran.r-project.org"))))
 }
 
@@ -261,6 +269,13 @@ get_cransplainer_update <- function(package) {
   )
 
   paste0(cransplainer, "\n\nCheck results at: ", url)
+}
+
+get_latest_rversion <- function() {
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    return(getRversion())
+  }
+  rversions::r_release()[["version"]]
 }
 
 #' @description
