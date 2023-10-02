@@ -72,7 +72,6 @@ test_that("bump_version() errors informatively for wrong branch", {
 
 
 test_that("bump_version() errors well for wrong arguments", {
-
   expect_snapshot(error = TRUE, bump_version(no_change_behavior = "blabla"))
 
   expect_snapshot(error = TRUE, bump_version(which = "blabla"))
