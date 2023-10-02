@@ -279,7 +279,7 @@ harvest_pr_data <- function(message) {
       {
         # suppressMessages() for quiet mocking
         suppressMessages(
-          gh::gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
+          gh(glue("GET /repos/{slug}/pulls/{pr_number}"))
         )
       },
       error = function(e) {

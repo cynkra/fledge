@@ -1,10 +1,11 @@
 test_that("Can parse conventional commits", {
-  withr::local_envvar("FLEDGE.EMPTY.DATE" = "blabla")
+  withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
+
   repo <- withr::local_tempdir()
   withr::local_dir(repo)
 
   create_cc_repo(repo)
-  messages <- get_top_level_commits_impl(since = NULL)$message
+  messages <- get_top_level_commits_impl(since = NULL)[["message"]]
 
   usethis::with_project(
     repo,
@@ -12,22 +13,22 @@ test_that("Can parse conventional commits", {
     force = TRUE
   )
 
-  withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
-
   update_news(messages, which = "patch")
+
   expect_snapshot_file("NEWS.md")
 })
 
 test_that("Will use commits", {
-  testthat::skip_if_offline() # because of usethis::use_news_md() -> available.packages()
-  withr::local_envvar("FLEDGE_EMPTY_DATE" = "true")
 
   local_demo_project(quiet = TRUE)
   commits_df <- tibble::tibble(
     message = c("one", "two"),
     merge = c(TRUE, FALSE)
   )
-  mockery::stub(update_news, "default_commit_range", commits_df)
+
+  local_mocked_bindings(
+    default_commit_range = function() commits_df
+  )
 
   update_news(which = "minor")
   file.copy("NEWS.md", "NEWS-merge.md")
@@ -93,8 +94,9 @@ test_that("Can parse PR merge commits - PAT absence", {
 test_that("Can parse PR merge commits - other error", {
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
-  bla <- function(...) stop("bla")
-  mockery::stub(harvest_pr_data, "gh::gh", bla)
+
+  local_mocked_bindings(gh = function(...) stop("bla"))
+
   with_mock_dir("pr", {
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")

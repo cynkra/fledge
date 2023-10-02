@@ -1,0 +1,3 @@
+gh <- function(...) {
+  gh::gh(...)
+}

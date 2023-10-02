@@ -206,7 +206,7 @@ update_cran_comments <- function() {
 }
 
 get_crp_date <- function() {
-  cmt <- gh::gh("/repos/eddelbuettel/crp/commits")[[1]]
+  cmt <- gh("/repos/eddelbuettel/crp/commits")[[1]]
   date <- cmt$commit$committer$date
   as.Date(date)
 }
@@ -396,7 +396,7 @@ create_github_release <- function() {
   slug <- github_slug()
   tag <- get_tag_info()
 
-  out <- gh::gh(
+  out <- gh(
     glue("POST /repos/{slug}/releases"),
     tag_name = tag$name,
     name = tag$header,
@@ -453,7 +453,7 @@ is_ignored <- function(path) {
 }
 
 create_pull_request <- function(release_branch, main_branch, remote_name, force) {
-  # FIXME: Use gh::gh() to determine if we need to create the pull request
+  # FIXME: Use gh() to determine if we need to create the pull request
   create <- TRUE
 
   if (create) {
@@ -462,7 +462,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     template_path <- system.file("templates", "pr.md", package = "fledge")
     body <- glue_collapse(readLines(template_path), sep = "\n")
 
-    pr <- gh::gh(
+    pr <- gh(
       "POST /repos/:owner/:repo/pulls",
       owner = info$owner$login,
       repo = info$name,
@@ -479,7 +479,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     )
 
     ## ensure that label exists ----
-    labels <- gh::gh(
+    labels <- gh(
       "GET /repos/:owner/:repo/labels",
       owner = info$owner$login,
       repo = info$name
@@ -489,7 +489,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     no_cran_release_label <- (length(cran_release_label) == 0)
     if (no_cran_release_label) {
       cran_release_label <- "CRAN release :station:"
-      gh::gh(
+      gh(
         "POST /repos/:owner/:repo/labels",
         owner = info[["owner"]][["login"]],
         repo = info[["name"]],
@@ -499,7 +499,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     }
 
     ## add label to PR ----
-    gh::gh(
+    gh(
       "PATCH /repos/:owner/:repo/issues/:issue_number",
       owner = info[["owner"]][["login"]],
       repo = info[["name"]],
@@ -517,7 +517,7 @@ release_after_cran_built_binaries <- function() {
   remote <- "origin"
   github_info <- github_info(remote)
 
-  prs <- gh::gh(
+  prs <- gh(
     "GET /repos/:owner/:repo/pulls",
     owner = github_info[["owner"]][["login"]],
     repo = github_info[["name"]],
