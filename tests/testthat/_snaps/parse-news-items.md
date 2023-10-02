@@ -80,8 +80,13 @@
 
 # Can parse PR merge commits - PAT absence
 
-    x Can't find a GitHub Personal Access Token (PAT).
-    i See for instance `?gh::gh_token` or <https://usethis.r-lib.org/reference/github-token.html>
+    Code
+      extract_newsworthy_items(
+        "Merge pull request #332 from cynkra/conventional-parsing")
+    Condition
+      Error in `check_gh_pat()`:
+      x Can't find a GitHub Personal Access Token (PAT).
+      i See for instance `?gh::gh_token` or <https://usethis.r-lib.org/reference/github-token.html>
 
 # Can parse PR merge commits - other error
 

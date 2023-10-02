@@ -17,7 +17,11 @@
 
 ---
 
-    Tag "v0.0.0.9000" exists, use `force = TRUE` to overwrite.
+    Code
+      shut_up_fledge(tag_version(force = FALSE))
+    Condition
+      Error in `tag_version_impl()`:
+      ! Tag "v0.0.0.9000" exists, use `force = TRUE` to overwrite.
 
 ---
 

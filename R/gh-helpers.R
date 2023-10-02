@@ -29,6 +29,6 @@ extract_repo <- function(url) {
 }
 
 get_repo_data <- function(repo) {
-  req <- gh::gh("/repos/:repo", repo = repo)
+  req <- gh("/repos/:repo", repo = repo)
   return(req)
 }
