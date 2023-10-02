@@ -341,7 +341,10 @@ auto_confirm <- function() {
     cli_alert_info("Check your inbox for a confirmation e-mail from CRAN.")
   }
   if (fledge_chatty()) cli_alert("Copy the URL to the clipboard.")
-
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    cli::cli_inform("Not submitting for real o:-)")
+    return(invisible(NULL))
+  }
   tryCatch(
     repeat {
       suppressWarnings(url <- clipr::read_clip())
