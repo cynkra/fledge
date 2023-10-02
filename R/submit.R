@@ -67,28 +67,36 @@ upload_cran <- function(pkg, built_path) {
 
   # Initial upload ---------
   cli::cli_alert_info("Uploading package & comments")
+
+  # impossible as fledge imports httr2 that imports curl :-)
+  if (!rlang::is_installed("curl")) {
+    cli::cli_abort("Must install the curl package")
+  }
   body <- list(
     pkg_id = "",
     name = maint_name,
     email = maint_email,
-    uploaded_file = httr::upload_file(built_path, "application/x-gzip"),
+    uploaded_file = curl::form_file(built_path, type = "application/x-gzip"),
     comment = comments,
     upload = "Upload package"
   )
-  r <- httr::POST(cran_submission_url, body = body)
+  r <- httr2::request(cran_submission_url) %>%
+    httr2::req_body_multipart(!!!body) %>%
+    httr2::req_perform()
 
   # If a 404 likely CRAN is closed for maintenance, try to get the message
-  if (httr::status_code(r) == 404) {
+  if (httr2::resp_status(r) == 404) {
     msg <- ""
     try({
-      r2 <- httr::GET(sub("index2", "index", cran_submission_url))
-      msg <- extract_cran_msg(httr::content(r2, "text"))
+      r2 <- httr2::request(sub("index2", "index", cran_submission_url)) %>%
+        httr2::req_perform()
+      msg <- extract_cran_msg(httr2::resp_body_string(r2))
     })
     stop("Submission failed:", msg, call. = FALSE)
   }
 
-  httr::stop_for_status(r)
-  new_url <- httr::parse_url(r$url)
+  httr2::resp_check_status(r)
+  new_url <- httr2::url_parse(r$url)
 
   # Confirmation -----------
   cli::cli_alert_info("Confirming submission")
@@ -99,9 +107,10 @@ upload_cran <- function(pkg, built_path) {
     policy_check = "1/",
     submit = "Submit package"
   )
-  r <- httr::POST(cran_submission_url, body = body)
-  httr::stop_for_status(r)
-  new_url <- httr::parse_url(r$url)
+  r <- httr2::request(cran_submission_url) %>%
+    httr2::req_body_multipart(!!!body)
+  httr2::resp_check_status(r)
+  new_url <- httr2::url_parse(r$url)
   if (new_url$query$submit == "1") {
     cli::cli_alert_success("Package submission successful")
     cli::cli_alert_info("Check your email for confirmation link.")

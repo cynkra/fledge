@@ -346,7 +346,7 @@ confirm_submission <- function(url) {
 }
 
 get_confirm_url <- function(url) {
-  parsed <- httr::parse_url(url)
+  parsed <- httr2::url_parse(url)
 
   parsed$query$policy_check2 <- "on"
   parsed$query$policy_check3 <- "on"
@@ -357,7 +357,7 @@ get_confirm_url <- function(url) {
   }
   parsed$query$confirm_submit <- utils::URLencode("Upload Package to CRAN")
 
-  httr::build_url(parsed)
+  httr2::url_build(parsed)
 }
 
 #' @description
