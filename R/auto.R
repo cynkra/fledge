@@ -499,6 +499,14 @@ post_release_impl <- function() {
   switch_branch(get_main_branch())
   pull_head()
   merge_branch(release_branch)
+
+  bump_version_impl(
+    read_fledgling(),
+    "dev",
+    no_change_behavior = "bump",
+    edit = FALSE,
+    no_change_message = "- Resume development after CRAN release."
+  )
   push_head()
 
   # Begin extension points
