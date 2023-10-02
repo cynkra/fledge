@@ -59,7 +59,7 @@ test_that("Can parse PR merge commits", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
 
   with_mock_dir("pr", {
-    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
+    withr::local_envvar("FLEDGE_YES_INTERNET_TEST" = "yes")
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot_tibble(
@@ -74,7 +74,7 @@ test_that("Can parse PR merge commits - external contributor", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
 
   with_mock_dir("pr0", {
-    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
+    withr::local_envvar("FLEDGE_YES_INTERNET_TEST" = "yes")
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot(suppressMessages(
@@ -88,7 +88,7 @@ test_that("Can parse PR merge commits - linked issues", {
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
 
   with_mock_dir("pr2", {
-    withr::local_envvar("YES_INTERNET_TEST_FLEDGE" = "bla")
+    withr::local_envvar("FLEDGE_YES_INTERNET_TEST" = "yes")
     withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
     withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot_tibble(
@@ -101,7 +101,7 @@ test_that("Can parse PR merge commits - internet error", {
   withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
-  withr::local_envvar("NO_INTERNET_TEST_FLEDGE" = "blop")
+  withr::local_envvar("FLEDGE_NO_INTERNET_TEST" = "no")
 
   expect_snapshot(
     extract_newsworthy_items("Merge pull request #332 from cynkra/conventional-parsing")
