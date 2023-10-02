@@ -46,6 +46,18 @@ fs::dir_tree()
 # post release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 post_release()
+# why conflict?
+brio::write_lines(
+  c(
+  "#", "",
+  "- Add cool bla.", "",
+  "- Added a `NEWS.md` file to track changes to the package."
+  ),
+  "NEWS.md"
+)
+gert::git_add("NEWS.md")
+gert::git_commit("Fix conflicts in changelog")
+gert::git_push()
 
 # back to fledge directory and project ----
 back_to_start()
