@@ -98,7 +98,11 @@ init_release_impl <- function(which, force) {
   # Bump dev if needed, bail out if bumped
   new_fledgeling <- bump_version_impl(fledgeling, "dev", no_change_behavior = "noop")
   if (!identical(new_fledgeling, fledgeling)) {
-    return()
+    cli_abort(c(
+      # FIXME: Copilot-generated
+      "Aborting release process because the version was bumped during the process.",
+      i = "Rerun {.run fledge::init_release()}"
+    ))
   }
   rm(new_fledgeling)
 
