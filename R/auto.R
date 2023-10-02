@@ -105,7 +105,9 @@ pre_release_impl <- function(which, force) {
   switch_branch(release_branch)
 
   cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
-  create_pull_request(release_branch, main_branch, remote_name, force)
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    create_pull_request(release_branch, main_branch, remote_name, force)
+  }
 
   edit_news()
   edit_cran_comments()
@@ -200,7 +202,7 @@ update_cran_comments <- function() {
     ignore = TRUE
   )
 
-  gert::git_add(files = "cran-comments.md")
+  gert::git_add(files = c("cran-comments.md", ".Rbuildignore"))
   gert::git_commit(message = "Update CRAN comments")
 }
 
@@ -308,6 +310,11 @@ release_impl <- function() {
 }
 
 is_news_consistent <- function() {
+  # FIXME: For tests, no longer needed after #658
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    return(TRUE)
+  }
+
   headers <- with_repo(get_news_headers())
 
   # One entry is fine, zero entries are an error
@@ -333,6 +340,10 @@ auto_confirm <- function() {
   cli_alert_info("Check your inbox for a confirmation e-mail from CRAN.")
   cli_alert("Copy the URL to the clipboard.")
 
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    return(invisible())
+  }
+
   tryCatch(
     repeat {
       suppressWarnings(url <- clipr::read_clip())
@@ -350,6 +361,8 @@ auto_confirm <- function() {
   code <- paste0('browseURL("', get_confirm_url(url), '")')
   cli_ul("Run {.code {code}}.")
   send_to_console(code)
+
+  invisible()
 }
 
 confirm_submission <- function(url) {
@@ -391,7 +404,9 @@ post_release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  create_github_release()
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    create_github_release()
+  }
 
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()
