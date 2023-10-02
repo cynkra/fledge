@@ -1,52 +1,56 @@
 test_that("bump_version() works -- dev", {
-  skip_if_not_installed("rlang", "1.0.1")
-  skip_if_not_installed("testthat", "3.1.2")
 
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   create_remote(tempdir_remote)
+
   use_r("bla")
   gert::git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
+
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
-  expect_snapshot(bump_version(), variant = snapshot_variant("testthat"))
+
+  expect_snapshot(bump_version())
+
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
-  expect_equal(get_last_tag()$name, "v0.0.0.9001")
+  expect_equal(get_last_tag()[["name"]], "v0.0.0.9001")
   expect_snapshot_file("NEWS.md", compare = compare_file_text)
 
-  ## no changes
-  expect_snapshot_error(bump_version(no_change_behavior = "fail"), variant = snapshot_variant("testthat"))
-  expect_snapshot(bump_version(no_change_behavior = "noop"), variant = snapshot_variant("testthat"))
+  ## no changes ----
+  expect_snapshot_error(bump_version(no_change_behavior = "fail"))
+
+  expect_snapshot(bump_version(no_change_behavior = "noop"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
-  expect_equal(get_last_tag()$name, "v0.0.0.9001")
-  expect_snapshot(bump_version(no_change_behavior = "bump"), variant = snapshot_variant("testthat"))
+  expect_equal(get_last_tag()[["name"]], "v0.0.0.9001")
+
+  expect_snapshot(bump_version(no_change_behavior = "bump"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9002")
-  expect_equal(get_last_tag()$name, "v0.0.0.9002")
+  expect_equal(get_last_tag()[["name"]], "v0.0.0.9002")
   expect_snapshot_file("NEWS.md", "NEWS2.md", compare = compare_file_text)
 })
 
 test_that("bump_version() works -- not dev", {
-  skip_if_not_installed("rlang", "1.0.1")
-  skip_if_not_installed("testthat", "3.1.2")
 
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   create_remote(tempdir_remote)
+
   use_r("bla")
   gert::git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
+
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
-  expect_snapshot(bump_version(which = "major"), variant = snapshot_variant("testthat"))
+
+  expect_snapshot(bump_version(which = "major"))
   expect_equal(as.character(desc::desc_get_version()), "1.0.0")
   expect_snapshot_file("NEWS.md", "NEWS-nondev.md", compare = compare_file_text)
 })
 
 test_that("bump_version() errors informatively for forbidden notifications", {
-  skip_if_not_installed("rlang", "1.0.1")
 
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
@@ -54,12 +58,13 @@ test_that("bump_version() errors informatively for forbidden notifications", {
   use_r("bla")
   gert::git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
+
   desc::desc_set_dep("bla")
+
   expect_snapshot_error(bump_version())
 })
 
 test_that("bump_version() errors informatively for wrong branch", {
-  skip_if_not_installed("rlang", "1.0.1")
 
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
@@ -67,28 +72,28 @@ test_that("bump_version() errors informatively for wrong branch", {
   use_r("bla")
   gert::git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
-  gert::git_branch_create("bla")
+
+  gert::git_branch_create("bla", checkout = TRUE)
+
   expect_snapshot_error(bump_version())
 })
 
 
 test_that("bump_version() errors well for wrong arguments", {
-  skip_if_not_installed("rlang", "1.0.1")
 
   expect_snapshot_error(bump_version(no_change_behavior = "blabla"))
+
   expect_snapshot_error(bump_version(which = "blabla"))
 })
 
 test_that("bump_version() does nothing if no preamble and not interactive", {
-  skip_if_not_installed("rlang", "1.0.1")
-  skip_if_not_installed("testthat", "3.1.2")
 
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
-  # remove preamble
   news_lines <- readLines("NEWS.md")
-  writeLines(news_lines[3:length(news_lines)], "NEWS.md")
+  preamble_lines <- 1:2
+  brio::write_lines(news_lines[-preamble_lines], "NEWS.md")
 
-  expect_snapshot(bump_version(), variant = snapshot_variant("testthat"))
+  expect_snapshot(bump_version())
 })
