@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9004 (2023-10-03)
+
+## Chore
+
+- More efficient data frame access (#706).
+
+## Refactoring
+
+- Replace httr with httr2 (#712).
+
+## tests
+
+- Clean up, simplify tests (#716).
+
+- Add a function to help run the tests without losing one's current dir (#715).
+
+
 # fledge 0.1.99.9003 (2023-09-26)
 
 ## Testing
