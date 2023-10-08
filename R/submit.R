@@ -125,8 +125,11 @@ upload_cran <- function(pkg, built_path) {
     policy_check = "1/",
     submit = "Submit package"
   )
-  r <- httr2::request(cran_submission_url) %>%
+  request <- httr2::request(cran_submission_url) %>%
     httr2::req_body_multipart(!!!body)
+
+  r <- httr2::req_perform(request)
+
   httr2::resp_check_status(r)
   new_url <- httr2::url_parse(r$url)
   if (new_url$query$submit == "1") {
