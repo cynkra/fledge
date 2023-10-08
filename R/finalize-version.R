@@ -58,7 +58,7 @@ push_to_new <- function(remote_name, force) {
 
   cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
 
-  if (nzchar("FLEDGE_TEST_NOPUSH_PRERELEASE")) {
+  if (nzchar(Sys.getenv("FLEDGE_TEST_NOPUSH_PRERELEASE"))) {
     return()
   }
 
