@@ -106,20 +106,7 @@ init_release_impl <- function(which, force) {
   }
   rm(new_fledgeling)
 
-  # Bump dev unconditionally, ignore resulting NEWS entry
-  bump_version_impl(
-    fledgeling,
-    which = "dev",
-    no_change_behavior = "bump",
-    edit = FALSE,
-    no_change_message = paste0(
-      "Initiated release of version ",
-      new_version,
-      " from version ",
-      fledgeling$version
-    )
-  )
-  finalize_version_impl(push = TRUE)
+  # Don't bump here, want to be compatible with merge queues at some point
 
   if (fledge_chatty()) cli_h1("2. Creating a release branch and getting ready")
 
