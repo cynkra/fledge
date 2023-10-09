@@ -263,7 +263,7 @@ test_that("release abandon", {
   ## init release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  try(init_release())
+  shut_up_fledge(try(init_release()))
 
   expect_snapshot(error = TRUE, {
     init_release(force = TRUE)
