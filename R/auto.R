@@ -466,12 +466,33 @@ check_post_release <- function() {
   # FIXME add the conflict resolution
   gert::git_fetch(get_remote_name())
   ab_this <- gert::git_ahead_behind()
-  stopifnot(ab_this$behind == 0 && ab_this$ahead == 0)
+  if (ab_this[["behind"]] != 0) {
+    cli::cli_abort(c(
+      "Local release branch behind by {ab_this[['behind']]} commit{?s}."
+    ))
+  }
+  if (ab_this[["ahead"]] != 0) {
+    ncommit <- ab_this[['ahead']]
+    cli::cli_abort(c(
+      "Local release branch ahead by {ncommit} commit{?s}."
+    ))
+  }
   main_branch <- get_main_branch()
   remote_name <- get_remote_name(main_branch)
   remote_main <- paste0(remote_name, "/", main_branch)
   ab_main <- gert::git_ahead_behind(remote_main, main_branch)
-  stopifnot(ab_main$behind == 0 && ab_main$ahead == 0)
+  if (ab_main[["behind"]] != 0) {
+    ncommit <- ab_main[['behind']]
+    cli::cli_abort(c(
+      "Local main branch behind by {ncommit} commit{?s}."
+    ))
+  }
+  if (ab_main[["ahead"]] != 0) {
+    ncommit <- ab_main[["ahead"]]
+    cli::cli_abort(c(
+      "Local main branch ahead by {ncommit} commit{?s}."
+    ))
+  }
 
   if (fledge_chatty()) {
     cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
