@@ -107,11 +107,9 @@ upload_cran <- function(pkg, built_path) {
   if (!is.null(new_url$query$strErr) && new_url$query$strErr != "99") {
     msg <- "<Can't extract error message>"
     try({
-      r2 <- httr::GET(r$url)
-      html <- httr::content(r2, "text")
-      msg <-
-        html %>%
-        xml2::read_html() %>%
+      msg <- httr2::request(r[["url"]]) %>%
+        httr2::req_perform() %>%
+        httr2::resp_body_html() %>%
         xml2::xml_find_all('./body//font[@color="red"]') %>%
         xml2::xml_text()
     })
