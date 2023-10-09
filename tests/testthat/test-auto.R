@@ -98,9 +98,8 @@ test_that("pre_release() works", {
 
   local_demo_project(quiet = TRUE)
 
-  with_mock_dir("repo-creation", {
-    use_github(protocol = "ssh")
-  })
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
 
   # TODO: add test for bump_version() not run?
   shut_up_fledge(bump_version())
