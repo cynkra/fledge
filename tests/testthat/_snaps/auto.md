@@ -180,7 +180,7 @@
       * checking DESCRIPTION meta-information ... OK
       * checking for LF line-endings in source and make files and shell scripts
       * checking for empty or unneeded directories
-      * building ‘tea_0.0.1.tar.gz’
+      * building 'tea_0.0.1.tar.gz'
       
     Message
       i Submitting file: 'tea_0.0.1.tar.gz'
