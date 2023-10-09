@@ -164,3 +164,112 @@
       -- 2. User Action Items --------------------------------------------------------
       * Run `fledge::release()`.
 
+# full cycle
+
+    Code
+      init_release()
+    Output
+      +-----------------+
+      |                 |
+      |   pre-release   |
+      |                 |
+      +-----------------+
+    Message
+      
+      -- 1. Wrapping up development --------------------------------------------------
+      i No change since last version.
+      > Digesting messages from 1 commits.
+      i Initiated release of version 0.0.1 from version 0.0.0.9001
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.0.9002.
+      > Added header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+      > Resetting to previous commit.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      i Tag v0.0.0.9002 exists and points to the current commit.
+      > Force-pushing tag v0.0.0.9002.
+      > Pushing main.
+      
+      -- 2. Creating a release branch and getting ready ------------------------------
+      > Creating branch cran-0.0.1.
+      > Switching to branch cran-0.0.1.
+      
+      -- 3. User Action Items --------------------------------------------------------
+      * Run `devtools::check_win_devel()`.
+      * Run `rhub::check_for_cran()`.
+      * Run `urlchecker::url_update()`.
+      * Check all items in 'cran-comments.md'.
+      * Review 'NEWS.md'.
+      * Run `fledge::pre_release()`.
+    Output
+      NULL
+
+---
+
+    Code
+      pre_release()
+    Message
+      
+      -- 1. Opening Pull Request for release branch ----------------------------------
+      > Pushing cran-0.0.1 to remote origin.
+      > Opening draft pull request with contents from 'cran-comments.md'.
+      
+      -- 2. User Action Items --------------------------------------------------------
+      * Run `fledge::release()`.
+
+---
+
+    Code
+      release()
+    Message
+      > Pushing cran-0.0.1.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.1 with tag message derived from 'NEWS.md'.
+      > Force-pushing tag v0.0.1.
+      i Building
+    Output
+      -- R CMD build -----------------------------------------------------------------
+      * checking for file DESCRIPTION
+      * preparing ‘tea’:
+      * checking DESCRIPTION meta-information ... OK
+      * checking for LF line-endings in source and make files and shell scripts
+      * checking for empty or unneeded directories
+      * building ‘tea_0.0.1.tar.gz’
+      
+    Message
+      i Submitting file: 'tea_0.0.1.tar.gz'
+      i File size: "some hundreds of bytes"
+      i Uploading package & comments
+      Not submitting for real o:-)
+      i Check your inbox for a confirmation e-mail from CRAN.
+      > Copy the URL to the clipboard.
+      Not submitting for real o:-)
+
+---
+
+    Code
+      post_release()
+    Message
+      > Checking presence and scope of `GITHUB_PAT`.
+      > Switching to branch main.
+      > Pulling main.
+      Resetting main to origin/main
+      > Merging release branch.
+      i If this fails, resolve the conflict manually and push.
+      > Pushing main.
+
