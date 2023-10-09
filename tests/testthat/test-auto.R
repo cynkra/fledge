@@ -276,5 +276,4 @@ test_that("release abandon", {
   })
 
   expect_snapshot(init_release(force = TRUE))
-
 })
