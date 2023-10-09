@@ -176,7 +176,7 @@
     Output
       -- R CMD build -----------------------------------------------------------------
       * checking for file DESCRIPTION
-      * preparing ‘tea’:
+      * preparing 'tea'
       * checking DESCRIPTION meta-information ... OK
       * checking for LF line-endings in source and make files and shell scripts
       * checking for empty or unneeded directories
@@ -278,7 +278,7 @@
     Output
       -- R CMD build -----------------------------------------------------------------
       * checking for file DESCRIPTION
-      * preparing ‘tea’:
+      * preparing 'tea'
       * checking DESCRIPTION meta-information ... OK
       * checking for LF line-endings in source and make files and shell scripts
       * checking for empty or unneeded directories
@@ -369,4 +369,58 @@
       * Run `fledge::pre_release()`.
     Output
       NULL
+
+# full cycle, add more to main
+
+    Code
+      pre_release()
+    Message
+      
+      -- 1. Opening Pull Request for release branch ----------------------------------
+      > Pushing cran-0.0.1 to remote origin.
+      > Opening draft pull request with contents from 'cran-comments.md'.
+      
+      -- 2. User Action Items --------------------------------------------------------
+      * Run `fledge::release()`.
+
+---
+
+    Code
+      release()
+    Message
+      > Pushing cran-0.0.1.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.1 with tag message derived from 'NEWS.md'.
+      > Force-pushing tag v0.0.1.
+      i Building
+    Output
+      -- R CMD build -----------------------------------------------------------------
+      * checking for file DESCRIPTION
+      * preparing 'tea'
+      * checking DESCRIPTION meta-information ... OK
+      * checking for LF line-endings in source and make files and shell scripts
+      * checking for empty or unneeded directories
+      * building 'tea_0.0.1.tar.gz'
+      
+    Message
+      i Submitting file: 'tea_0.0.1.tar.gz'
+      i File size: "some hundreds of bytes"
+      i Uploading package & comments
+      Not submitting for real o:-)
+      i Check your inbox for a confirmation e-mail from CRAN.
+      > Copy the URL to the clipboard.
+      Not submitting for real o:-)
+
+---
+
+    Code
+      post_release()
+    Message
+      > Checking presence and scope of `GITHUB_PAT`.
+    Condition
+      Error in `check_post_release()`:
+      ! The main branch contains newsworthy commits.
+      i Run `fledge::bump_version()` on the main branch.
 
