@@ -1,6 +1,6 @@
 deps <- c("testthat", "foghorn", "httptest2", "parsedate")
 deps_availability <- purrr::map_lgl(deps, rlang::is_installed)
-all_deps_available <-  all(deps_availability)
+all_deps_available <- all(deps_availability)
 
 if (all_deps_available) {
   library(testthat)
