@@ -542,11 +542,9 @@ merge_branch <- function(other_branch) {
   if (fledge_chatty()) {
     cli_alert_info("If this fails, resolve the conflict manually and push.")
   }
-
+  browser()
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
-
-  # FIXME add the conflict resolution
 }
 
 check_post_release <- function() {
@@ -554,6 +552,7 @@ check_post_release <- function() {
   check_cran_branch("post_release()")
 
   # Check that this and the main branch are in sync
+  # FIXME add the conflict resolution
   gert::git_fetch(get_remote_name())
   ab_this <- gert::git_ahead_behind()
   stopifnot(ab_this$behind == 0 && ab_this$ahead == 0)
