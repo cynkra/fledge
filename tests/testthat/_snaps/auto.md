@@ -31,34 +31,11 @@
       
       -- 1. Wrapping up development --------------------------------------------------
       i No change since last version.
-      > Digesting messages from 1 commits.
-      i Initiated release of version 0.0.1 from version 0.0.0.9001
-      
-      -- Updating NEWS --
-      
-      > Adding new entries to 'NEWS.md'.
-      
-      -- Updating Version --
-      
-      v Package version bumped to 0.0.0.9002.
-      > Added header to 'NEWS.md'.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
-      > Resetting to previous commit.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      i Tag v0.0.0.9002 exists and points to the current commit.
-      > Force-pushing tag v0.0.0.9002.
-      > Pushing main.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
+      > Committing changes.
       
       -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
@@ -66,7 +43,7 @@
       * Run `urlchecker::url_update()`.
       * Check all items in 'cran-comments.md'.
       * Review 'NEWS.md'.
-      * Call `pre_release()`.
+      * Run `fledge::pre_release()`.
     Output
       NULL
 
@@ -93,34 +70,11 @@
       
       -- 1. Wrapping up development --------------------------------------------------
       i No change since last version.
-      > Digesting messages from 1 commits.
-      i Initiated release of version 0.0.1 from version 0.0.0.9001
-      
-      -- Updating NEWS --
-      
-      > Adding new entries to 'NEWS.md'.
-      
-      -- Updating Version --
-      
-      v Package version bumped to 0.0.0.9002.
-      > Added header to 'NEWS.md'.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
-      > Resetting to previous commit.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      i Tag v0.0.0.9002 exists and points to the current commit.
-      > Force-pushing tag v0.0.0.9002.
-      > Pushing main.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
+      > Committing changes.
       
       -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
@@ -128,7 +82,7 @@
       * Run `urlchecker::url_update()`.
       * Check all items in 'cran-comments.md'.
       * Review 'NEWS.md'.
-      * Call `pre_release()`.
+      * Run `fledge::pre_release()`.
     Output
       NULL
 
