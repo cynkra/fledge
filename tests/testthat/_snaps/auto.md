@@ -105,3 +105,16 @@
       x Found untracked/unstaged/staged file in the git index: 'R/'.
       i Please commit or discard it and try again.
 
+# pre_release() works
+
+    Code
+      pre_release()
+    Message
+      
+      -- 1. Opening Pull Request for release branch ----------------------------------
+      > Pushing cran-0.0.1 to remote origin.
+      > Opening draft pull request with contents from 'cran-comments.md'.
+      
+      -- 2. User Action Items --------------------------------------------------------
+      * Run `fledge::release()`.
+
