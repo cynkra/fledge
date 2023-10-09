@@ -1,6 +1,16 @@
-if (require(testthat)) {
+deps <- c("testthat", "foghorn", "httptest2", "parsedate")
+deps_availability <- purrr::map_lgl(deps, rlang::is_installed)
+all_deps_available <-  all(deps_availability)
+
+if (all_deps_available) {
+  library(testthat)
   library(fledge)
   test_check("fledge")
 } else {
-  message("testthat not available.")
+  message(
+    sprintf(
+      "%s not available.",
+      toString(deps[!deps_availability])
+    )
+  )
 }
