@@ -175,7 +175,7 @@
     Output
       -- R CMD build -----------------------------------------------------------------
       * checking for file DESCRIPTION
-      * preparing ‘tea’:
+      * preparing 'tea':
       * checking DESCRIPTION meta-information ... OK
       * checking for LF line-endings in source and make files and shell scripts
       * checking for empty or unneeded directories
@@ -277,7 +277,7 @@
     Output
       -- R CMD build -----------------------------------------------------------------
       * checking for file DESCRIPTION
-      * preparing ‘tea’:
+      * preparing 'tea':
       * checking DESCRIPTION meta-information ... OK
       * checking for LF line-endings in source and make files and shell scripts
       * checking for empty or unneeded directories
