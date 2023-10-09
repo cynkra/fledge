@@ -542,7 +542,7 @@ merge_branch <- function(other_branch) {
   if (fledge_chatty()) {
     cli_alert_info("If this fails, resolve the conflict manually and push.")
   }
-  browser()
+
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
 }
