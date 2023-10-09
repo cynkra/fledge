@@ -422,15 +422,6 @@
 # full cycle, add more to main NO PUSH
 
     Code
-      pre_release()
-    Message
-      
-      -- 1. Opening Pull Request for release branch ----------------------------------
-      > Pushing cran-0.0.1 to remote origin.
-
----
-
-    Code
       release()
     Message
       i Building
@@ -456,5 +447,5 @@
       post_release()
     Condition
       Error in `check_post_release()`:
-      ! ab_main$behind == 0 && ab_main$ahead == 0 is not TRUE
+      ! Local main branch ahead by 1 commit.
 
