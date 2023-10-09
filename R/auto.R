@@ -554,6 +554,8 @@ merge_branch <- function(other_branch) {
 
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
+
+  # FIXME add the conflict resolution
 }
 
 check_post_release <- function() {
