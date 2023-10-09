@@ -112,7 +112,6 @@ test_that("pre_release() works", {
 })
 
 test_that("full cycle", {
-  rlang::local_options("fledge.quiet" = TRUE)
   ## not opening anything ----
   rlang::local_options(rlang_interactive = FALSE)
 
@@ -179,7 +178,6 @@ test_that("full cycle", {
 })
 
 test_that("full cycle pre-minor", {
-  rlang::local_options("fledge.quiet" = TRUE)
   ## not opening anything ----
   rlang::local_options(rlang_interactive = FALSE)
 
@@ -245,7 +243,6 @@ test_that("full cycle pre-minor", {
 })
 
 test_that("release abandon", {
-  rlang::local_options("fledge.quiet" = TRUE)
   ## not opening anything ----
   rlang::local_options(rlang_interactive = FALSE)
 
@@ -345,6 +342,8 @@ test_that("full cycle, add more to main", {
   gert::git_branch_checkout("cran-0.0.1")
 
   expect_snapshot(post_release())
+
+
   expect_equal(nrow(gert::git_status()), 0)
   expect_equal(gert::git_branch(), "main")
   expect_setequal(
