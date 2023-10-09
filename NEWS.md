@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9005 (2023-10-09)
+
+- Internal changes only.
+
+
 # fledge 0.1.99.9004 (2023-10-03)
 
 ## Chore
