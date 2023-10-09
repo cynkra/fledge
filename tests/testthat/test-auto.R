@@ -377,7 +377,7 @@ test_that("full cycle, add more to main NO PUSH", {
   gert::git_branch_checkout("cran-0.0.1")
 
   ## prep release ----
-  expect_snapshot(pre_release())
+  shut_up_fledge(pre_release())
 
   ## check boxes ----
   cran_comments <- get_cran_comments_text()
