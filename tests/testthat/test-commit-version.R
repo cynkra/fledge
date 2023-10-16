@@ -11,4 +11,9 @@ test_that("check_only_modified() works", {
   expect_snapshot(error = TRUE, {
     check_only_modified("NEWS.md")
   })
+
+  file.create("onemore.R")
+  expect_snapshot(error = TRUE, {
+    check_only_modified(c("blop.R", "NEWS.md"))
+  })
 })
