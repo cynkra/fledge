@@ -75,10 +75,9 @@ init_release_impl <- function(which, force) {
   # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
   stopifnot(get_branch_name() != "HEAD")
 
-  # check PAT scopes for PR for early abort
-  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
-
+  # Early bump_version_impl() instead of an unconditional GH_PAT check
   fledgeling <- read_fledgling()
+  new_fledgeling <- bump_version_impl(fledgeling, "dev", no_change_behavior = "noop")
 
   new_version <- fledge_guess_version(fledgeling[["version"]], which)
 
@@ -96,7 +95,6 @@ init_release_impl <- function(which, force) {
   if (fledge_chatty()) cli_h1("1. Wrapping up development")
 
   # Bump dev if needed, bail out if bumped
-  new_fledgeling <- bump_version_impl(fledgeling, "dev", no_change_behavior = "noop")
   if (!identical(new_fledgeling, fledgeling)) {
     cli_abort(c(
       # FIXME: Copilot-generated
@@ -141,6 +139,11 @@ init_release_impl <- function(which, force) {
 }
 
 pre_release_impl <- function(force) {
+  # check PAT scopes for PR for early abort
+  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    check_gh_pat("repo")
+  }
+
   cli_h1("1. Opening Pull Request for release branch")
 
   main_branch <- get_main_branch()
@@ -156,6 +159,7 @@ pre_release_impl <- function(force) {
   if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
     create_pull_request(get_branch_name(), main_branch, remote_name, force)
   }
+
   # user action items
   if (fledge_chatty()) {
     cli_h1("2. User Action Items")
