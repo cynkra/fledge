@@ -1,9 +1,13 @@
 #' @rdname bump_version
 #' @usage NULL
-bump_version_impl <- function(which, no_change_behavior, fledgeling = NULL) {
+bump_version_impl <- function(fledgeling,
+                              which,
+                              no_change_behavior,
+                              edit = TRUE,
+                              no_change_message = NULL) {
   #' @description
   #' 1. Verify that the current branch is the main branch.
-  check_main_branch()
+  check_main_branch("bump_version()")
   #' 1. Check if there were changes since the last version.
   if (no_change()) {
     if (no_change_behavior == "fail") {
@@ -17,15 +21,20 @@ bump_version_impl <- function(which, no_change_behavior, fledgeling = NULL) {
     }
     if (no_change_behavior == "noop") {
       cli::cli_alert_info("No change since last version.")
-      return(invisible(FALSE))
+      return(invisible(fledgeling))
     }
   }
   #' 1. [update_news()], using the `which` argument
-  update_news_impl(default_commit_range(), which = which, fledgeling = fledgeling)
+  out <- update_news_impl(
+    default_commit_range(),
+    which = which,
+    fledgeling = fledgeling,
+    no_change_message = no_change_message
+  )
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
-    finalize_version_impl(push = FALSE)
+    finalize_version_impl(push = FALSE, suggest_finalize = edit)
   } else {
     #'     - Otherwise, [commit_version()].
     commit_version()
@@ -34,14 +43,16 @@ bump_version_impl <- function(which, no_change_behavior, fledgeling = NULL) {
       cli_h2("Preparing package for CRAN release")
     }
 
-    edit_news()
+    if (edit) {
+      edit_news()
 
-    if (fledge_chatty()) {
-      cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+      if (fledge_chatty()) {
+        cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+      }
     }
   }
 
-  invisible(TRUE)
+  invisible(out)
 }
 
 bump_version_to_dev_with_force <- function(force, which) {
@@ -51,17 +62,6 @@ bump_version_to_dev_with_force <- function(force, which) {
   tag <- tag_version(force)
   push_tag(tag)
   push_head()
-}
-
-check_main_branch <- function() {
-  if (gert::git_branch() != get_main_branch()) {
-    cli::cli_abort(
-      c(
-        x = "Must be on the main branch ({.val {get_main_branch()}}) for running fledge functions.",
-        i = "Currently on branch {.val {gert::git_branch()}}."
-      )
-    )
-  }
 }
 
 get_main_branch <- function() {

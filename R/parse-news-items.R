@@ -1,46 +1,19 @@
 # General --------------------
 
-collect_news <- function(commits) {
-  if (fledge_chatty()) {
-    cli_alert("Digesting messages from {.field {nrow(commits)}} commits.")
-  }
-
-  treat_message <- function(commit_df) {
-    default_newsworthy <- commit_df$message %>%
-      gsub("\r\n", "\n", .) %>%
-      purrr::discard(~ . == "") %>%
-      purrr::map_chr(remove_housekeeping) %>%
-      purrr::map(extract_newsworthy_items)
-
-    if (nrow(default_newsworthy[[1]]) > 0) {
-      return(default_newsworthy[[1]])
-    }
-
-    if (commit_df$merge) {
-      tibble::tibble(
-        description = commit_df$message,
-        type = default_type(),
-        breaking = FALSE,
-        scope = NA
-      )
-    } else {
-      NULL
-    }
-  }
-
-  newsworthy_items <- split(commits, seq_len(nrow(commits))) %>%
-    purrr::map(treat_message) %>%
-    purrr::keep(~ !is.null(.)) %>%
-    bind_rows()
+collect_news <- function(commits, no_change_message = NULL) {
+  newsworthy_items <- get_newsworthy_items(commits)
 
   if (is.null(newsworthy_items)) {
-    if (nrow(commits) <= 1) {
-      newsworthy_items <- parse_bullet_commit(sprintf("- %s", same_as_previous()))
-      if (fledge_chatty()) cli_alert_info(same_as_previous())
-    } else {
-      newsworthy_items <- parse_bullet_commit(sprintf("- %s", internal_changes_only()))
-      if (fledge_chatty()) cli_alert_info(internal_changes_only())
+    if (is.null(no_change_message)) {
+      if (nrow(commits) <= 1) {
+        no_change_message <- same_as_previous()
+      } else {
+        no_change_message <- internal_changes_only()
+      }
     }
+
+    newsworthy_items <- parse_bullet_commit(sprintf("- %s", no_change_message))
+    if (fledge_chatty()) cli_alert_info(no_change_message)
   } else {
     if (fledge_chatty()) {
       no <- nrow(newsworthy_items)
@@ -51,6 +24,41 @@ collect_news <- function(commits) {
 
   newsworthy_items
 }
+
+get_newsworthy_items <- function(commits) {
+  if (fledge_chatty()) {
+    cli_alert("Digesting messages from {.field {nrow(commits)}} commits.")
+  }
+
+  split(commits, seq_len(nrow(commits))) %>%
+    purrr::map(treat_commit_message) %>%
+    purrr::keep(~ !is.null(.)) %>%
+    bind_rows()
+}
+
+treat_commit_message <- function(commit_df) {
+  default_newsworthy <- commit_df$message %>%
+    gsub("\r\n", "\n", .) %>%
+    purrr::discard(~ . == "") %>%
+    purrr::map_chr(remove_housekeeping) %>%
+    purrr::map(extract_newsworthy_items)
+
+  if (nrow(default_newsworthy[[1]]) > 0) {
+    return(default_newsworthy[[1]])
+  }
+
+  if (commit_df$merge) {
+    tibble::tibble(
+      description = commit_df$message,
+      type = default_type(),
+      breaking = FALSE,
+      scope = NA
+    )
+  } else {
+    NULL
+  }
+}
+
 
 remove_housekeeping <- function(message) {
   strsplit(message, "\n---", fixed = TRUE)[[1]][1]

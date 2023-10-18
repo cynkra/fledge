@@ -23,7 +23,9 @@
 #' Fear not, run [unbump_version()], merge that PR, run `bump_version()`.
 #'
 #' @example man/examples/bump-version.R
-bump_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major"), no_change_behavior = c("bump", "noop", "fail")) {
+bump_version <- function(
+    which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major"),
+    no_change_behavior = c("bump", "noop", "fail")) {
   which <- arg_match(which)
   no_change_behavior <- arg_match(no_change_behavior)
 
@@ -38,9 +40,11 @@ bump_version <- function(which = c("dev", "patch", "pre-minor", "minor", "pre-ma
 
   local_repo()
 
-  bump_version_impl(
+  new_fledgeling <- bump_version_impl(
+    fledgeling,
     which = which,
-    no_change_behavior = no_change_behavior,
-    fledgeling = fledgeling
+    no_change_behavior = no_change_behavior
   )
+
+  invisible(!identical(new_fledgeling, fledgeling))
 }

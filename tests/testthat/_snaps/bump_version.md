@@ -19,7 +19,7 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version(push = TRUE)`.
+      ! Run `fledge::finalize_version(push = TRUE)`.
 
 ---
 
@@ -58,7 +58,7 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version(push = TRUE)`.
+      ! Run `fledge::finalize_version(push = TRUE)`.
 
 # bump_version() works -- not dev
 
@@ -97,7 +97,7 @@
       bump_version()
     Condition
       Error in `check_main_branch()`:
-      x Must be on the main branch ("main") for running fledge functions.
+      x Must be on the main branch ("main") for running `bump_version()`.
       i Currently on branch "bla".
 
 # bump_version() errors well for wrong arguments
