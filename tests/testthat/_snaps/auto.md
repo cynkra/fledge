@@ -21,6 +21,8 @@
 
     Code
       init_release()
+    Message
+      i No change since last version.
     Output
       +-----------------+
       |                 |
@@ -30,7 +32,6 @@
     Message
       
       -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
@@ -51,6 +52,8 @@
 
     Code
       init_release()
+    Message
+      i No change since last version.
     Condition
       Error in `check_release_branch()`:
       x The branch "cran-0.0.1" already exists.
@@ -60,6 +63,8 @@
 
     Code
       init_release(force = TRUE)
+    Message
+      i No change since last version.
     Output
       +-----------------+
       |                 |
@@ -69,7 +74,6 @@
     Message
       
       -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
@@ -122,6 +126,8 @@
 
     Code
       init_release()
+    Message
+      i No change since last version.
     Output
       +-----------------+
       |                 |
@@ -131,7 +137,6 @@
     Message
       
       -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
@@ -224,6 +229,8 @@
 
     Code
       init_release()
+    Message
+      i No change since last version.
     Output
       +-----------------+
       |                 |
@@ -233,7 +240,6 @@
     Message
       
       -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.1.0.
@@ -335,6 +341,8 @@
 
     Code
       init_release(force = FALSE)
+    Message
+      i No change since last version.
     Condition
       Error in `check_release_branch()`:
       x The branch "cran-0.0.1" already exists.
@@ -344,6 +352,8 @@
 
     Code
       init_release(force = TRUE)
+    Message
+      i No change since last version.
     Output
       +-----------------+
       |                 |
@@ -353,7 +363,6 @@
     Message
       
       -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
       
       -- 2. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
@@ -415,7 +424,7 @@
     Code
       post_release()
     Condition
-      Error in `check_post_release()`:
+      Error in `merge_main_into_post_release()`:
       ! Merging the main branch into the release branch failed.
       i Resolve the conflict manually and push.
 
