@@ -25,9 +25,9 @@
 ---
 
     Code
-      create_release_branch("0.1.0", ref = "blop", force = TRUE)
+      create_release_branch("0.0.1", ref = "blop", force = TRUE)
     Message
-      > Creating branch cran-0.1.0.
+      > Creating branch cran-0.0.1.
     Condition
       Error in `gert::git_branch_create()`:
       ! Failed to find git reference 'blop'
