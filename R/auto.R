@@ -396,6 +396,17 @@ create_github_release <- function() {
   slug <- github_slug()
   tag <- get_tag_info()
 
+  existing_releases <- gh(glue("/repos/{slug}/releases"))
+  existing_tags <- map_chr(existing_releases, "tag_name")
+
+  if (any(existing_tags == tag$name)) {
+    release <- existing_releases[[which(existing_tags == tag$name)]]
+    if (fledge_chatty()) {
+      cli_alert("Release {.url {release$html_url}} already exists.")
+    }
+    return()
+  }
+
   out <- gh(
     glue("POST /repos/{slug}/releases"),
     tag_name = tag$name,
@@ -414,6 +425,8 @@ create_github_release <- function() {
     cli_alert("Opening release edit URL {.url {edit_url}}.")
     utils::browseURL(edit_url)
   }
+
+  invisible()
 }
 
 merge_branch <- function(other_branch) {
