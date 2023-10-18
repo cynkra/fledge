@@ -1,4 +1,4 @@
-deps <- c("testthat", "foghorn", "httptest2")
+deps <- c("testthat", "httptest2")
 deps_availability <- purrr::map_lgl(deps, rlang::is_installed)
 all_deps_available <- all(deps_availability)
 
