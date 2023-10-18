@@ -289,7 +289,7 @@ fledge::bump_version()
 ## -- Tagging Version --
 ## 
 ## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-## ! Call `fledge::finalize_version(push = TRUE)`.
+## ! Run `fledge::finalize_version(push = TRUE)`.
 ```
 
 The new version number is 0.0.0.9001.
@@ -475,7 +475,7 @@ fledge::bump_version()
 ## -- Tagging Version --
 ## 
 ## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
-## ! Call `fledge::finalize_version(push = TRUE)`.
+## ! Run `fledge::finalize_version(push = TRUE)`.
 news <- readLines("NEWS.md")
 writeLines(news)
 ## <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
@@ -633,7 +633,7 @@ fledge::bump_version()
 ## -- Tagging Version --
 ## 
 ## > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
-## ! Call `fledge::finalize_version(push = TRUE)`.
+## ! Run `fledge::finalize_version(push = TRUE)`.
 news <- readLines("NEWS.md")
 ```
 
