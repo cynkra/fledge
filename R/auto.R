@@ -84,6 +84,9 @@ pre_release_impl <- function(which, force) {
   update_news(which = which)
   commit_version()
 
+  # FIXME: This will be obsolete later
+  fledgeling <- read_fledgeling()
+
   # switch to release branch and update cran-comments
   release_branch <- create_release_branch(fledgeling$version, force)
   switch_branch(release_branch)
