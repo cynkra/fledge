@@ -411,6 +411,8 @@ post_release_impl <- function() {
 
   merge_main_into_post_release()
 
+  merge_main_into_post_release()
+
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
@@ -499,6 +501,12 @@ check_post_release <- function() {
       i = "Run {.run fledge::bump_version()} on the main branch."
     ))
   }
+
+  invisible()
+}
+
+merge_main_into_post_release <- function() {
+  main_branch <- get_main_branch()
 
   if (gert::git_ahead_behind(main_branch)$behind != 0) {
     if (system2("git", c("merge", "--no-ff", "--no-commit", main_branch)) != 0) {
