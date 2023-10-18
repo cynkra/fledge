@@ -106,7 +106,8 @@
       pre_release()
     Condition
       Error in `check_only_modified()`:
-      ! Found untracked/unstaged/staged files in the git index: 'R/'. Please commit or discard them and try again.
+      x Found untracked/unstaged/staged file in the git index: 'R/'.
+      i Please commit or discard it and try again.
 
 # pre_release() works
 
