@@ -78,25 +78,43 @@ upload_cran <- function(pkg, built_path) {
     email = maint_email,
     uploaded_file = curl::form_file(built_path, type = "application/x-gzip"),
     comment = comments,
-    upload = "Upload package"
+    upload = "Upload the package"
   )
-  r <- httr2::request(cran_submission_url) %>%
-    httr2::req_body_multipart(!!!body) %>%
-    httr2::req_perform()
+  request <- httr2::request(cran_submission_url) %>%
+    httr2::req_body_multipart(!!!body)
+
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    cli::cli_inform("Not submitting for real o:-)")
+    return(invisible(NULL))
+  }
+
+  r <- httr2::req_perform(request)
 
   # If a 404 likely CRAN is closed for maintenance, try to get the message
   if (httr2::resp_status(r) == 404) {
-    msg <- ""
+    msg <- "<Can't extract error message>"
     try({
       r2 <- httr2::request(sub("index2", "index", cran_submission_url)) %>%
         httr2::req_perform()
       msg <- extract_cran_msg(httr2::resp_body_string(r2))
     })
-    stop("Submission failed:", msg, call. = FALSE)
+    stop("Submission failed: ", msg, call. = FALSE)
   }
 
   httr2::resp_check_status(r)
   new_url <- httr2::url_parse(r$url)
+
+  if (!is.null(new_url$query$strErr) && new_url$query$strErr != "99") {
+    msg <- "<Can't extract error message>"
+    try({
+      msg <- httr2::request(r[["url"]]) %>%
+        httr2::req_perform() %>%
+        httr2::resp_body_html() %>%
+        xml2::xml_find_all('./body//font[@color="red"]') %>%
+        xml2::xml_text()
+    })
+    stop("Submission failed: ", msg, call. = FALSE)
+  }
 
   # Confirmation -----------
   cli::cli_alert_info("Confirming submission")
@@ -107,8 +125,11 @@ upload_cran <- function(pkg, built_path) {
     policy_check = "1/",
     submit = "Submit package"
   )
-  r <- httr2::request(cran_submission_url) %>%
+  request <- httr2::request(cran_submission_url) %>%
     httr2::req_body_multipart(!!!body)
+
+  r <- httr2::req_perform(request)
+
   httr2::resp_check_status(r)
   new_url <- httr2::url_parse(r$url)
   if (new_url$query$submit == "1") {
