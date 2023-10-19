@@ -1,5 +1,28 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9006 (2023-10-19)
+
+## Bug fixes
+
+- Extract error from first submission step, fix CRAN submission (#738).
+
+- Check if release exists before creating (#731).
+
+## Chore
+
+- Add `version` and `ref` arguments to `create_release_branch()`, fix `create_release_branch(force = TRUE)` (#734).
+
+- `no_change()` and other functions gain ref argument (#733).
+
+- Pretty `check_only_modified()` (#705).
+
+- Refactorings for #686 (#729).
+
+## Testing
+
+- Is this how we handle NoSuggests checks 😅 (#732).
+
+
 # fledge 0.1.99.9005 (2023-10-09)
 
 - Internal changes only.
