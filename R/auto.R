@@ -391,11 +391,6 @@ release_impl <- function() {
 }
 
 is_news_consistent <- function() {
-  # FIXME: For tests, no longer needed after #658
-  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
-    return(TRUE)
-  }
-
   headers <- with_repo(get_news_headers())
 
   # One entry is fine, zero entries are an error
