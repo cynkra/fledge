@@ -1,4 +1,8 @@
 check_gh_pat <- function(needed_scopes = "repo") {
+  if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    return(TRUE)
+  }
+
   if (!nzchar(gh::gh_token()) || nzchar(Sys.getenv("FLEDGE_TEST_NO_PAT"))) {
     cli::cli_abort(
       message = c(
