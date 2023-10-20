@@ -148,7 +148,7 @@ get_remote_name <- function(branch = get_main_branch()) {
 create_release_branch <- function(version, force, ref = "HEAD") {
   branch_name <- paste0("cran-", version)
 
-  cli_alert("Creating branch {.field {branch_name}}.")
+  if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")
 
   if (gert::git_branch_exists(branch_name) && force) {
     gert::git_branch_delete(branch_name)
@@ -161,7 +161,7 @@ create_release_branch <- function(version, force, ref = "HEAD") {
 }
 
 switch_branch <- function(name) {
-  cli_alert("Switching to branch {.field {name}}.")
+  if (fledge_chatty()) cli_alert("Switching to branch {.field {name}}.")
   gert::git_branch_checkout(branch = name)
 }
 
@@ -262,7 +262,7 @@ get_cransplainer_update <- function(package) {
   }
 
   url <- foghorn::visit_cran_check(package)
-  cli_ul("Review {.url {url}}.")
+  if (fledge_chatty()) cli_ul("Review {.url {url}}.")
 
   cransplainer <- paste0(
     "- [x] ", checked_on, ", problems found: ", url, "\n",
@@ -359,8 +359,8 @@ auto_confirm <- function() {
     }
   )
 
-  code <- paste0('browseURL("', get_confirm_url(url), '")')
-  cli_ul("Run {.code {code}}.")
+  code <- paste0('utils::browseURL("', get_confirm_url(url), '")')
+  if (fledge_chatty()) cli_ul("Run {.run {code}}.")
   send_to_console(code)
 
   invisible()
@@ -369,7 +369,7 @@ auto_confirm <- function() {
 confirm_submission <- function(url) {
   url <- get_confirm_url(url)
 
-  cli_alert("Visiting {.url {url}}.")
+  if (fledge_chatty()) cli_alert("Visiting {.url {url}}.")
   utils::browseURL(url)
 }
 
@@ -409,6 +409,8 @@ post_release_impl <- function() {
     create_github_release()
   }
 
+  merge_main_into_post_release()
+
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
@@ -421,7 +423,7 @@ post_release_impl <- function() {
 }
 
 create_github_release <- function() {
-  cli_alert("Creating GitHub release.")
+  if (fledge_chatty()) cli_alert("Creating GitHub release.")
 
   slug <- github_slug()
   tag <- get_tag_info()
@@ -447,12 +449,12 @@ create_github_release <- function() {
   if (rlang::is_interactive()) {
     url <- out$html_url
 
-    cli_alert("Opening release URL {.url {url}}.")
+    if (fledge_chatty()) cli_alert("Opening release URL {.url {url}}.")
     utils::browseURL(url)
 
     edit_url <- gsub("/tag/", "/edit/", url)
 
-    cli_alert("Opening release edit URL {.url {edit_url}}.")
+    if (fledge_chatty()) cli_alert("Opening release edit URL {.url {edit_url}}.")
     utils::browseURL(edit_url)
   }
 
@@ -460,23 +462,83 @@ create_github_release <- function() {
 }
 
 merge_branch <- function(other_branch) {
-  cli_alert("Merging release branch.")
-  cli_alert_info("If this fails, resolve the conflict manually and push.")
+  if (fledge_chatty()) cli_alert("Merging release branch.")
+  if (fledge_chatty()) {
+    cli_alert_info("If this fails, resolve the conflict manually and push.")
+  }
 
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
 }
 
 check_post_release <- function() {
-  cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
+  check_only_modified(character())
+  check_cran_branch("post_release()")
+
+  # Check that this and the main branch are in sync
+  # FIXME add the conflict resolution
+  gert::git_fetch(get_remote_name())
+  ab_this <- gert::git_ahead_behind()
+  if (ab_this[["behind"]] != 0) {
+    cli::cli_abort(c(
+      "Local release branch behind by {ab_this[['behind']]} commit{?s}."
+    ))
+  }
+  if (ab_this[["ahead"]] != 0) {
+    ncommit <- ab_this[['ahead']]
+    cli::cli_abort(c(
+      "Local release branch ahead by {ncommit} commit{?s}."
+    ))
+  }
+  main_branch <- get_main_branch()
+  remote_name <- get_remote_name(main_branch)
+  remote_main <- paste0(remote_name, "/", main_branch)
+  ab_main <- gert::git_ahead_behind(remote_main, main_branch)
+  if (ab_main[["behind"]] != 0) {
+    ncommit <- ab_main[['behind']]
+    cli::cli_abort(c(
+      "Local main branch behind by {ncommit} commit{?s}."
+    ))
+  }
+  if (ab_main[["ahead"]] != 0) {
+    ncommit <- ab_main[["ahead"]]
+    cli::cli_abort(c(
+      "Local main branch ahead by {ncommit} commit{?s}."
+    ))
+  }
+
+  if (fledge_chatty()) {
+    cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
+  }
 
   # FIXME: Distinguish between public and private repo?
   check_gh_pat("repo")
 
-  # FIXME: release() should (force-)create and (force-)push a tag vx.y.z-rc
-  # This can be taken as a reference for the new tag.
-  repo_head_sha <- gert::git_log(max = 1)$commit
-  repo_head_sha
+  if (!no_change(main_branch)) {
+    cli_abort(c(
+      "The main branch contains newsworthy commits.",
+      i = "Run {.run fledge::bump_version()} on the main branch."
+    ))
+  }
+
+  invisible()
+}
+
+merge_main_into_post_release <- function() {
+  main_branch <- get_main_branch()
+
+  if (gert::git_ahead_behind(main_branch)$behind != 0) {
+    if (system2("git", c("merge", "--no-ff", "--no-commit", main_branch)) != 0) {
+      cli_abort(c(
+        "Merging the main branch into the release branch failed.",
+        i = "Resolve the conflict manually and push."
+      ))
+    }
+
+    stopifnot(system2("git", c("merge", "--abort")) == 0)
+  }
+
+  invisible()
 }
 
 check_gitignore <- function(files) {
@@ -572,12 +634,16 @@ release_after_cran_built_binaries <- function() {
   )
 
   if (length(cran_pr) == 0) {
-    cli::cli_alert_info("Can't find a 'CRAN release'-labelled PR")
+    if (fledge_chatty()) {
+      cli::cli_alert_info("Can't find a 'CRAN release'-labelled PR")
+    }
     return(invisible(FALSE))
   }
 
   if (length(cran_pr) > 1) {
-    cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PRs")
+    if (fledge_chatty()) {
+      cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PRs")
+    }
   }
 
   cran_pr <- cran_pr[[1]]

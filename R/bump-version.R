@@ -20,7 +20,7 @@ bump_version_impl <- function(fledgeling,
       )
     }
     if (no_change_behavior == "noop") {
-      cli::cli_alert_info("No change since last version.")
+      if (fledge_chatty()) cli::cli_alert_info("No change since last version.")
       return(invisible(fledgeling))
     }
   }
@@ -62,6 +62,18 @@ bump_version_to_dev_with_force <- function(force, which) {
   tag <- tag_version(force)
   push_tag(tag)
   push_head()
+}
+
+check_cran_branch <- function(reason) {
+  if (!grepl("^cran-", get_branch_name())) {
+    cli::cli_abort(
+      c(
+        x = "Must be on the a release branch that starts with {.val cran-} for running {.code {reason}}.",
+        i = "Currently on branch {.val {get_branch_name()}}.",
+        i = if (reason == "pre_release()") "Do you need to call {.code init_release()} first?"
+      )
+    )
+  }
 }
 
 get_main_branch <- function() {
