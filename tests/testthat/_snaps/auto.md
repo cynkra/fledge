@@ -456,5 +456,5 @@
       post_release()
     Condition
       Error in `check_post_release()`:
-      ! Local main branch ahead by 1 commit.
+      ! ab_main$behind == 0 && ab_main$ahead == 0 is not TRUE
 
