@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9007 (2023-10-21)
+
+## Features
+
+- Automatically merge news from dev versions before release (#744).
+
+- More extensive preflight checks in `post_release()`, reduce output in quiet mode (#740).
+
+## Testing
+
+- Basic testing scripts (#742).
+
+
 # fledge 0.1.99.9006 (2023-10-19)
 
 ## Bug fixes
