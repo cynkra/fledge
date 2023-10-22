@@ -19,6 +19,8 @@ test_that("merge_dev_news() works", {
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
+  withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
+
   use_r("bla")
   gert::git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
