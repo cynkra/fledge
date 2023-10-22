@@ -1,3 +1,4 @@
-- [ ] Resolve all tasks in `cran-comments.md`
+- [ ] Review PR
+- [ ] Await successful CI/CD run
 - [ ] Run `fledge::release()`
 - [ ] When the package is accepted on CRAN, run `fledge::post_release()`

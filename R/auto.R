@@ -1,15 +1,19 @@
 #' Automating CRAN release
 #'
-#' `pre_release()` is run when development of a package is finished
+#' `init_release()` and `pre_release()` are run
+#' when a milestone in the development of a package is reached
 #' and it is ready to be sent to CRAN.
 #'
-#' `pre_release()`:
+#' `init_release()`:
 #' - Ensures that no modified files are in the git index.
-#' - Bumps version to a non-development version which should be sent to CRAN.
+#' - Creates a release branch and bumps version to a non-development version which should be sent to CRAN.
 #' - Writes/updates `cran-comments.md` with useful information about the current
-#' release process.
-#' - Prompts the user to run `devtools::check_win_devel()`.
-#' - Prompts the user to run `rhub::check_for_cran()`.
+#'   release process.
+#' - Prompts the user to run `urlchecker::url_update()`, `devtools::check_win_devel()`,
+#'   and `rhub::check_for_cran()`.
+#'
+#' `pre_release()`:
+#' - Opens a pull request for the release branch for final checks.
 #'
 #' @param which Component of the version number to update. Supported
 #'   values are
@@ -23,8 +27,8 @@
 #'   Useful to recover from a previously failed attempt.
 #' @name release
 #' @export
-pre_release <- function(which = "next", force = FALSE) {
-  check_main_branch("pre_release()")
+init_release <- function(which = "next", force = FALSE) {
+  check_main_branch("init_release()")
   check_only_modified(character())
   check_gitignore("cran-comments.md")
 
@@ -34,7 +38,16 @@ pre_release <- function(which = "next", force = FALSE) {
   }
 
   local_options(usethis.quiet = TRUE)
-  with_repo(pre_release_impl(which, force))
+  with_repo(init_release_impl(which, force))
+}
+
+#' @rdname release
+#' @export
+pre_release <- function(force = FALSE) {
+  check_cran_branch("pre_release()")
+
+  local_options(usethis.quiet = TRUE)
+  with_repo(pre_release_impl(force))
 }
 
 guess_next <- function() {
@@ -57,80 +70,100 @@ guess_next_impl <- function(version) {
   return(which)
 }
 
-pre_release_impl <- function(which, force) {
-  # FIXME: Needs repair in create_release_branch()
-  stopifnot(!force)
+init_release_impl <- function(which, force) {
+  # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
+  stopifnot(get_branch_name() != "HEAD")
 
-  # https://github.com/r-lib/gert/issues/139
-  stopifnot(gert::git_branch() != "HEAD")
+  # Do we need bump_version() first?
+  if (!no_change()) {
+    cli_abort(c(
+      "Aborting release process because not all changes were recorded.",
+      i = "Run {.run fledge::bump_version()}, then rerun {.run fledge::init_release()}"
+    ))
+  }
 
-  # check PAT scopes for PR for early abort
-  check_gh_pat("repo")
+  # Check PAT early
+  check_gh_pat()
 
-  cat(boxx("pre-release", border_style = "double"))
+  fledgeling <- read_fledgling()
+  new_version <- fledge_guess_version(fledgeling[["version"]], which)
+
+  if (!force) {
+    check_release_branch(new_version)
+  }
+
+  if (fledge_chatty()) {
+    cat(boxx("pre-release", border_style = "double"))
+  }
 
   # Begin extension points
   # End extension points
 
-  # We expect that this branch is pushed already, ok to fail here
-  main_branch <- get_branch_name()
-  remote_name <- get_remote_name(main_branch)
+  # Don't bump here, want to be compatible with merge queues at some point
 
-  cli_h1("1. Creating a release branch and getting ready")
+  if (fledge_chatty()) cli_h1("1. Creating a release branch and getting ready")
 
-  fledgeling <- read_fledgling()
-
-  # bump version on main branch to version set by user
-  # Avoid `bump_version()` to avoid showing `NEWS.md` at this stage,
-  # because it changes as we jump between branches.
-  update_news(which = which)
-  commit_version()
-
-  new_version <- fledge_guess_version(fledgeling[["version"]], which)
+  # regroup dev news
+  fledgeling <- merge_dev_news(fledgeling, new_version)
 
   # switch to release branch and update cran-comments
   release_branch <- create_release_branch(new_version, force)
   switch_branch(release_branch)
 
-  fledgeling <- merge_dev_news(fledgeling, new_version)
+  update_cran_comments(new_version)
+  gert::git_add(c("cran-comments.md", ".Rbuildignore"))
+  gert::git_commit("CRAN comments")
+
   write_fledgling(fledgeling)
-  gert::git_add(files = c("NEWS.md"))
-  gert::git_commit(message = "Update NEWS")
-
-  update_cran_comments()
-
-  # push main branch, bump to devel version and push again
-  push_to_new(remote_name, force)
-  switch_branch(main_branch)
-
-  cli_h1("2. Bumping main branch to dev version and updating NEWS")
-  # manual implementation of bump_version(), it doesn't expose `force` yet
-  bump_version_to_dev_with_force(force, which = "dev")
-
-  cli_h1("3. Opening Pull Request for release branch")
-  # switch to release branch and init pre_release actions
-  switch_branch(release_branch)
-
-  cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
-  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
-    create_pull_request(release_branch, main_branch, remote_name, force)
-  }
+  commit_version_impl()
 
   edit_news()
   edit_cran_comments()
 
-  # user action items
-  cli_h1("4. User Action Items")
-  cli_div(theme = list(ul = list(color = "magenta")))
-  cli_ul("Run {.code devtools::check_win_devel()}.")
-  cli_ul("Run {.code rhub::check_for_cran()}.")
-  cli_ul("Run {.code urlchecker::url_update()}.")
-  cli_ul("Check all items in {.file cran-comments.md}.")
-  cli_ul("Convert {.file NEWS.md} from changelog format to release notes.")
-  cli_ul("Run {.code fledge::release()}.")
-  cli_end()
+  if (fledge_chatty()) {
+    cli_h1("2. User Action Items")
+    cli_div(theme = list(ul = list(color = "magenta")))
+    cli_ul("Run {.run devtools::check_win_devel()}.")
+    cli_ul("Run {.run rhub::check_for_cran()}.")
+    cli_ul("Run {.run urlchecker::url_update()}.")
+    cli_ul("Check all items in {.file cran-comments.md}.")
+    cli_ul("Review {.file NEWS.md}.")
+    cli_ul("Run {.run fledge::pre_release()}.")
+    send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
+  }
+}
 
-  send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
+pre_release_impl <- function(force) {
+  # check PAT scopes for PR for early abort
+  check_gh_pat("repo")
+
+  check_only_modified(c("NEWS.md", "cran-comments.md"))
+  gert::git_add(c("NEWS.md", "cran-comments.md"))
+  if (nrow(gert::git_status(staged = TRUE)) > 0) {
+    gert::git_commit("NEWS and CRAN comments")
+  }
+
+  cli_h1("1. Opening Pull Request for release branch")
+
+  main_branch <- get_main_branch()
+  remote_name <- get_remote_name(main_branch)
+
+  # push main branch, bump to devel version and push again
+  push_to_new(remote_name, force)
+
+  if (fledge_chatty()) {
+    cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
+  }
+
+  create_pull_request(get_branch_name(), main_branch, remote_name, force)
+
+  # user action items
+  if (fledge_chatty()) {
+    cli_h1("2. User Action Items")
+    cli_div(theme = list(ul = list(color = "magenta")))
+    cli_ul("Run {.code fledge::release()}.")
+    cli_end()
+  }
 
   # Begin extension points
   # End extension points
@@ -179,7 +212,21 @@ merge_dev_news <- function(fledgeling, new_version) {
   fledgeling
 }
 
-create_release_branch <- function(version, force, ref = "HEAD") {
+check_release_branch <- function(new_version) {
+  # FIXME: extract functions to go from version to branch name and vice versa
+  branch_name <- paste0("cran-", new_version)
+
+  if (gert::git_branch_exists(branch_name)) {
+    cli_abort(c(
+      x = "The branch {.val {branch_name}} already exists.",
+      i = "Do you need {.code init_release(force = TRUE)}?"
+    ))
+  }
+}
+
+create_release_branch <- function(version,
+                                  force,
+                                  ref = "HEAD") {
   branch_name <- paste0("cran-", version)
 
   if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")
@@ -199,7 +246,7 @@ switch_branch <- function(name) {
   gert::git_branch_checkout(branch = name)
 }
 
-update_cran_comments <- function() {
+update_cran_comments <- function(new_version) {
   rlang::check_installed("rversions")
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
@@ -225,7 +272,7 @@ update_cran_comments <- function() {
     package = "fledge",
     data = list(
       package = package,
-      version = desc::desc_get_version(),
+      version = new_version,
       crp_date = crp_date,
       crp_cross = crp_cross,
       crp_changes = crp_changes,
@@ -235,9 +282,6 @@ update_cran_comments <- function() {
     ),
     ignore = TRUE
   )
-
-  gert::git_add(files = c("cran-comments.md", ".Rbuildignore"))
-  gert::git_commit(message = "Update CRAN comments")
 }
 
 get_crp_date <- function() {
@@ -434,9 +478,7 @@ post_release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
-    create_github_release()
-  }
+  create_github_release()
 
   merge_main_into_post_release()
 
@@ -445,6 +487,14 @@ post_release_impl <- function() {
   switch_branch(get_main_branch())
   pull_head()
   merge_branch(release_branch)
+
+  bump_version_impl(
+    read_fledgling(),
+    "dev",
+    no_change_behavior = "bump",
+    edit = FALSE,
+    no_change_message = "- Resume development after CRAN release."
+  )
   push_head()
 
   # Begin extension points
@@ -453,6 +503,11 @@ post_release_impl <- function() {
 
 create_github_release <- function() {
   if (fledge_chatty()) cli_alert("Creating GitHub release.")
+
+  if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    cli_alert("Omitting in test.")
+    return(invisible())
+  }
 
   slug <- github_slug()
   tag <- get_tag_info()
@@ -465,7 +520,7 @@ create_github_release <- function() {
     if (fledge_chatty()) {
       cli_alert("Release {.url {release$html_url}} already exists.")
     }
-    return()
+    return(invisible())
   }
 
   out <- gh(
@@ -498,6 +553,8 @@ merge_branch <- function(other_branch) {
 
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
+
+  # FIXME add the conflict resolution
 }
 
 check_post_release <- function() {
@@ -540,7 +597,7 @@ check_post_release <- function() {
     cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
   }
 
-  # FIXME: Distinguish between public and private repo?
+  # Need PAT for creating GitHub release
   check_gh_pat("repo")
 
   if (!no_change(main_branch)) {
@@ -587,6 +644,10 @@ is_ignored <- function(path) {
 }
 
 create_pull_request <- function(release_branch, main_branch, remote_name, force) {
+  if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    return(invisible())
+  }
+
   # FIXME: Use gh() to determine if we need to create the pull request
   create <- TRUE
 

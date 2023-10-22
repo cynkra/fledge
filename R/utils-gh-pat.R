@@ -1,4 +1,5 @@
 check_gh_pat <- function(needed_scopes = "repo") {
+  # Checks are always successful if no GitHub is requested
   if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
     return(TRUE)
   }

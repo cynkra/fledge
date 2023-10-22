@@ -9,8 +9,7 @@ dir.create(project_dir)
 local_demo_project(project_dir, quiet = TRUE)
 # local_demo_project(quiet = TRUE)
 
-term <- rstudioapi::terminalCreate()
-rstudioapi::terminalSend(term, paste0("cd ", getwd(), "\n"))
+rstudioapi::terminalExecute("zsh", workingDir = getwd())
 
 # create remote ----
 tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -27,14 +26,17 @@ gert::git_commit("* Add cool bla.")
 bump_version()
 finalize_version(push = TRUE)
 
-# prep release ----
+# init release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-pre_release()
+init_release()
 gert::git_branch()
 gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
 gert::git_status()
+
+# prep release ----
+pre_release()
 
 # check boxes ----
 cran_comments <- get_cran_comments_text()
@@ -61,14 +63,17 @@ gert::git_commit("* Add cool blop.")
 bump_version("pre-minor")
 finalize_version(push = TRUE)
 
-# prep release ----
+# init release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-pre_release()
+init_release()
 gert::git_branch()
 gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
 gert::git_status()
+
+# prep release ----
+pre_release()
 
 # check boxes ----
 cran_comments <- get_cran_comments_text()

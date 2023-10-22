@@ -27,10 +27,10 @@ gert::git_commit("* Add cool bla.")
 bump_version()
 finalize_version(push = TRUE)
 
-# prep release ----
+# init release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-pre_release()
+init_release()
 gert::git_branch()
 gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
@@ -47,6 +47,9 @@ finalize_version(push = TRUE)
 
 gert::git_branch_checkout("cran-0.0.1")
 
+
+# prep release ----
+pre_release()
 
 # check boxes ----
 cran_comments <- get_cran_comments_text()
@@ -67,6 +70,7 @@ gert::git_status()
 fs::dir_tree()
 
 # post release ----
+withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 post_release()
 
 # back to fledge directory and project ----

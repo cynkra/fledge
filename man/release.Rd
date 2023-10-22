@@ -2,11 +2,14 @@
 % Please edit documentation in R/auto.R
 \name{release}
 \alias{release}
+\alias{init_release}
 \alias{pre_release}
 \alias{post_release}
 \title{Automating CRAN release}
 \usage{
-pre_release(which = "next", force = FALSE)
+init_release(which = "next", force = FALSE)
+
+pre_release(force = FALSE)
 
 release()
 
@@ -28,7 +31,8 @@ values are
 Useful to recover from a previously failed attempt.}
 }
 \description{
-\code{pre_release()} is run when development of a package is finished
+\code{init_release()} and \code{pre_release()} are run
+when a milestone in the development of a package is reached
 and it is ready to be sent to CRAN.
 
 \code{release()} sends to CRAN after performing several checks,
@@ -37,13 +41,18 @@ and offers help with accepting the submission.
 \code{post_release()} should be called after the submission has been accepted.
 }
 \details{
-\code{pre_release()}:
+\code{init_release()}:
 \itemize{
 \item Ensures that no modified files are in the git index.
-\item Bumps version to a non-development version which should be sent to CRAN.
+\item Creates a release branch and bumps version to a non-development version which should be sent to CRAN.
 \item Writes/updates \code{cran-comments.md} with useful information about the current
 release process.
-\item Prompts the user to run \code{devtools::check_win_devel()}.
-\item Prompts the user to run \code{rhub::check_for_cran()}.
+\item Prompts the user to run \code{urlchecker::url_update()}, \code{devtools::check_win_devel()},
+and \code{rhub::check_for_cran()}.
+}
+
+\code{pre_release()}:
+\itemize{
+\item Opens a pull request for the release branch for final checks.
 }
 }
