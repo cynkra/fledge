@@ -197,6 +197,8 @@
       post_release()
     Message
       > Checking presence and scope of `GITHUB_PAT`.
+      > Creating GitHub release.
+      > Omitting in test.
       > Switching to branch main.
       > Pulling main.
       Resetting main to origin/main
@@ -299,6 +301,8 @@
       post_release()
     Message
       > Checking presence and scope of `GITHUB_PAT`.
+      > Creating GitHub release.
+      > Omitting in test.
       > Switching to branch main.
       > Pulling main.
       Resetting main to origin/main
@@ -414,6 +418,8 @@
 
     Code
       post_release()
+    Message
+      > Omitting in test.
     Condition
       Error in `merge_main_into_post_release()`:
       ! Merging the main branch into the release branch failed.

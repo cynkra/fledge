@@ -141,6 +141,9 @@ init_release_impl <- function(which, force) {
 }
 
 pre_release_impl <- function(force) {
+  # check PAT scopes for PR for early abort
+  check_gh_pat("repo")
+
   cli_h1("1. Opening Pull Request for release branch")
 
   main_branch <- get_main_branch()
@@ -153,9 +156,8 @@ pre_release_impl <- function(force) {
     cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   }
 
-  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
-    create_pull_request(get_branch_name(), main_branch, remote_name, force)
-  }
+  create_pull_request(get_branch_name(), main_branch, remote_name, force)
+
   # user action items
   if (fledge_chatty()) {
     cli_h1("2. User Action Items")
@@ -477,9 +479,7 @@ post_release_impl <- function() {
   # Begin extension points
   # End extension points
 
-  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
-    create_github_release()
-  }
+  create_github_release()
 
   merge_main_into_post_release()
 
@@ -505,6 +505,11 @@ post_release_impl <- function() {
 create_github_release <- function() {
   if (fledge_chatty()) cli_alert("Creating GitHub release.")
 
+  if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    cli_alert("Omitting in test.")
+    return(invisible())
+  }
+
   slug <- github_slug()
   tag <- get_tag_info()
 
@@ -516,7 +521,7 @@ create_github_release <- function() {
     if (fledge_chatty()) {
       cli_alert("Release {.url {release$html_url}} already exists.")
     }
-    return()
+    return(invisible())
   }
 
   out <- gh(
@@ -593,8 +598,8 @@ check_post_release <- function() {
     cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
   }
 
-  # FIXME: Distinguish between public and private repo?
-  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
+  # Need PAT for creating GitHub release
+  check_gh_pat("repo")
 
   if (!no_change(main_branch)) {
     cli_abort(c(
@@ -640,6 +645,10 @@ is_ignored <- function(path) {
 }
 
 create_pull_request <- function(release_branch, main_branch, remote_name, force) {
+  if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    return(invisible())
+  }
+
   # FIXME: Use gh() to determine if we need to create the pull request
   create <- TRUE
 
