@@ -45,7 +45,6 @@ init_release <- function(which = "next", force = FALSE) {
 #' @export
 pre_release <- function(force = FALSE) {
   check_cran_branch("pre_release()")
-  check_only_modified(character())
 
   local_options(usethis.quiet = TRUE)
   with_repo(pre_release_impl(force))
@@ -137,6 +136,12 @@ init_release_impl <- function(which, force) {
 pre_release_impl <- function(force) {
   # check PAT scopes for PR for early abort
   check_gh_pat("repo")
+
+  check_only_modified(c("NEWS.md", "cran-comments.md"))
+  gert::git_add(c("NEWS.md", "cran-comments.md"))
+  if (nrow(gert::git_status(staged = TRUE)) > 0) {
+    gert::git_commit("NEWS and CRAN comments")
+  }
 
   cli_h1("1. Opening Pull Request for release branch")
 

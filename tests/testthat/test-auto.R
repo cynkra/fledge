@@ -150,16 +150,14 @@ test_that("full cycle", {
   expect_equal(as.character(desc::desc_get_version()), "0.0.1")
   expect_equal(nrow(gert::git_status()), 0)
 
-  ## prep release ----
-  expect_snapshot(pre_release())
-
-  ## check boxes ----
+  ## check boxes first ----
   cran_comments <- get_cran_comments_text()
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-  gert::git_add("cran-comments.md")
-  gert::git_commit("this is how we check boxes")
+
+  ## prep release ----
+  expect_snapshot(pre_release())
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
