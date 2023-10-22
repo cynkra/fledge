@@ -75,11 +75,15 @@ init_release_impl <- function(which, force) {
   # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
   stopifnot(get_branch_name() != "HEAD")
 
-  # check PAT scopes for PR for early abort
-  if (!nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) check_gh_pat("repo")
+  # Do we need bump_version() first?
+  if (!no_change()) {
+    cli_abort(c(
+      "Aborting release process because not all changes were recorded.",
+      i = "Run {.run fledge::bump_version()}, then rerun {.run fledge::init_release()}"
+    ))
+  }
 
   fledgeling <- read_fledgling()
-
   new_version <- fledge_guess_version(fledgeling[["version"]], which)
 
   if (!force) {
@@ -93,22 +97,9 @@ init_release_impl <- function(which, force) {
   # Begin extension points
   # End extension points
 
-  if (fledge_chatty()) cli_h1("1. Wrapping up development")
-
-  # Bump dev if needed, bail out if bumped
-  new_fledgeling <- bump_version_impl(fledgeling, "dev", no_change_behavior = "noop")
-  if (!identical(new_fledgeling, fledgeling)) {
-    cli_abort(c(
-      # FIXME: Copilot-generated
-      "Aborting release process because the version was bumped during the process.",
-      i = "Rerun {.run fledge::init_release()}"
-    ))
-  }
-  rm(new_fledgeling)
-
   # Don't bump here, want to be compatible with merge queues at some point
 
-  if (fledge_chatty()) cli_h1("2. Creating a release branch and getting ready")
+  if (fledge_chatty()) cli_h1("1. Creating a release branch and getting ready")
 
   # regroup dev news
   fledgeling <- merge_dev_news(fledgeling, new_version)
@@ -128,7 +119,7 @@ init_release_impl <- function(which, force) {
   edit_cran_comments()
 
   if (fledge_chatty()) {
-    cli_h1("3. User Action Items")
+    cli_h1("2. User Action Items")
     cli_div(theme = list(ul = list(color = "magenta")))
     cli_ul("Run {.run devtools::check_win_devel()}.")
     cli_ul("Run {.run rhub::check_for_cran()}.")

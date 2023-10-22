@@ -29,15 +29,12 @@
       +-----------------+
     Message
       
-      -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
-      
-      -- 2. Creating a release branch and getting ready ------------------------------
+      -- 1. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
       > Committing changes.
       
-      -- 3. User Action Items --------------------------------------------------------
+      -- 2. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
       * Run `rhub::check_for_cran()`.
       * Run `urlchecker::url_update()`.
@@ -68,15 +65,12 @@
       +-----------------+
     Message
       
-      -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
-      
-      -- 2. Creating a release branch and getting ready ------------------------------
+      -- 1. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
       > Committing changes.
       
-      -- 3. User Action Items --------------------------------------------------------
+      -- 2. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
       * Run `rhub::check_for_cran()`.
       * Run `urlchecker::url_update()`.
@@ -130,15 +124,12 @@
       +-----------------+
     Message
       
-      -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
-      
-      -- 2. Creating a release branch and getting ready ------------------------------
+      -- 1. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
       > Committing changes.
       
-      -- 3. User Action Items --------------------------------------------------------
+      -- 2. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
       * Run `rhub::check_for_cran()`.
       * Run `urlchecker::url_update()`.
@@ -234,15 +225,12 @@
       +-----------------+
     Message
       
-      -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
-      
-      -- 2. Creating a release branch and getting ready ------------------------------
+      -- 1. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.1.0.
       > Switching to branch cran-0.1.0.
       > Committing changes.
       
-      -- 3. User Action Items --------------------------------------------------------
+      -- 2. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
       * Run `rhub::check_for_cran()`.
       * Run `urlchecker::url_update()`.
@@ -356,15 +344,12 @@
       +-----------------+
     Message
       
-      -- 1. Wrapping up development --------------------------------------------------
-      i No change since last version.
-      
-      -- 2. Creating a release branch and getting ready ------------------------------
+      -- 1. Creating a release branch and getting ready ------------------------------
       > Creating branch cran-0.0.1.
       > Switching to branch cran-0.0.1.
       > Committing changes.
       
-      -- 3. User Action Items --------------------------------------------------------
+      -- 2. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
       * Run `rhub::check_for_cran()`.
       * Run `urlchecker::url_update()`.
