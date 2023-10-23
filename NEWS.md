@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9008 (2023-10-23)
+
+## Features
+
+- New `init_release()`, to be called before `pre_release()` (#686).
+
+
 # fledge 0.1.99.9007 (2023-10-21)
 
 ## Features
