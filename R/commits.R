@@ -51,7 +51,7 @@ get_parent_since <- function(all_parents, since) {
   purrr::detect(all_parents, ~ gert::git_ahead_behind(since, .x)$behind == 0)
 }
 
-get_last_tag_impl <- function(ref = "HEAD") {
+get_last_tag_impl <- function(ref = "HEAD", pattern = NULL) {
   repo_head <- gert::git_log(ref, max = 1)
 
   all_tags <- gert::git_tag_list()
@@ -60,8 +60,15 @@ get_last_tag_impl <- function(ref = "HEAD") {
     return(NULL)
   }
 
-  tags_ab <- map(all_tags$name, ~ gert::git_ahead_behind(upstream = repo_head$commit, ref = .x))
-  names(tags_ab) <- all_tags$name
+  tag_names <- all_tags$name
+  if (!is.null(pattern)) {
+    tag_names <- grep(pattern, tag_names, value = TRUE, perl = TRUE)
+  }
+
+  tags_ab <- map(
+    set_names(tag_names),
+    ~ gert::git_ahead_behind(upstream = repo_head$commit, ref = .x)
+  )
   tags_only_b <- discard(tags_ab, ~ .[[1]] > 0)
   tags_b <- map_int(tags_only_b, 2)
   names(tags_b) <- names(tags_only_b)

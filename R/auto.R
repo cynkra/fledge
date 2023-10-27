@@ -707,82 +707,36 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
   usethis::pr_view()
 }
 
+# FIXME: Align with new-style release
 release_after_cran_built_binaries <- function() {
-  # look for PR branch
-  remote <- "origin"
-  github_info <- github_info(remote)
-
-  prs <- gh(
-    "GET /repos/:owner/:repo/pulls",
-    owner = github_info[["owner"]][["login"]],
-    repo = github_info[["name"]],
-    .limit = Inf
-  )
-  cran_pr <- purrr::keep(
-    prs,
-    ~ any(grepl("^cran release", tolower(purrr::map_chr(.x[["labels"]], "name"))))
-  )
-
-  if (length(cran_pr) == 0) {
-    if (fledge_chatty()) {
-      cli::cli_alert_info("Can't find a 'CRAN release'-labelled PR")
-    }
-    return(invisible(FALSE))
-  }
-
-  if (length(cran_pr) > 1) {
-    if (fledge_chatty()) {
-      cli::cli_abort("Found {length(cran_pr)} 'CRAN release'-labelled PRs")
-    }
-  }
-
-  cran_pr <- cran_pr[[1]]
-  gert::git_branch_checkout(cran_pr[["head"]][["ref"]])
-
-  # get info from CRAN page ----
-
   pkg <- read_package()
 
-  temp_file <- withr::local_tempfile()
-
-  curl::curl_download(
-    sprintf("https://cran.r-project.org/package=%s", pkg),
-    temp_file
+  last_release_tag <- get_last_tag_impl(
+    pattern = "^v[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$"
   )
 
-  pkg_cran_page <- xml2::read_html(temp_file)
-  pkg_version <- extract_version_pr(cran_pr[["title"]])
+  last_release_version <- as.package_version(gsub("^v", "", last_release_tag$name))
 
-  # treat binaries link
-  tibblify_binary_link <- function(link) {
-    rematch2::re_match(
-      link,
-      "/bin/(?<flavor>.+)/contrib/(?<r_version>[^/]+)/[^_]+_(?<binary_version>[-0-9.]+)[.][a-z]+$"
-    )
+  ppm_packages <- utils::available.packages(repos = "https://packagemanager.posit.co/cran/latest")
+
+  if (!(pkg %in% rownames(ppm_packages))) {
+    if (fledge_chatty()) {
+      cli_alert_info("Package not found on PPM.")
+    }
+    return(invisible())
   }
 
-  # binaries
-  binaries <- xml2::xml_find_all(
-    pkg_cran_page,
-    ".//a[starts-with(@href, '../../../bin/')]"
-  ) %>%
-    xml2::xml_attr("href") %>%
-    map_dfr(tibblify_binary_link)
+  ppm_version <- ppm_packages[pkg, "Version"]
 
-  # put it together
-  binaries[["up_to_date"]] <- (binaries[["binary_version"]] == pkg_version)
-
-  all_ok <- all(binaries[["up_to_date"]])
-
-  if (all_ok) {
+  if (ppm_version == last_release_version) {
     if (fledge_chatty()) {
-      cli_alert_info("All binaries match the most recent version, releasing.")
+      cli_alert_info("PPM version matches the most recent version, releasing.")
     }
     post_release()
     return(invisible(TRUE))
   } else {
     if (fledge_chatty()) {
-      cli_alert_info("Some binaries don't match the most recent version.")
+      cli_alert_info("PPM version {.val {ppm_version}} don't match the most recent version {.val {last_release_version}}.")
     }
     return(invisible(FALSE))
   }
