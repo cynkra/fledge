@@ -3,13 +3,10 @@
 \name{release}
 \alias{release}
 \alias{init_release}
-\alias{pre_release}
 \alias{post_release}
 \title{Automating CRAN release}
 \usage{
 init_release(which = "next", force = FALSE)
-
-pre_release(force = FALSE)
 
 release()
 
