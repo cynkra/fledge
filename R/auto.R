@@ -41,15 +41,6 @@ init_release <- function(which = "next", force = FALSE) {
   with_repo(init_release_impl(which, force))
 }
 
-#' @rdname release
-#' @export
-pre_release <- function(force = FALSE) {
-  check_cran_branch("pre_release()")
-
-  local_options(usethis.quiet = TRUE)
-  with_repo(pre_release_impl(force))
-}
-
 guess_next <- function() {
   desc <- desc::desc(file = "DESCRIPTION")
   guess_next_impl(desc$get_version())
@@ -93,7 +84,7 @@ init_release_impl <- function(which, force) {
   }
 
   if (fledge_chatty()) {
-    cat(boxx("pre-release", border_style = "double"))
+    cat(boxx("init-release", border_style = "double"))
   }
 
   # Begin extension points
@@ -110,40 +101,17 @@ init_release_impl <- function(which, force) {
   release_branch <- create_release_branch(new_version, force)
   switch_branch(release_branch)
 
+  write_fledgling(fledgeling)
+  commit_version_impl()
+
   update_cran_comments(new_version)
   gert::git_add(c("cran-comments.md", ".Rbuildignore"))
   gert::git_commit("CRAN comments")
 
-  write_fledgling(fledgeling)
-  commit_version_impl()
-
   edit_news()
   edit_cran_comments()
 
-  if (fledge_chatty()) {
-    cli_h1("2. User Action Items")
-    cli_div(theme = list(ul = list(color = "magenta")))
-    cli_ul("Run {.run devtools::check_win_devel()}.")
-    cli_ul("Run {.run rhub::check_for_cran()}.")
-    cli_ul("Run {.run urlchecker::url_update()}.")
-    cli_ul("Check all items in {.file cran-comments.md}.")
-    cli_ul("Review {.file NEWS.md}.")
-    cli_ul("Run {.run fledge::pre_release()}.")
-    send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
-  }
-}
-
-pre_release_impl <- function(force) {
-  # check PAT scopes for PR for early abort
-  check_gh_pat("repo")
-
-  check_only_modified(c("NEWS.md", "cran-comments.md"))
-  gert::git_add(c("NEWS.md", "cran-comments.md"))
-  if (nrow(gert::git_status(staged = TRUE)) > 0) {
-    gert::git_commit("NEWS and CRAN comments")
-  }
-
-  cli_h1("1. Opening Pull Request for release branch")
+  cli_h1("2. Opening Pull Request for release branch")
 
   main_branch <- get_main_branch()
   remote_name <- get_remote_name(main_branch)
@@ -157,12 +125,16 @@ pre_release_impl <- function(force) {
 
   create_pull_request(get_branch_name(), main_branch, remote_name, force)
 
-  # user action items
   if (fledge_chatty()) {
-    cli_h1("2. User Action Items")
+    cli_h1("3. User Action Items")
     cli_div(theme = list(ul = list(color = "magenta")))
-    cli_ul("Run {.code fledge::release()}.")
-    cli_end()
+    cli_ul("Run {.run devtools::check_win_devel()}.")
+    cli_ul("Run {.run rhub::check_for_cran()}.")
+    cli_ul("Run {.run urlchecker::url_update()}.")
+    cli_ul("Check all items in {.file cran-comments.md}.")
+    cli_ul("Review {.file NEWS.md}.")
+    cli_ul("Run {.run fledge::release()}.")
+    send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
   }
 
   # Begin extension points
@@ -378,10 +350,19 @@ release <- function() {
 }
 
 release_impl <- function() {
-  check_only_modified(character())
-
+  check_cran_branch("release()")
   stopifnot(is_news_consistent())
   stopifnot(is_cran_comments_good())
+  check_only_modified(c(news_path(), "cran-comments.md"))
+
+  # Commit NEWS and CRAN comments
+  gert::git_add(c(news_path(), "cran-comments.md"))
+  if (nrow(gert::git_status(staged = TRUE)) > 0) {
+    gert::git_commit("NEWS and CRAN comments [ci skip]")
+  }
+
+  # After committing NEWS and CRAN comments
+  check_release()
 
   # Begin extension points
   # End extension points
@@ -392,6 +373,15 @@ release_impl <- function() {
   push_tag(tag)
 
   submit_cran()
+
+  merge_main_into_post_release()
+
+  # FIXME: Check if PR open, if yes merge PR instead
+  release_branch <- get_branch_name()
+  switch_branch(get_main_branch())
+  pull_head()
+  merge_branch(release_branch)
+
   auto_confirm()
 
   # Begin extension points
@@ -443,8 +433,8 @@ auto_confirm <- function() {
     }
   )
 
-  code <- paste0('utils::browseURL("', get_confirm_url(url), '")')
-  if (fledge_chatty()) cli_ul("Run {.run {code}}.")
+  if (fledge_chatty()) cli_ul("Run the code sent to the console to confirm the submission and update the main branch.")
+  code <- paste0('utils::browseURL("', get_confirm_url(url), '"); gert::git_push()')
   send_to_console(code)
 
   invisible()
@@ -482,7 +472,7 @@ post_release <- function() {
 }
 
 post_release_impl <- function() {
-  check_only_modified(c(".Rbuildignore"))
+  check_only_modified(character())
   # Need PAT for creating GitHub release
   check_gh_pat("repo")
 
@@ -552,20 +542,12 @@ create_github_release <- function() {
 
 merge_branch <- function(other_branch) {
   if (fledge_chatty()) cli_alert("Merging release branch.")
-  if (fledge_chatty()) {
-    cli_alert_info("If this fails, resolve the conflict manually and push.")
-  }
 
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
-
-  # FIXME add the conflict resolution
 }
 
-check_post_release <- function() {
-  check_only_modified(character())
-  check_cran_branch("post_release()")
-
+check_release <- function() {
   # Check that this and the main branch are in sync
   # FIXME add the conflict resolution
   gert::git_fetch(get_remote_name())
@@ -575,12 +557,7 @@ check_post_release <- function() {
       "Local release branch behind by {ab_this[['behind']]} commit{?s}."
     ))
   }
-  if (ab_this[["ahead"]] != 0) {
-    ncommit <- ab_this[['ahead']]
-    cli::cli_abort(c(
-      "Local release branch ahead by {ncommit} commit{?s}."
-    ))
-  }
+
   main_branch <- get_main_branch()
   remote_name <- get_remote_name(main_branch)
   remote_main <- paste0(remote_name, "/", main_branch)
@@ -601,9 +578,6 @@ check_post_release <- function() {
   if (fledge_chatty()) {
     cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
   }
-
-  # Need PAT for creating GitHub release
-  check_gh_pat("repo")
 
   if (!no_change(main_branch)) {
     cli_abort(c(

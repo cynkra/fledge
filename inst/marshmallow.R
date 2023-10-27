@@ -42,9 +42,6 @@ writeLines(cran_comments)
 cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
 brio::write_lines(cran_comments, "cran-comments.md")
 
-# prep release ----
-pre_release()
-
 # release ----
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
 release()
