@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9009 (2023-10-28)
+
+## Features
+
+- Release package as soon as it's available on PPM.
+
+
 # fledge 0.1.99.9008 (2023-10-23)
 
 ## Features
