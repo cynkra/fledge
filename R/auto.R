@@ -502,7 +502,10 @@ post_release_impl <- function() {
 }
 
 create_github_release <- function() {
-  if (fledge_chatty()) cli_alert("Creating GitHub release.")
+  version <- get_last_release_version()
+  tag <- paste0("v", version)
+
+  if (fledge_chatty()) cli_alert("Creating GitHub release {.val {tag}}.")
 
   if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
     cli_alert("Omitting in test.")
@@ -510,24 +513,29 @@ create_github_release <- function() {
   }
 
   slug <- github_slug()
-  tag <- get_tag_info()
 
   existing_releases <- gh(glue("/repos/{slug}/releases"))
   existing_tags <- map_chr(existing_releases, "tag_name")
 
-  if (any(existing_tags == tag$name)) {
-    release <- existing_releases[[which(existing_tags == tag$name)]]
+  if (any(existing_tags == tag)) {
+    release <- existing_releases[[which(existing_tags == tag)]]
     if (fledge_chatty()) {
       cli_alert("Release {.url {release$html_url}} already exists.")
     }
     return(invisible())
   }
 
+  fledgling <- read_fledgling()
+
+  stopifnot(sum(fledgling$news$version == version) == 1)
+  header <- paste0(fledgling$name, " ", version)
+  body <- fledgling$news$raw[fledgling$news$version == version]
+
   out <- gh(
     glue("POST /repos/{slug}/releases"),
-    tag_name = tag$name,
-    name = tag$header,
-    body = tag$body
+    tag_name = tag,
+    name = header,
+    body = body
   )
 
   if (rlang::is_interactive()) {
@@ -711,11 +719,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
 release_after_cran_built_binaries <- function() {
   pkg <- read_package()
 
-  last_release_tag <- get_last_tag_impl(
-    pattern = "^v[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$"
-  )
-
-  last_release_version <- as.package_version(gsub("^v", "", last_release_tag$name))
+  last_release_version <- get_last_release_version()
 
   ppm_packages <- utils::available.packages(repos = "https://packagemanager.posit.co/cran/latest")
 
@@ -740,6 +744,13 @@ release_after_cran_built_binaries <- function() {
     }
     return(invisible(FALSE))
   }
+}
+
+get_last_release_version <- function() {
+  tag_df <- get_last_tag_impl(
+    pattern = "^v[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$"
+  )
+  as.package_version(gsub("^v", "", tag_df$name))
 }
 
 cran_release_pr_title <- function() {
