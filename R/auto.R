@@ -1,18 +1,16 @@
 #' Automating CRAN release
 #'
-#' `init_release()` and `pre_release()` are run
-#' when a milestone in the development of a package is reached
+#' `init_release()` is run when a milestone in the development of a package is reached
 #' and it is ready to be sent to CRAN.
 #'
 #' `init_release()`:
 #' - Ensures that no modified files are in the git index.
-#' - Creates a release branch and bumps version to a non-development version which should be sent to CRAN.
+#' - Creates a release branch and bumps version to a non-development version
+#'   which should be sent to CRAN.
 #' - Writes/updates `cran-comments.md` with useful information about the current
 #'   release process.
 #' - Prompts the user to run `urlchecker::url_update()`, `devtools::check_win_devel()`,
 #'   and `rhub::check_for_cran()`.
-#'
-#' `pre_release()`:
 #' - Opens a pull request for the release branch for final checks.
 #'
 #' @param which Component of the version number to update. Supported
