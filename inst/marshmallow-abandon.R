@@ -49,9 +49,6 @@ try(init_release())
 init_release(force = TRUE)
 
 
-# prep release ----
-pre_release()
-
 # check boxes ----
 cran_comments <- get_cran_comments_text()
 writeLines(cran_comments)
