@@ -48,9 +48,6 @@ finalize_version(push = TRUE)
 gert::git_branch_checkout("cran-0.0.1")
 
 
-# prep release ----
-pre_release()
-
 # check boxes ----
 cran_comments <- get_cran_comments_text()
 writeLines(cran_comments)
@@ -65,9 +62,14 @@ gert::git_commit("Beeing bla.")
 
 # release ----
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-release()
+try(release())
 gert::git_status()
 fs::dir_tree()
+
+# Non-resolution of conflicts
+stopifnot(system2("touch", c("DESCRIPTION", "NEWS.md", "R/bla.R")) == 0)
+gert::git_add(c("DESCRIPTION", "NEWS.md", "R/bla.R"))
+gert::git_commit()
 
 # post release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
