@@ -188,7 +188,7 @@
       post_release()
     Message
       > Checking presence and scope of `GITHUB_PAT`.
-      > Creating GitHub release.
+      > Creating GitHub release "v0.0.1".
       > Omitting in test.
       > Switching to branch main.
       > Pulling main.
@@ -289,7 +289,7 @@
       post_release()
     Message
       > Checking presence and scope of `GITHUB_PAT`.
-      > Creating GitHub release.
+      > Creating GitHub release "v0.1.0".
       > Omitting in test.
       > Switching to branch main.
       > Pulling main.
