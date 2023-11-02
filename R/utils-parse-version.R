@@ -96,10 +96,6 @@ fledge_guess_version <- function(version, which) {
   } else if (which %in% c("pre-minor", "pre-major")) {
     # pre-minor and pre-major
 
-    if (is.na(dev)) {
-      cli::cli_abort("Can't update version from not dev to {.val {which}}.")
-    }
-
     if (patch >= 99) {
       cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (patch >= 99).")
     }

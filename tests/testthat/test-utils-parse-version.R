@@ -23,13 +23,11 @@ test_that("fledge_guess_version() works", {
     fledge_guess_version("1.1.1", "1.0.0")
   })
 
-  # FIXME: Should this really be an error?
-  expect_snapshot(error = TRUE, {
+  expect_snapshot({
     fledge_guess_version("1.1.1", "pre-minor")
   })
 
-  # FIXME: Should this really be an error?
-  expect_snapshot(error = TRUE, {
+  expect_snapshot({
     fledge_guess_version("1.1.1", "pre-major")
   })
 

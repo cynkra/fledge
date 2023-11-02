@@ -10,17 +10,15 @@
 
     Code
       fledge_guess_version("1.1.1", "pre-minor")
-    Condition
-      Error in `fledge_guess_version()`:
-      ! Can't update version from not dev to "pre-minor".
+    Output
+      [1] "1.1.99.9000"
 
 ---
 
     Code
       fledge_guess_version("1.1.1", "pre-major")
-    Condition
-      Error in `fledge_guess_version()`:
-      ! Can't update version from not dev to "pre-major".
+    Output
+      [1] "1.99.99.9000"
 
 ---
 
