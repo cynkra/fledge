@@ -12,3 +12,4 @@
 ^CRAN-SUBMISSION$
 ^data-raw$
 ^pkgdown$
+^\.aviator$
