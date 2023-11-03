@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9010 (2023-11-03)
+
+## Features
+
+- Allow bumping straight from released version (#747).
+
+- `post_release()` is independent from release branch (#748).
+
+## Chore
+
+- Add aviator configuration.
+
+
 # fledge 0.1.99.9009 (2023-10-28)
 
 ## Features
