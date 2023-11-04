@@ -67,8 +67,8 @@ create_demo_project <- function(open = rlang::is_interactive(),
       sprintf("# %s %s", name, as.character(desc::desc_get_version())), "",
       "* Added a `NEWS.md` file to track changes to the package."
     )
-    brio::write_lines(news_lines, "NEWS.md")
-    gert::git_add("NEWS.md")
+    brio::write_lines(news_lines, news_path())
+    gert::git_add(news_path())
     gert::git_commit(
       "Add NEWS.md to track changes.",
       author = default_gert_author(),

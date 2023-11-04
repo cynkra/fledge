@@ -37,8 +37,8 @@ read_date <- function() {
 
 read_news <- function(news_lines = NULL) {
   if (is.null(news_lines)) {
-    if (file.exists("NEWS.md")) {
-      news_lines <- readLines("NEWS.md")
+    if (file.exists(news_path())) {
+      news_lines <- readLines(news_path())
     } else {
       news_lines <- character()
     }
