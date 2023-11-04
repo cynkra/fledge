@@ -167,14 +167,16 @@ test_that("full cycle", {
   )
   expect_equal(nrow(gert::git_status()), 0)
 
+  gert::git_branch_checkout("main")
+  expect_equal(nrow(gert::git_status()), 0)
+
   ## post release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   expect_snapshot(post_release())
   expect_equal(nrow(gert::git_status()), 0)
-  expect_equal(gert::git_branch(), "main")
   expect_setequal(
     gert::git_tag_list()[["name"]],
-    c("v0.0.0.9001", "v0.0.1", "v0.0.1.9000")
+    c("v0.0.0.9001", "v0.0.1")
   )
 })
 
@@ -232,14 +234,16 @@ test_that("full cycle pre-minor", {
   )
   expect_equal(nrow(gert::git_status()), 0)
 
+  gert::git_branch_checkout("main")
+  expect_equal(nrow(gert::git_status()), 0)
+
   ## post release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   expect_snapshot(post_release())
   expect_equal(nrow(gert::git_status()), 0)
-  expect_equal(gert::git_branch(), "main")
   expect_setequal(
     gert::git_tag_list()[["name"]],
-    c("v0.0.99.9000", "v0.1.0", "v0.1.0.9000")
+    c("v0.0.99.9000", "v0.1.0")
   )
 })
 
@@ -334,14 +338,14 @@ test_that("full cycle, add more to main", {
 
   ## post release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
-  expect_snapshot(error = TRUE, post_release())
+  expect_snapshot(post_release())
 
   gert::git_branch_checkout("main")
   shut_up_fledge(fledge::bump_version())
   gert::git_push()
   gert::git_branch_checkout("cran-0.0.1")
 
-  expect_snapshot(error = TRUE, post_release())
+  expect_snapshot(post_release())
 })
 
 test_that("full cycle, add more to main NO PUSH", {
@@ -398,5 +402,5 @@ test_that("full cycle, add more to main NO PUSH", {
 
   ## post release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
-  expect_snapshot(error = TRUE, post_release())
+  expect_snapshot(post_release())
 })
