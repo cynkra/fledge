@@ -18,8 +18,8 @@
 #' @param which Component of the version number to update. Supported
 #'   values are
 #'   * `"next"` (`"major"` if the current version is `x.99.99.9yz`,
-#'   `"minor"` if the current version is `x.y.99.za`,
-#'   `"patch"` otherwise),
+#'     `"minor"` if the current version is `x.y.99.za`,
+#'     `"patch"` otherwise),
 #'   * `"patch"`
 #'   * `"minor"`,
 #'   * `"major"`.
@@ -472,30 +472,13 @@ post_release <- function() {
 
 post_release_impl <- function() {
   check_only_modified(c(".Rbuildignore"))
-
-  check_post_release()
+  # Need PAT for creating GitHub release
+  check_gh_pat("repo")
 
   # Begin extension points
   # End extension points
 
   create_github_release()
-
-  merge_main_into_post_release()
-
-  # FIXME: Check if PR open, if yes merge PR instead
-  release_branch <- get_branch_name()
-  switch_branch(get_main_branch())
-  pull_head()
-  merge_branch(release_branch)
-
-  bump_version_impl(
-    read_fledgling(),
-    "dev",
-    no_change_behavior = "bump",
-    edit = FALSE,
-    no_change_message = "- Resume development after CRAN release."
-  )
-  push_head()
 
   # Begin extension points
   # End extension points
