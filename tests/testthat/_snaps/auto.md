@@ -187,31 +187,8 @@
     Code
       post_release()
     Message
-      > Checking presence and scope of `GITHUB_PAT`.
       > Creating GitHub release "v0.0.1".
       > Omitting in test.
-      > Switching to branch main.
-      > Pulling main.
-      Resetting main to origin/main
-      > Merging release branch.
-      i If this fails, resolve the conflict manually and push.
-      > Digesting messages from 2 commits.
-      v Found 1 NEWS-worthy entry.
-      
-      -- Updating NEWS --
-      
-      > Adding new entries to 'NEWS.md'.
-      
-      -- Updating Version --
-      
-      v Package version bumped to 0.0.1.9000.
-      > Added header to 'NEWS.md'.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
-      > Pushing main.
 
 # full cycle pre-minor
 
@@ -288,31 +265,8 @@
     Code
       post_release()
     Message
-      > Checking presence and scope of `GITHUB_PAT`.
       > Creating GitHub release "v0.1.0".
       > Omitting in test.
-      > Switching to branch main.
-      > Pulling main.
-      Resetting main to origin/main
-      > Merging release branch.
-      i If this fails, resolve the conflict manually and push.
-      > Digesting messages from 2 commits.
-      v Found 1 NEWS-worthy entry.
-      
-      -- Updating NEWS --
-      
-      > Adding new entries to 'NEWS.md'.
-      
-      -- Updating Version --
-      
-      v Package version bumped to 0.1.0.9000.
-      > Added header to 'NEWS.md'.
-      > Committing changes.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.1.0.9000 with tag message derived from 'NEWS.md'.
-      > Pushing main.
 
 # release abandon
 
@@ -390,26 +344,6 @@
       Not submitting for real o:-)
       Not submitting for real o:-)
 
----
-
-    Code
-      post_release()
-    Condition
-      Error in `check_post_release()`:
-      ! The main branch contains newsworthy commits.
-      i Run `fledge::bump_version()` on the main branch.
-
----
-
-    Code
-      post_release()
-    Message
-      > Omitting in test.
-    Condition
-      Error in `merge_main_into_post_release()`:
-      ! Merging the main branch into the release branch failed.
-      i Resolve the conflict manually and push.
-
 # full cycle, add more to main NO PUSH
 
     Code
@@ -431,12 +365,4 @@
       i Uploading package & comments
       Not submitting for real o:-)
       Not submitting for real o:-)
-
----
-
-    Code
-      post_release()
-    Condition
-      Error in `check_post_release()`:
-      ! Local main branch ahead by 1 commit.
 
