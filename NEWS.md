@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9011 (2023-11-05)
+
+## Features
+
+- `post_release()` no longer checks if on release branch (#750).
+
+## Chore
+
+- Use `news_path()` (#751).
+
+
 # fledge 0.1.99.9010 (2023-11-03)
 
 ## Features
