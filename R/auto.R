@@ -226,10 +226,8 @@ update_cran_comments <- function(new_version) {
     url <- glue("https://github.com/eddelbuettel/crp/compare/master@%7B{old_crp_date}%7D...master@%7B{crp_date}%7D")
     utils::browseURL(url)
 
-    crp_cross <- " "
     crp_changes <- glue("\n\nSee changes at {url}", .trim = FALSE)
   } else {
-    crp_cross <- "x"
     crp_changes <- ""
   }
 
@@ -244,7 +242,6 @@ update_cran_comments <- function(new_version) {
       package = package,
       version = new_version,
       crp_date = crp_date,
-      crp_cross = crp_cross,
       crp_changes = crp_changes,
       rversion = glue("{version$major}.{version$minor}"),
       latest_rversion = get_latest_rversion(),
@@ -372,14 +369,12 @@ release_impl <- function() {
 
   submit_cran()
 
-  merge_main_into_post_release()
+  # merge_main_into_post_release()
 
   # FIXME: Check if PR open, if yes merge PR instead
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
   pull_head()
-  merge_branch(release_branch)
-
   auto_confirm()
 
   # Begin extension points
