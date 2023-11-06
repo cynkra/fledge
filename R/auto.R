@@ -335,8 +335,19 @@ get_cransplainer_update <- function(package) {
 
   details <- foghorn::cran_details(package)
   details <- details[details$result != "OK", ]
+
+  # We know that installation size warnings are fine
+  is_size_problem <- grepl("installed size", details$message)
+  details <- details[!is_size_problem, ]
+
   if (nrow(details) == 0) {
-    return(paste0("- [x] ", checked_on, ", no problems found."))
+    return(paste0(
+      "- [x] ",
+      checked_on,
+      ", no problems ",
+      if (any(is_size_problem)) "(other than installation size) ",
+      "found."
+    ))
   }
 
   url <- foghorn::visit_cran_check(package)
@@ -344,7 +355,7 @@ get_cransplainer_update <- function(package) {
 
   cransplainer <- paste0(
     "- [x] ", checked_on, ", problems found: ", url, "\n",
-    paste0("- [ ] ", details$result, ": ", details$flavors, collapse = "\n")
+    paste0("- [ ] ", details$result, ": ", details$flavors, "\n", details$message, collapse = "\n")
   )
 
   paste0(cransplainer, "\n\nCheck results at: ", url)
