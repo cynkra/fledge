@@ -299,7 +299,49 @@
     Message
       > Omitting in test.
 
+---
+
+    Code
+      post_release()
+    Message
+      > Omitting in test.
+
+---
+
+    Code
+      post_release()
+    Message
+      > Omitting in test.
+
+---
+
+    Code
+      post_release()
+    Message
+      > Omitting in test.
+
+---
+
+    Code
+      post_release()
+    Message
+      > Omitting in test.
+
 # full cycle, add more to main NO PUSH
+
+    Code
+      post_release()
+    Message
+      > Omitting in test.
+
+---
+
+    Code
+      post_release()
+    Message
+      > Omitting in test.
+
+---
 
     Code
       post_release()
