@@ -287,7 +287,8 @@ test_that("full cycle, add more to main", {
   brio::write_lines('"boo"', "R/bla.R")
   gert::git_add("R/bla.R")
   gert::git_commit("* Booing bla.")
-  gert::git_push()
+  bump_version()
+  finalize_version(push = TRUE)
 
   gert::git_branch_checkout("cran-0.0.1")
 
@@ -296,8 +297,6 @@ test_that("full cycle, add more to main", {
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-  gert::git_add("cran-comments.md")
-  gert::git_commit("this is how we check boxes")
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
@@ -349,6 +348,8 @@ test_that("full cycle, add more to main NO PUSH", {
   brio::write_lines('"boo"', "R/bla.R")
   gert::git_add("R/bla.R")
   gert::git_commit("* Booing bla.")
+  bump_version()
+  finalize_version(push = TRUE)
 
   gert::git_branch_checkout("cran-0.0.1")
 
@@ -357,8 +358,6 @@ test_that("full cycle, add more to main NO PUSH", {
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-  gert::git_add("cran-comments.md")
-  gert::git_commit("this is how we check boxes")
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
