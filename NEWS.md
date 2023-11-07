@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9012 (2023-11-07)
+
+## Features
+
+- Do not report installation size problems (#755).
+
+
 # fledge 0.1.99.9011 (2023-11-05)
 
 ## Features
