@@ -525,6 +525,9 @@ create_github_release <- function() {
   header <- paste0(fledgling$name, " ", version)
   body <- fledgling$news$raw[fledgling$news$version == version]
 
+  # FIXME: Find a nicer way to remove the header
+  body <- gsub("^# .*\n+", "", body)
+
   out <- gh(
     glue("POST /repos/{slug}/releases"),
     tag_name = tag,
