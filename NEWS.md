@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9013 (2023-11-09)
+
+## Bug fixes
+
+- `create_github_release()` removes the header from the NEWS entry.
+
+
 # fledge 0.1.99.9012 (2023-11-07)
 
 ## Features
