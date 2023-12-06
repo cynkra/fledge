@@ -375,6 +375,8 @@ release_impl <- function() {
   release_branch <- get_branch_name()
   switch_branch(get_main_branch())
   pull_head()
+  merge_branch(release_branch)
+
   auto_confirm()
 
   # Begin extension points
@@ -538,6 +540,8 @@ merge_branch <- function(other_branch) {
 
   # https://github.com/r-lib/gert/issues/198
   stopifnot(system2("git", c("merge", "--no-ff", "--no-edit", "--commit", other_branch)) == 0)
+
+  if (fledge_chatty()) cli_alert(c(i = "Push main branch after the release."))
 }
 
 check_release <- function() {
