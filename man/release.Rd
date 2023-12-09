@@ -21,7 +21,8 @@ values are
 \code{"patch"} otherwise),
 \item \code{"patch"}
 \item \code{"minor"},
-\item \code{"major"}.
+\item \code{"major"},
+\item \code{"last"} (to make another release attempt after CRAN rejected a submission).
 }}
 
 \item{force}{Create branches and tags even if they exist.

@@ -20,7 +20,8 @@
 #'     `"patch"` otherwise),
 #'   * `"patch"`
 #'   * `"minor"`,
-#'   * `"major"`.
+#'   * `"major"`,
+#'   * `"last"` (to make another release attempt after CRAN rejected a submission).
 #' @param force Create branches and tags even if they exist.
 #'   Useful to recover from a previously failed attempt.
 #' @name release
@@ -30,7 +31,7 @@ init_release <- function(which = "next", force = FALSE) {
   check_only_modified(character())
   check_gitignore("cran-comments.md")
 
-  stopifnot(which %in% c("next", "patch", "minor", "major"))
+  stopifnot(which %in% c("next", "patch", "minor", "major", "last"))
   if (which == "next") {
     which <- guess_next()
   }
@@ -64,7 +65,7 @@ init_release_impl <- function(which, force) {
   stopifnot(get_branch_name() != "HEAD")
 
   # Do we need bump_version() first?
-  if (!no_change()) {
+  if (which != "last" && !no_change()) {
     cli_abort(c(
       "Aborting release process because not all changes were recorded.",
       i = "Run {.run fledge::bump_version()}, then rerun {.run fledge::init_release()}"
@@ -92,22 +93,32 @@ init_release_impl <- function(which, force) {
 
   if (fledge_chatty()) cli_h1("1. Creating a release branch and getting ready")
 
-  # regroup dev news
-  fledgeling <- merge_dev_news(fledgeling, new_version)
-
   # switch to release branch and update cran-comments
-  release_branch <- create_release_branch(new_version, force)
+  release_branch <- create_release_branch(
+    new_version,
+    force,
+    if (which == "last") paste0("v", new_version)
+  )
   switch_branch(release_branch)
 
-  write_fledgling(fledgeling)
-  commit_version_impl()
+  if (which != "last") {
+    # regroup dev news
+    fledgeling <- merge_dev_news(fledgeling, new_version)
 
-  update_cran_comments(new_version)
-  gert::git_add(c("cran-comments.md", ".Rbuildignore"))
-  gert::git_commit("CRAN comments")
+    write_fledgling(fledgeling)
+    commit_version_impl()
 
-  edit_news()
-  edit_cran_comments()
+    update_cran_comments(new_version)
+    gert::git_add(c("cran-comments.md", ".Rbuildignore"))
+    gert::git_commit("CRAN comments")
+
+    edit_news()
+    edit_cran_comments()
+  } else {
+    tweak_cran_comments()
+    gert::git_add("cran-comments.md")
+    gert::git_commit("CRAN comments")
+  }
 
   cli_h1("2. Opening Pull Request for release branch")
 
@@ -214,6 +225,12 @@ create_release_branch <- function(version,
 switch_branch <- function(name) {
   if (fledge_chatty()) cli_alert("Switching to branch {.field {name}}.")
   gert::git_branch_checkout(branch = name)
+}
+
+tweak_cran_comments <- function() {
+  text <- readLines("cran-comments.md")
+  text <- c("Resubmission.", "", text)
+  writeLines(text, "cran-comments.md")
 }
 
 update_cran_comments <- function(new_version) {
