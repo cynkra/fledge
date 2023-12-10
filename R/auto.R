@@ -205,9 +205,11 @@ check_release_branch <- function(new_version) {
   }
 }
 
-create_release_branch <- function(version,
-                                  force,
-                                  ref = "HEAD") {
+create_release_branch <- function(version, force, ref = NULL) {
+  if (is.null(ref)) {
+    ref <- "HEAD"
+  }
+
   branch_name <- paste0("cran-", version)
 
   if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")
