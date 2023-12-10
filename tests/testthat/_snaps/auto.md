@@ -150,6 +150,7 @@
       > Pulling main.
       Resetting main to origin/main
       > Merging release branch.
+      > Push main branch after the release.
       i Check your inbox for a confirmation e-mail from CRAN.
       > Copy the URL to the clipboard.
       Not submitting for real o:-)
