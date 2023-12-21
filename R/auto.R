@@ -496,6 +496,7 @@ post_release_impl <- function() {
 }
 
 create_github_release <- function() {
+  # FIXME: Extract function, add test
   version <- get_last_release_version()
   tag <- paste0("v", version)
 
@@ -525,8 +526,7 @@ create_github_release <- function() {
   header <- paste0(fledgling$name, " ", version)
   body <- fledgling$news$raw[fledgling$news$version == version]
 
-  # FIXME: Find a nicer way to remove the header
-  body <- gsub("^# .*\n+", "", body)
+  body <- gsub("^# [^\n]*\n+", "", body)
 
   out <- gh(
     glue("POST /repos/{slug}/releases"),
