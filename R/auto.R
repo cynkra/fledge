@@ -451,7 +451,7 @@ auto_confirm <- function() {
   )
 
   if (fledge_chatty()) cli_ul("Run the code sent to the console to confirm the submission and update the main branch.")
-  code <- paste0('utils::browseURL("', get_confirm_url(url), '"); gert::git_push()')
+  code <- paste0('utils::browseURL("', get_confirm_url(url), '"); fledge::bump_version()')
   send_to_console(code)
 
   invisible()
