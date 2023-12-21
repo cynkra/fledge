@@ -75,6 +75,9 @@ init_release_impl <- function(which, force) {
   # Check PAT early
   check_gh_pat()
 
+  # Done again in release():
+  check_release()
+
   fledgeling <- read_fledgling()
   new_version <- fledge_guess_version(fledgeling[["version"]], which)
 
