@@ -13,3 +13,4 @@
 ^data-raw$
 ^pkgdown$
 ^\.aviator$
+^\.aviator/config\.yml$
