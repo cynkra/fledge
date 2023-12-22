@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9014 (2023-12-22)
+
+## Bug fixes
+
+- Create releases with correct body (#756).
+
+## Chore
+
+- Add Aviator configuration.
+
+
 # fledge 0.1.99.9013 (2023-11-09)
 
 ## Bug fixes
