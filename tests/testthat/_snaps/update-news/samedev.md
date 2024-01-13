@@ -2,9 +2,7 @@
 
 # fledge (development version)
 
-## Features
-
-- New stuff.
+- One.
 
 
 # fledge 0.1.0

@@ -2,14 +2,7 @@
 
 # fledge (development version)
 
-## Bug fixes
-
-- Horrible bug.
-
-## Features
-
-- Neat helper.
-- New stuff.
+- One.
 
 
 # fledge 0.1.0
