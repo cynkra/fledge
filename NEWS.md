@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9015 (2024-01-15)
+
+## Chore
+
+- Work around r-lib/roxygen2#1570.
+
+
 # fledge 0.1.99.9014 (2023-12-22)
 
 ## Bug fixes
