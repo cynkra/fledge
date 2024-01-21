@@ -27,8 +27,11 @@
 #' @name release
 #' @export
 init_release <- function(which = "next", force = FALSE) {
+  message(1)
   check_main_branch("init_release()")
+  message(2)
   check_only_modified(character())
+  message(3)
   check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("next", "patch", "minor", "major", "last"))
@@ -36,7 +39,9 @@ init_release <- function(which = "next", force = FALSE) {
     which <- guess_next()
   }
 
+  message(5)
   local_options(usethis.quiet = TRUE)
+  message(6)
   with_repo(init_release_impl(which, force))
 }
 
@@ -234,7 +239,11 @@ switch_branch <- function(name) {
 
 tweak_cran_comments <- function() {
   text <- readLines("cran-comments.md")
-  text <- c("Resubmission.", "", text)
+  header <- c("Resubmission.", "")
+  if (text[seq_along(header)] == header) {
+    return()
+  }
+  text <- c(header, text)
   writeLines(text, "cran-comments.md")
 }
 
@@ -598,12 +607,8 @@ check_release <- function() {
     cli_alert("Checking presence and scope of {.var GITHUB_PAT}.")
   }
 
-  if (!no_change(main_branch)) {
-    cli_abort(c(
-      "The main branch contains newsworthy commits.",
-      i = "Run {.run fledge::bump_version()} on the main branch."
-    ))
-  }
+  # Newsworthy commits are checked specifically in init_release().
+  # What are the implications of newsworthy commits in release()?
 
   invisible()
 }
