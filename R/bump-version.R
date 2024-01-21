@@ -85,19 +85,26 @@ check_cran_branch <- function(reason) {
 }
 
 get_main_branch <- function(repo = getwd()) {
+  message("a")
   remote <- "origin"
+  message("b")
   remote_list <- gert::git_remote_list(repo)
+  message("b1")
   if (remote %in% remote_list$name) {
+    message("b2")
     remote_main <- get_main_branch_remote(remote, repo)
+    message("b3")
     if (length(remote_main)) {
       return(remote_main)
     }
   }
 
-  get_main_branch_config(repo)
+  message("c")
+  get_main_branch_config()
 }
 
 get_main_branch_remote <- function(remote, repo) {
+  message("get_main_branch_remote()")
   remotes <- gert::git_remote_ls(repo = repo, verbose = FALSE, remote = remote)
   basename(as.character(remotes$symref[remotes$ref == "HEAD"]))
 }

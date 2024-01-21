@@ -68,10 +68,6 @@ upload_cran <- function(pkg, built_path) {
   # Initial upload ---------
   cli::cli_alert_info("Uploading package & comments")
 
-  # impossible as fledge imports httr2 that imports curl :-)
-  if (!rlang::is_installed("curl")) {
-    cli::cli_abort("Must install the curl package")
-  }
   body <- list(
     pkg_id = "",
     name = maint_name,
@@ -89,6 +85,10 @@ upload_cran <- function(pkg, built_path) {
   }
 
   r <- httr2::req_perform(request)
+  body_path <- tempfile("fledge", fileext = ".html")
+  writeLines(httr2::resp_body_string(r), body_path)
+  body_code <- paste0('utils::browseURL("file://', body_path, '")')
+  cli::cli_alert_info(c(i = "Show response body with {.run {body_code}}"))
 
   # If a 404 likely CRAN is closed for maintenance, try to get the message
   if (httr2::resp_status(r) == 404) {
@@ -129,6 +129,10 @@ upload_cran <- function(pkg, built_path) {
     httr2::req_body_multipart(!!!body)
 
   r <- httr2::req_perform(request)
+  body_path <- tempfile("fledge", fileext = ".html")
+  writeLines(httr2::resp_body_string(r), body_path)
+  body_code <- paste0('utils::browseURL("file://', body_path, '")')
+  cli::cli_alert_info(c(i = "Show response body with {.run {body_code}}"))
 
   httr2::resp_check_status(r)
   new_url <- httr2::url_parse(r$url)
