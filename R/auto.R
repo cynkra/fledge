@@ -240,7 +240,7 @@ switch_branch <- function(name) {
 tweak_cran_comments <- function() {
   text <- readLines("cran-comments.md")
   header <- c("Resubmission.", "")
-  if (text[seq_along(header)] == header) {
+  if (identical(text[seq_along(header)], header)) {
     return()
   }
   text <- c(header, text)
