@@ -124,8 +124,10 @@ init_release_impl <- function(which, force) {
     edit_cran_comments()
   } else {
     tweak_cran_comments()
-    gert::git_add("cran-comments.md")
-    gert::git_commit("CRAN comments")
+    if (nrow(gert::git_status(pathspec = "cran-comments.md")) > 0) {
+      gert::git_add("cran-comments.md")
+      gert::git_commit("CRAN comments")
+    }
   }
 
   cli_h1("2. Opening Pull Request for release branch")
