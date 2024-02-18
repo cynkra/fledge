@@ -94,7 +94,7 @@ get_main_branch <- function(repo = getwd()) {
     }
   }
 
-  get_main_branch_config()
+  get_main_branch_config(repo)
 }
 
 get_main_branch_remote <- function(remote, repo) {
