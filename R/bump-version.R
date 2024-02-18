@@ -33,6 +33,7 @@ bump_version_impl <- function(fledgeling,
   )
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
+    write_fledgling(out)
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
     finalize_version_impl(push = FALSE, suggest_finalize = edit)
   } else {
