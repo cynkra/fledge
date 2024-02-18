@@ -88,7 +88,6 @@
       Error in `check_cran_branch()`:
       x Must be on the a release branch that starts with "cran-" for running `pre_release()`.
       i Currently on branch "main".
-      i Do you need to call `init_release()` first?
 
 ---
 

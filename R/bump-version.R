@@ -71,8 +71,7 @@ check_cran_branch <- function(reason) {
     cli::cli_abort(
       c(
         x = "Must be on the a release branch that starts with {.val cran-} for running {.code {reason}}.",
-        i = "Currently on branch {.val {get_branch_name()}}.",
-        i = if (reason == "pre_release()") "Do you need to call {.code init_release()} first?"
+        i = "Currently on branch {.val {get_branch_name()}}."
       )
     )
   }
