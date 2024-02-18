@@ -92,6 +92,8 @@
 
     Code
       init_release()
+    Message
+      > Checking presence and scope of `GITHUB_PAT`.
     Output
       +------------------+
       |                  |
@@ -167,6 +169,8 @@
 
     Code
       init_release()
+    Message
+      > Checking presence and scope of `GITHUB_PAT`.
     Output
       +------------------+
       |                  |
@@ -250,6 +254,8 @@
 
     Code
       init_release(force = FALSE)
+    Message
+      > Checking presence and scope of `GITHUB_PAT`.
     Condition
       Error in `check_release_branch()`:
       x The branch "cran-0.0.1" already exists.
@@ -259,6 +265,8 @@
 
     Code
       init_release(force = TRUE)
+    Message
+      > Checking presence and scope of `GITHUB_PAT`.
     Output
       +------------------+
       |                  |
