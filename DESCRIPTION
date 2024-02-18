@@ -34,6 +34,7 @@ Imports:
     glue,
     httr2,
     lifecycle,
+    memoise,
     pandoc,
     parsedate,
     purrr (>= 0.3.2),
