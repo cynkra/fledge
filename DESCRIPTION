@@ -25,9 +25,9 @@ URL: https://fledge.cynkra.com/,
     https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
+    brio,
     cli,
     desc (>= 1.2.0),
-    enc,
     gert (>= 1.4.0),
     purrr (>= 0.3.2),
     rematch2,
@@ -46,12 +46,11 @@ Suggests:
     rmarkdown,
     rstudioapi,
     testthat (>= 3.0.0),
-    brio,
     callr,
     pkgload
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3
