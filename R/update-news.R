@@ -60,7 +60,6 @@ update_news_impl <- function(commits,
       fledgeling[["news"]]$news[[1]] <- regroup_news(combined)
       fledgeling[["news"]][1, ]$section_state <- "new"
     }
-    write_fledgling(fledgeling)
 
     if (fledge_chatty()) {
       cli_alert("Added items to {.file {news_path()}}.")
@@ -119,8 +118,6 @@ update_news_impl <- function(commits,
       )
     }
 
-    write_fledgling(fledgeling)
-
     if (fledge_chatty()) {
       cli_h2("Updating Version")
 
@@ -129,6 +126,8 @@ update_news_impl <- function(commits,
       cli_alert("Added header to {.file {news_path()}}.")
     }
   }
+
+  fledgeling
 }
 
 news_path <- function() {

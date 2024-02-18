@@ -33,9 +33,11 @@ bump_version_impl <- function(fledgeling,
   )
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
+    write_fledgling(out)
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
     finalize_version_impl(push = FALSE, suggest_finalize = edit)
   } else {
+    write_fledgling(out)
     #'     - Otherwise, [commit_version()].
     commit_version()
 
@@ -69,32 +71,32 @@ check_cran_branch <- function(reason) {
     cli::cli_abort(
       c(
         x = "Must be on the a release branch that starts with {.val cran-} for running {.code {reason}}.",
-        i = "Currently on branch {.val {get_branch_name()}}.",
-        i = if (reason == "pre_release()") "Do you need to call {.code init_release()} first?"
+        i = "Currently on branch {.val {get_branch_name()}}."
       )
     )
   }
 }
 
-get_main_branch <- function() {
+get_main_branch <- function(repo = getwd()) {
   remote <- "origin"
-  if (remote %in% gert::git_remote_list()$name) {
-    remote_main <- get_main_branch_remote(remote)
+  remote_list <- gert::git_remote_list(repo)
+  if (remote %in% remote_list$name) {
+    remote_main <- get_main_branch_remote(remote, repo)
     if (length(remote_main)) {
       return(remote_main)
     }
   }
 
-  get_main_branch_config()
+  get_main_branch_config(repo)
 }
 
-get_main_branch_remote <- function(remote) {
-  remotes <- gert::git_remote_ls(verbose = FALSE, remote = remote)
+get_main_branch_remote <- function(remote, repo) {
+  remotes <- gert::git_remote_ls(repo = repo, verbose = FALSE, remote = remote)
   basename(as.character(remotes$symref[remotes$ref == "HEAD"]))
 }
 
-get_main_branch_config <- function() {
-  config <- gert::git_config()
+get_main_branch_config <- function(repo) {
+  config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
   local <- init[init$level == "local", ]
 
