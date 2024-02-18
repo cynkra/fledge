@@ -71,7 +71,14 @@ create_demo_project <- function(open = rlang::is_interactive(),
             withr::with_options(
               list(repos = c("CRAN" = "https://cloud.r-project.org")),
               {
-                usethis::use_news_md()
+                writeLines(
+                  c(
+                    paste0("# ", name, " 0.0.0.9000"),
+                    "",
+                    "* Added a `NEWS.md` file to track changes to the package."
+                  ),
+                  "NEWS.md"
+                )
               }
             )
           },
