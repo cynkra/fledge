@@ -36,10 +36,11 @@ update_news <- function(
     )
   }
 
-  update_news_impl(
+  fledgeling <- update_news_impl(
     commits = commits,
     which = which
   )
+  write_fledgling(fledgeling)
 
   invisible(NULL)
 }
