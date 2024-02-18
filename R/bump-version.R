@@ -36,6 +36,12 @@ bump_version_impl <- function(fledgeling,
     write_fledgling(out)
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
     finalize_version_impl(push = FALSE, suggest_finalize = edit)
+  } else if (which %in% c("pre-minor", "pre-major")) {
+    #'     - If `"pre-minor"` or `"pre-major"`, merging NEWS from second-level headers and [finalize_version()] with `push = FALSE`
+    # FIXME: Cleaner API
+    out <- merge_dev_news(out, as.character(out$version))
+    write_fledgling(out)
+    finalize_version_impl(push = FALSE, suggest_finalize = edit)
   } else {
     write_fledgling(out)
     #'     - Otherwise, [commit_version()].
