@@ -27,11 +27,8 @@
 #' @name release
 #' @export
 init_release <- function(which = "next", force = FALSE) {
-  message(1)
   check_main_branch("init_release()")
-  message(2)
   check_only_modified(character())
-  message(3)
   check_gitignore("cran-comments.md")
 
   stopifnot(which %in% c("next", "patch", "minor", "major", "last"))
@@ -39,9 +36,7 @@ init_release <- function(which = "next", force = FALSE) {
     which <- guess_next()
   }
 
-  message(5)
   local_options(usethis.quiet = TRUE)
-  message(6)
   with_repo(init_release_impl(which, force))
 }
 
