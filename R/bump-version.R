@@ -37,6 +37,7 @@ bump_version_impl <- function(fledgeling,
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
     finalize_version_impl(push = FALSE, suggest_finalize = edit)
   } else {
+    write_fledgling(out)
     #'     - Otherwise, [commit_version()].
     commit_version()
 
