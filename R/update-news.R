@@ -129,6 +129,8 @@ update_news_impl <- function(commits,
       cli_alert("Added header to {.file {news_path()}}.")
     }
   }
+
+  fledgeling
 }
 
 news_path <- function() {
