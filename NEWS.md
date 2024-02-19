@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9017 (2024-02-19)
+
+## Chore
+
+- Move responsibility for writing fledgeling, memoise, add `repo` argument (#761).
+
+
 # fledge 0.1.99.9016 (2024-01-24)
 
 - Internal changes only.
