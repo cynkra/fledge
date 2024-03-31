@@ -27,7 +27,7 @@ This runner is run every 2h (?) on the branch and calls `fledge::unleash()` ever
 
 The following list describes the conditions which need to be fulfilled for each state:
 
-- `pre_release()`: 
+- `init_release()`: 
   - No `CRAN-SUBMISSION` file exists.
   - The package version number has a four component scheme.
   - There is no `cran-comments.md` file.
@@ -35,9 +35,9 @@ The following list describes the conditions which need to be fulfilled for each 
   - Three component package version.
   - A `cran-comments.md` file exists.
   - The local package version is smaller than the one on CRAN.
+  - All boxes in `cran-comments.md` are checked.
 - `post_release()`: 
   - The local version is equal to the CRAN version.
-  - All boxes in `cran-comments.md` are checked.
 
 Possible improvements: 
 - Let the user forward specific CRAN mails so fledge can check the required boxes itself.
@@ -45,17 +45,11 @@ Possible improvements:
 - Make strict NEWS checking optional
 - The branch creation should be optional (TRUE by default).
 
-`unleash()` wraps 
-
-- `fledge::pre_release()`
-- `fledge::release()`
-- `fledge::post_release()`
-
 ## Execution Actions
 
 The following list describes the actions of each state function:
 
-- `pre_release()`
+- `init_release()`
   - Creates `cran-comments.md` from template.
   - Creates a branch named `r-release<version>`.
   - Check recent changes to CRAN policies via `eddelbuettel/crp@master`.
