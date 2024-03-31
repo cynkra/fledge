@@ -575,7 +575,7 @@ merge_branch <- function(other_branch) {
 check_release <- function() {
   # Check that this and the main branch are in sync
   # FIXME add the conflict resolution
-  gert::git_fetch(get_remote_name())
+  system(paste0("git fetch ", get_remote_name()))
   ab_this <- gert::git_ahead_behind()
   if (ab_this[["behind"]] != 0) {
     cli::cli_abort(c(
