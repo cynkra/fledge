@@ -3,13 +3,10 @@
 \name{release}
 \alias{release}
 \alias{init_release}
-\alias{pre_release}
 \alias{post_release}
 \title{Automating CRAN release}
 \usage{
 init_release(which = "next", force = FALSE)
-
-pre_release(force = FALSE)
 
 release()
 
@@ -24,15 +21,15 @@ values are
 \code{"patch"} otherwise),
 \item \code{"patch"}
 \item \code{"minor"},
-\item \code{"major"}.
+\item \code{"major"},
+\item \code{"last"} (to make another release attempt after CRAN rejected a submission).
 }}
 
 \item{force}{Create branches and tags even if they exist.
 Useful to recover from a previously failed attempt.}
 }
 \description{
-\code{init_release()} and \code{pre_release()} are run
-when a milestone in the development of a package is reached
+\code{init_release()} is run when a milestone in the development of a package is reached
 and it is ready to be sent to CRAN.
 
 \code{release()} sends to CRAN after performing several checks,
@@ -44,15 +41,12 @@ and offers help with accepting the submission.
 \code{init_release()}:
 \itemize{
 \item Ensures that no modified files are in the git index.
-\item Creates a release branch and bumps version to a non-development version which should be sent to CRAN.
+\item Creates a release branch and bumps version to a non-development version
+which should be sent to CRAN.
 \item Writes/updates \code{cran-comments.md} with useful information about the current
 release process.
 \item Prompts the user to run \code{urlchecker::url_update()}, \code{devtools::check_win_devel()},
 and \code{rhub::check_for_cran()}.
-}
-
-\code{pre_release()}:
-\itemize{
 \item Opens a pull request for the release branch for final checks.
 }
 }
