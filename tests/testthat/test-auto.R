@@ -70,6 +70,7 @@ test_that("init_release() -- force", {
   create_remote(tempdir_remote)
 
   shut_up_fledge(bump_version())
+  shut_up_fledge(finalize_version(push = TRUE))
 
   gert::git_branch_create("cran-0.0.1", checkout = FALSE)
 
@@ -90,6 +91,7 @@ test_that("init_release() works", {
 
   ## TODO: add test for bump_version() not run?
   shut_up_fledge(bump_version())
+  shut_up_fledge(finalize_version(push = TRUE))
   shut_up_fledge(init_release())
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
