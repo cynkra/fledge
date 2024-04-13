@@ -1,5 +1,9 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# fledge 0.1.1 (2023-06-16)
+
+- Compatibility release for usethis 2.2.0.
+
 # fledge 0.1.0 (2021-12-07)
 
 Change log management utility, initial release.
