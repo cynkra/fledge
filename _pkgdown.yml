@@ -3,6 +3,7 @@ url: https://fledge.cynkra.com/
 template:
   params: {}
   package: cynkratemplate
+  bootstrap: 5
 development:
   mode: auto
 authors:
