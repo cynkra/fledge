@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9018 (2024-04-16)
+
+## Documentation
+
+- Set BS version explicitly for now.
+
+  https://github.com/cynkra/cynkratemplate/issues/53
+
+
 # fledge 0.1.99.9017 (2024-02-19)
 
 ## Chore
