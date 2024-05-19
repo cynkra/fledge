@@ -95,17 +95,17 @@ get_main_branch_remote <- function(remote, repo) {
   basename(as.character(remotes$symref[remotes$ref == "HEAD"]))
 }
 
-get_main_branch_config <- function(repo) {
+  get_main_branch_config <- function(repo) {
+  #retrieve config of repo, filter down to init.defaultbranch values
   config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
-  local <- init[init$level == "local", ]
 
-  if (length(local)) {
-    return(local$value)
+  #return local default branch if it exists, otherwise default to global
+  if("local" %in% init$level){
+    return(init[init$level == "local",]$value)
+  } else { 
+    return(init[init$level == "global",]$value)
   }
-
-  global <- init[init$level == "global"]
-  return(global$value)
 }
 
 no_change <- function(ref = "HEAD") {
