@@ -95,7 +95,7 @@ get_main_branch_remote <- function(remote, repo) {
   basename(as.character(remotes$symref[remotes$ref == "HEAD"]))
 }
 
-  get_main_branch_config <- function(repo) {
+get_main_branch_config <- function(repo) {
   #retrieve config of repo, filter down to init.defaultbranch values
   config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
