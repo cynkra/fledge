@@ -96,11 +96,9 @@ get_main_branch_remote <- function(remote, repo) {
 }
 
 get_main_branch_config <- function(repo) {
-  #retrieve config of repo, filter down to init.defaultbranch values
   config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
 
-  #return local default branch if it exists, otherwise default to global
   if("local" %in% init$level){
     return(init[init$level == "local",]$value)
   } else { 
