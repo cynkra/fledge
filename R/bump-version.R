@@ -99,9 +99,9 @@ get_main_branch_config <- function(repo) {
   config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
 
-  if("local" %in% init$level){
+  if ("local" %in% init$level) {
     return(init[init$level == "local",]$value)
-  } else { 
+  } else {
     return(init[init$level == "global",]$value)
   }
 }
