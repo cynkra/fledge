@@ -98,14 +98,12 @@ get_main_branch_remote <- function(remote, repo) {
 get_main_branch_config <- function(repo) {
   config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
-  local <- init[init$level == "local", ]
 
-  if (length(local)) {
-    return(local$value)
+  if ("local" %in% init$level) {
+    return(init[init$level == "local",]$value)
+  } else {
+    return(init[init$level == "global",]$value)
   }
-
-  global <- init[init$level == "global"]
-  return(global$value)
 }
 
 no_change <- function(ref = "HEAD") {
