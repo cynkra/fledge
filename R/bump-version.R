@@ -100,9 +100,9 @@ get_main_branch_config <- function(repo) {
   init <- config[config$name == "init.defaultbranch", ]
 
   if ("local" %in% init$level) {
-    return(init[init$level == "local",]$value)
+    return(init[init$level == "local", ]$value)
   } else {
-    return(init[init$level == "global",]$value)
+    return(init[init$level == "global", ]$value)
   }
 }
 
