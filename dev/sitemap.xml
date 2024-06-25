@@ -1,66 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://fledge.cynkra.com/dev/articles/cran-automation.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/articles/demo.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/articles/fledge.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/articles/internals.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/bump_version.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/commit_version.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/create_demo_project.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/finalize_version.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/get_last_tag.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/get_top_level_commits.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/release.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/tag_version.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/unbump_version.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/update_news.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/update_version.html</loc>
-  </url>
-  <url>
-    <loc>https://fledge.cynkra.com/dev/reference/with_demo_project.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://fledge.cynkra.com/dev/articles/cran-automation.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/articles/demo.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/articles/fledge.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/articles/index.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/articles/internals.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/authors.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/index.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/news/index.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/bump_version.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/commit_version.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/create_demo_project.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/finalize_version.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/get_last_tag.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/get_top_level_commits.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/index.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/release.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/tag_version.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/unbump_version.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/update_news.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/update_version.html</loc></url>
+<url><loc>https://fledge.cynkra.com/dev/reference/with_demo_project.html</loc></url>
 </urlset>
+
