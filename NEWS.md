@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9019 (2024-06-26)
+
+## Bug fixes
+
+- Update bump-version.R - replace length test in get_main_branch_config() (#775).
+
+
 # fledge 0.1.99.9018 (2024-04-16)
 
 ## Documentation
