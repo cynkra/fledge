@@ -1,5 +1,26 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9020 (2024-06-28)
+
+## Chore
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/cynkra/fledge/actions/runs/9691617690
+
+## Continuous integration
+
+- Avoid checking bashisms on Windows.
+
+- Remove netlify workflow.
+
+- Remove special branch.
+
+- Bump versions, better default, consume custom matrix.
+
+- Recent updates.
+
+
 # fledge 0.1.99.9019 (2024-06-26)
 
 ## Bug fixes
