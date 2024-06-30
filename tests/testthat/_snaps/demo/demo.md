@@ -72,6 +72,9 @@ You could use `usethis::use_git()` function that creates an initial commit, and 
 # Number of commits until now
 nrow(gert::git_log())
 ## [1] 1
+```
+
+``` r
 # Anything staged?
 gert::git_status()
 ## # A tibble: 0 x 3
@@ -109,6 +112,9 @@ show_files <- function(remote_url) {
 }
 show_files(remote_url)
 ## remote/DESCRIPTION remote/NAMESPACE   remote/tea.Rproj
+```
+
+``` r
 
 show_tags <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -171,6 +177,9 @@ We start by creating the new R file called `cup.R` and adding code (well only a 
 ``` r
 usethis::use_r("cup")
 ## * Edit 'R/cup.R'
+```
+
+``` r
 writeLines("# cup", "R/cup.R")
 ```
 
@@ -212,6 +221,9 @@ usethis::use_test("cup")
 ## v Writing 'tests/testthat.R'
 ## v Writing 'tests/testthat/test-cup.R'
 ## * Edit 'tests/testthat/test-cup.R'
+```
+
+``` r
 cat(readLines("tests/testthat/test-cup.R"), sep = "\n")
 ## test_that("multiplication works", {
 ##   expect_equal(2 * 2, 4)
@@ -336,6 +348,9 @@ cat(news, sep = "\n")
 ## - Add tests for cup of tea.
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## - Added a `NEWS.md` file to track changes to the package.
+```
+
+``` r
 writeLines(news, "NEWS.md")
 ```
 
@@ -358,6 +373,9 @@ Note that it should be called after `fledge::bump_version()`, an error is raised
 show_tags(remote_url)
 ## # A tibble: 0 x 2
 ## # i 2 variables: name <chr>, ref <chr>
+```
+
+``` r
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
@@ -368,6 +386,9 @@ fledge::finalize_version(push = TRUE)
 ## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
 ## > Force-pushing tag v0.0.0.9001.
 ## > Pushing main.
+```
+
+``` r
 show_tags(remote_url)
 ## # A tibble: 1 x 2
 ##   name        ref                  
@@ -428,6 +449,9 @@ gert::git_commit("Add bowl tests.")
 ``` r
 usethis::use_r("bowl")
 ## * Edit 'R/bowl.R'
+```
+
+``` r
 writeLines("# bowl of tea", "R/bowl.R")
 ```
 
@@ -449,6 +473,9 @@ Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 gert::git_branch_checkout("main")
 gert::git_merge("f-bowl", commit = FALSE)
 ## Merge was not committed due to merge conflict(s). Please fix and run git_commit() or git_merge_abort()
+```
+
+``` r
 gert::git_commit("- New bowl_of_tea() function makes it easy to drink a bowl of tea.")
 ```
 
@@ -476,6 +503,9 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
 ## ! Run `fledge::finalize_version(push = TRUE)`.
+```
+
+``` r
 news <- readLines("NEWS.md")
 writeLines(news)
 ## <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
@@ -490,6 +520,9 @@ writeLines(news)
 ## - Add tests for cup of tea.
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## - Added a `NEWS.md` file to track changes to the package.
+```
+
+``` r
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
@@ -594,6 +627,9 @@ fledge::tag_version()
 ## -- Tagging Version --
 ## 
 ## > Creating tag v0.0.1 with tag message derived from 'NEWS.md'.
+```
+
+``` r
 show_tags(remote_url)
 ## # A tibble: 2 x 2
 ##   name        ref                  
@@ -634,6 +670,9 @@ fledge::bump_version()
 ## 
 ## > Creating tag v0.0.1.9000 with tag message derived from 'NEWS.md'.
 ## ! Run `fledge::finalize_version(push = TRUE)`.
+```
+
+``` r
 news <- readLines("NEWS.md")
 ```
 
