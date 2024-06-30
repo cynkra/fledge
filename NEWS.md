@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9021 (2024-06-30)
+
+## Chore
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/cynkra/fledge/actions/runs/9727971994
+
+
 # fledge 0.1.99.9020 (2024-06-28)
 
 ## Chore
