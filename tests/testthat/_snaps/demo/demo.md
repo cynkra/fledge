@@ -133,7 +133,7 @@ An initial NEWS file can be created with `usethis::use_news_md()`.
 
 ``` r
 usethis::use_news_md()
-## v Writing 'NEWS.md'
+## v Writing 'NEWS.md'.
 ```
 
 Let's take a look at the contents:
@@ -176,7 +176,7 @@ We start by creating the new R file called `cup.R` and adding code (well only a 
 
 ``` r
 usethis::use_r("cup")
-## * Edit 'R/cup.R'
+## [ ] Edit 'R/cup.R'.
 ```
 
 ``` r
@@ -215,12 +215,12 @@ The code in `cup.R` warrants a test (at least it would if it were actual code!):
 
 ``` r
 usethis::use_test("cup")
-## v Adding 'testthat' to Suggests field in DESCRIPTION
-## v Adding '3' to Config/testthat/edition
-## v Creating 'tests/testthat/'
-## v Writing 'tests/testthat.R'
-## v Writing 'tests/testthat/test-cup.R'
-## * Edit 'tests/testthat/test-cup.R'
+## v Adding testthat to 'Suggests' field in DESCRIPTION.
+## v Adding "3" to 'Config/testthat/edition'.
+## v Creating 'tests/testthat/'.
+## v Writing 'tests/testthat.R'.
+## v Writing 'tests/testthat/test-cup.R'.
+## [ ] Edit 'tests/testthat/test-cup.R'.
 ```
 
 ``` r
@@ -434,8 +434,8 @@ This time we write the tests first, test-driven development.
 
 ``` r
 usethis::use_test("bowl")
-## v Writing 'tests/testthat/test-bowl.R'
-## * Edit 'tests/testthat/test-bowl.R'
+## v Writing 'tests/testthat/test-bowl.R'.
+## [ ] Edit 'tests/testthat/test-bowl.R'.
 ```
 
 
@@ -448,7 +448,7 @@ gert::git_commit("Add bowl tests.")
 
 ``` r
 usethis::use_r("bowl")
-## * Edit 'R/bowl.R'
+## [ ] Edit 'R/bowl.R'.
 ```
 
 ``` r
