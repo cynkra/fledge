@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9022 (2024-07-02)
+
+## Continuous integration
+
+- Fix on Windows, tweak lock workflow.
+
+
 # fledge 0.1.99.9021 (2024-06-30)
 
 ## Chore
