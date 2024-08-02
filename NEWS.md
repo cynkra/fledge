@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9023 (2024-08-02)
+
+## Continuous integration
+
+- Use dev roxygen2 and decor.
+
+## Testing
+
+- Accept snapshots after knitr update.
+
+
 # fledge 0.1.99.9022 (2024-07-02)
 
 ## Continuous integration
