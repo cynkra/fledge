@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9025 (2024-08-06)
+
+## Continuous integration
+
+- Inline action.
+
+
 # fledge 0.1.99.9024 (2024-08-03)
 
 ## Testing
