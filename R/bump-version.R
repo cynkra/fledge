@@ -3,11 +3,15 @@
 bump_version_impl <- function(fledgeling,
                               which,
                               no_change_behavior,
+                              check_default_branch = TRUE,
                               edit = TRUE,
                               no_change_message = NULL) {
   #' @description
-  #' 1. Verify that the current branch is the main branch.
-  check_main_branch("bump_version()")
+  #' 1. Verify that the current branch is the main branch
+  #'    if `check_default_branch = TRUE` (the default).
+  if (check_default_branch) {
+    check_main_branch("bump_version()")
+  }
   #' 1. Check if there were changes since the last version.
   if (no_change()) {
     if (no_change_behavior == "fail") {
