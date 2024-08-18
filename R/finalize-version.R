@@ -9,8 +9,8 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   tag <- tag_version(force)
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
-    push_tag(tag, force = TRUE)
     push_head()
+    push_tag(tag, force = TRUE)
   } else if (suggest_finalize) {
     edit_news()
 
