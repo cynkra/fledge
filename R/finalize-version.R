@@ -50,7 +50,13 @@ push_head <- function() {
     cli_alert("Pushing {.field {head}}.")
   }
 
+  # https://github.com/r-lib/gert/issues/236
   gert::git_push()
+
+  info <- gert::git_info()
+  if (info$commit != gert::git_commit_id(info$upstream)) {
+    cli::cli_abort("Push failed, perhaps due to branch protection?")
+  }
 }
 
 push_to_new <- function(remote_name, force) {

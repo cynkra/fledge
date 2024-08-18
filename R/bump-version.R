@@ -62,8 +62,8 @@ bump_version_to_dev_with_force <- function(force, which) {
 
   force <- commit_version() || force
   tag <- tag_version(force)
-  push_tag(tag)
   push_head()
+  push_tag(tag)
 }
 
 check_cran_branch <- function(reason) {
