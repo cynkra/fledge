@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9028 (2024-08-19)
+
+## Bug fixes
+
+- Try pushing head first.
+
+- Try pushing head first, fail with branch protection.
+
+## Features
+
+- `bump_version(check_default_branch = TRUE)`.
+
+
 # fledge 0.1.99.9027 (2024-08-17)
 
 ## Chore
