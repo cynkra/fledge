@@ -366,8 +366,8 @@ fledge::finalize_version(push = TRUE)
 ## 
 ## > Deleting existing tag v0.0.0.9001.
 ## > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-## > Force-pushing tag v0.0.0.9001.
 ## > Pushing main.
+## > Force-pushing tag v0.0.0.9001.
 show_tags(remote_url)
 ## # A tibble: 1 x 2
 ##   name        ref                  
@@ -497,8 +497,8 @@ fledge::finalize_version(push = TRUE)
 ## -- Tagging Version --
 ## 
 ## i Tag v0.0.0.9002 exists and points to the current commit.
-## > Force-pushing tag v0.0.0.9002.
 ## > Pushing main.
+## > Force-pushing tag v0.0.0.9002.
 ```
 
 It seems we do not even need to amend the `NEWS.md` by hand this time as we made no typo!
