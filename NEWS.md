@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9029 (2024-08-31)
+
+## Chore
+
+- Add Aviator configuration.
+
+## Continuous integration
+
+- Install local package for pkgdown builds.
+
+- Improve support for protected branches, without fledge.
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#786).
+
+
 # fledge 0.1.99.9028 (2024-08-19)
 
 ## Bug fixes
