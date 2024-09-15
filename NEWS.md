@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9030 (2024-09-15)
+
+## Continuous integration
+
+- Install via R CMD INSTALL ., not pak (#789).
+
+
 # fledge 0.1.99.9029 (2024-08-31)
 
 ## Chore
