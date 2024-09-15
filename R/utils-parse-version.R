@@ -113,6 +113,8 @@ fledge_guess_version <- function(version, which) {
     } else {
       stopifnot(which == "pre-minor")
     }
+  } else if (which == "last") {
+    dev <- NULL
   } else {
     cli::cli_abort("Unknown version specifier {.val {which}}.")
   }
