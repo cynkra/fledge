@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9031 (2024-10-28)
+
+## Continuous integration
+
+- Use pkgdown branch (#791).
+
+
 # fledge 0.1.99.9030 (2024-09-15)
 
 ## Continuous integration
