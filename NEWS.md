@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9032 (2024-11-11)
+
+## Continuous integration
+
+- Trigger run (#792).
+
+
 # fledge 0.1.99.9031 (2024-10-28)
 
 ## Continuous integration
