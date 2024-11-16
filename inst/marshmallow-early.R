@@ -31,6 +31,7 @@ withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
 try(init_release())
 
 # init release ----
+bump_version()
 init_release()
 gert::git_branch()
 gert::git_branch_list(local = TRUE)

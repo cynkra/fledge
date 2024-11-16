@@ -48,10 +48,13 @@ fs::dir_tree()
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 post_release()
 
+gert::git_branch_checkout("main")
+
 # some edits, for pre-minor ----
 use_r("blop", open = FALSE)
 gert::git_add("R/blop.R")
 gert::git_commit("* Add cool blop.")
+
 bump_version("pre-minor")
 finalize_version(push = TRUE)
 
