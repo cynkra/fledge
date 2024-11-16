@@ -1,4 +1,3 @@
-
 test_that("pre_release() pre-flight checks", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
