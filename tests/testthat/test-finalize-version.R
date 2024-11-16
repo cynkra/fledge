@@ -2,7 +2,7 @@ test_that("finalize_version(push = FALSE)", {
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Ad cool bla.")
 
   shut_up_fledge(bump_version())
@@ -26,7 +26,7 @@ test_that("finalize_version(push = TRUE)", {
   remote_url <- create_remote(tempdir_remote)
 
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Ad cool bla.")
 
   shut_up_fledge(bump_version())

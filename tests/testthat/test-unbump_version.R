@@ -6,14 +6,14 @@ test_that("unbump_version() works", {
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.", author = default_gert_author(), committer = default_gert_committer())
 
   testthat::expect_snapshot({
     bump_version()
     unbump_version()
     use_r("blop")
-    gert::git_add("R/blop.R")
+    fast_git_add("R/blop.R")
     c <- gert::git_commit("* Add cool blop.", author = default_gert_author(), committer = default_gert_committer())
     bump_version()
   })

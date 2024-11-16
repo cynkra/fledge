@@ -11,7 +11,7 @@ test_that("full cycle pre-minor", {
 
   ## some edits ----
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
   shut_up_fledge(bump_version(which = "pre-minor"))
   shut_up_fledge(finalize_version(push = TRUE))
@@ -41,7 +41,7 @@ test_that("full cycle pre-minor", {
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-  gert::git_add("cran-comments.md")
+  fast_git_add("cran-comments.md")
   gert::git_commit("this is how we check boxes")
 
   ## release ----

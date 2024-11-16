@@ -2,7 +2,7 @@ test_that("tag_version() works", {
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
 
   expect_snapshot({
@@ -16,7 +16,7 @@ test_that("tag_version() works", {
   ## Attempting tagging again ----
   # with a new commit but same version
   use_r("pof")
-  gert::git_add("R/pof.R")
+  fast_git_add("R/pof.R")
   gert::git_commit("* Add cool pof.")
 
   expect_snapshot(error = TRUE, shut_up_fledge(tag_version(force = FALSE)))
