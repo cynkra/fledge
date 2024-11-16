@@ -30,7 +30,7 @@ finalize_version(push = TRUE)
 # init release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-init_release()
+plan_release("next")
 gert::git_branch()
 gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
@@ -44,9 +44,6 @@ gert::git_commit("* Booing bla.")
 gert::git_push()
 
 gert::git_branch_checkout("cran-0.0.1")
-
-# prep release ----
-pre_release()
 
 # release ----
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
