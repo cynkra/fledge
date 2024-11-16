@@ -1,19 +1,21 @@
 test_that("update_news() works when news file absent", {
+  local_fledge_quiet()
   local_demo_project(news = FALSE, quiet = TRUE)
   expect_no_error(
-    shut_up_fledge(update_news(which = "patch"))
+    update_news(which = "patch")
   )
 })
 
 test_that("update_news() works when news file still empty", {
+  local_fledge_quiet()
   withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
 
   local_demo_project(news = FALSE, quiet = TRUE)
   file.create("NEWS.md")
-  expect_no_error(shut_up_fledge(update_news(which = "patch")))
+  expect_no_error(update_news(which = "patch"))
 
   local_options(pillar.width = 240)
-  expect_snapshot(read_fledgling())
+  expect_fledge_snapshot(read_fledgling())
 })
 
 test_that("normalize_news() works", {
@@ -64,8 +66,8 @@ test_that("regroup_news() works", {
 })
 
 test_that("Can update dev version news item", {
+  local_fledge_quiet()
   skip_if_offline()
-  withr::local_options("usethis.quiet" = TRUE)
 
   repo <- withr::local_tempdir(pattern = "devpkg")
 
@@ -86,21 +88,22 @@ test_that("Can update dev version news item", {
 
   expect_snapshot_file("NEWS.md", "samedev-base.md")
 
-  shut_up_fledge(update_news())
+  update_news()
   expect_snapshot_file("NEWS.md", name = "samedev.md")
 
   ## regrouping! ----
   sort_of_commit("fix: horrible bug")
   sort_of_commit("feat: neat helper")
-  shut_up_fledge(update_news())
+  update_news()
   expect_snapshot_file("NEWS.md", "samedev-updated.md")
 })
 
 test_that("Message when creating the news file", {
+  local_fledge_quiet()
   withr::local_envvar("FLEDGE_DATE" = "2023-03-20")
   local_demo_project(news = FALSE, quiet = TRUE)
 
-  shut_up_fledge(update_news())
+  update_news()
 
   expect_snapshot_file("NEWS.md", "newchangelog.md")
 })

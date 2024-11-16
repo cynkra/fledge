@@ -1,6 +1,6 @@
 test_that("full cycle", {
   ## not opening anything ----
-  rlang::local_options(rlang_interactive = FALSE)
+  local_options(rlang_interactive = FALSE)
 
   ## initial state ----
   local_demo_project(quiet = TRUE)
@@ -19,13 +19,17 @@ test_that("full cycle", {
   use_r("bla")
   fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
-  shut_up_fledge(bump_version())
-  shut_up_fledge(finalize_version(push = TRUE))
+
+  local_fledge_quiet()
+  bump_version()
+  finalize_version(push = TRUE)
 
   ## init release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  expect_snapshot(init_release())
+  expect_fledge_snapshot({
+    init_release()
+  })
   expect_equal(gert::git_branch(), "cran-0.0.1")
   expect_setequal(
     gert::git_branch_list(local = TRUE)[["name"]],

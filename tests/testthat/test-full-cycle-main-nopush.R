@@ -1,7 +1,7 @@
 test_that("full cycle, add more to main NO PUSH", {
-  rlang::local_options("fledge.quiet" = TRUE)
+  local_fledge_quiet()
   ## not opening anything ----
-  rlang::local_options(rlang_interactive = FALSE)
+  local_options(rlang_interactive = FALSE)
 
   ## initial state ----
   local_demo_project(quiet = TRUE)
@@ -14,13 +14,13 @@ test_that("full cycle, add more to main NO PUSH", {
   use_r("bla")
   fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
-  shut_up_fledge(bump_version())
-  shut_up_fledge(finalize_version(push = TRUE))
+  bump_version()
+  finalize_version(push = TRUE)
 
   ## init release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  shut_up_fledge(init_release())
+  init_release()
 
   ## add stuff on main and push ----
   gert::git_branch_checkout("main")
@@ -32,7 +32,7 @@ test_that("full cycle, add more to main NO PUSH", {
   gert::git_branch_checkout("cran-0.0.1")
 
   ## prep release ----
-  shut_up_fledge(pre_release())
+  pre_release()
 
   ## check boxes ----
   cran_comments <- get_cran_comments_text()
@@ -44,13 +44,14 @@ test_that("full cycle, add more to main NO PUSH", {
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  expect_snapshot(
-    release(),
-    transform = clean_submission_messages
-  )
+  expect_fledge_snapshot(transform = clean_submission_messages, {
+    release()
+  })
   expect_equal(nrow(gert::git_status()), 0)
 
   ## post release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
-  expect_snapshot(post_release())
+  expect_fledge_snapshot({
+    post_release()
+  })
 })

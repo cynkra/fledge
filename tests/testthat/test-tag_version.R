@@ -1,4 +1,5 @@
 test_that("tag_version() works", {
+  local_fledge_quiet()
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
@@ -11,7 +12,7 @@ test_that("tag_version() works", {
   })
 
   ## Attempting tagging again without any new commit ----
-  shut_up_fledge(tag_version())
+  tag_version()
 
   ## Attempting tagging again ----
   # with a new commit but same version
@@ -19,10 +20,12 @@ test_that("tag_version() works", {
   fast_git_add("R/pof.R")
   gert::git_commit("* Add cool pof.")
 
-  expect_snapshot(error = TRUE, shut_up_fledge(tag_version(force = FALSE)))
+  expect_snapshot(error = TRUE, {
+    tag_version(force = FALSE)
+  })
 
   ## Same, but forcing ----
-  expect_snapshot({
+  expect_fledge_snapshot({
     tag_version(force = TRUE)
     get_last_tag()[, c("name", "ref")]
   })

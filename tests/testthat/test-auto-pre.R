@@ -7,13 +7,19 @@ test_that("pre_release() pre-flight checks", {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   create_remote(tempdir_remote)
 
-  shut_up_fledge(bump_version())
+  local_fledge_quiet()
+  bump_version()
 
-  expect_snapshot(pre_release(), error = TRUE)
+  expect_fledge_snapshot(error = TRUE, {
+    pre_release()
+  })
 
-  shut_up_fledge(init_release())
+  init_release()
   use_r("blop")
-  expect_snapshot(error = TRUE, pre_release())
+
+  expect_fledge_snapshot(error = TRUE, {
+    pre_release()
+  })
 })
 
 test_that("pre_release() works", {
@@ -27,9 +33,12 @@ test_that("pre_release() works", {
   create_remote(tempdir_remote)
 
   ## TODO: add test for bump_version() not run?
-  shut_up_fledge(bump_version())
-  shut_up_fledge(init_release())
+  local_fledge_quiet()
+  bump_version()
+  init_release()
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 
-  expect_snapshot(pre_release())
+  expect_fledge_snapshot({
+    pre_release()
+  })
 })

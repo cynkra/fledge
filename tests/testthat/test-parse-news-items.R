@@ -1,4 +1,5 @@
 test_that("Can parse conventional commits", {
+  local_fledge_quiet()
   withr::local_envvar("FLEDGE_DATE" = "2023-01-23")
   withr::local_options(usethis.quiet = TRUE)
 
@@ -14,12 +15,13 @@ test_that("Can parse conventional commits", {
     force = TRUE
   )
 
-  shut_up_fledge(update_news(messages, which = "patch"))
+  update_news(messages, which = "patch")
 
   expect_snapshot_file("NEWS.md")
 })
 
 test_that("Will use commits", {
+  local_fledge_quiet()
   local_demo_project(quiet = TRUE)
   commits_df <- tibble::tibble(
     message = c("one", "two"),
@@ -30,7 +32,7 @@ test_that("Will use commits", {
     default_commit_range = function() commits_df
   )
 
-  shut_up_fledge(update_news(which = "minor"))
+  update_news(which = "minor")
 
   expect_snapshot_file("NEWS.md", "NEWS-merge.md")
 })

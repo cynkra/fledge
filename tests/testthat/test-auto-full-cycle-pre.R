@@ -1,6 +1,6 @@
 test_that("full cycle pre-minor", {
   ## not opening anything ----
-  rlang::local_options(rlang_interactive = FALSE)
+  local_options(rlang_interactive = FALSE)
 
   ## initial state ----
   local_demo_project(quiet = TRUE)
@@ -13,8 +13,9 @@ test_that("full cycle pre-minor", {
   use_r("bla")
   fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
-  shut_up_fledge(bump_version(which = "pre-minor"))
-  shut_up_fledge(finalize_version(push = TRUE))
+  local_fledge_quiet()
+  bump_version(which = "pre-minor")
+  finalize_version(push = TRUE)
 
   expect_equal(
     as.character(desc::desc_get_version()),
@@ -24,7 +25,9 @@ test_that("full cycle pre-minor", {
   ## init release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  expect_snapshot(init_release())
+  expect_fledge_snapshot({
+    init_release()
+  })
   expect_equal(gert::git_branch(), "cran-0.1.0")
   expect_setequal(
     gert::git_branch_list(local = TRUE)[["name"]],
@@ -34,7 +37,9 @@ test_that("full cycle pre-minor", {
   expect_equal(nrow(gert::git_status()), 0)
 
   ## prep release ----
-  expect_snapshot(pre_release())
+  expect_fledge_snapshot({
+    pre_release()
+  })
 
   ## check boxes ----
   cran_comments <- get_cran_comments_text()
@@ -46,7 +51,7 @@ test_that("full cycle pre-minor", {
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  expect_snapshot(
+  expect_fledge_snapshot(
     release(),
     transform = clean_submission_messages
   )
@@ -57,7 +62,9 @@ test_that("full cycle pre-minor", {
 
   ## post release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
-  expect_snapshot(post_release())
+  expect_fledge_snapshot({
+    post_release()
+  })
   expect_equal(nrow(gert::git_status()), 0)
   expect_setequal(
     gert::git_tag_list()[["name"]],
