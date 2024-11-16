@@ -60,9 +60,9 @@ Suggests:
     pkgload,
     rmarkdown,
     rstudioapi,
-    rversions,
     testthat (>= 3.1.10),
     vctrs,
+    whisker,
     withr
 Config/Needs/readme: r-lib/downlit@f-readme-document
 VignetteBuilder: 

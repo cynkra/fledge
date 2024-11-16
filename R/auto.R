@@ -247,7 +247,6 @@ switch_branch <- function(name) {
 }
 
 update_cran_comments <- function(new_version) {
-  rlang::check_installed("rversions")
   package <- desc::desc_get("Package")
   crp_date <- get_crp_date()
   old_crp_date <- get_old_crp_date()
@@ -263,8 +262,6 @@ update_cran_comments <- function(new_version) {
     crp_changes <- ""
   }
 
-  cransplainer <- get_cransplainer(package)
-
   unlink("cran-comments.md")
   local_options(usethis.quiet = TRUE)
   use_template(
@@ -273,12 +270,11 @@ update_cran_comments <- function(new_version) {
     data = list(
       package = package,
       version = new_version,
+      # FIXME: Add additional info if re-release
+      re_release = "",
       crp_date = crp_date,
       crp_cross = crp_cross,
-      crp_changes = crp_changes,
-      rversion = glue("{version$major}.{version$minor}"),
-      latest_rversion = get_latest_rversion(),
-      cransplainer = cransplainer
+      crp_changes = crp_changes
     ),
     ignore = TRUE
   )
@@ -311,7 +307,9 @@ get_old_crp_date <- function() {
   as.Date(date)
 }
 
-get_cransplainer <- function(package) {
+get_cransplainer <- function() {
+  package <- desc::desc_get("Package")
+
   if (!is_new_submission(package)) {
     get_cransplainer_update(package)
   } else {
@@ -328,7 +326,6 @@ is_new_submission <- function(package) {
 }
 
 get_cransplainer_update <- function(package) {
-  rlang::check_installed("foghorn")
   local_options(repos = c(CRAN = "https://cran.r-project.org"))
 
   checked_on <- paste0("Checked on ", get_date())
@@ -359,13 +356,6 @@ get_cransplainer_update <- function(package) {
   )
 
   paste0(cransplainer, "\n\nCheck results at: ", url)
-}
-
-get_latest_rversion <- function() {
-  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
-    return(getRversion())
-  }
-  rversions::r_release()[["version"]]
 }
 
 #' @description
@@ -660,7 +650,11 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     info <- github_info(remote = remote_name)
     ## create PR ----
     template_path <- system.file("templates", "pr.md", package = "fledge")
-    body <- glue_collapse(readLines(template_path), sep = "\n")
+    template <- whisker::whisker.render(
+      readLines(template_path),
+      list(cransplainer = get_cransplainer())
+    )
+    body <- glue_collapse(template, sep = "\n")
 
     pr <- gh(
       "POST /repos/:owner/:repo/pulls",

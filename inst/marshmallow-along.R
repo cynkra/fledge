@@ -51,14 +51,6 @@ gert::git_branch_checkout("cran-0.0.1")
 # prep release ----
 pre_release()
 
-# check boxes ----
-cran_comments <- get_cran_comments_text()
-writeLines(cran_comments)
-cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
-brio::write_lines(cran_comments, "cran-comments.md")
-gert::git_add("cran-comments.md")
-gert::git_commit("this is how we check boxes")
-
 writeLines('"bee"', "R/bla.R")
 gert::git_add("R/bla.R")
 gert::git_commit("Beeing bla.")

@@ -34,13 +34,6 @@ test_that("full cycle, add more to main NO PUSH", {
   ## prep release ----
   pre_release()
 
-  ## check boxes ----
-  cran_comments <- get_cran_comments_text()
-  cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
-  brio::write_lines(cran_comments, "cran-comments.md")
-  fast_git_add("cran-comments.md")
-  gert::git_commit("this is how we check boxes")
-
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
   expect_fledge_snapshot(transform = clean_submission_messages, {

@@ -38,14 +38,6 @@ gert::git_status()
 # prep release ----
 pre_release()
 
-# check boxes ----
-cran_comments <- get_cran_comments_text()
-writeLines(cran_comments)
-cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
-brio::write_lines(cran_comments, "cran-comments.md")
-gert::git_add("cran-comments.md")
-gert::git_commit("this is how we check boxes")
-
 # release ----
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
 release()
@@ -56,10 +48,13 @@ fs::dir_tree()
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 post_release()
 
+gert::git_branch_checkout("main")
+
 # some edits, for pre-minor ----
 use_r("blop", open = FALSE)
 gert::git_add("R/blop.R")
 gert::git_commit("* Add cool blop.")
+
 bump_version("pre-minor")
 finalize_version(push = TRUE)
 
@@ -74,14 +69,6 @@ gert::git_status()
 
 # prep release ----
 pre_release()
-
-# check boxes ----
-cran_comments <- get_cran_comments_text()
-writeLines(cran_comments)
-cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
-brio::write_lines(cran_comments, "cran-comments.md")
-gert::git_add("cran-comments.md")
-gert::git_commit("this is how we check boxes")
 
 # release ----
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
