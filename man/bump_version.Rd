@@ -47,8 +47,8 @@ Calls the following functions:
 \enumerate{
 \item Verify that the current branch is the main branch
 if \code{check_default_branch = TRUE} (the default).
-\item Check if there were changes since the last version.
-\item \code{\link[=update_news]{update_news()}}, using the \code{which} argument
+\item \code{\link[=update_news]{update_news()}}, using the \code{which} argument.
+\item From the result, check if there were meaningful changes since the last version.
 \item Depending on the \code{which} argument:
 \itemize{
 \item If \code{"dev"}, \code{\link[=finalize_version]{finalize_version()}} with \code{push = FALSE}

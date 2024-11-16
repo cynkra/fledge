@@ -12,8 +12,10 @@ collect_news <- function(commits, no_change_message = NULL) {
       }
     }
 
-    newsworthy_items <- parse_bullet_commit(sprintf("- %s", no_change_message))
-    if (fledge_chatty()) cli_alert_info(no_change_message)
+    if (!is.na(no_change_message)) {
+      newsworthy_items <- parse_bullet_commit(sprintf("- %s", no_change_message))
+      if (fledge_chatty()) cli_alert_info(no_change_message)
+    }
   } else {
     if (fledge_chatty()) {
       no <- nrow(newsworthy_items)

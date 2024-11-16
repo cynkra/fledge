@@ -16,8 +16,14 @@ test_that("bump_version() works -- dev", {
   expect_equal(get_last_tag()[["name"]], "v0.0.0.9001")
   expect_snapshot_file("NEWS.md", compare = compare_file_text)
 
+  cat("\n", file = "NEWS.md", append = TRUE)
+  fast_git_add("NEWS.md")
+  gert::git_commit("fledge: Edit NEWS.")
+
   ## no changes ----
-  expect_snapshot(error = TRUE, bump_version(no_change_behavior = "fail"))
+  expect_snapshot(error = TRUE, {
+    bump_version(no_change_behavior = "fail")
+  })
 
   expect_snapshot(bump_version(no_change_behavior = "noop"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
