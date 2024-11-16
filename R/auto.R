@@ -929,3 +929,9 @@ extract_version_pr <- function(title) {
   matches <- regexpr("[0-9]*\\.[0-9]*\\.[0-9]*", title)
   regmatches(title, matches)
 }
+
+no_change <- function(ref = "HEAD") {
+  # Only review meaningful comments
+  news <- collect_news(default_commit_range(ref), no_change_message = NA_character_)
+  NROW(news) == 0
+}
