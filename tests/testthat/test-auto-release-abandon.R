@@ -22,20 +22,20 @@ test_that("release abandon", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
   expect_fledge_snapshot({
-    init_release()
+    plan_release()
   })
 
   expect_fledge_snapshot(error = TRUE, {
-    init_release(force = TRUE)
+    plan_release(force = TRUE)
   })
 
   gert::git_branch_checkout("main")
 
   expect_fledge_snapshot(error = TRUE, {
-    init_release(force = FALSE)
+    plan_release(force = FALSE)
   })
 
   expect_fledge_snapshot({
-    init_release(force = TRUE)
+    plan_release(force = TRUE)
   })
 })

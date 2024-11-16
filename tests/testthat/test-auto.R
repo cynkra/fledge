@@ -49,7 +49,7 @@ test_that("create_release_branch() works", {
   })
 })
 
-test_that("init_release() works", {
+test_that("plan_release() works", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
   local_demo_project(quiet = TRUE)
@@ -61,12 +61,12 @@ test_that("init_release() works", {
   bump_version()
 
   expect_fledge_snapshot({
-    init_release()
+    plan_release("next")
   })
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
 
-test_that("init_release() -- force", {
+test_that("plan_release() -- force", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
   local_demo_project(quiet = TRUE)
@@ -77,13 +77,13 @@ test_that("init_release() -- force", {
   local_fledge_quiet()
   bump_version()
 
-  gert::git_branch_create("cran-0.0.1", checkout = FALSE)
+  gert::git_branch_create("cran-0.0.0.9900", checkout = FALSE)
 
   expect_fledge_snapshot(error = TRUE, {
-    init_release()
+    plan_release()
   })
   expect_fledge_snapshot({
-    init_release(force = TRUE)
+    plan_release(force = TRUE)
   })
-  expect_true(gert::git_branch_exists("cran-0.0.1"))
+  expect_true(gert::git_branch_exists("cran-0.0.0.9900"))
 })

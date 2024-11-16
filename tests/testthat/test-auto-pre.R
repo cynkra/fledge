@@ -1,4 +1,4 @@
-test_that("pre_release() pre-flight checks", {
+test_that("plan_release() pre-flight checks", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
 
@@ -10,19 +10,13 @@ test_that("pre_release() pre-flight checks", {
   local_fledge_quiet()
   bump_version()
 
-  expect_fledge_snapshot(error = TRUE, {
-    pre_release()
-  })
-
-  init_release()
   use_r("blop")
-
   expect_fledge_snapshot(error = TRUE, {
-    pre_release()
+    plan_release()
   })
 })
 
-test_that("pre_release() works", {
+test_that("plan_release() works", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_FORCE_NEWS_MD" = "bla")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
@@ -35,10 +29,8 @@ test_that("pre_release() works", {
   ## TODO: add test for bump_version() not run?
   local_fledge_quiet()
   bump_version()
-  init_release()
-  expect_true(gert::git_branch_exists("cran-0.0.1"))
-
   expect_fledge_snapshot({
-    pre_release()
+    plan_release("next")
   })
+  expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
