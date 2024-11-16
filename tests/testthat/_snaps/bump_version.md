@@ -114,7 +114,7 @@
       bump_version(which = "blabla")
     Condition
       Error in `bump_version()`:
-      ! `which` must be one of "dev", "patch", "pre-minor", "minor", "pre-major", or "major", not "blabla".
+      ! `which` must be one of "dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", or "major", not "blabla".
 
 # bump_version() does nothing if no preamble and not interactive
 

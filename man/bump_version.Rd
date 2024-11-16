@@ -6,7 +6,7 @@
 \title{Bump package version}
 \usage{
 bump_version(
-  which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major"),
+  which = c("dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major"),
   ...,
   no_change_behavior = c("bump", "noop", "fail"),
   check_default_branch = TRUE

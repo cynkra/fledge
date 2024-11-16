@@ -11,7 +11,7 @@ get_top_level_commits(since = NULL)
 If \code{NULL}, the entire log is retrieved.}
 }
 \value{
-A \link[tibble:tibble]{tibble::tibble} with at least two columns:
+A \link{tibble} with at least two columns:
 \itemize{
 \item \code{commit}: the commit SHA
 \item \code{message}: the commit message
