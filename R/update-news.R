@@ -5,6 +5,11 @@ update_news_impl <- function(commits,
                              fledgeling = NULL,
                              no_change_message = NULL) {
   news_items <- collect_news(commits, no_change_message)
+
+  if (is.null(news_items)) {
+    return(fledgeling)
+  }
+
   news_items <- normalize_news(news_items)
   news_lines <- organize_news(news_items)
 
