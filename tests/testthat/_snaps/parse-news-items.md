@@ -36,8 +36,8 @@
 
     [
       {
-        "description": "PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#332).",
-        "type": "Uncategorized",
+        "description": "Improve parsing of conventional commit messages (#332).",
+        "type": "Features",
         "breaking": false,
         "scope": "NA"
       }
@@ -49,42 +49,17 @@
       suppressMessages(extract_newsworthy_items(
         "Merge pull request #18 from someone/conventional-parsing"))
     Output
-      <error/httptest2_request>
-      Error in `stop_request()`:
-      ! An unexpected request was made:
-      GET https://api.github.com/repos/cynkra/fledge/pulls/18
-      Expected mock file: api.github.com/repos/cynkra/fledge/pulls/18.*
-      ---
-      Backtrace:
-           x
-        1. +-base::suppressMessages(extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing"))
-        2. | \-base::withCallingHandlers(...)
-        3. \-fledge:::extract_newsworthy_items("Merge pull request #18 from someone/conventional-parsing")
-        4.   \-fledge:::parse_merge_commit(message) at fledge/R/parse-news-items.R:70:5
-        5.     \-fledge:::harvest_pr_data(message) at fledge/R/parse-news-items.R:240:3
-        6.       +-base::tryCatch(...) at fledge/R/parse-news-items.R:286:5
-        7.       | \-base (local) tryCatchList(expr, classes, parentenv, handlers)
-        8.       |   \-base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-        9.       |     \-base (local) doTryCatch(return(expr), name, parentenv, handler)
-       10.       +-base::suppressMessages(gh(glue("GET /repos/{slug}/pulls/{pr_number}"))) at fledge/R/parse-news-items.R:289:9
-       11.       | \-base::withCallingHandlers(...)
-       12.       \-fledge:::gh(glue("GET /repos/{slug}/pulls/{pr_number}")) at fledge/R/parse-news-items.R:289:9
-       13.         \-gh::gh(...) at fledge/R/utils-gh.R:2:3
-       14.           \-gh:::gh_make_request(req) at gh/R/gh.R:203:3
-       15.             \-httr2::req_perform(req, path = x$desttmp) at gh/R/gh.R:317:3
-       16.               \-httptest2 (local) mock(req) at httr2/R/req-perform.R:83:5
-       17.                 \-httptest2:::stop_request(req)
       # A tibble: 1 x 4
         description                                               type  breaking scope
         <chr>                                                     <chr> <lgl>    <lgl>
-      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/18 (#1~ Unca~ FALSE    NA   
+      1 Improve parsing of conventional commit messages (@someon~ Feat~ FALSE    NA   
 
 # Can parse PR merge commits - linked issues
 
     [
       {
-        "description": "PLACEHOLDER https://github.com/cynkra/fledge/pull/328 (#153, cynkra/dm#325, #328).",
-        "type": "Uncategorized",
+        "description": "improve bump_version() (error) messages  (#153, cynkra/dm#325, #328).",
+        "type": "Features",
         "breaking": false,
         "scope": "NA"
       }
