@@ -387,7 +387,7 @@ check_release_branch <- function(new_version) {
   if (gert::git_branch_exists(branch_name)) {
     cli_abort(c(
       x = "The branch {.val {branch_name}} already exists.",
-      i = "Do you need {.code init_release(force = TRUE)}?"
+      i = "Do you need {.code plan_release(force = TRUE)}?"
     ))
   }
 }
