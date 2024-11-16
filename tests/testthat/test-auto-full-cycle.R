@@ -28,7 +28,7 @@ test_that("full cycle", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
   expect_fledge_snapshot({
-    init_release()
+    plan_release("next")
   })
   expect_equal(gert::git_branch(), "cran-0.0.1")
   expect_setequal(
@@ -42,11 +42,6 @@ test_that("full cycle", {
   cran_comments <- get_cran_comments_text()
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-
-  ## prep release ----
-  expect_fledge_snapshot({
-    pre_release()
-  })
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
