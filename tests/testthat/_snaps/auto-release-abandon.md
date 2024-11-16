@@ -48,7 +48,7 @@
     Condition
       Error in `check_release_branch()`:
       x The branch "cran-0.0.0.9900" already exists.
-      i Do you need `init_release(force = TRUE)`?
+      i Do you need `plan_release(force = TRUE)`?
 
 ---
 
