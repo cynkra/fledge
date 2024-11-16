@@ -47,7 +47,7 @@ treat_commit_message <- function(commit_df) {
     return(default_newsworthy[[1]])
   }
 
-  if (commit_df$merge) {
+  if (commit_df$merge && !is_fledge_message(commit_df$message)) {
     tibble::tibble(
       description = commit_df$message,
       type = default_type(),
@@ -64,7 +64,16 @@ remove_housekeeping <- function(message) {
   strsplit(message, "\n---", fixed = TRUE)[[1]][1]
 }
 
+is_fledge_message <- function(message) {
+  grepl("^fledge: ", message)
+}
+
 extract_newsworthy_items <- function(message) {
+  # Skip our commits
+  if (is_fledge_message(message)) {
+    return(tibble::tibble())
+  }
+
   # Merge messages
   if (is_merge_commit(message)) {
     return(parse_merge_commit(message))
