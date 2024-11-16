@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
     - Support for subsequent release attempts off of a branch created from a tag
 
 2. Easy to undo a release attempt
-    - Pre-flight with `init_release("pre-patch")`, including grooming of `NEWS.md`
+    - Pre-flight with `plan_release("pre-patch")`, including grooming of `NEWS.md`
     - Caveat: once committed to a release, there is no way back, to avoid conflicts
 
 3. More rigorous checks before release
@@ -45,7 +45,7 @@ knitr::opts_chunk$set(
     - TODO: Composable workflow, grooming can be separate from release
 
 8. Compatibility with manual release workflow
-    - `init_release("pre-patch")`
+    - `plan_release("pre-patch")`
 
 9. Consistency with `usethis::use_release_issue()`
     - TODO: snapshot tests for `usethis:::release_checklist()`, maintain own list
