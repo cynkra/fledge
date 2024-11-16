@@ -35,6 +35,7 @@ knitr::opts_chunk$set(
 
 5. Compatibility with auto-merge and merge queues
     - GHA workflow
+    - Commits/merges made by fledge are not newsworthy
 
 6. Support merge and squash commits
     - We can always create a tag
@@ -54,3 +55,35 @@ knitr::opts_chunk$set(
 1. Always release from main branch
     - Conflicts with important goal to avoid conflicts, and also with auto-merge and merge queues
     - Release from main branch possible in some cases
+
+## Workflow
+
+1. Optional, recommended because grooming the NEWS often gives a hint about what's missing in a release:
+
+    - `fledge::plan_release("pre-patch")` (or `"pre-minor"` or `"pre-major"`)
+
+    - Edit `NEWS.md` as needed
+
+    - Perform any release-related tasks
+
+    - Merge PR
+
+2. Mandatory:
+
+    - `fledge::plan_release("next")` (or `"minor"` or `"major"`)
+
+    - Perform work from previous step if omitted
+
+    - `fledge::release()` (FIXME: also by merging PR)
+
+3. If submission rejected:
+
+    - `fledge::plan_release("last")` (FIXME)
+
+    - Apply hotfixes required to submit
+
+    - `fledge::release()` (FIXME: also by merging PR)
+
+4. If submission abandoned:
+
+    - No action required

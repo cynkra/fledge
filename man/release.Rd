@@ -37,6 +37,10 @@ Useful to recover from a previously failed attempt.}
 \code{plan_release()} is run
 when a milestone in the development of a package is reached
 and it is ready to be sent to CRAN.
+By default, this function will initiate a pre-release, indicated by \code{9900}
+in the fourth component of the version number.
+Pass \code{which = "patch"}, \code{which = "minor"}, or \code{which = "major"} to
+initiate a release with the corresponding version number.
 
 \code{release()} sends to CRAN after performing several checks,
 and offers help with accepting the submission.
