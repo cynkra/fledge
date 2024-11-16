@@ -21,9 +21,8 @@
 #' @return None
 #' @export
 update_news <- function(
-  messages = NULL,
-  which = c("auto", "samedev", "dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major")
-) {
+    messages = NULL,
+    which = c("auto", "samedev", "dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major")) {
   which <- arg_match(which)
 
   local_repo()
