@@ -18,7 +18,7 @@ test_that("full cycle pre-minor", {
 
   expect_equal(
     as.character(desc::desc_get_version()),
-    "0.0.99.9000"
+    "0.0.99.9900"
   )
 
   ## init release ----
@@ -61,6 +61,6 @@ test_that("full cycle pre-minor", {
   expect_equal(nrow(gert::git_status()), 0)
   expect_setequal(
     gert::git_tag_list()[["name"]],
-    c("v0.0.99.9000", "v0.1.0")
+    c("v0.0.99.9900", "v0.1.0")
   )
 })

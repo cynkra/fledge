@@ -93,25 +93,26 @@ fledge_guess_version <- function(version, which) {
       major = major + 1,
       major
     )
-  } else if (which %in% c("pre-minor", "pre-major")) {
-    # pre-minor and pre-major
-
-    if (patch >= 99) {
-      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (patch >= 99).")
-    }
-
-    if (minor >= 99) {
-      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (minor >= 99).")
-    }
-
-    dev <- "9000"
-    patch <- "99"
-    # pre-minor: make patch 99
-    # pre-major: make both minor and patch 99
-    if (which == "pre-major") {
-      minor <- "99"
+  } else if (which == "pre-patch") {
+    dev <- max(dev + 1, 9900)
+  } else if (which == "pre-minor") {
+    if (patch > 99) {
+      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (patch > 99).")
+    } else if (patch == 99) {
+      dev <- max(dev + 1, 9900)
     } else {
-      stopifnot(which == "pre-minor")
+      patch <- 99
+      dev <- 9900
+    }
+  } else if (which == "pre-major") {
+    if (minor > 99) {
+      cli::cli_abort("Can't bump to {.val {which}} from version {.val {version}} (minor > 99).")
+    } else if (minor == 99) {
+      dev <- max(dev + 1, 9900)
+    } else {
+      dev <- 9900
+      patch <- 99
+      minor <- 99
     }
   } else {
     cli::cli_abort("Unknown version specifier {.val {which}}.")
