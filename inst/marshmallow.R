@@ -30,7 +30,7 @@ finalize_version(push = TRUE)
 # init release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-init_release()
+plan_release()
 gert::git_branch()
 gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
@@ -41,6 +41,10 @@ cran_comments <- get_cran_comments_text()
 writeLines(cran_comments)
 cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
 brio::write_lines(cran_comments, "cran-comments.md")
+
+gert::git_add("cran-comments.md")
+gert::git_commit("Check boxes.")
+gert::git_push()
 
 # prep release ----
 pre_release()

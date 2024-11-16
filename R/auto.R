@@ -3,6 +3,10 @@
 #' `plan_release()` is run
 #' when a milestone in the development of a package is reached
 #' and it is ready to be sent to CRAN.
+#' By default, this function will initiate a pre-release, indicated by `9900`
+#' in the fourth component of the version number.
+#' Pass `which = "patch"`, `which = "minor"`, or `which = "major"` to
+#' initiate a release with the corresponding version number.
 #'
 #' `plan_release()`:
 #' - Ensures that no modified files are in the Git index.
@@ -33,9 +37,10 @@ plan_release <- function(
   which = c("pre-patch", "pre-minor", "pre-major", "next", "patch", "minor", "major"),
   force = FALSE
 ) {
-  check_main_branch("init_release()")
+  check_main_branch("plan_release()")
   check_only_modified(character())
   check_gitignore("cran-comments.md")
+  check_suggested(c("job", "devtools", "rhub", "urlchecker"), "plan_release")
 
   which <- arg_match(which)
   if (which == "next") {
@@ -54,12 +59,12 @@ plan_release_impl <- function(which, force) {
   if (!no_change()) {
     cli_abort(c(
       "Aborting release process because not all changes were recorded.",
-      i = "Run {.run fledge::bump_version()}, then rerun {.run fledge::init_release()}"
+      i = "Run {.run fledge::bump_version()}, then rerun {.run fledge::plan_release()}"
     ))
   }
 
   # Check PAT early
-  check_gh_pat()
+  check_gh_pat("repo")
 
   fledgeling <- read_fledgling()
   new_version <- fledge_guess_version(fledgeling[["version"]], which)
@@ -69,7 +74,7 @@ plan_release_impl <- function(which, force) {
   }
 
   if (fledge_chatty()) {
-    cat(boxx("pre-release", border_style = "double"))
+    cat(boxx("plan_release", border_style = "double"))
   }
 
   # Begin extension points
@@ -77,7 +82,9 @@ plan_release_impl <- function(which, force) {
 
   # Don't bump here, want to be compatible with merge queues at some point
 
-  if (fledge_chatty()) cli_h1("1. Creating a release branch and getting ready")
+  if (fledge_chatty()) {
+    cli_h1("1. Creating a release branch and getting ready")
+  }
 
   # regroup dev news
   fledgeling <- merge_dev_news(fledgeling, new_version)
@@ -96,30 +103,15 @@ plan_release_impl <- function(which, force) {
   edit_news()
   edit_cran_comments()
 
-  if (fledge_chatty()) {
-    cli_h1("2. User Action Items")
-    cli_div(theme = list(ul = list(color = "magenta")))
-    cli_ul("Run {.run devtools::check_win_devel()}.")
-    cli_ul("Run {.run rhub::check_for_cran()}.")
-    cli_ul("Run {.run urlchecker::url_update()}.")
-    cli_ul("Check all items in {.file cran-comments.md}.")
-    cli_ul("Review {.file NEWS.md}.")
-    cli_ul("Run {.run fledge::pre_release()}.")
-    send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
-  }
-}
-
-pre_release_impl <- function(force) {
-  # check PAT scopes for PR for early abort
-  check_gh_pat("repo")
-
   check_only_modified(c("NEWS.md", "cran-comments.md"))
   gert::git_add(c("NEWS.md", "cran-comments.md"))
   if (nrow(gert::git_status(staged = TRUE)) > 0) {
     gert::git_commit("NEWS and CRAN comments")
   }
 
-  cli_h1("1. Opening Pull Request for release branch")
+  if (fledge_chatty()) {
+    cli_h1("2. Opening Pull Request for release branch")
+  }
 
   main_branch <- get_main_branch()
   remote_name <- get_remote_name(main_branch)
@@ -131,14 +123,43 @@ pre_release_impl <- function(force) {
     cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   }
 
-  create_pull_request(get_branch_name(), main_branch, remote_name, force)
+  if (is_installed("job") && rstudioapi::isAvailable() && !nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+    inject(job::empty(title = "create_pull_request", { fledge:::create_pull_request(!!get_branch_name(), !!main_branch, !!remote_name, !!force) }))
+    inject(job::empty(title = "check_win_devel", { devtools::check_win_devel() }))
+    # FIXME
+    inject(job::empty(title = "check_for_cran", { if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch) }))
+    inject(job::empty(title = "url_update", { urlchecker::url_update() }))
 
-  # user action items
-  if (fledge_chatty()) {
-    cli_h1("2. User Action Items")
-    cli_div(theme = list(ul = list(color = "magenta")))
-    cli_ul("Run {.code fledge::release()}.")
-    cli_end()
+    if (fledge_chatty()) {
+      cli_h1("3. User Action Items")
+      cli_div(theme = list(ul = list(color = "magenta")))
+      cli_ul("Check all items in {.file cran-comments.md}.")
+      cli_ul("Review {.file NEWS.md}.")
+
+      # FIXME: Only if ready for release
+      cli_ul("Run {.code fledge::release()}.")
+
+      cli_end()
+    }
+  } else {
+    create_pull_request(get_branch_name(), main_branch, remote_name, force)
+
+    # user action items
+    if (fledge_chatty()) {
+      cli_h1("3. User Action Items")
+      cli_div(theme = list(ul = list(color = "magenta")))
+      cli_ul("Run {.run devtools::check_win_devel()}.")
+      cli_ul("Run {.run rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = '{release_branch}')}.")
+      cli_ul("Run {.run urlchecker::url_update()}.")
+      cli_ul("Check all items in {.file cran-comments.md}.")
+      cli_ul("Review {.file NEWS.md}.")
+      send_to_console(glue("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = '{release_branch}'))"))
+
+      # FIXME: Only if ready for release
+      cli_ul("Run {.code fledge::release()}.")
+
+      cli_end()
+    }
   }
 
   # Begin extension points
