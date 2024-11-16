@@ -718,6 +718,13 @@ release_after_cran_built_binaries <- function() {
 
   last_release_version <- get_last_release_version()
 
+  if (length(last_release_version) == 0) {
+    if (fledge_chatty()) {
+      cli_alert_info("No previous release found.")
+    }
+    return(invisible())
+  }
+
   ppm_packages <- utils::available.packages(repos = "https://packagemanager.posit.co/cran/latest")
 
   if (!(pkg %in% rownames(ppm_packages))) {
