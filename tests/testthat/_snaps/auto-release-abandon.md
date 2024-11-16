@@ -2,6 +2,8 @@
 
     Code
       init_release()
+    Message
+      > Digesting messages from 1 commits.
     Output
       +-----------------+
       |                 |
@@ -38,6 +40,8 @@
 
     Code
       init_release(force = FALSE)
+    Message
+      > Digesting messages from 1 commits.
     Condition
       Error in `check_release_branch()`:
       x The branch "cran-0.0.1" already exists.
@@ -47,6 +51,8 @@
 
     Code
       init_release(force = TRUE)
+    Message
+      > Digesting messages from 1 commits.
     Output
       +-----------------+
       |                 |
