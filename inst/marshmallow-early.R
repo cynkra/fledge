@@ -37,9 +37,6 @@ gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
 gert::git_status()
 
-# prep release ----
-pre_release()
-
 # check boxes ----
 cran_comments <- get_cran_comments_text()
 writeLines(cran_comments)

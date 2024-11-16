@@ -78,25 +78,7 @@ test_that("init_release() -- force", {
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
 
-test_that("pre_release() pre-flight checks", {
-  withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
-  withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-
-  local_demo_project(quiet = TRUE)
-
-  tempdir_remote <- withr::local_tempdir(pattern = "remote")
-  create_remote(tempdir_remote)
-
-  shut_up_fledge(bump_version())
-
-  expect_snapshot(pre_release(), error = TRUE)
-
-  shut_up_fledge(init_release())
-  use_r("blop")
-  expect_snapshot(error = TRUE, pre_release())
-})
-
-test_that("pre_release() works", {
+test_that("init_release() works", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "blop")
   withr::local_envvar("FLEDGE_FORCE_NEWS_MD" = "bla")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
@@ -110,8 +92,6 @@ test_that("pre_release() works", {
   shut_up_fledge(bump_version())
   shut_up_fledge(init_release())
   expect_true(gert::git_branch_exists("cran-0.0.1"))
-
-  expect_snapshot(pre_release())
 })
 
 test_that("full cycle", {
@@ -155,9 +135,6 @@ test_that("full cycle", {
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-
-  ## prep release ----
-  expect_snapshot(pre_release())
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
@@ -214,9 +191,6 @@ test_that("full cycle pre-minor", {
   )
   expect_equal(as.character(desc::desc_get_version()), "0.1.0")
   expect_equal(nrow(gert::git_status()), 0)
-
-  ## prep release ----
-  expect_snapshot(pre_release())
 
   ## check boxes ----
   cran_comments <- get_cran_comments_text()
@@ -313,20 +287,16 @@ test_that("full cycle, add more to main", {
   brio::write_lines('"boo"', "R/bla.R")
   gert::git_add("R/bla.R")
   gert::git_commit("* Booing bla.")
-  gert::git_push()
+  bump_version()
+  finalize_version(push = TRUE)
 
   gert::git_branch_checkout("cran-0.0.1")
-
-  ## prep release ----
-  expect_snapshot(pre_release())
 
   ## check boxes ----
   cran_comments <- get_cran_comments_text()
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-  gert::git_add("cran-comments.md")
-  gert::git_commit("this is how we check boxes")
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
@@ -378,19 +348,16 @@ test_that("full cycle, add more to main NO PUSH", {
   brio::write_lines('"boo"', "R/bla.R")
   gert::git_add("R/bla.R")
   gert::git_commit("* Booing bla.")
+  bump_version()
+  finalize_version(push = TRUE)
 
   gert::git_branch_checkout("cran-0.0.1")
-
-  ## prep release ----
-  shut_up_fledge(pre_release())
 
   ## check boxes ----
   cran_comments <- get_cran_comments_text()
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-  gert::git_add("cran-comments.md")
-  gert::git_commit("this is how we check boxes")
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")

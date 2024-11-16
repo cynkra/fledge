@@ -35,6 +35,9 @@ check_gh_pat <- function(needed_scopes = "repo") {
 }
 
 gh_scopes <- function() {
+  message("gh_scopes()")
+  on.exit(message("gh_scopes() done"))
+
   if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES")) || nzchar(Sys.getenv("FLEDGE_GHA_CI"))) {
     "repo"
   } else if (nzchar(Sys.getenv("FLEDGE_TEST_SCOPES_BAD"))) {
