@@ -32,7 +32,7 @@ init_release <- function(which = "next", force = FALSE) {
   check_only_modified(character())
   check_gitignore("cran-comments.md")
 
-  stopifnot(which %in% c("next", "patch", "minor", "major"))
+  stopifnot(which %in% c("next", "patch", "minor", "major", "pre-patch", "pre-minor", "pre-major"))
   if (which == "next") {
     which <- guess_next()
   }
@@ -717,6 +717,13 @@ release_after_cran_built_binaries <- function() {
   pkg <- read_package()
 
   last_release_version <- get_last_release_version()
+
+  if (length(last_release_version) == 0) {
+    if (fledge_chatty()) {
+      cli_alert_info("No previous release found.")
+    }
+    return(invisible())
+  }
 
   ppm_packages <- utils::available.packages(repos = "https://packagemanager.posit.co/cran/latest")
 

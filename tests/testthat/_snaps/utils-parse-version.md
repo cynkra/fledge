@@ -11,14 +11,14 @@
     Code
       fledge_guess_version("1.1.1", "pre-minor")
     Output
-      [1] "1.1.99.9000"
+      [1] "1.1.99.9900"
 
 ---
 
     Code
       fledge_guess_version("1.1.1", "pre-major")
     Output
-      [1] "1.99.99.9000"
+      [1] "1.99.99.9900"
 
 ---
 

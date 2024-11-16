@@ -1,5 +1,161 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9032 (2024-11-11)
+
+## Continuous integration
+
+- Trigger run (#792).
+
+
+# fledge 0.1.99.9031 (2024-10-28)
+
+## Continuous integration
+
+- Use pkgdown branch (#791).
+
+
+# fledge 0.1.99.9030 (2024-09-15)
+
+## Continuous integration
+
+- Install via R CMD INSTALL ., not pak (#789).
+
+
+# fledge 0.1.99.9029 (2024-08-31)
+
+## Chore
+
+- Add Aviator configuration.
+
+## Continuous integration
+
+- Install local package for pkgdown builds.
+
+- Improve support for protected branches, without fledge.
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#786).
+
+
+# fledge 0.1.99.9028 (2024-08-19)
+
+## Bug fixes
+
+- Try pushing head first.
+
+- Try pushing head first, fail with branch protection.
+
+## Features
+
+- `bump_version(check_default_branch = TRUE)`.
+
+
+# fledge 0.1.99.9027 (2024-08-17)
+
+## Chore
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/cynkra/fledge/actions/runs/10425483871
+
+## Continuous integration
+
+- Sync with latest developments.
+
+
+# fledge 0.1.99.9026 (2024-08-10)
+
+## Continuous integration
+
+- Use v2 instead of master.
+
+
+# fledge 0.1.99.9025 (2024-08-06)
+
+## Continuous integration
+
+- Inline action.
+
+
+# fledge 0.1.99.9024 (2024-08-03)
+
+## Testing
+
+- Snapshot updates for R-CMD-check-base (null) (#783).
+
+
+# fledge 0.1.99.9023 (2024-08-02)
+
+## Continuous integration
+
+- Use dev roxygen2 and decor.
+
+## Testing
+
+- Accept snapshots after knitr update.
+
+
+# fledge 0.1.99.9022 (2024-07-02)
+
+## Continuous integration
+
+- Fix on Windows, tweak lock workflow.
+
+
+# fledge 0.1.99.9021 (2024-06-30)
+
+## Chore
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/cynkra/fledge/actions/runs/9727971994
+
+
+# fledge 0.1.99.9020 (2024-06-28)
+
+## Chore
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/cynkra/fledge/actions/runs/9691617690
+
+## Continuous integration
+
+- Avoid checking bashisms on Windows.
+
+- Remove netlify workflow.
+
+- Remove special branch.
+
+- Bump versions, better default, consume custom matrix.
+
+- Recent updates.
+
+
+# fledge 0.1.99.9019 (2024-06-26)
+
+## Bug fixes
+
+- Update bump-version.R - replace length test in get_main_branch_config() (#775).
+
+
+# fledge 0.1.99.9018 (2024-04-16)
+
+## Documentation
+
+- Set BS version explicitly for now.
+
+  https://github.com/cynkra/cynkratemplate/issues/53
+
+
+# fledge 0.1.99.9017 (2024-02-19)
+
+## Chore
+
+- Move responsibility for writing fledgeling, memoise, add `repo` argument (#761).
+
+
 # fledge 0.1.99.9016 (2024-01-24)
 
 - Internal changes only.

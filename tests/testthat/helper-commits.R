@@ -1,7 +1,7 @@
 touch <- function(file, bullet = TRUE) {
   writeLines(character(), file)
 
-  gert::git_add(file)
+  fast_git_add(file)
   gert::git_commit(message = paste0(if (bullet) "- ", file))
   invisible(gert::git_log(max = 1)$commit)
 }

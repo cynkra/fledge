@@ -9,8 +9,8 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   tag <- tag_version(force)
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
-    push_tag(tag, force = TRUE)
     push_head()
+    push_tag(tag, force = TRUE)
   } else if (suggest_finalize) {
     edit_news()
 
@@ -50,7 +50,13 @@ push_head <- function() {
     cli_alert("Pushing {.field {head}}.")
   }
 
+  # https://github.com/r-lib/gert/issues/236
   gert::git_push()
+
+  info <- gert::git_info()
+  if (info$commit != gert::git_commit_id(info$upstream)) {
+    cli::cli_abort("Push failed, perhaps due to branch protection?")
+  }
 }
 
 push_to_new <- function(remote_name, force) {

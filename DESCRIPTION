@@ -1,7 +1,7 @@
 Package: fledge
 Title: Smoother Change Tracking and Versioning for R Packages
-Version: 0.1.99.9016
-Date: 2024-01-24
+Version: 0.1.99.9032
+Date: 2024-11-11
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
@@ -69,10 +69,10 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2.9000
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/testthat/start-first: demo, parse-news-items, bump_version
+Config/testthat/start-first: auto, demo, parse-news-items, bump_version
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: true
 Config/Needs/website: cynkra/cynkratemplate

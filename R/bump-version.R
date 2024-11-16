@@ -3,11 +3,15 @@
 bump_version_impl <- function(fledgeling,
                               which,
                               no_change_behavior,
+                              check_default_branch = TRUE,
                               edit = TRUE,
                               no_change_message = NULL) {
   #' @description
-  #' 1. Verify that the current branch is the main branch.
-  check_main_branch("bump_version()")
+  #' 1. Verify that the current branch is the main branch
+  #'    if `check_default_branch = TRUE` (the default).
+  if (check_default_branch) {
+    check_main_branch("bump_version()")
+  }
   #' 1. Check if there were changes since the last version.
   if (no_change()) {
     if (no_change_behavior == "fail") {
@@ -69,8 +73,8 @@ bump_version_to_dev_with_force <- function(force, which) {
 
   force <- commit_version() || force
   tag <- tag_version(force)
-  push_tag(tag)
   push_head()
+  push_tag(tag)
 }
 
 check_cran_branch <- function(reason) {
@@ -105,14 +109,12 @@ get_main_branch_remote <- function(remote, repo) {
 get_main_branch_config <- function(repo) {
   config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
-  local <- init[init$level == "local", ]
 
-  if (length(local)) {
-    return(local$value)
+  if ("local" %in% init$level) {
+    return(init[init$level == "local", ]$value)
+  } else {
+    return(init[init$level == "global", ]$value)
   }
-
-  global <- init[init$level == "global"]
-  return(global$value)
 }
 
 no_change <- function(ref = "HEAD") {

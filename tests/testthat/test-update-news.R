@@ -69,8 +69,8 @@ test_that("Can update dev version news item", {
 
   repo <- withr::local_tempdir(pattern = "devpkg")
 
-  create_cc_repo(repo, commit_messages = "feat: new stuff")
   usethis::local_project(repo, force = TRUE, setwd = TRUE)
+  create_cc_repo(commit_messages = "feat: new stuff")
 
   usethis::use_description(
     fields = list(Package = "fledge", Version = "0.1.0")
