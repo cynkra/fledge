@@ -27,10 +27,11 @@
 #'
 #' @example man/examples/bump-version.R
 bump_version <- function(
-    which = c("dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major"),
-    ...,
-    no_change_behavior = c("bump", "noop", "fail"),
-    check_default_branch = TRUE) {
+  which = c("dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major"),
+  ...,
+  no_change_behavior = c("bump", "noop", "fail"),
+  check_default_branch = TRUE
+) {
   check_dots_empty()
 
   which <- arg_match(which)
