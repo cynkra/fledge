@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Fledge internals • fledge</title>
+<title>Automate CRAN releases v2 • fledge</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Mono-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fledge internals">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Automate CRAN releases v2">
 <meta name="robots" content="noindex">
 <script defer data-domain="fledge.cynkra.com" src="https://plausible.io/js/plausible.js"></script>
 </head>
@@ -69,88 +69,101 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Fledge internals</h1>
+      <h1>Automate CRAN releases v2</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/main/vignettes/internals.Rmd" class="external-link"><code>vignettes/internals.Rmd</code></a></small>
-      <div class="d-none name"><code>internals.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/cynkra/fledge/blob/main/vignettes/auto.Rmd" class="external-link"><code>vignettes/auto.Rmd</code></a></small>
+      <div class="d-none name"><code>auto.Rmd</code></div>
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fledge.cynkra.com/">fledge</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
+<h2 id="goals-and-how-achieved">Goals, and how achieved<a class="anchor" aria-label="anchor" href="#goals-and-how-achieved"></a>
 </h2>
-<p>The following sections explain how things actually work inside
-fledge.</p>
-<div class="section level3">
-<h3 id="updating-news-md">Updating <code>NEWS.md</code><a class="anchor" aria-label="anchor" href="#updating-news-md"></a>
-</h3>
-<p>New entries are added to <code>NEWS.md</code> from commit messages to
-commits in <code>master</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Avoid conflicts in <code>NEWS.md</code> and <code>DESCRIPTION</code>
 <ul>
-<li><p>Only top-level commits are considered (roughly equivalent to
-<code>git log --first-parent</code>.) The messages from these commits
-are parsed. Only lines that start with a star <code>*</code> or a dash
-<code>-</code> are included.</p></li>
-<li>
-<p>If a line starts with three dashes, then everything past that
-line is excluded. Example: the following commit message</p>
-<pre><code>Merge f-fancy-feature to master, closes #5678
-
-- Added fancy feature (#5678).
-
-- Fixed bug as a side effect (#9012).
-
----
-
-The fancy feature consists of the components:
-
-- foo
-- bar
-- baz</code></pre>
-<p>will be added as below to <code>NEWS.md</code>:</p>
-<pre><code>- Added fancy feature (#5678).
-- Fixed bug as a side effect (#9012).</code></pre>
+<li>Bumping to CRAN version and back to dev version is atomic, no
+dangling release branch</li>
+<li>Support for subsequent release attempts off of a branch created from
+a tag</li>
+</ul>
+</li>
+<li>Easy to undo a release attempt
+<ul>
+<li>Pre-flight with <code>init_release("pre-patch")</code>, including
+grooming of <code>NEWS.md</code>
+</li>
+<li>Caveat: once committed to a release, there is no way back, to avoid
+conflicts</li>
+</ul>
+</li>
+<li>More rigorous checks before release
+<ul>
+<li>On GitHub Actions for branches that start with
+<code>cran-</code>
+</li>
+<li>Locally through <code><a href="https://rdrr.io/pkg/urlchecker/man/url_update.html" class="external-link">urlchecker::url_update()</a></code>,
+<code><a href="https://devtools.r-lib.org/reference/check_win.html" class="external-link">devtools::check_win_devel()</a></code>, and
+<code>rhub::check_for_cran()</code>
+</li>
+<li>TODO: Compatibility with
+<code><a href="https://usethis.r-lib.org/reference/use_release_issue.html" class="external-link">usethis::use_release_issue()</a></code>
 </li>
 </ul>
-<p>When retrieving the current NEWS for defining the tag message, the
-entries between the first two first-level headers (starting with
-<code>#</code>) are returned. You can use second and third level headers
-and add as many empty lines as you want.</p>
-</div>
-<div class="section level3">
-<h3 id="collecting-news">Collecting NEWS<a class="anchor" aria-label="anchor" href="#collecting-news"></a>
-</h3>
-<p>The first function to call at any stage is always
-<code><a href="../reference/bump_version.html">bump_version()</a></code>. This does the following</p>
-<ol style="list-style-type: decimal">
-<li>Calls <code><a href="../reference/update_news.html">update_news()</a></code> to collect NEWS entries from
-top-level commits and to increment the version in
-<code>DESCRIPTION</code> and add a header to <code>NEWS.md</code>.</li>
+</li>
+<li>Minimize interactive wait time
+<ul>
+<li>Checks run on GitHub Actions for branches that start with
+<code>cran-</code>
+</li>
+<li>TODO: Use background jobs via <code>job::empty()</code> where
+useful</li>
+</ul>
+</li>
+<li>Compatibility with auto-merge and merge queues
+<ul>
+<li>GHA workflow</li>
+</ul>
+</li>
+<li>Support merge and squash commits
+<ul>
+<li>We can always create a tag</li>
+<li>PR merge is triggered by user</li>
+</ul>
+</li>
+<li>Support for dev version header
+<ul>
+<li>TODO: Composable workflow, grooming can be separate from
+release</li>
+</ul>
+</li>
+<li>Compatibility with manual release workflow
+<ul>
+<li><code>init_release("pre-patch")</code></li>
+</ul>
+</li>
+<li>Consistency with <code><a href="https://usethis.r-lib.org/reference/use_release_issue.html" class="external-link">usethis::use_release_issue()</a></code>
+<ul>
+<li>TODO: snapshot tests for <code>usethis:::release_checklist()</code>,
+maintain own list</li>
+</ul>
+</li>
 </ol>
 </div>
-<div class="section level3">
-<h3 id="tagging-for-dev-vs--other-releases">Tagging for “dev” vs. other releases<a class="anchor" aria-label="anchor" href="#tagging-for-dev-vs--other-releases"></a>
-</h3>
-<p><code><a href="../reference/bump_version.html">bump_version()</a></code> continues depending on the release
-type:</p>
+<div class="section level2">
+<h2 id="non-goals">Non-goals<a class="anchor" aria-label="anchor" href="#non-goals"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>Always release from main branch
 <ul>
-<li>
-<code>"dev"</code> releases: Calls <code><a href="../reference/finalize_version.html">finalize_version()</a></code>
-to commit <code>DESCRIPTION</code> and <code>NEWS.md</code>. Also
-creates a tag with a message. You can always edit <code>NEWS.md</code>
-and call <code><a href="../reference/finalize_version.html">finalize_version()</a></code> again. Both the commit and the
-tag will be updated.</li>
-<li>Other releases: Calls <code><a href="../reference/commit_version.html">commit_version()</a></code> to commit
-<code>DESCRIPTION</code> and <code>NEWS.md</code> without tagging. In
-this stage, you can edit <code>NEWS.md</code> and commit as much as you
-like. The tag is created only after you use <code><a href="../reference/tag_version.html">tag_version()</a></code>
-manually.</li>
+<li>Conflicts with important goal to avoid conflicts, and also with
+auto-merge and merge queues</li>
+<li>Release from main branch possible in some cases</li>
 </ul>
-</div>
+</li>
+</ol>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
