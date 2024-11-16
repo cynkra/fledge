@@ -40,7 +40,10 @@ plan_release <- function(
   check_main_branch("plan_release()")
   check_only_modified(character())
   check_gitignore("cran-comments.md")
-  check_suggested(c("job", "devtools", "rhub", "urlchecker"), "plan_release")
+  check_suggested(
+    c("job", "devtools", "rhub", "urlchecker", "pkgbuild", "foghorn"),
+    "plan_release"
+  )
 
   which <- arg_match(which)
   if (which == "next") {
@@ -123,6 +126,8 @@ plan_release_impl <- function(which, force) {
     cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
   }
 
+  has_src <- pkgbuild::pkg_has_src()
+
   if (is_installed("job") && rstudioapi::isAvailable() && !nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
     inject(job::empty(title = "create_pull_request", {
       fledge:::create_pull_request(!!get_branch_name(), !!main_branch, !!remote_name, !!force)
@@ -130,10 +135,11 @@ plan_release_impl <- function(which, force) {
     inject(job::empty(title = "check_win_devel", {
       devtools::check_win_devel()
     }))
-    # FIXME
-    inject(job::empty(title = "check_for_cran", {
-      if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
-    }))
+    if (has_src) {
+      inject(job::empty(title = "check_for_cran", {
+        if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
+      }))
+    }
     inject(job::empty(title = "url_update", {
       urlchecker::url_update()
     }))
@@ -157,11 +163,21 @@ plan_release_impl <- function(which, force) {
       cli_h1("3. User Action Items")
       cli_div(theme = list(ul = list(color = "magenta")))
       cli_ul("Run {.run devtools::check_win_devel()}.")
-      cli_ul("Run {.run rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = '{release_branch}')}.")
+      if (has_src) cli_ul("Run {.run rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = '{release_branch}')}.")
       cli_ul("Run {.run urlchecker::url_update()}.")
       cli_ul("Check all items in {.file cran-comments.md}.")
       cli_ul("Review {.file NEWS.md}.")
-      send_to_console(glue("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = '{release_branch}'))"))
+
+      url_update_code <- "urlchecker <- urlchecker::url_update()"
+      winbuilder_code <- "winbuilder = devtools::check_win_devel(quiet = TRUE)"
+      if (has_src) {
+        rhub_code <- ", rhub = if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = '{release_branch}')"
+      } else {
+        rhub_code <- ""
+      }
+      send_to_console(
+        glue("{url_update_code}; fledge:::bg_r({winbuilder_code}{rhub_code})")
+      )
 
       # FIXME: Only if ready for release
       cli_ul("Run {.code fledge::release()}.")

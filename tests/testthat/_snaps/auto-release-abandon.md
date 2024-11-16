@@ -23,8 +23,6 @@
       
       -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
-      * Run `rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch =
-      'cran-0.0.0.9900')`.
       * Run `urlchecker::url_update()`.
       * Check all items in 'cran-comments.md'.
       * Review 'NEWS.md'.
@@ -75,8 +73,6 @@
       
       -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
-      * Run `rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch =
-      'cran-0.0.0.9900')`.
       * Run `urlchecker::url_update()`.
       * Check all items in 'cran-comments.md'.
       * Review 'NEWS.md'.
