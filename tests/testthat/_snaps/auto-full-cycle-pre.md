@@ -2,6 +2,8 @@
 
     Code
       init_release()
+    Message
+      > Digesting messages from 1 commits.
     Output
       +-----------------+
       |                 |
