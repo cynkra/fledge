@@ -2,7 +2,7 @@
 
 # tea 0.0.0.9002
 
-- Same as previous version.
+- Internal changes only.
 
 
 # tea 0.0.0.9001
