@@ -5,13 +5,16 @@ test_that("finalize_version(push = FALSE)", {
   fast_git_add("R/bla.R")
   gert::git_commit("* Ad cool bla.")
 
-  shut_up_fledge(bump_version())
+  local_fledge_quiet()
+  bump_version()
 
   news <- brio::read_lines("NEWS.md")
   news <- sub("Ad cool", "Add cool", news)
   brio::write_lines(news, "NEWS.md")
 
-  expect_snapshot(finalize_version(push = FALSE))
+  expect_fledge_snapshot({
+    finalize_version(push = FALSE)
+  })
 
   expect_snapshot_file(
     "NEWS.md", "NEWS-push-false.md",
@@ -20,6 +23,7 @@ test_that("finalize_version(push = FALSE)", {
 })
 
 test_that("finalize_version(push = TRUE)", {
+  local_fledge_quiet()
   local_demo_project(quiet = TRUE)
 
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
@@ -29,13 +33,13 @@ test_that("finalize_version(push = TRUE)", {
   fast_git_add("R/bla.R")
   gert::git_commit("* Ad cool bla.")
 
-  shut_up_fledge(bump_version())
+  bump_version()
 
   news <- brio::read_lines("NEWS.md")
   news <- sub("Ad cool", "Add cool", news)
   brio::write_lines(news, "NEWS.md")
 
-  expect_snapshot({
+  expect_fledge_snapshot({
     finalize_version(push = TRUE)
     show_tags(remote_url)
     show_files(remote_url)

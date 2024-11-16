@@ -12,6 +12,7 @@ test_that("guess_next_impl() works", {
 
 test_that("merge_dev_news() works", {
   skip_if_not_installed("rlang", "1.0.1")
+  local_fledge_quiet()
   local_options(repos = NULL) # because of usethis::use_news_md() -> available.packages()
   local_demo_project(quiet = TRUE)
 
@@ -20,12 +21,12 @@ test_that("merge_dev_news() works", {
   use_r("bla")
   fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
-  shut_up_fledge(bump_version())
+  bump_version()
 
   use_r("blop")
   fast_git_add("R/blop.R")
   gert::git_commit("* Add cool blop.")
-  shut_up_fledge(bump_version())
+  bump_version()
 
   fledgeling <- read_fledgling()
   fledgeling <- merge_dev_news(fledgeling, "2.0.0")
@@ -56,8 +57,12 @@ test_that("init_release() works", {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   create_remote(tempdir_remote)
 
-  shut_up_fledge(bump_version())
-  expect_snapshot(init_release())
+  local_fledge_quiet()
+  bump_version()
+
+  expect_fledge_snapshot({
+    init_release()
+  })
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
 
@@ -69,11 +74,16 @@ test_that("init_release() -- force", {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   create_remote(tempdir_remote)
 
-  shut_up_fledge(bump_version())
+  local_fledge_quiet()
+  bump_version()
 
   gert::git_branch_create("cran-0.0.1", checkout = FALSE)
 
-  expect_snapshot(init_release(), error = TRUE)
-  expect_snapshot(init_release(force = TRUE))
+  expect_fledge_snapshot(error = TRUE, {
+    init_release()
+  })
+  expect_fledge_snapshot({
+    init_release(force = TRUE)
+  })
   expect_true(gert::git_branch_exists("cran-0.0.1"))
 })
