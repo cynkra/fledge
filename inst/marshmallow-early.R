@@ -40,14 +40,6 @@ gert::git_status()
 # prep release ----
 pre_release()
 
-# check boxes ----
-cran_comments <- get_cran_comments_text()
-writeLines(cran_comments)
-cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
-brio::write_lines(cran_comments, "cran-comments.md")
-gert::git_add("cran-comments.md")
-gert::git_commit("this is how we check boxes")
-
 # release ----
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
 release()

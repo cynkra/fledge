@@ -1,3 +1,9 @@
+## Current CRAN check results
+
+{{{ cransplainer }}}
+
+## Action items
+
 - [ ] Review PR
 - [ ] Await successful CI/CD run
 - [ ] Run `fledge::release()`
