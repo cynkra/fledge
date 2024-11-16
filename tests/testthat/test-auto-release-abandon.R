@@ -11,7 +11,7 @@ test_that("release abandon", {
 
   ## some edits ----
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
   shut_up_fledge(bump_version())
   shut_up_fledge(finalize_version(push = TRUE))

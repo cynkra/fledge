@@ -12,7 +12,7 @@ test_that("full cycle, add more to main", {
 
   ## some edits ----
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Add cool bla.")
   shut_up_fledge(bump_version())
   shut_up_fledge(finalize_version(push = TRUE))
@@ -26,7 +26,7 @@ test_that("full cycle, add more to main", {
   gert::git_branch_checkout("main")
 
   brio::write_lines('"boo"', "R/bla.R")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Booing bla.")
   gert::git_push()
 
@@ -40,7 +40,7 @@ test_that("full cycle, add more to main", {
   writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
-  gert::git_add("cran-comments.md")
+  fast_git_add("cran-comments.md")
   gert::git_commit("this is how we check boxes")
 
   ## release ----

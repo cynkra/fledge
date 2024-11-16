@@ -47,7 +47,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
   gert::git_init()
   gert::git_config_set("user.name", maintainer)
   gert::git_config_set("user.email", email)
-  gert::git_add(".")
+  fast_git_add(".")
   gert::git_commit(
     "First commit",
     author = default_gert_author(),
@@ -68,7 +68,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
       "* Added a `NEWS.md` file to track changes to the package."
     )
     brio::write_lines(news_lines, news_path())
-    gert::git_add(news_path())
+    fast_git_add(news_path())
     gert::git_commit(
       "Add NEWS.md to track changes.",
       author = default_gert_author(),
