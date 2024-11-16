@@ -22,7 +22,7 @@
 #' @export
 update_news <- function(
     messages = NULL,
-    which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major", "major")) {
+    which = c("auto", "samedev", "dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major")) {
   which <- arg_match(which)
 
   local_repo()
