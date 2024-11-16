@@ -124,11 +124,19 @@ plan_release_impl <- function(which, force) {
   }
 
   if (is_installed("job") && rstudioapi::isAvailable() && !nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
-    inject(job::empty(title = "create_pull_request", { fledge:::create_pull_request(!!get_branch_name(), !!main_branch, !!remote_name, !!force) }))
-    inject(job::empty(title = "check_win_devel", { devtools::check_win_devel() }))
+    inject(job::empty(title = "create_pull_request", {
+      fledge:::create_pull_request(!!get_branch_name(), !!main_branch, !!remote_name, !!force)
+    }))
+    inject(job::empty(title = "check_win_devel", {
+      devtools::check_win_devel()
+    }))
     # FIXME
-    inject(job::empty(title = "check_for_cran", { if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch) }))
-    inject(job::empty(title = "url_update", { urlchecker::url_update() }))
+    inject(job::empty(title = "check_for_cran", {
+      if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
+    }))
+    inject(job::empty(title = "url_update", {
+      urlchecker::url_update()
+    }))
 
     if (fledge_chatty()) {
       cli_h1("3. User Action Items")
