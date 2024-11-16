@@ -1,5 +1,152 @@
 #' Automating CRAN release
 #'
+#' `plan_release()` is run
+#' when a milestone in the development of a package is reached
+#' and it is ready to be sent to CRAN.
+#'
+#' `plan_release()`:
+#' - Ensures that no modified files are in the Git index.
+#' - Creates a pre-release or release branch and bumps the version accordingly.
+#' - Writes/updates `cran-comments.md` with useful information about the current
+#'   release process.
+#' - Runs `urlchecker::url_update()`, `devtools::check_win_devel()`,
+#'   and `rhub::rhub_check(platforms = rhub::rhub_platforms()$name)`
+#'   in the background of the RStudio IDE, or prompts the user to do so.
+#' - Opens a pull request for the release branch for final checks.
+#'
+#' @param which Component of the version number to update. Supported
+#'   values are
+#'   * `"pre-patch"` (default, `x.y.z.9900`)
+#'   * `"pre-minor"` (`x.y.99.9900`),
+#'   * `"pre-major"` (`x.99.99.9900`),
+#'   * `"next"` (`"major"` if the current version is `x.99.99.9yyy`,
+#'     `"minor"` if the current version is `x.y.99.9zzz`,
+#'     `"patch"` otherwise),
+#'   * `"patch"`
+#'   * `"minor"`,
+#'   * `"major"`.
+#' @param force Create branches and tags even if they exist.
+#'   Useful to recover from a previously failed attempt.
+#' @rdname release
+#' @export
+plan_release <- function(
+  which = c("pre-patch", "pre-minor", "pre-major", "next", "patch", "minor", "major"),
+  force = FALSE
+) {
+  check_main_branch("init_release()")
+  check_only_modified(character())
+  check_gitignore("cran-comments.md")
+
+  which <- arg_match(which)
+  if (which == "next") {
+    which <- guess_next()
+  }
+
+  local_options(usethis.quiet = TRUE)
+  with_repo(plan_release_impl(which, force))
+}
+
+plan_release_impl <- function(which, force) {
+  # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
+  stopifnot(get_branch_name() != "HEAD")
+
+  # Do we need bump_version() first?
+  if (!no_change()) {
+    cli_abort(c(
+      "Aborting release process because not all changes were recorded.",
+      i = "Run {.run fledge::bump_version()}, then rerun {.run fledge::init_release()}"
+    ))
+  }
+
+  # Check PAT early
+  check_gh_pat()
+
+  fledgeling <- read_fledgling()
+  new_version <- fledge_guess_version(fledgeling[["version"]], which)
+
+  if (!force) {
+    check_release_branch(new_version)
+  }
+
+  if (fledge_chatty()) {
+    cat(boxx("pre-release", border_style = "double"))
+  }
+
+  # Begin extension points
+  # End extension points
+
+  # Don't bump here, want to be compatible with merge queues at some point
+
+  if (fledge_chatty()) cli_h1("1. Creating a release branch and getting ready")
+
+  # regroup dev news
+  fledgeling <- merge_dev_news(fledgeling, new_version)
+
+  # switch to release branch and update cran-comments
+  release_branch <- create_release_branch(new_version, force)
+  switch_branch(release_branch)
+
+  update_cran_comments(new_version)
+  gert::git_add(c("cran-comments.md", ".Rbuildignore"))
+  gert::git_commit("CRAN comments")
+
+  write_fledgling(fledgeling)
+  commit_version_impl()
+
+  edit_news()
+  edit_cran_comments()
+
+  if (fledge_chatty()) {
+    cli_h1("2. User Action Items")
+    cli_div(theme = list(ul = list(color = "magenta")))
+    cli_ul("Run {.run devtools::check_win_devel()}.")
+    cli_ul("Run {.run rhub::check_for_cran()}.")
+    cli_ul("Run {.run urlchecker::url_update()}.")
+    cli_ul("Check all items in {.file cran-comments.md}.")
+    cli_ul("Review {.file NEWS.md}.")
+    cli_ul("Run {.run fledge::pre_release()}.")
+    send_to_console("urlchecker <- urlchecker::url_update(); fledge:::bg_r(winbuilder = devtools::check_win_devel(quiet = TRUE), rhub = rhub::check_for_cran())")
+  }
+}
+
+pre_release_impl <- function(force) {
+  # check PAT scopes for PR for early abort
+  check_gh_pat("repo")
+
+  check_only_modified(c("NEWS.md", "cran-comments.md"))
+  gert::git_add(c("NEWS.md", "cran-comments.md"))
+  if (nrow(gert::git_status(staged = TRUE)) > 0) {
+    gert::git_commit("NEWS and CRAN comments")
+  }
+
+  cli_h1("1. Opening Pull Request for release branch")
+
+  main_branch <- get_main_branch()
+  remote_name <- get_remote_name(main_branch)
+
+  # push main branch, bump to devel version and push again
+  push_to_new(remote_name, force)
+
+  if (fledge_chatty()) {
+    cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
+  }
+
+  create_pull_request(get_branch_name(), main_branch, remote_name, force)
+
+  # user action items
+  if (fledge_chatty()) {
+    cli_h1("2. User Action Items")
+    cli_div(theme = list(ul = list(color = "magenta")))
+    cli_ul("Run {.code fledge::release()}.")
+    cli_end()
+  }
+
+  # Begin extension points
+  # End extension points
+}
+
+#' Automating CRAN release
+#'
 #' `init_release()` and `pre_release()` are run
 #' when a milestone in the development of a package is reached
 #' and it is ready to be sent to CRAN.
@@ -25,7 +172,7 @@
 #'   * `"major"`.
 #' @param force Create branches and tags even if they exist.
 #'   Useful to recover from a previously failed attempt.
-#' @name release
+#' @name release_deprecated
 #' @export
 init_release <- function(which = "next", force = FALSE) {
   check_main_branch("init_release()")
@@ -41,7 +188,7 @@ init_release <- function(which = "next", force = FALSE) {
   with_repo(init_release_impl(which, force))
 }
 
-#' @rdname release
+#' @rdname release_deprecated
 #' @export
 pre_release <- function(force = FALSE) {
   check_cran_branch("pre_release()")
