@@ -124,12 +124,11 @@ test_that("Can parse PR merge commits - PAT absence", {
 test_that("Can parse PR merge commits - other error", {
   withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
   withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
+  withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
 
   local_mocked_bindings(gh = function(...) stop("bla"))
 
   with_mock_dir("pr", {
-    withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
-    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
     expect_snapshot_tibble(
       harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing")
     )

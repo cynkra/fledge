@@ -39,7 +39,6 @@ test_that("full cycle, add more to main", {
 
   ## check boxes ----
   cran_comments <- get_cran_comments_text()
-  writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
   fast_git_add("cran-comments.md")

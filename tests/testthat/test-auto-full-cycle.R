@@ -40,12 +40,13 @@ test_that("full cycle", {
 
   ## check boxes first ----
   cran_comments <- get_cran_comments_text()
-  writeLines(cran_comments)
   cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
   brio::write_lines(cran_comments, "cran-comments.md")
 
   ## prep release ----
-  expect_snapshot(pre_release())
+  expect_fledge_snapshot({
+    pre_release()
+  })
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")

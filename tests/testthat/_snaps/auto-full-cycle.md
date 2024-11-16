@@ -33,6 +33,10 @@
       
       -- 1. Opening Pull Request for release branch ----------------------------------
       > Pushing cran-0.0.1 to remote origin.
+      > Opening draft pull request with contents from 'cran-comments.md'.
+      
+      -- 2. User Action Items --------------------------------------------------------
+      * Run `fledge::release()`.
 
 ---
 
