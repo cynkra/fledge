@@ -26,7 +26,9 @@
       * Run `urlchecker::url_update()`.
       * Check all items in 'cran-comments.md'.
       * Review 'NEWS.md'.
-      * Run `fledge::release()`.
+      * Run `fledge::finalize_version(push = TRUE)`.
+      * Merge the PR.
+      * Restart with `fledge::plan_release("next")`.
 
 ---
 
@@ -76,5 +78,7 @@
       * Run `urlchecker::url_update()`.
       * Check all items in 'cran-comments.md'.
       * Review 'NEWS.md'.
-      * Run `fledge::release()`.
+      * Run `fledge::finalize_version(push = TRUE)`.
+      * Merge the PR.
+      * Restart with `fledge::plan_release("next")`.
 
