@@ -150,8 +150,14 @@ plan_release_impl <- function(which, force) {
       cli_ul("Check all items in {.file cran-comments.md}.")
       cli_ul("Review {.file NEWS.md}.")
 
-      # FIXME: Only if ready for release
-      cli_ul("Run {.code fledge::release()}.")
+      if (is_dev_version(fledgeling$version)) {
+        # FIXME: Is this the right code?
+        cli_ul("Run {.run fledge::finalize_version(push = TRUE)}.")
+        cli_ul("Merge the PR.")
+        cli_ul('Restart with {.run fledge::plan_release("next")}.')
+      } else {
+        cli_ul("Run {.code fledge::release()}.")
+      }
 
       cli_end()
     }
@@ -179,8 +185,14 @@ plan_release_impl <- function(which, force) {
         glue("{url_update_code}; fledge:::bg_r({winbuilder_code}{rhub_code})")
       )
 
-      # FIXME: Only if ready for release
-      cli_ul("Run {.code fledge::release()}.")
+      if (is_dev_version(fledgeling$version)) {
+        # FIXME: Is this the right code?
+        cli_ul("Run {.run fledge::finalize_version(push = TRUE)}.")
+        cli_ul("Merge the PR.")
+        cli_ul('Restart with {.run fledge::plan_release("next")}.')
+      } else {
+        cli_ul("Run {.code fledge::release()}.")
+      }
 
       cli_end()
     }
