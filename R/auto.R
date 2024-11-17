@@ -803,7 +803,7 @@ get_last_release_version <- function() {
 }
 
 cran_release_pr_title <- function() {
-  "CRAN release v"
+  "fledge: CRAN release v"
 }
 
 extract_version_pr <- function(title) {
