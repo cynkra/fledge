@@ -44,7 +44,6 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/auto.html">Automate CRAN releases v2</a></li>
-    <li><a class="dropdown-item" href="../articles/cran-automation.html">Automate CRAN releases</a></li>
     <li><a class="dropdown-item" href="../articles/demo.html">Using fledge</a></li>
     <li><a class="dropdown-item" href="../articles/internals.html">Fledge internals</a></li>
   </ul>
@@ -92,7 +91,7 @@ a tag</li>
 </li>
 <li>Easy to undo a release attempt
 <ul>
-<li>Pre-flight with <code>init_release("pre-patch")</code>, including
+<li>Pre-flight with <code>plan_release("pre-patch")</code>, including
 grooming of <code>NEWS.md</code>
 </li>
 <li>Caveat: once committed to a release, there is no way back, to avoid
@@ -106,7 +105,7 @@ conflicts</li>
 </li>
 <li>Locally through <code><a href="https://rdrr.io/pkg/urlchecker/man/url_update.html" class="external-link">urlchecker::url_update()</a></code>,
 <code><a href="https://devtools.r-lib.org/reference/check_win.html" class="external-link">devtools::check_win_devel()</a></code>, and
-<code>rhub::check_for_cran()</code>
+<code><a href="https://r-hub.github.io/rhub/reference/check_for_cran.html" class="external-link">rhub::check_for_cran()</a></code>
 </li>
 <li>TODO: Compatibility with
 <code><a href="https://usethis.r-lib.org/reference/use_release_issue.html" class="external-link">usethis::use_release_issue()</a></code>
@@ -118,13 +117,14 @@ conflicts</li>
 <li>Checks run on GitHub Actions for branches that start with
 <code>cran-</code>
 </li>
-<li>TODO: Use background jobs via <code>job::empty()</code> where
+<li>TODO: Use background jobs via <code><a href="https://lindeloev.github.io/job/reference/job.html" class="external-link">job::empty()</a></code> where
 useful</li>
 </ul>
 </li>
 <li>Compatibility with auto-merge and merge queues
 <ul>
 <li>GHA workflow</li>
+<li>Commits/merges made by fledge are not newsworthy</li>
 </ul>
 </li>
 <li>Support merge and squash commits
@@ -141,7 +141,7 @@ release</li>
 </li>
 <li>Compatibility with manual release workflow
 <ul>
-<li><code>init_release("pre-patch")</code></li>
+<li><code>plan_release("pre-patch")</code></li>
 </ul>
 </li>
 <li>Consistency with <code><a href="https://usethis.r-lib.org/reference/use_release_issue.html" class="external-link">usethis::use_release_issue()</a></code>
@@ -161,6 +161,48 @@ maintain own list</li>
 <li>Conflicts with important goal to avoid conflicts, and also with
 auto-merge and merge queues</li>
 <li>Release from main branch possible in some cases</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>
+<p>Optional, recommended because grooming the NEWS often gives a
+hint about what’s missing in a release:</p>
+<ul>
+<li><p><code>fledge::plan_release("pre-patch")</code> (or
+<code>"pre-minor"</code> or <code>"pre-major"</code>)</p></li>
+<li><p>Edit <code>NEWS.md</code> as needed</p></li>
+<li><p>Perform any release-related tasks</p></li>
+<li><p>Merge PR</p></li>
+</ul>
+</li>
+<li>
+<p>Mandatory:</p>
+<ul>
+<li><p><code>fledge::plan_release("next")</code> (or
+<code>"minor"</code> or <code>"major"</code>)</p></li>
+<li><p>Perform work from previous step if omitted</p></li>
+<li><p><code><a href="../reference/release.html">fledge::release()</a></code> (FIXME: also by merging
+PR)</p></li>
+</ul>
+</li>
+<li>
+<p>If submission rejected:</p>
+<ul>
+<li><p><code>fledge::plan_release("last")</code> (FIXME)</p></li>
+<li><p>Apply hotfixes required to submit</p></li>
+<li><p><code><a href="../reference/release.html">fledge::release()</a></code> (FIXME: also by merging
+PR)</p></li>
+</ul>
+</li>
+<li>
+<p>If submission abandoned:</p>
+<ul>
+<li>No action required</li>
 </ul>
 </li>
 </ol>
