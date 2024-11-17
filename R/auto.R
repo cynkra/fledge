@@ -437,9 +437,7 @@ is_news_consistent <- function() {
     return(length(headers$version) == 1)
   }
 
-  versions <- package_version(headers$version[1:2], strict = TRUE)
-
-  all(lengths(unclass(versions)) <= 3)
+  !any(is_dev_version(headers$version[1:2]))
 }
 
 get_cran_comments_text <- function() {
