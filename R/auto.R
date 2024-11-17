@@ -137,7 +137,7 @@ plan_release_impl <- function(which, force) {
     }))
     if (has_src) {
       inject(job::empty(title = "rhub", {
-        if (has_src) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
+        rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
       }))
     }
     inject(job::empty(title = "url_update", {
@@ -156,7 +156,7 @@ plan_release_impl <- function(which, force) {
         cli_ul("Merge the PR.")
         cli_ul('Restart with {.run fledge::plan_release("next")}.')
       } else {
-        cli_ul("Run {.code fledge::release()}.")
+        cli_ul("Run {.run fledge::release()}.")
       }
 
       cli_end()
@@ -191,7 +191,7 @@ plan_release_impl <- function(which, force) {
         cli_ul("Merge the PR.")
         cli_ul('Restart with {.run fledge::plan_release("next")}.')
       } else {
-        cli_ul("Run {.code fledge::release()}.")
+        cli_ul("Run {.run fledge::release()}.")
       }
 
       cli_end()
@@ -803,7 +803,7 @@ get_last_release_version <- function() {
 }
 
 cran_release_pr_title <- function() {
-  "CRAN release v"
+  "fledge: CRAN release v"
 }
 
 extract_version_pr <- function(title) {
