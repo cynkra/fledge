@@ -124,6 +124,8 @@ read_news <- function(news_lines = NULL) {
   }
   section_df$news <- map(section_df$news, fix_name_and_level)
 
+  section_df$news <- NA_character_
+
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
   if (is_preamble_absent) {
