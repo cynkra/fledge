@@ -137,7 +137,7 @@ plan_release_impl <- function(which, force) {
     }))
     if (has_src) {
       inject(job::empty(title = "rhub", {
-        if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
+        if (has_src) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
       }))
     }
     inject(job::empty(title = "url_update", {
