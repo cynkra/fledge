@@ -130,7 +130,7 @@ plan_release_impl <- function(which, force) {
 
   if (is_installed("job") && rstudioapi::isAvailable() && !nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
     inject(job::empty(title = "create_pull_request", {
-      fledge:::create_pull_request(!!get_branch_name(), !!main_branch, !!remote_name, !!force)
+      asNamespace("fledge")$create_pull_request(!!get_branch_name(), !!main_branch, !!remote_name, !!force)
     }))
     inject(job::empty(title = "check_win_devel", {
       devtools::check_win_devel()
