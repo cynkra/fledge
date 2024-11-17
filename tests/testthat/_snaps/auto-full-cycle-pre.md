@@ -1,13 +1,15 @@
 # full cycle pre-minor
 
     Code
-      init_release()
+      plan_release("next")
+    Message
+      > Digesting messages from 1 commits.
     Output
-      +-----------------+
-      |                 |
-      |   pre-release   |
-      |                 |
-      +-----------------+
+      +------------------+
+      |                  |
+      |   plan_release   |
+      |                  |
+      +------------------+
     Message
       
       -- 1. Creating a release branch and getting ready ------------------------------
@@ -15,27 +17,15 @@
       > Switching to branch cran-0.1.0.
       > Committing changes.
       
-      -- 2. User Action Items --------------------------------------------------------
-      * Run `devtools::check_win_devel()`.
-      * Run `rhub::check_for_cran()`.
-      * Run `urlchecker::url_update()`.
-      * Check all items in 'cran-comments.md'.
-      * Review 'NEWS.md'.
-      * Run `fledge::pre_release()`.
-    Output
-      NULL
-
----
-
-    Code
-      pre_release()
-    Message
-      
-      -- 1. Opening Pull Request for release branch ----------------------------------
+      -- 2. Opening Pull Request for release branch ----------------------------------
       > Pushing cran-0.1.0 to remote origin.
       > Opening draft pull request with contents from 'cran-comments.md'.
       
-      -- 2. User Action Items --------------------------------------------------------
+      -- 3. User Action Items --------------------------------------------------------
+      * Run `devtools::check_win_devel()`.
+      * Run `urlchecker::url_update()`.
+      * Check all items in 'cran-comments.md'.
+      * Review 'NEWS.md'.
       * Run `fledge::release()`.
 
 ---

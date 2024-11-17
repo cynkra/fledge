@@ -26,7 +26,7 @@ test_that("full cycle pre-minor", {
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
   expect_fledge_snapshot({
-    init_release()
+    plan_release("next")
   })
   expect_equal(gert::git_branch(), "cran-0.1.0")
   expect_setequal(
@@ -35,11 +35,6 @@ test_that("full cycle pre-minor", {
   )
   expect_equal(as.character(desc::desc_get_version()), "0.1.0")
   expect_equal(nrow(gert::git_status()), 0)
-
-  ## prep release ----
-  expect_fledge_snapshot({
-    pre_release()
-  })
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")

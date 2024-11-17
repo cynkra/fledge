@@ -20,7 +20,9 @@ test_that("full cycle, add more to main", {
   ## init release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  init_release()
+  expect_fledge_snapshot({
+    plan_release("next")
+  })
 
   ## add stuff on main and push ----
   gert::git_branch_checkout("main")
@@ -31,11 +33,6 @@ test_that("full cycle, add more to main", {
   gert::git_push()
 
   gert::git_branch_checkout("cran-0.0.1")
-
-  ## prep release ----
-  expect_fledge_snapshot({
-    pre_release()
-  })
 
   ## release ----
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")

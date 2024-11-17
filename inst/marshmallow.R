@@ -30,7 +30,7 @@ finalize_version(push = TRUE)
 # init release ----
 withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-init_release()
+plan_release()
 gert::git_branch()
 gert::git_branch_list(local = TRUE)
 desc::desc_get_version()
@@ -42,8 +42,11 @@ writeLines(cran_comments)
 cran_comments <- gsub("- \\[ \\]", "- \\[x\\]", cran_comments)
 brio::write_lines(cran_comments, "cran-comments.md")
 
+gert::git_branch_checkout("main")
+system("git merge cran-0.0.0.9900 --no-ff -m 'fledge: Bump'")
+
 # prep release ----
-pre_release()
+plan_release("patch")
 
 # release ----
 withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
