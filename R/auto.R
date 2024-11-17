@@ -136,7 +136,7 @@ plan_release_impl <- function(which, force) {
       devtools::check_win_devel()
     }))
     if (has_src) {
-      inject(job::empty(title = "check_for_cran", {
+      inject(job::empty(title = "rhub", {
         if (FALSE) rhub::rhub_check(platforms = rhub::rhub_platforms()$name, branch = !!release_branch)
       }))
     }
