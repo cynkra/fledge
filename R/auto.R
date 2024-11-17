@@ -156,7 +156,7 @@ plan_release_impl <- function(which, force) {
         cli_ul("Merge the PR.")
         cli_ul('Restart with {.run fledge::plan_release("next")}.')
       } else {
-        cli_ul("Run {.code fledge::release()}.")
+        cli_ul("Run {.run fledge::release()}.")
       }
 
       cli_end()
@@ -191,7 +191,7 @@ plan_release_impl <- function(which, force) {
         cli_ul("Merge the PR.")
         cli_ul('Restart with {.run fledge::plan_release("next")}.')
       } else {
-        cli_ul("Run {.code fledge::release()}.")
+        cli_ul("Run {.run fledge::release()}.")
       }
 
       cli_end()
