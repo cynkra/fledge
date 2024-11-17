@@ -292,18 +292,6 @@ bind_rows <- function(df_list) {
   do.call(rbind, df_list)
 }
 
-
-get_version_components <- function(version) {
-  # from https://github.com/r-lib/desc/blob/daece0e5816e17a461969489bfdda2d50b4f5fe5/R/version.R#L53
-  components <- as.numeric(strsplit(format(version), "[-\\.]")[[1]])
-  c(
-    major = components[1],
-    minor = components[2],
-    patch = components[3],
-    dev = components[4] # can be NA
-  )
-}
-
 get_news_headers <- function() {
   read_fledgling()[["news"]][, c("start", "version", "date", "nickname")]
 }
