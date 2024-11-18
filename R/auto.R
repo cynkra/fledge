@@ -719,7 +719,6 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       head = release_branch,
       base = main_branch,
       maintainer_can_modify = TRUE,
-      draft = TRUE,
       body = body
     )
 
