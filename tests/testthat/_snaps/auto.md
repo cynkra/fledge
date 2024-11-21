@@ -17,36 +17,6 @@
       Error in `gert::git_branch_create()`:
       ! Failed to find git reference 'blop'
 
-# plan_release() works
-
-    Code
-      plan_release("next")
-    Message
-      > Digesting messages from 1 commits.
-    Output
-      +------------------+
-      |                  |
-      |   plan_release   |
-      |                  |
-      +------------------+
-    Message
-      
-      -- 1. Creating a release branch and getting ready ------------------------------
-      > Creating branch cran-0.0.1.
-      > Switching to branch cran-0.0.1.
-      > Committing changes.
-      
-      -- 2. Opening Pull Request for release branch ----------------------------------
-      > Pushing cran-0.0.1 to remote origin.
-      > Opening draft pull request with contents from 'cran-comments.md'.
-      
-      -- 3. User Action Items --------------------------------------------------------
-      * Run `devtools::check_win_devel()`.
-      * Run `urlchecker::url_update()`.
-      * Check all items in 'cran-comments.md'.
-      * Review 'NEWS.md'.
-      * Run `fledge::release()`.
-
 # plan_release() -- force
 
     Code
