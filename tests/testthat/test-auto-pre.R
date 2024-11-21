@@ -26,9 +26,8 @@ test_that("plan_release() works", {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   create_remote(tempdir_remote)
 
-  ## TODO: add test for bump_version() not run?
   local_fledge_quiet()
-  bump_version()
+
   expect_fledge_snapshot({
     plan_release("next")
   })

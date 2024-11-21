@@ -3,7 +3,24 @@
     Code
       plan_release("next")
     Message
-      > Digesting messages from 1 commits.
+      > Digesting messages from 3 commits.
+      v Found 1 NEWS-worthy entry.
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.0.9001.
+      > Added header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
+      > Pushing main.
+      > Force-pushing tag v0.0.0.9001.
     Output
       +------------------+
       |                  |
