@@ -10,7 +10,7 @@ bump_version_impl <- function(fledgeling,
   #' 1. Verify that the current branch is the main branch
   #'    if `check_default_branch = TRUE` (the default).
   if (check_default_branch) {
-    check_main_branch("bump_version()")
+    check_main_branch("bump_version()", "bump_version(check_default_branch = FALSE)")
   }
   #' 1. [update_news()], using the `which` argument.
   out <- update_news_impl(
