@@ -130,15 +130,14 @@ plan_release_impl <- function(which, force) {
   push_to_new(remote_name, force)
 
   if (fledge_chatty()) {
-    cli_alert("Opening draft pull request with contents from {.file cran-comments.md}.")
+    cli_alert("Opening pull request with instructions.")
   }
+
+  create_pull_request(get_branch_name(), main_branch, remote_name, force)
 
   has_src <- pkgbuild::pkg_has_src()
 
   if (is_installed("job") && rstudioapi::isAvailable() && !nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
-    inject(job::empty(title = "create_pull_request", {
-      asNamespace("fledge")$create_pull_request(!!get_branch_name(), !!main_branch, !!remote_name, !!force)
-    }))
     inject(job::empty(title = "check_win_devel", {
       devtools::check_win_devel()
     }))
@@ -169,8 +168,6 @@ plan_release_impl <- function(which, force) {
       cli_end()
     }
   } else {
-    create_pull_request(get_branch_name(), main_branch, remote_name, force)
-
     # user action items
     if (fledge_chatty()) {
       cli_h1("3. User Action Items")
@@ -412,7 +409,7 @@ get_cransplainer_update <- function(package) {
 
   cransplainer <- paste0(
     "- [x] ", checked_on, ", problems found: ", url, "\n",
-    paste0("- [ ] ", details$result, ": ", details$flavors, "\n", details$message, collapse = "\n")
+    paste0("- [ ] ", details$result, ": ", details$flavors, "\n", substr(details$message, 1, 2000), collapse = "\n")
   )
 
   paste0(cransplainer, "\n\nCheck results at: ", url)
@@ -759,8 +756,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
     )
   }
 
-  # FIXME: Use response from gh() call to open URL
-  usethis::pr_view()
+  utils::browseURL(pr[["html_url"]])
 }
 
 # FIXME: Align with new-style release
