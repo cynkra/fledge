@@ -102,6 +102,7 @@
       Error in `check_main_branch()`:
       x Must be on the main branch ("main") for running `bump_version()`.
       i Currently on branch "bla".
+      i Consider running `bump_version(check_default_branch = FALSE)`.
 
 # bump_version() errors well for wrong arguments
 
