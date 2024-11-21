@@ -13,7 +13,6 @@
   obsolete now.
 
   Reviewed-by: Z
-  Refs: #123
 
 ## Features
 

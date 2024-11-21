@@ -14,23 +14,23 @@
 
     Code
       extract_newsworthy_items(
-        "- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)")
+        "- blop\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)")
     Output
       # A tibble: 1 x 4
-        description                 type          breaking scope
-        <chr>                       <chr>         <lgl>    <lgl>
-      1 blop (@person, @else, #42). Uncategorized FALSE    NA   
+        description            type          breaking scope
+        <chr>                  <chr>         <lgl>    <lgl>
+      1 blop (@person, @else). Uncategorized FALSE    NA   
 
 ---
 
     Code
       extract_newsworthy_items(
-        "feat: blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
+        "feat: blop\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
     Output
       # A tibble: 1 x 4
-        description         type     breaking scope
-        <chr>               <chr>    <lgl>    <lgl>
-      1 blop (@person, #42) Features FALSE    NA   
+        description    type     breaking scope
+        <chr>          <chr>    <lgl>    <lgl>
+      1 blop (@person) Features FALSE    NA   
 
 # Can parse PR merge commits
 
@@ -96,6 +96,17 @@
         "pr_number": "332",
         "issue_numbers": [],
         "external_ctb": "NA"
+      }
+    ] 
+
+# Can parse PR squash commits - linked issues
+
+    [
+      {
+        "description": "improve bump_version() (error) messages  (#153, cynkra/dm#325, #328).",
+        "type": "Features",
+        "breaking": false,
+        "scope": "NA"
       }
     ] 
 

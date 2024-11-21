@@ -46,13 +46,13 @@ test_that("Can parse Co-authored-by", {
 
   expect_snapshot(
     extract_newsworthy_items(
-      "- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)"
+      "- blop\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)"
     )
   )
 
   expect_snapshot(
     extract_newsworthy_items(
-      "feat: blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)"
+      "feat: blop\n\nCo-authored-by: Person (<person@users.noreply.github.com>)"
     )
   )
 })
@@ -131,6 +131,19 @@ test_that("Can parse PR merge commits - other error", {
   with_mock_dir("pr", {
     expect_snapshot_tibble(
       harvest_pr_data("Merge pull request #332 from cynkra/conventional-parsing")
+    )
+  })
+})
+
+test_that("Can parse PR squash commits - linked issues", {
+  withr::local_envvar("FLEDGE_TEST_GITHUB_SLUG" = "cynkra/fledge")
+
+  with_mock_dir("pr2", {
+    withr::local_envvar("FLEDGE_YES_INTERNET_TEST" = "yes")
+    withr::local_envvar("FLEDGE_TEST_SCOPES" = "bla")
+    withr::local_envvar("GITHUB_PAT" = "ghp_111111111111111111111111111111111111111")
+    expect_snapshot_tibble(
+      extract_newsworthy_items("feat: blop (#328)\n")
     )
   })
 })
