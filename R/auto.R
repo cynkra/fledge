@@ -248,7 +248,9 @@ merge_dev_news <- function(fledgeling, new_version) {
 
   n_dev <- rle(dev_idx)$lengths[[1]]
 
-  news <- regroup_news(unlist(fledgeling$news$news[seq_len(n_dev)], recursive = FALSE))
+  news <- regroup_news(
+    unlist(fledgeling[["news"]]$news[seq_len(n_dev)], recursive = FALSE)
+  )
 
   new_section <- tibble::tibble(
     start = 3,
