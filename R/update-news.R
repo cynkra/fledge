@@ -92,7 +92,7 @@ update_news_impl <- function(commits,
     if (dev_header_present) {
       combined <- c(
         parse_news_md(news_lines),
-        fledgeling[["news"]][1, ]$news[[1]]
+        fledgeling[["news"]]$news[[1]][[1]]
       )
       combined <- purrr::discard(combined, purrr::is_empty)
       news <- regroup_news(combined)
