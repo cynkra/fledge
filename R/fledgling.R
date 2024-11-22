@@ -248,7 +248,7 @@ write_news_section <- function(df) {
 
     section_lines <- c(
       version_header, "",
-      format_news_subsections(df$news[[1]], header_level), ""
+      df$raw, ""
     )
   }
   paste0(section_lines, collapse = "\n")
