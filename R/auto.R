@@ -51,25 +51,32 @@ plan_release <- function(
   }
 
   local_options(usethis.quiet = TRUE)
-  with_repo(plan_release_impl(which, force))
+  local_repo()
+
+  plan_release_impl(which, force)
 }
 
 plan_release_impl <- function(which, force) {
   # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
   stopifnot(get_branch_name() != "HEAD")
 
-  # Do we need bump_version() first?
-  if (!no_change()) {
-    cli_abort(c(
-      "Aborting release process because not all changes were recorded.",
-      i = "Run {.run fledge::bump_version()}, then rerun {.run fledge::plan_release()}"
-    ))
-  }
-
   # Check PAT early
   check_gh_pat("repo")
 
-  fledgeling <- read_fledgling()
+  orig_fledgeling <- read_fledgling()
+
+  fledgeling <- update_news_impl(
+    default_commit_range(),
+    which = "dev",
+    fledgeling = orig_fledgeling,
+    no_change_message = NA_character_
+  )
+
+  if (!identical(fledgeling, orig_fledgeling)) {
+    write_fledgling(fledgeling)
+    finalize_version_impl(push = TRUE)
+  }
+
   new_version <- fledge_guess_version(fledgeling[["version"]], which)
 
   if (!force) {

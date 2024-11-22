@@ -12,7 +12,7 @@
     Code
       plan_release("next")
     Message
-      > Digesting messages from 1 commits.
+      > Digesting messages from 2 commits.
     Output
       +------------------+
       |                  |

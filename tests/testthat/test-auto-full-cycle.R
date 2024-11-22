@@ -21,8 +21,8 @@ test_that("full cycle", {
   gert::git_commit("* Add cool bla.")
 
   local_fledge_quiet()
-  bump_version()
-  finalize_version(push = TRUE)
+
+  # Deliberately without bump_version()
 
   ## init release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
