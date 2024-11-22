@@ -715,9 +715,7 @@ create_pull_request <- function(release_branch, main_branch, remote_name, force)
       "POST /repos/:owner/:repo/pulls",
       owner = info$owner$login,
       repo = info$name,
-      title = sprintf(
-        "%s%s",
-        cran_release_pr_title(),
+      title = cran_release_pr_title(
         strsplit(gert::git_branch(), "cran-")[[1]][2]
       ),
       head = release_branch,
@@ -804,16 +802,16 @@ get_last_release_version <- function() {
   as.package_version(gsub("^v", "", tag_df$name))
 }
 
-cran_release_pr_title <- function() {
-  "fledge: CRAN release v"
+cran_release_pr_title <- function(version) {
+  if (is_dev_version(version)) {
+    paste0("fledge: CRAN pre-release v", version)
+  } else {
+    paste0("fledge: CRAN release v", version)
+  }
 }
 
 extract_version_pr <- function(title) {
-  if (grepl(cran_release_pr_title(), title)) {
-    return(sub(cran_release_pr_title(), "", title))
-  }
-
-  matches <- regexpr("[0-9]*\\.[0-9]*\\.[0-9]*", title)
+  matches <- regexpr("(?<=v)[0-9]+[.][0-9]+[.][0-9]+([.][0-9]+)?$", title, perl = TRUE)
   regmatches(title, matches)
 }
 
