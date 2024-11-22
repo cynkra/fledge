@@ -243,12 +243,14 @@ get_remote_name <- function(branch = get_main_branch()) {
 }
 
 merge_dev_news <- function(fledgeling, new_version) {
-  dev_idx <- grepl("^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$", fledgeling$news$version)
+  dev_idx <- grepl("^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$", fledgeling[["news"]]$version)
   stopifnot(dev_idx[[1]])
 
   n_dev <- rle(dev_idx)$lengths[[1]]
 
-  news <- regroup_news(unlist(fledgeling$news$news[seq_len(n_dev)], recursive = FALSE))
+  news <- regroup_news(
+    unlist(fledgeling[["news"]]$news[seq_len(n_dev)], recursive = FALSE)
+  )
 
   new_section <- tibble::tibble(
     start = 3,
@@ -263,8 +265,11 @@ merge_dev_news <- function(fledgeling, new_version) {
     section_state = "new"
   )
 
-  fledgeling$version <- as.package_version(new_version)
-  fledgeling$news <- vctrs::vec_rbind(new_section, fledgeling$news[-seq_len(n_dev), ])
+  fledgeling[["version"]] <- as.package_version(new_version)
+  fledgeling[["news"]] <- vctrs::vec_rbind(
+    new_section,
+    fledgeling[["news"]][-seq_len(n_dev), ]
+  )
 
   fledgeling
 }
@@ -567,9 +572,9 @@ create_github_release <- function() {
 
   fledgling <- read_fledgling()
 
-  stopifnot(sum(fledgling$news$version == version) == 1)
+  stopifnot(sum(fledgling[["news"]]$version == version) == 1)
   header <- paste0(fledgling$name, " ", version)
-  body <- fledgling$news$raw[fledgling$news$version == version]
+  body <- fledgling[["news"]]$raw[fledgling[["news"]]$version == version]
 
   body <- gsub("^# [^\n]*\n+", "", body)
 

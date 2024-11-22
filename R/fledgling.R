@@ -193,7 +193,7 @@ write_fledgling <- function(fledgeling) {
 
   # store news
 
-  news_df <- fledgeling$news
+  news_df <- fledgeling[["news"]]
   news_lines <- purrr::map_chr(
     split(news_df, seq_len(nrow(news_df))),
     write_news_section
