@@ -99,14 +99,6 @@ read_news <- function(news_lines = NULL) {
     news = unname(split(news, seq_len(length(news))))
   )
 
-  section_df$section_state <- "keep"
-
-  section_df$title <- names(news)
-
-  parsed_titles <- parse_versions(names(news))[, c("version", "date", "nickname")]
-
-  section_df <- vctrs::vec_cbind(section_df, parsed_titles)
-
   fix_name_and_level <- function(news_list) {
     if (is.null(news_list)) {
       return(news_list)
@@ -123,6 +115,14 @@ read_news <- function(news_lines = NULL) {
     unlist(news_list[[1]], recursive = FALSE)
   }
   section_df$news <- map(section_df$news, fix_name_and_level)
+
+  section_df$section_state <- "keep"
+
+  section_df$title <- names(news)
+
+  parsed_titles <- parse_versions(names(news))[, c("version", "date", "nickname")]
+
+  section_df <- vctrs::vec_cbind(section_df, parsed_titles)
 
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
