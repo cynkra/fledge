@@ -265,8 +265,11 @@ merge_dev_news <- function(fledgeling, new_version) {
     section_state = "new"
   )
 
-  fledgeling$version <- as.package_version(new_version)
-  fledgeling$news <- vctrs::vec_rbind(new_section, fledgeling$news[-seq_len(n_dev), ])
+  fledgeling[["version"]] <- as.package_version(new_version)
+  fledgeling[["news"]] <- vctrs::vec_rbind(
+    new_section,
+    fledgeling[["news"]][-seq_len(n_dev), ]
+  )
 
   fledgeling
 }
