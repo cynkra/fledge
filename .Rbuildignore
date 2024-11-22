@@ -12,5 +12,3 @@
 ^CRAN-SUBMISSION$
 ^data-raw$
 ^pkgdown$
-^\.aviator$
-^\.aviator/config\.yml$
