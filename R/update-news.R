@@ -24,7 +24,7 @@ update_news_impl <- function(commits,
   dev_header_present <- isTRUE(
     grepl(
       "(development version)",
-      fledgeling[["news"]][["title"]][1]
+      fledgeling[["news"]]$title[[1]]
     )
   )
 
@@ -120,7 +120,7 @@ update_news_impl <- function(commits,
     if (initializing) {
       fledgeling[["news"]] <- section_df
     } else {
-      fledgeling[["news"]] <- rbind(
+      fledgeling[["news"]] <- vctrs::vec_rbind(
         section_df,
         fledgeling[["news"]]
       )
