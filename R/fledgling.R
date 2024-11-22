@@ -105,7 +105,7 @@ read_news <- function(news_lines = NULL) {
 
   parsed_titles <- parse_versions(names(news))[, c("version", "date", "nickname")]
 
-  section_df <- tibble::as_tibble(cbind(section_df, parsed_titles))
+  section_df <- vctrs::vec_cbind(section_df, parsed_titles)
 
   fix_name_and_level <- function(news_list) {
     if (is.null(news_list)) {
