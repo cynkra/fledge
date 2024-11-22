@@ -572,7 +572,7 @@ create_github_release <- function() {
 
   fledgling <- read_fledgling()
 
-  stopifnot(sum(fledgling$news$version == version) == 1)
+  stopifnot(sum(fledgling[["news"]]$version == version) == 1)
   header <- paste0(fledgling$name, " ", version)
   body <- fledgling$news$raw[fledgling$news$version == version]
 
