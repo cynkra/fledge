@@ -1,5 +1,66 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9033 (2024-11-22)
+
+## Bug fixes
+
+- CRAN PRs are no longer created as draft (#810).
+
+- `fledge:::release_after_cran_built_binaries()` no longer throws an error if no release exists.
+
+## Features
+
+- `finalize_version()` unconditionally overwrites existing tags (#819).
+
+- Pre-releases get a different PR title (#818).
+
+- PR must open from the main window (#816).
+
+- `plan_release()` calls `bump_version()` (#814).
+
+- Detect contributors for squashed commits (#813).
+
+- Mention `bump_version(check_default_branch = FALSE)` in error message (#812).
+
+- New `plan_release()`, replaces `init_release()` and `pre_release()` (#803).
+
+- Support `which = "pre-patch"` for `bump_version()` and `update_version()` (#802).
+
+- `bump_version()` does not bump if no newsworthy messages are found (#801).
+
+- Messages that start with `"fledge: "` are no longer considered newsworthy (#800).
+
+- Include only relevant info in `cran-comments.md` (#799).
+
+- Support pre-patch version, new versioning scheme starting at 9900 (#794).
+
+## Chore
+
+- Bump commit messages get a fledge prefix.
+
+- Add fledge prefix to CRAN PR (#809).
+
+## Continuous integration
+
+- Remove Aviator (#815).
+
+- Correctly detect branch protection (#811).
+
+- Sync fledge workflow.
+
+## Refactoring
+
+- `is_dev_version()` and related (#805).
+
+## Testing
+
+- Reduce use of `shut_up_fledge()` (#796).
+
+- Speed up tests by replacing `gert::git_add()` with a system call (#793).
+
+- Split slow test.
+
+
 # fledge 0.1.99.9032 (2024-11-11)
 
 ## Continuous integration
