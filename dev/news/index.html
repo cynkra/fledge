@@ -7,7 +7,7 @@
     <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-nav" alt="cynkra"></a>
     <a class="navbar-brand me-2" href="../index.html">fledge</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.99.9032</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.99.9033</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,51 @@
       <small>Source: <a href="https://github.com/cynkra/fledge/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.99.9033" id="fledge-01999033-2024-11-22">fledge 0.1.99.9033 (2024-11-22)<a class="anchor" aria-label="anchor" href="#fledge-01999033-2024-11-22"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-99-9033">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-99-9033"></a></h3>
+<ul><li><p>CRAN PRs are no longer created as draft (<a href="https://github.com/cynkra/fledge/issues/810" class="external-link">#810</a>).</p></li>
+<li><p><code>fledge:::release_after_cran_built_binaries()</code> no longer throws an error if no release exists.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-1-99-9033">Features<a class="anchor" aria-label="anchor" href="#features-0-1-99-9033"></a></h3>
+<ul><li><p><code><a href="../reference/finalize_version.html">finalize_version()</a></code> unconditionally overwrites existing tags (<a href="https://github.com/cynkra/fledge/issues/819" class="external-link">#819</a>).</p></li>
+<li><p>Pre-releases get a different PR title (<a href="https://github.com/cynkra/fledge/issues/818" class="external-link">#818</a>).</p></li>
+<li><p>PR must open from the main window (<a href="https://github.com/cynkra/fledge/issues/816" class="external-link">#816</a>).</p></li>
+<li><p><code><a href="../reference/release.html">plan_release()</a></code> calls <code><a href="../reference/bump_version.html">bump_version()</a></code> (<a href="https://github.com/cynkra/fledge/issues/814" class="external-link">#814</a>).</p></li>
+<li><p>Detect contributors for squashed commits (<a href="https://github.com/cynkra/fledge/issues/813" class="external-link">#813</a>).</p></li>
+<li><p>Mention <code>bump_version(check_default_branch = FALSE)</code> in error message (<a href="https://github.com/cynkra/fledge/issues/812" class="external-link">#812</a>).</p></li>
+<li><p>New <code><a href="../reference/release.html">plan_release()</a></code>, replaces <code>init_release()</code> and <code>pre_release()</code> (<a href="https://github.com/cynkra/fledge/issues/803" class="external-link">#803</a>).</p></li>
+<li><p>Support <code>which = "pre-patch"</code> for <code><a href="../reference/bump_version.html">bump_version()</a></code> and <code><a href="../reference/update_version.html">update_version()</a></code> (<a href="https://github.com/cynkra/fledge/issues/802" class="external-link">#802</a>).</p></li>
+<li><p><code><a href="../reference/bump_version.html">bump_version()</a></code> does not bump if no newsworthy messages are found (<a href="https://github.com/cynkra/fledge/issues/801" class="external-link">#801</a>).</p></li>
+<li><p>Messages that start with <code>"fledge: "</code> are no longer considered newsworthy (<a href="https://github.com/cynkra/fledge/issues/800" class="external-link">#800</a>).</p></li>
+<li><p>Include only relevant info in <code>cran-comments.md</code> (<a href="https://github.com/cynkra/fledge/issues/799" class="external-link">#799</a>).</p></li>
+<li><p>Support pre-patch version, new versioning scheme starting at 9900 (<a href="https://github.com/cynkra/fledge/issues/794" class="external-link">#794</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-1-99-9033">Chore<a class="anchor" aria-label="anchor" href="#chore-0-1-99-9033"></a></h3>
+<ul><li><p>Bump commit messages get a fledge prefix.</p></li>
+<li><p>Add fledge prefix to CRAN PR (<a href="https://github.com/cynkra/fledge/issues/809" class="external-link">#809</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-1-99-9033">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-1-99-9033"></a></h3>
+<ul><li><p>Remove Aviator (<a href="https://github.com/cynkra/fledge/issues/815" class="external-link">#815</a>).</p></li>
+<li><p>Correctly detect branch protection (<a href="https://github.com/cynkra/fledge/issues/811" class="external-link">#811</a>).</p></li>
+<li><p>Sync fledge workflow.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="refactoring-0-1-99-9033">Refactoring<a class="anchor" aria-label="anchor" href="#refactoring-0-1-99-9033"></a></h3>
+<ul><li>
+<code>is_dev_version()</code> and related (<a href="https://github.com/cynkra/fledge/issues/805" class="external-link">#805</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-1-99-9033">Testing<a class="anchor" aria-label="anchor" href="#testing-0-1-99-9033"></a></h3>
+<ul><li><p>Reduce use of <code>shut_up_fledge()</code> (<a href="https://github.com/cynkra/fledge/issues/796" class="external-link">#796</a>).</p></li>
+<li><p>Speed up tests by replacing <code><a href="https://docs.ropensci.org/gert/reference/git_commit.html" class="external-link">gert::git_add()</a></code> with a system call (<a href="https://github.com/cynkra/fledge/issues/793" class="external-link">#793</a>).</p></li>
+<li><p>Split slow test.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.99.9032" id="fledge-01999032-2024-11-11">fledge 0.1.99.9032 (2024-11-11)<a class="anchor" aria-label="anchor" href="#fledge-01999032-2024-11-11"></a></h2>
 <div class="section level3">
