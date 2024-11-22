@@ -243,7 +243,7 @@ get_remote_name <- function(branch = get_main_branch()) {
 }
 
 merge_dev_news <- function(fledgeling, new_version) {
-  dev_idx <- grepl("^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$", fledgeling$news$version)
+  dev_idx <- grepl("^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$", fledgeling[["news"]]$version)
   stopifnot(dev_idx[[1]])
 
   n_dev <- rle(dev_idx)$lengths[[1]]
