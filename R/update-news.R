@@ -57,10 +57,8 @@ update_news_impl <- function(commits,
         section_state = "new"
       )
     } else {
-      combined <- c(
-        parse_news_md_update(news_lines),
-        fledgeling[["news"]]$news[[1]]
-      )
+      old_news <- fledgeling[["news"]]$news[[1]]
+      combined <- c(parse_news_md_update(news_lines), old_news)
       combined <- purrr::discard(combined, purrr::is_empty)
       regrouped <- regroup_news(combined)
       fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
@@ -91,10 +89,8 @@ update_news_impl <- function(commits,
     }
 
     if (dev_header_present) {
-      combined <- c(
-        parse_news_md_update(news_lines),
-        fledgeling[["news"]]$news[[1]]
-      )
+      old_news <- fledgeling[["news"]]$news[[1]]
+      combined <- c(parse_news_md_update(news_lines), old_news)
       combined <- purrr::discard(combined, purrr::is_empty)
       news <- regroup_news(combined)
       fledgeling[["news"]] <- fledgeling[["news"]][-1, ]
