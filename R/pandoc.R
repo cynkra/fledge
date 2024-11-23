@@ -40,41 +40,44 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     check_top_level_headers(versions)
   }
 
-  treat_section <- function(section) {
-    children <- xml2::xml_children(section)
+  out <- news_collection_treat_section(versions)
+  out
+}
 
-    header <- children[grepl("^h[1-9]", xml2::xml_name(children))][1]
-    title <- xml2::xml_text(header)
-    xml2::xml_remove(header)
+news_collection_treat_section <- function(news_collection) {
+  info <- purrr::map(news_collection, news_treat_section)
+  unlist(info, recursive = FALSE)
+}
 
-    children <- xml2::xml_children(section)
+news_treat_section <- function(section) {
+  title <- news_get_section_name(section)
 
-    no_section <- all(xml2::xml_name(children) != "section")
-    if (no_section) {
-      contents <- markdownify(section)
-      return(
-        structure(
-          list(contents),
-          names = title
-        )
-      )
-    } else {
-      treat_children <- function(child) {
-        if (xml2::xml_name(child) == "section") {
-          treat_section(child)
-        } else {
-          list(markdownify(child))
-        }
+  children <- xml2::xml_children(section)[-1]
+
+  no_section <- all(xml2::xml_name(children) != "section")
+  if (no_section) {
+    section_copy <- xml2::xml_new_root(section, .copy = TRUE)
+    xml2::xml_remove(xml2::xml_child(section_copy))
+    contents <- markdownify(section_copy)
+  } else {
+    treat_children <- function(child) {
+      if (xml2::xml_name(child) == "section") {
+        news_treat_section(child)
+      } else {
+        list(markdownify(child))
       }
-      structure(
-        list(purrr::map(children, treat_children)),
-        names = title
-      )
     }
+    contents <- purrr::map(children, treat_children)
   }
 
-  info <- purrr::map(versions, treat_section)
-  unlist(info, recursive = FALSE)
+  structure(
+    list(contents),
+    names = title
+  )
+}
+
+news_get_section_name <- function(section) {
+  xml2::xml_text(xml2::xml_child(section))
 }
 
 protect_hashtag <- function(lines) {
