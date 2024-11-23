@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9034 (2024-11-23)
+
+## Chore
+
+- Distinguish `news` component from `news` column in data frame (#820).
+
+
 # fledge 0.1.99.9033 (2024-11-22)
 
 ## Bug fixes
