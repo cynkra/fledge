@@ -40,35 +40,35 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     check_top_level_headers(versions)
   }
 
-  treat_section <- function(section) {
-    title <- news_get_section_name(section)
+  info <- purrr::map(versions, news_treat_section)
+  unlist(info, recursive = FALSE)
+}
 
-    xml2::xml_remove(xml2::xml_child(section))
+news_treat_section <- function(section) {
+  title <- news_get_section_name(section)
 
-    children <- xml2::xml_children(section)
+  xml2::xml_remove(xml2::xml_child(section))
 
-    no_section <- all(xml2::xml_name(children) != "section")
-    if (no_section) {
-      contents <- markdownify(section)
-    } else {
-      treat_children <- function(child) {
-        if (xml2::xml_name(child) == "section") {
-          treat_section(child)
-        } else {
-          list(markdownify(child))
-        }
+  children <- xml2::xml_children(section)
+
+  no_section <- all(xml2::xml_name(children) != "section")
+  if (no_section) {
+    contents <- markdownify(section)
+  } else {
+    treat_children <- function(child) {
+      if (xml2::xml_name(child) == "section") {
+        news_treat_section(child)
+      } else {
+        list(markdownify(child))
       }
-      contents <- purrr::map(children, treat_children)
     }
-
-    structure(
-      list(contents),
-      names = title
-    )
+    contents <- purrr::map(children, treat_children)
   }
 
-  info <- purrr::map(versions, treat_section)
-  unlist(info, recursive = FALSE)
+  structure(
+    list(contents),
+    names = title
+  )
 }
 
 news_get_section_name <- function(section) {
