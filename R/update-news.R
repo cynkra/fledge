@@ -19,7 +19,47 @@ update_news_impl <- function(commits,
   }
 
   fledgeling <- fledgeling %||% read_fledgling()
+  add_news_to_fledgeling(fledgeling, news_lines, which, news_items)
+}
 
+add_news_to_fledgeling_samedev <- function(fledgeling, news_lines) {
+  # Append and regroup
+  initializing <- is.null(fledgeling[["news"]])
+
+  if (initializing) {
+    fledgeling[["news"]] <- tibble::tibble(
+      start = 3,
+      h2 = FALSE,
+      version = fledgeling[["version"]],
+      date = "",
+      nickname = "",
+      original = "",
+      news = list(parse_news_md_update(news_lines)),
+      raw = news_lines,
+      section_state = "new"
+    )
+  } else {
+    old_news <- fledgeling[["news"]]$news[[1]]
+    combined <- c(parse_news_md_update(news_lines), old_news)
+    combined <- purrr::discard(combined, purrr::is_empty)
+    regrouped <- regroup_news(combined)
+    fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
+    fledgeling[["news"]][1, ]$section_state <- "new"
+  }
+
+  if (fledge_chatty()) {
+    cli_alert("Added items to {.file {news_path()}}.")
+  }
+
+  fledgeling
+}
+
+add_news_to_fledgeling <- function(
+  fledgeling,
+  news_lines,
+  which,
+  news_items
+) {
   # isTRUE() as NEWS.md can be empty
   dev_header_present <- isTRUE(
     grepl(
@@ -35,96 +75,72 @@ update_news_impl <- function(commits,
       which <- "dev"
     }
   }
-  initializing <- is.null(fledgeling[["news"]])
 
   if (which == "samedev") {
     if (!dev_header_present) {
       cli::cli_abort("Can't find a development version header in {.file NEWS.md}.")
     }
 
-    # Append and regroup
+    return(add_news_to_fledgeling_samedev(fledgeling, news_lines))
+  }
 
-    if (initializing) {
-      fledgeling[["news"]] <- tibble::tibble(
-        start = 3,
-        h2 = FALSE,
-        version = fledgeling[["version"]],
-        date = "",
-        nickname = "",
-        original = "",
-        news = list(parse_news_md_update(news_lines)),
-        raw = news_lines,
-        section_state = "new"
-      )
-    } else {
-      old_news <- fledgeling[["news"]]$news[[1]]
-      combined <- c(parse_news_md_update(news_lines), old_news)
-      combined <- purrr::discard(combined, purrr::is_empty)
-      regrouped <- regroup_news(combined)
-      fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
-      fledgeling[["news"]][1, ]$section_state <- "new"
-    }
+  initializing <- is.null(fledgeling[["news"]])
 
-    if (fledge_chatty()) {
-      cli_alert("Added items to {.file {news_path()}}.")
+  current_version <- fledgeling[["version"]]
+
+  new_version <- fledge_guess_version(current_version, which)
+  fledgeling[["version"]] <- new_version
+
+  # In the galley test for the demo vignette, for some reason, `is.na(get_date())`
+  if (!is.null(fledgeling[["date"]]) && !is.na(get_date())) {
+    fledgeling[["date"]] <- as.character(get_date())
+  }
+
+  if (initializing) {
+    no_actual_commit <- (nrow(news_items) == 1) &&
+      (news_items[["description"]] == same_as_previous())
+
+    if (no_actual_commit) {
+      news_lines <- sprintf("## Uncategorized\n\n- %s", added_changelog())
     }
+  }
+
+  if (dev_header_present) {
+    old_news <- fledgeling[["news"]]$news[[1]]
+    combined <- c(parse_news_md_update(news_lines), old_news)
+    combined <- purrr::discard(combined, purrr::is_empty)
+    news <- regroup_news(combined)
+    fledgeling[["news"]] <- fledgeling[["news"]][-1, ]
   } else {
-    current_version <- fledgeling[["version"]]
+    news <- parse_news_md_update(news_lines)
+  }
 
-    new_version <- fledge_guess_version(current_version, which)
-    fledgeling[["version"]] <- new_version
+  raw <- format_news_subsections(news, header_level = 2)
 
-    # In the galley test for the demo vignette, for some reason, `is.na(get_date())`
-    if (!is.null(fledgeling[["date"]]) && !is.na(get_date())) {
-      fledgeling[["date"]] <- as.character(get_date())
-    }
+  section_df <- tibble::tibble(
+    start = 3,
+    end = NA,
+    h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
+    version = new_version,
+    date = maybe_date(fledgeling[["news"]]),
+    nickname = NA,
+    news = list(news),
+    raw = raw,
+    title = "",
+    section_state = "new"
+  )
 
-    if (initializing) {
-      no_actual_commit <- (nrow(news_items) == 1) &&
-        (news_items[["description"]] == same_as_previous())
+  fledgeling[["news"]] <- vctrs::vec_rbind(
+    section_df,
+    fledgeling[["news"]]
+  )
 
-      if (no_actual_commit) {
-        news_lines <- sprintf("## Uncategorized\n\n- %s", added_changelog())
-      }
-    }
+  if (fledge_chatty()) {
+    cli_h2("Updating Version")
 
-    if (dev_header_present) {
-      old_news <- fledgeling[["news"]]$news[[1]]
-      combined <- c(parse_news_md_update(news_lines), old_news)
-      combined <- purrr::discard(combined, purrr::is_empty)
-      news <- regroup_news(combined)
-      fledgeling[["news"]] <- fledgeling[["news"]][-1, ]
-    } else {
-      news <- parse_news_md_update(news_lines)
-    }
+    cli_alert_success("Package version bumped to {.field {new_version}}.")
 
-    raw <- format_news_subsections(news, header_level = 2)
-
-    section_df <- tibble::tibble(
-      start = 3,
-      end = NA,
-      h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
-      version = new_version,
-      date = maybe_date(fledgeling[["news"]]),
-      nickname = NA,
-      news = list(news),
-      raw = raw,
-      title = "",
-      section_state = "new"
-    )
-
-    fledgeling[["news"]] <- vctrs::vec_rbind(
-      section_df,
-      fledgeling[["news"]]
-    )
-
-    if (fledge_chatty()) {
-      cli_h2("Updating Version")
-
-      cli_alert_success("Package version bumped to {.field {new_version}}.")
-
-      cli_alert("Added header to {.file {news_path()}}.")
-    }
+    cli_alert("Added header to {.file {news_path()}}.")
   }
 
   fledgeling
