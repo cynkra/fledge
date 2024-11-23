@@ -40,12 +40,8 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     check_top_level_headers(versions)
   }
 
-  get_section_name <- function(section) {
-    xml2::xml_text(xml2::xml_child(section))
-  }
-
   treat_section <- function(section) {
-    title <- get_section_name(section)
+    title <- news_get_section_name(section)
 
     xml2::xml_remove(xml2::xml_child(section))
 
@@ -73,6 +69,10 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
 
   info <- purrr::map(versions, treat_section)
   unlist(info, recursive = FALSE)
+}
+
+news_get_section_name <- function(section) {
+  xml2::xml_text(xml2::xml_child(section))
 }
 
 protect_hashtag <- function(lines) {
