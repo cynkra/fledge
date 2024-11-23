@@ -103,9 +103,7 @@ read_news <- function(news_lines = NULL) {
     parse_versions(names(versions))[, c("version", "date", "nickname")],
   )
 
-  news <- versions
-
-  section_df$news <- news_collection_fix_name_and_level(news)
+  section_df$news <- news_collection_fix_name_and_level(news_collection_treat_section(versions))
 
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)

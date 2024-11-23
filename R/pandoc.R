@@ -37,9 +37,7 @@ parse_news_md <- function(news = brio::read_lines(news_path())) {
   }
 
   check_top_level_headers(versions)
-
-  out <- news_collection_treat_section(versions)
-  out
+  rlang::set_names(unclass(versions), news_collection_get_section_name(versions))
 }
 
 news_collection_treat_section <- function(news_collection) {
@@ -72,6 +70,10 @@ news_treat_section <- function(section) {
     list(contents),
     names = title
   )
+}
+
+news_collection_get_section_name <- function(news_collection) {
+  purrr::map_chr(news_collection, news_get_section_name)
 }
 
 news_get_section_name <- function(section) {
