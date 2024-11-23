@@ -248,8 +248,11 @@ merge_dev_news <- function(fledgeling, new_version) {
 
   n_dev <- rle(dev_idx)$lengths[[1]]
 
+  raw <- write_news_sections(fledgeling[["news"]][seq_len(n_dev), ])
+  versions <- parse_news_md(raw)
+
   news <- regroup_news(
-    unlist(fledgeling[["news"]]$news[seq_len(n_dev)], recursive = FALSE)
+    unlist(news_from_versions(versions), recursive = FALSE)
   )
 
   raw <- format_news_subsections(news, header_level = 2)

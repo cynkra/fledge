@@ -23,9 +23,9 @@
         raw                                                                           
         <chr>                                                                         
       1 "# tea 0.0.1 (2023-01-23)\n\n- Added a `NEWS.md` file to track changes to the~
-        news             section_state title                  version date    nickname
-        <list>           <chr>         <chr>                  <chr>   <chr>   <chr>   
-      1 <named list [1]> keep          tea 0.0.1 (2023-01-23) 0.0.1   (2023-~ <NA>    
+        versions     section_state title                  version date        nickname
+        <named list> <chr>         <chr>                  <chr>   <chr>       <chr>   
+      1 <xml_node>   keep          tea 0.0.1 (2023-01-23) 0.0.1   (2023-01-2~ <NA>    
       
       $preamble_in_file
       [1] TRUE

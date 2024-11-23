@@ -1,6 +1,4 @@
-parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) {
-  news <- protect_hashtag(news)
-
+versions_from_news <- function(news) {
   temp_file <- withr::local_tempfile(fileext = ".md")
   brio::write_lines(news, temp_file)
 
@@ -31,17 +29,9 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
   }
   if (length(versions) == 0) {
     cli::cli_abort("Empty {.file NEWS.md}")
-
-    contents <- markdownify(html)
-    return(list(contents))
   }
 
-  if (strict) {
-    check_top_level_headers(versions)
-  }
-
-  out <- news_collection_treat_section(versions)
-  out
+  versions
 }
 
 news_collection_treat_section <- function(news_collection) {
@@ -74,6 +64,10 @@ news_treat_section <- function(section) {
     list(contents),
     names = title
   )
+}
+
+news_collection_get_section_name <- function(news_collection) {
+  purrr::map_chr(news_collection, news_get_section_name)
 }
 
 news_get_section_name <- function(section) {

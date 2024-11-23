@@ -44,9 +44,9 @@ read_news <- function(news_lines = NULL) {
     }
   }
 
-  news <- parse_news_md(news_lines, strict = TRUE)
+  versions <- parse_news_md(news_lines)
 
-  if (is.null(news)) {
+  if (is.null(versions)) {
     return(
       list(
         section_df = NULL,
@@ -57,7 +57,7 @@ read_news <- function(news_lines = NULL) {
   }
 
   # NEWS content under no version
-  if (length(news) == 1 && !nzchar(names(news))) {
+  if (length(versions) == 1 && !nzchar(names(versions))) {
     cli::cli_abort("All {.file NEWS.md} content must be under version headers.")
   }
 
@@ -77,9 +77,9 @@ read_news <- function(news_lines = NULL) {
     section_start
   }
 
-  duplicate_version_names_present <- anyDuplicated(names(news))
+  duplicate_version_names_present <- anyDuplicated(names(versions))
   if (duplicate_version_names_present) {
-    duplicated_version_names <- toString(names(news)[duplicated(names(news))])
+    duplicated_version_names <- toString(names(versions)[duplicated(names(versions))])
     cli::cli_abort(
       c(
         "Can't deal with duplicate version names: {duplicated_version_names}.",
@@ -88,7 +88,7 @@ read_news <- function(news_lines = NULL) {
     )
   }
 
-  starts <- purrr::map_int(names(news), get_section_start, news_lines)
+  starts <- purrr::map_int(names(versions), get_section_start, news_lines)
   ends <- c(starts[seq_along(starts[-1]) + 1] - 1L, length(news_lines))
 
   section_df <- tibble::tibble(
@@ -96,16 +96,11 @@ read_news <- function(news_lines = NULL) {
     end = ends,
     h2 = grepl("##", news_lines[starts]), # TODO does not account for all syntaxes,
     raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
-    news = news_collection_fix_name_and_level(news)
+    versions = versions,
+    section_state = "keep",
+    title = names(versions),
+    parse_versions(names(versions))[, c("version", "date", "nickname")],
   )
-
-  section_df$section_state <- "keep"
-
-  section_df$title <- names(news)
-
-  parsed_titles <- parse_versions(names(news))[, c("version", "date", "nickname")]
-
-  section_df <- vctrs::vec_cbind(section_df, parsed_titles)
 
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
@@ -128,8 +123,21 @@ read_news <- function(news_lines = NULL) {
   )
 }
 
-news_collection_fix_name_and_level <- function(news_collection) {
-  news_wrapped <- unname(split(news_collection, seq_len(length(news_collection))))
+parse_news_md <- function(news) {
+  news <- protect_hashtag(news)
+  versions <- versions_from_news(news)
+  if (is.null(versions)) {
+    return(NULL)
+  }
+
+  check_top_level_headers(versions)
+  rlang::set_names(unclass(versions), news_collection_get_section_name(versions))
+}
+
+news_from_versions <- function(news_collection) {
+  news_treated <- news_collection_treat_section(news_collection)
+
+  news_wrapped <- unname(split(news_treated, seq_len(length(news_treated))))
 
   map(news_wrapped, news_fix_name_and_level)
 }
