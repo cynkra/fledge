@@ -233,24 +233,21 @@ write_news_section <- function(df) {
     )
   )
 
-  # If only uncategorized items for the version, no subheaders
-  if (length(df$news[[1]]) == 1 && names(df$news[[1]]) == default_type()) {
-    section_lines <- c(
-      version_header, "",
-      paste(df$news[[1]][[1]], collapse = "\n"), ""
-    )
+  if (isTRUE(df$h2)) {
+    header_level <- 3
   } else {
-    if (isTRUE(df$h2)) {
-      header_level <- 3
-    } else {
-      header_level <- 2
-    }
-
-    section_lines <- c(
-      version_header, "",
-      format_news_subsections(df$news[[1]], header_level), ""
-    )
+    header_level <- 2
   }
+
+  raw <- df$raw
+
+  # If only uncategorized items for the version, no subheaders
+  if (grepl(paste0("^#+ ", default_type()), raw)) {
+    raw <- gsub("^#+ [^\n]*\n\n", "", raw)
+  }
+
+  section_lines <- c(version_header, "", raw, "")
+
   paste0(section_lines, collapse = "\n")
 }
 

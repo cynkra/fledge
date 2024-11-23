@@ -24,7 +24,7 @@ update_news_impl <- function(commits,
   dev_header_present <- isTRUE(
     grepl(
       "(development version)",
-      fledgeling[["news"]][["title"]][1]
+      fledgeling[["news"]]$title[[1]]
     )
   )
 
@@ -62,7 +62,8 @@ update_news_impl <- function(commits,
         fledgeling[["news"]]$news[[1]]
       )
       combined <- purrr::discard(combined, purrr::is_empty)
-      fledgeling[["news"]]$news[[1]] <- regroup_news(combined)
+      regrouped <- regroup_news(combined)
+      fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
       fledgeling[["news"]][1, ]$section_state <- "new"
     }
 
@@ -101,6 +102,8 @@ update_news_impl <- function(commits,
       news <- parse_news_md(news_lines)
     }
 
+    raw <- format_news_subsections(news, header_level = 2)
+
     section_df <- tibble::tibble(
       start = 3,
       end = NA,
@@ -109,7 +112,7 @@ update_news_impl <- function(commits,
       date = maybe_date(fledgeling[["news"]]),
       nickname = NA,
       news = list(news),
-      raw = "",
+      raw = raw,
       title = "",
       section_state = "new"
     )
@@ -117,7 +120,7 @@ update_news_impl <- function(commits,
     if (initializing) {
       fledgeling[["news"]] <- section_df
     } else {
-      fledgeling[["news"]] <- rbind(
+      fledgeling[["news"]] <- vctrs::vec_rbind(
         section_df,
         fledgeling[["news"]]
       )

@@ -252,6 +252,8 @@ merge_dev_news <- function(fledgeling, new_version) {
     unlist(fledgeling[["news"]]$news[seq_len(n_dev)], recursive = FALSE)
   )
 
+  raw <- format_news_subsections(news, header_level = 2)
+
   new_section <- tibble::tibble(
     start = 3,
     end = NA,
@@ -260,7 +262,7 @@ merge_dev_news <- function(fledgeling, new_version) {
     date = maybe_date(fledgeling[["news"]]),
     nickname = NA,
     news = list(news),
-    raw = "",
+    raw = raw,
     title = "",
     section_state = "new"
   )
