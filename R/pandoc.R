@@ -40,7 +40,12 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     check_top_level_headers(versions)
   }
 
-  info <- purrr::map(versions, news_treat_section)
+  out <- news_collection_treat_section(versions)
+  out
+}
+
+news_collection_treat_section <- function(news_collection) {
+  info <- purrr::map(news_collection, news_treat_section)
   unlist(info, recursive = FALSE)
 }
 
