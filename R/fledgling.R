@@ -198,18 +198,21 @@ write_fledgling <- function(fledgeling) {
 
   # store news
 
-  news_df <- fledgeling[["news"]]
-  news_lines <- purrr::map_chr(
-    split(news_df, seq_len(nrow(news_df))),
-    write_news_section
-  )
-  news_lines <- unprotect_hashtag(news_lines)
+  news_lines <- write_news_sections(fledgeling[["news"]])
 
   lines <- c(
     fledgeling[["preamble"]], "",
     paste0(news_lines, collapse = "\n\n")
   )
   brio::write_lines(lines, news_path())
+}
+
+write_news_sections <- function(news_df) {
+  news_lines <- purrr::map_chr(
+    vctrs::vec_split(news_df, seq_len(nrow(news_df)))$val,
+    write_news_section
+  )
+  unprotect_hashtag(news_lines)
 }
 
 write_news_section <- function(df) {
