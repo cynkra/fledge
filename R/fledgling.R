@@ -96,6 +96,7 @@ read_news <- function(news_lines = NULL) {
     end = ends,
     h2 = grepl("##", news_lines[starts]), # TODO does not account for all syntaxes,
     raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
+    versions = versions,
     # Placeholder
     news = list(NULL),
     section_state = "keep",
