@@ -1,4 +1,4 @@
-parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) {
+parse_news_md <- function(news = brio::read_lines(news_path())) {
   news <- protect_hashtag(news)
 
   temp_file <- withr::local_tempfile(fileext = ".md")
@@ -36,9 +36,7 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     return(list(contents))
   }
 
-  if (strict) {
-    check_top_level_headers(versions)
-  }
+  check_top_level_headers(versions)
 
   out <- news_collection_treat_section(versions)
   out

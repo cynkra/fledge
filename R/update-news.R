@@ -52,13 +52,13 @@ update_news_impl <- function(commits,
         date = "",
         nickname = "",
         original = "",
-        news = list(parse_news_md(news_lines)),
+        news = list(parse_news_md_update(news_lines)),
         raw = "",
         section_state = "new"
       )
     } else {
       combined <- c(
-        parse_news_md(news_lines),
+        parse_news_md_update(news_lines),
         fledgeling[["news"]]$news[[1]]
       )
       combined <- purrr::discard(combined, purrr::is_empty)
@@ -92,14 +92,14 @@ update_news_impl <- function(commits,
 
     if (dev_header_present) {
       combined <- c(
-        parse_news_md(news_lines),
+        parse_news_md_update(news_lines),
         fledgeling[["news"]]$news[[1]]
       )
       combined <- purrr::discard(combined, purrr::is_empty)
       news <- regroup_news(combined)
       fledgeling[["news"]] <- fledgeling[["news"]][-1, ]
     } else {
-      news <- parse_news_md(news_lines)
+      news <- parse_news_md_update(news_lines)
     }
 
     raw <- format_news_subsections(news, header_level = 2)
@@ -306,4 +306,46 @@ get_date <- function() {
   }
   author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
   as.Date(author_time)
+}
+
+parse_news_md_update <- function(news = brio::read_lines(news_path())) {
+  news <- protect_hashtag(news)
+
+  temp_file <- withr::local_tempfile(fileext = ".md")
+  brio::write_lines(news, temp_file)
+
+  out_temp_file <- withr::local_tempfile(fileext = ".html")
+  pandoc::pandoc_run(
+    c(
+      "-t", "html", # output format
+      "--wrap=preserve", # preserve soft linebreaks
+      "--no-highlight",
+      "-f", "gfm-autolink_bare_uris", # input format, do not transform bare URIs into links
+      "-o", out_temp_file, # output temp file
+      temp_file, # temp file with current Markdown news
+      "--section-divs" # wrap sections into divs (for parsing)
+    )
+  )
+
+  html <- xml2::read_html(out_temp_file, encoding = "UTF-8")
+
+  if (length(xml2::xml_contents(html)) == 0) {
+    return(NULL)
+  }
+
+  version_header_level <- 1
+  versions <- xml2::xml_find_all(html, ".//section[@class='level1']")
+  if (length(versions) == 0) {
+    version_header_level <- 2
+    versions <- xml2::xml_find_all(html, ".//section[@class='level2']")
+  }
+  if (length(versions) == 0) {
+    cli::cli_abort("Empty {.file NEWS.md}")
+
+    contents <- markdownify(html)
+    return(list(contents))
+  }
+
+  out <- news_collection_treat_section(versions)
+  out
 }

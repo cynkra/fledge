@@ -44,7 +44,7 @@ read_news <- function(news_lines = NULL) {
     }
   }
 
-  news <- parse_news_md(news_lines, strict = TRUE)
+  news <- parse_news_md(news_lines)
 
   if (is.null(news)) {
     return(
