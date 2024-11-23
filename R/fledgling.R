@@ -124,7 +124,6 @@ read_news <- function(news_lines = NULL) {
 }
 
 parse_news_md <- function(news) {
-  news <- protect_hashtag(news)
   versions <- versions_from_news(news)
   if (is.null(versions)) {
     return(NULL)
