@@ -54,12 +54,6 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
     no_section <- all(xml2::xml_name(children) != "section")
     if (no_section) {
       contents <- markdownify(section)
-      return(
-        structure(
-          list(contents),
-          names = title
-        )
-      )
     } else {
       treat_children <- function(child) {
         if (xml2::xml_name(child) == "section") {
@@ -68,11 +62,13 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
           list(markdownify(child))
         }
       }
-      structure(
-        list(purrr::map(children, treat_children)),
-        names = title
-      )
+      contents <- purrr::map(children, treat_children)
     }
+
+    structure(
+      list(contents),
+      names = title
+    )
   }
 
   info <- purrr::map(versions, treat_section)
