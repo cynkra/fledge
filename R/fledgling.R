@@ -96,7 +96,6 @@ read_news <- function(news_lines = NULL) {
     end = ends,
     h2 = grepl("##", news_lines[starts]), # TODO does not account for all syntaxes,
     raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
-    versions = versions,
     section_state = "keep",
     title = names(versions),
     parse_versions(names(versions))[, c("version", "date", "nickname")],
@@ -124,7 +123,6 @@ read_news <- function(news_lines = NULL) {
 }
 
 parse_news_md <- function(news) {
-  news <- protect_hashtag(news)
   versions <- versions_from_news(news)
   if (is.null(versions)) {
     return(NULL)
