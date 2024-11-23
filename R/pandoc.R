@@ -52,13 +52,13 @@ news_collection_treat_section <- function(news_collection) {
 news_treat_section <- function(section) {
   title <- news_get_section_name(section)
 
-  xml2::xml_remove(xml2::xml_child(section))
-
-  children <- xml2::xml_children(section)
+  children <- xml2::xml_children(section)[-1]
 
   no_section <- all(xml2::xml_name(children) != "section")
   if (no_section) {
-    contents <- markdownify(section)
+    section_copy <- xml2::xml_new_root(section, .copy = TRUE)
+    xml2::xml_remove(xml2::xml_child(section_copy))
+    contents <- markdownify(section_copy)
   } else {
     treat_children <- function(child) {
       if (xml2::xml_name(child) == "section") {
