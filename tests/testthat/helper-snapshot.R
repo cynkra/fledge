@@ -32,8 +32,26 @@ testthat_os <- function() {
   )
 }
 
-expect_snapshot_tibble <- function(code) {
-  json <- eval(code) %>%
-    jsonlite::toJSON(pretty = TRUE, na = "string", null = "null")
+expect_snapshot_tibble <- function(data) {
+  json <- jsonlite::toJSON(
+    deep_clean(data),
+    pretty = TRUE,
+    na = "string",
+    null = "null"
+  )
   expect_snapshot_output(json)
+}
+
+deep_clean <- function(data) {
+  if (is.data.frame(data)) {
+    is_list <- purrr::map_lgl(data, is.list)
+    data[is_list] <- purrr::map(data[is_list], purrr::map_chr, ~ {
+      paste(format(.x), collapse = "\n")
+    })
+    data
+  } else if (is.list(data)) {
+    purrr::map(data, deep_clean)
+  } else {
+    data
+  }
 }
