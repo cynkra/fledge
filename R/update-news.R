@@ -53,7 +53,7 @@ update_news_impl <- function(commits,
         nickname = "",
         original = "",
         news = list(parse_news_md_update(news_lines)),
-        raw = "",
+        raw = news_lines,
         section_state = "new"
       )
     } else {
