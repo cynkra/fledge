@@ -41,18 +41,13 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
   }
 
   get_section_name <- function(section) {
-    children <- xml2::xml_children(section)
-
-    header <- children[grepl("^h[1-9]", xml2::xml_name(children))][1]
-    xml2::xml_text(header)
+    xml2::xml_text(xml2::xml_child(section))
   }
 
   treat_section <- function(section) {
     title <- get_section_name(section)
 
-    children <- xml2::xml_children(section)
-    header <- children[grepl("^h[1-9]", xml2::xml_name(children))][1]
-    xml2::xml_remove(header)
+    xml2::xml_remove(xml2::xml_child(section))
 
     children <- xml2::xml_children(section)
 
