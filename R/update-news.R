@@ -117,14 +117,10 @@ update_news_impl <- function(commits,
       section_state = "new"
     )
 
-    if (initializing) {
-      fledgeling[["news"]] <- section_df
-    } else {
-      fledgeling[["news"]] <- vctrs::vec_rbind(
-        section_df,
-        fledgeling[["news"]]
-      )
-    }
+    fledgeling[["news"]] <- vctrs::vec_rbind(
+      section_df,
+      fledgeling[["news"]]
+    )
 
     if (fledge_chatty()) {
       cli_h2("Updating Version")
