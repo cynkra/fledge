@@ -94,7 +94,7 @@
       {
         "title": "NA",
         "pr_number": "332",
-        "issue_numbers": [],
+        "issue_numbers": "",
         "external_ctb": "NA"
       }
     ] 
