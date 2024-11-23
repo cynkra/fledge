@@ -97,14 +97,10 @@ read_news <- function(news_lines = NULL) {
     h2 = grepl("##", news_lines[starts]), # TODO does not account for all syntaxes,
     raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
     versions = versions,
-    # Placeholder
-    news = list(NULL),
     section_state = "keep",
     title = names(versions),
     parse_versions(names(versions))[, c("version", "date", "nickname")],
   )
-
-  section_df$news <- news_from_versions(versions)
 
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
