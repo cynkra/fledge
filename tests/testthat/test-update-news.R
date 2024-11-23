@@ -98,6 +98,37 @@ test_that("Can update dev version news item", {
   expect_snapshot_file("NEWS.md", "samedev-updated.md")
 })
 
+test_that("Can convert dev version news item to running news item", {
+  local_fledge_quiet()
+  skip_if_offline()
+
+  repo <- withr::local_tempdir(pattern = "devpkg")
+
+  usethis::local_project(repo, force = TRUE, setwd = TRUE)
+  create_cc_repo(commit_messages = "feat: new stuff")
+
+  usethis::use_description(
+    fields = list(Package = "fledge", Version = "0.1.0")
+  )
+  withr::with_options(
+    list(repos = c("CRAN" = "https://cloud.r-project.org")),
+    {
+      usethis::use_news_md()
+    }
+  )
+
+  usethis::use_dev_version()
+
+  update_news()
+
+  use_r("bla")
+  fast_git_add("R/bla.R")
+  gert::git_commit("* Add cool bla.")
+
+  update_news(which = "dev")
+  expect_snapshot_file("NEWS.md", name = "samedev-running.md")
+})
+
 test_that("Message when creating the news file", {
   local_fledge_quiet()
   withr::local_envvar("FLEDGE_DATE" = "2023-03-20")
