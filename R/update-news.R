@@ -34,13 +34,13 @@ add_news_to_fledgeling_samedev <- function(fledgeling, news_lines) {
       date = "",
       nickname = "",
       original = "",
-      news = list(parse_news_md_update(news_lines)),
+      news = list(parse_news_lines(news_lines)),
       raw = news_lines,
       section_state = "new"
     )
   } else {
     old_news <- news_from_versions(fledgeling[["news"]]$versions[1])[[1]]
-    combined <- c(parse_news_md_update(news_lines), old_news)
+    combined <- c(parse_news_lines(news_lines), old_news)
     combined <- purrr::discard(combined, purrr::is_empty)
     regrouped <- regroup_news(combined)
     fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
@@ -107,12 +107,12 @@ add_news_to_fledgeling <- function(
 
   if (dev_header_present) {
     old_news <- news_from_versions(fledgeling[["news"]]$versions[1])[[1]]
-    combined <- c(parse_news_md_update(news_lines), old_news)
+    combined <- c(parse_news_lines(news_lines), old_news)
     combined <- purrr::discard(combined, purrr::is_empty)
     news <- regroup_news(combined)
     fledgeling[["news"]] <- fledgeling[["news"]][-1, ]
   } else {
-    news <- parse_news_md_update(news_lines)
+    news <- parse_news_lines(news_lines)
   }
 
   raw <- format_news_subsections(news, header_level = 2)
@@ -320,44 +320,8 @@ get_date <- function() {
   as.Date(author_time)
 }
 
-parse_news_md_update <- function(news = brio::read_lines(news_path())) {
+parse_news_lines <- function(news) {
   news <- protect_hashtag(news)
-
-  temp_file <- withr::local_tempfile(fileext = ".md")
-  brio::write_lines(news, temp_file)
-
-  out_temp_file <- withr::local_tempfile(fileext = ".html")
-  pandoc::pandoc_run(
-    c(
-      "-t", "html", # output format
-      "--wrap=preserve", # preserve soft linebreaks
-      "--no-highlight",
-      "-f", "gfm-autolink_bare_uris", # input format, do not transform bare URIs into links
-      "-o", out_temp_file, # output temp file
-      temp_file, # temp file with current Markdown news
-      "--section-divs" # wrap sections into divs (for parsing)
-    )
-  )
-
-  html <- xml2::read_html(out_temp_file, encoding = "UTF-8")
-
-  if (length(xml2::xml_contents(html)) == 0) {
-    return(NULL)
-  }
-
-  version_header_level <- 1
-  versions <- xml2::xml_find_all(html, ".//section[@class='level1']")
-  if (length(versions) == 0) {
-    version_header_level <- 2
-    versions <- xml2::xml_find_all(html, ".//section[@class='level2']")
-  }
-  if (length(versions) == 0) {
-    cli::cli_abort("Empty {.file NEWS.md}")
-
-    contents <- markdownify(html)
-    return(list(contents))
-  }
-
-  out <- news_collection_treat_section(versions)
-  out
+  versions <- versions_from_news(news)
+  news_collection_treat_section(versions)
 }

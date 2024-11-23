@@ -123,6 +123,17 @@ read_news <- function(news_lines = NULL) {
   )
 }
 
+parse_news_md <- function(news) {
+  news <- protect_hashtag(news)
+  versions <- versions_from_news(news)
+  if (is.null(versions)) {
+    return(NULL)
+  }
+
+  check_top_level_headers(versions)
+  rlang::set_names(unclass(versions), news_collection_get_section_name(versions))
+}
+
 news_from_versions <- function(news_collection) {
   news_treated <- news_collection_treat_section(news_collection)
 
