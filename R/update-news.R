@@ -39,7 +39,7 @@ add_news_to_fledgeling_samedev <- function(fledgeling, news_lines) {
       section_state = "new"
     )
   } else {
-    old_news <- fledgeling[["news"]]$news[[1]]
+    old_news <- news_from_versions(fledgeling[["news"]]$versions[1])[[1]]
     combined <- c(parse_news_md_update(news_lines), old_news)
     combined <- purrr::discard(combined, purrr::is_empty)
     regrouped <- regroup_news(combined)
@@ -106,7 +106,7 @@ add_news_to_fledgeling <- function(
   }
 
   if (dev_header_present) {
-    old_news <- fledgeling[["news"]]$news[[1]]
+    old_news <- news_from_versions(fledgeling[["news"]]$versions[1])[[1]]
     combined <- c(parse_news_md_update(news_lines), old_news)
     combined <- purrr::discard(combined, purrr::is_empty)
     news <- regroup_news(combined)
