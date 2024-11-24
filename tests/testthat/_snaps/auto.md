@@ -22,6 +22,8 @@
     Code
       plan_release()
     Message
+      > Pulling main.
+      Resetting main to sha
       > Digesting messages from 1 commits.
     Condition
       Error in `check_release_branch()`:
@@ -33,6 +35,8 @@
     Code
       plan_release(force = TRUE)
     Message
+      > Pulling main.
+      Resetting main to sha
       > Digesting messages from 1 commits.
     Output
       +------------------+

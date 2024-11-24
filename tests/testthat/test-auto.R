@@ -60,10 +60,10 @@ test_that("plan_release() -- force", {
 
   gert::git_branch_create("cran-0.0.0.9900", checkout = FALSE)
 
-  expect_fledge_snapshot(error = TRUE, {
+  expect_fledge_snapshot(transform = scrub_hash, error = TRUE, {
     plan_release()
   })
-  expect_fledge_snapshot({
+  expect_fledge_snapshot(transform = scrub_hash, {
     plan_release(force = TRUE)
   })
   expect_true(gert::git_branch_exists("cran-0.0.0.9900"))

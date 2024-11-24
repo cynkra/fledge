@@ -37,21 +37,24 @@ plan_release <- function(
   which = c("pre-patch", "pre-minor", "pre-major", "next", "patch", "minor", "major"),
   force = FALSE
 ) {
+  which <- arg_match(which)
+
+  local_repo()
   check_main_branch("plan_release()")
   check_only_modified(character())
   check_gitignore("cran-comments.md")
+  pull_head()
+
   check_suggested(
     c("job", "devtools", "rhub", "urlchecker", "pkgbuild", "foghorn"),
     "plan_release"
   )
 
-  which <- arg_match(which)
   if (which == "next") {
     which <- guess_next()
   }
 
   local_options(usethis.quiet = TRUE)
-  local_repo()
 
   plan_release_impl(which, force)
 }

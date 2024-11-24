@@ -3,6 +3,8 @@
     Code
       plan_release("next")
     Message
+      > Pulling main.
+      Resetting main to sha
       > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       

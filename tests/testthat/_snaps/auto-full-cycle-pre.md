@@ -3,6 +3,8 @@
     Code
       plan_release("next")
     Message
+      > Pulling main.
+      Resetting main to origin/main
       > Digesting messages from 1 commits.
     Output
       +------------------+

@@ -27,7 +27,7 @@ test_that("full cycle", {
   ## init release ----
   withr::local_envvar("FLEDGE_TEST_NOGH" = "no-github-no-mocking-needed-yay")
   withr::local_envvar("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST" = "yes-a-test")
-  expect_fledge_snapshot({
+  expect_fledge_snapshot(transform = scrub_hash, {
     plan_release("next")
   })
   expect_equal(gert::git_branch(), "cran-0.0.1")
