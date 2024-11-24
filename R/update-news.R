@@ -124,7 +124,6 @@ add_news_to_fledgeling <- function(
     version = new_version,
     date = maybe_date(fledgeling[["news"]]),
     nickname = NA,
-    news = list(news),
     raw = raw,
     title = "",
     section_state = "new"

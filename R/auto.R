@@ -266,7 +266,6 @@ merge_dev_news <- function(fledgeling, new_version) {
     version = new_version,
     date = maybe_date(fledgeling[["news"]]),
     nickname = NA,
-    news = list(news),
     raw = raw,
     title = "",
     section_state = "new"
