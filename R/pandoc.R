@@ -76,7 +76,7 @@ news_get_section_name <- function(section) {
 
 protect_hashtag <- function(lines) {
   lines <- gsub(
-    "(?<!#)(?<!^)(?<!`)#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
+    "(?<!^|[#`\n])#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
     "`#\\1`{=html}\\2",
     lines,
     perl = TRUE

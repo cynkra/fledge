@@ -297,7 +297,7 @@ add_scope <- function(row) {
   if (is.na(row$scope)) {
     row$description
   } else {
-    sprintf("### %s \n\n%s", row$scope, row$description)
+    sprintf("### %s\n\n%s", row$scope, row$description)
   }
 }
 add_hyphen <- function(row) {
