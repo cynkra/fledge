@@ -1,4 +1,6 @@
 versions_from_news <- function(news) {
+  news <- protect_hashtag(news)
+
   temp_file <- withr::local_tempfile(fileext = ".md")
   brio::write_lines(news, temp_file)
 

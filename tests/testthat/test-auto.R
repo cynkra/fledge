@@ -18,7 +18,7 @@ test_that("merge_dev_news() works", {
 
   use_r("bla")
   fast_git_add("R/bla.R")
-  gert::git_commit("* Add cool bla.")
+  gert::git_commit("* Add cool bla (@someone, #hashtag-test).")
   bump_version()
 
   use_r("blop")

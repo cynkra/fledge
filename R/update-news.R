@@ -329,7 +329,6 @@ get_date <- function() {
 }
 
 parse_news_lines <- function(news) {
-  news <- protect_hashtag(news)
   versions <- versions_from_news(news)
   news_collection_treat_section(versions)
 }
