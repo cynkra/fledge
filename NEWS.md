@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9035 (2024-11-24)
+
+## Features
+
+- Keep only `raw` NEWS (#827).
+
+## Chore
+
+- Refactorings and a new test (#825).
+
+- Better JSON snapshot (#824).
+
+- Keep `raw` component up to date, use it for assembling the NEWS (#823).
+
+
 # fledge 0.1.99.9034 (2024-11-23)
 
 ## Chore
