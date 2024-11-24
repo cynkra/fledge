@@ -63,7 +63,7 @@ test_that("plan_release() -- force", {
   expect_fledge_snapshot(error = TRUE, {
     plan_release()
   })
-  expect_fledge_snapshot({
+  expect_fledge_snapshot(transform = scrub_hash, {
     plan_release(force = TRUE)
   })
   expect_true(gert::git_branch_exists("cran-0.0.0.9900"))
