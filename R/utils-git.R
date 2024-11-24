@@ -14,3 +14,7 @@ check_main_branch <- function(reason, alternative = NULL) {
 fast_git_add <- function(path) {
   stopifnot(system2("git", c("add", "--", path)) == 0)
 }
+
+scrub_hash <- function(x) {
+  gsub("[0-9a-f]{40}", "sha", x)
+}
