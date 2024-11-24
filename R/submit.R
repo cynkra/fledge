@@ -61,7 +61,7 @@ extract_cran_msg <- function(msg) {
 
 upload_cran <- function(pkg, built_path) {
   maint <- utils::as.person(desc::desc_get_maintainer(pkg))
-  maint_name <- paste(maint$given, maint$family)
+  maint_name <- paste0(maint$given, " ", maint$family)
   maint_email <- maint$email
   comments <- cran_comments(pkg)
 
