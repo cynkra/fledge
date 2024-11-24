@@ -22,38 +22,6 @@ update_news_impl <- function(commits,
   add_news_to_fledgeling(fledgeling, news_lines, which, news_items)
 }
 
-add_news_to_fledgeling_samedev <- function(fledgeling, news_lines) {
-  # Append and regroup
-  initializing <- is.null(fledgeling[["news"]])
-
-  if (initializing) {
-    fledgeling[["news"]] <- tibble::tibble(
-      start = 3,
-      h2 = FALSE,
-      version = fledgeling[["version"]],
-      date = "",
-      nickname = "",
-      original = "",
-      news = list(parse_news_lines(news_lines)),
-      raw = news_lines,
-      section_state = "new"
-    )
-  } else {
-    old_news <- news_from_versions(parse_news_md(fledgeling[["news"]]$raw[[1]]))[[1]]
-    combined <- c(parse_news_lines(news_lines), old_news)
-    combined <- purrr::discard(combined, purrr::is_empty)
-    regrouped <- regroup_news(combined)
-    fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
-    fledgeling[["news"]][1, ]$section_state <- "new"
-  }
-
-  if (fledge_chatty()) {
-    cli_alert("Added items to {.file {news_path()}}.")
-  }
-
-  fledgeling
-}
-
 add_news_to_fledgeling <- function(
   fledgeling,
   news_lines,
@@ -124,7 +92,6 @@ add_news_to_fledgeling <- function(
     version = new_version,
     date = maybe_date(fledgeling[["news"]]),
     nickname = NA,
-    news = list(news),
     raw = raw,
     title = "",
     section_state = "new"
@@ -141,6 +108,38 @@ add_news_to_fledgeling <- function(
     cli_alert_success("Package version bumped to {.field {new_version}}.")
 
     cli_alert("Added header to {.file {news_path()}}.")
+  }
+
+  fledgeling
+}
+
+
+add_news_to_fledgeling_samedev <- function(fledgeling, news_lines) {
+  # Append and regroup
+  initializing <- is.null(fledgeling[["news"]])
+
+  if (initializing) {
+    fledgeling[["news"]] <- tibble::tibble(
+      start = 3,
+      h2 = FALSE,
+      version = fledgeling[["version"]],
+      date = "",
+      nickname = "",
+      original = "",
+      raw = news_lines,
+      section_state = "new"
+    )
+  } else {
+    old_news <- news_from_versions(parse_news_md(fledgeling[["news"]]$raw[[1]]))[[1]]
+    combined <- c(parse_news_lines(news_lines), old_news)
+    combined <- purrr::discard(combined, purrr::is_empty)
+    regrouped <- regroup_news(combined)
+    fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
+    fledgeling[["news"]][1, ]$section_state <- "new"
+  }
+
+  if (fledge_chatty()) {
+    cli_alert("Added items to {.file {news_path()}}.")
   }
 
   fledgeling

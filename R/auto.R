@@ -253,10 +253,9 @@ merge_dev_news <- function(fledgeling, new_version) {
 
   raw <- write_news_sections(fledgeling[["news"]][seq_len(n_dev), ])
   versions <- parse_news_md(raw)
+  news <- news_from_versions(versions)
 
-  news <- regroup_news(
-    unlist(news_from_versions(versions), recursive = FALSE)
-  )
+  news <- regroup_news(unlist(news, recursive = FALSE))
 
   raw <- format_news_subsections(news, header_level = 2)
 
@@ -267,7 +266,6 @@ merge_dev_news <- function(fledgeling, new_version) {
     version = new_version,
     date = maybe_date(fledgeling[["news"]]),
     nickname = NA,
-    news = list(news),
     raw = raw,
     title = "",
     section_state = "new"
