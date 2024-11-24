@@ -12,6 +12,8 @@
     Code
       plan_release("next")
     Message
+      > Pulling main.
+      Resetting main to origin/main
       > Digesting messages from 2 commits.
     Output
       +------------------+

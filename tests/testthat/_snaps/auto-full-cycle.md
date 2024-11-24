@@ -3,6 +3,8 @@
     Code
       plan_release("next")
     Message
+      > Pulling main.
+      Resetting main to 59ba519de8bead3755ecab98b404ea150c95ef25
       > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       
