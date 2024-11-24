@@ -23,7 +23,7 @@
       plan_release()
     Message
       > Pulling main.
-      Resetting main to 8376550ac8136a722cdee0e875ab96cf59d17493
+      Resetting main to 774c9f7f3b21d361480f3b285e37d40c47475d62
       > Digesting messages from 1 commits.
     Condition
       Error in `check_release_branch()`:
