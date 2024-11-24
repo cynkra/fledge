@@ -56,3 +56,21 @@
       }
     ] 
 
+# regroup_news() works
+
+    Code
+      regroup_news(combined)
+    Output
+      $`Custom type`
+      [1] "cool right"
+      
+      $Features
+      [1] "- feat1" ""        "- feat2"
+      
+      $Documentation
+      [1] "- stuff" ""        "- other" ""        "- again"
+      
+      $Uncategorized
+      [1] "- blop" ""       "- etc"  ""       "- pof"  ""       "- ok"  
+      
+

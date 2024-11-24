@@ -313,7 +313,9 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tee.
+## 
 ## - Added a `NEWS.md` file to track changes to the package.
 ```
 
@@ -334,7 +336,9 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## - Added a `NEWS.md` file to track changes to the package.
 writeLines(news, "NEWS.md")
 ```
@@ -386,7 +390,9 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## - Added a `NEWS.md` file to track changes to the package.
 ```
 
@@ -488,7 +494,9 @@ writeLines(news)
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## - Added a `NEWS.md` file to track changes to the package.
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
@@ -562,7 +570,9 @@ cat(news, sep = "\n")
 ## # tea 0.0.0.9001
 ## 
 ## - Add tests for cup of tea.
+## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
+## 
 ## - Added a `NEWS.md` file to track changes to the package.
 ```
 

@@ -242,12 +242,21 @@ regroup_news <- function(list) {
 }
 
 merge_news_group <- function(name, groups) {
-  this_group <- do.call(
-    c,
-    purrr::map(groups[names(groups) == name], unlist, recursive = FALSE)
-  )
-  this_group <- unique(this_group[this_group != ""])
-  unname(this_group)
+  out <- purrr::reduce(groups[names(groups) == name], ~ c(.x, "", .y))
+
+  # Remove duplicates and their associated empty lines
+  dupes <- duplicated(out) & (out != "")
+  after_dupes <- c(FALSE, dupes[-length(dupes)])
+  after_dupes_empty <- after_dupes & (out == "")
+  keep <- !(dupes | after_dupes_empty)
+  out <- out[keep]
+
+  # Edge case: Duplicate removal leads to empty last line
+  if (out[[length(out)]] == "") {
+    out <- out[-length(out)]
+  }
+
+  out
 }
 
 # Grouping -------
