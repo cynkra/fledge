@@ -55,10 +55,10 @@ test_that("regroup_news() works", {
   )
 
   combined <- c(news_list1, news_list2)
-  regrouped <-
-    expect_snapshot({
-      regroup_news(combined)
-    })
+
+  expect_snapshot({
+    regroup_news(combined)
+  })
 })
 
 test_that("Can update dev version news item", {

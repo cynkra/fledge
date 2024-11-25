@@ -297,7 +297,7 @@ add_scope <- function(row) {
   if (is.na(row$scope)) {
     row$description
   } else {
-    sprintf("### %s \n\n%s", row$scope, row$description)
+    sprintf("### %s\n\n%s", row$scope, row$description)
   }
 }
 add_hyphen <- function(row) {
@@ -329,7 +329,6 @@ get_date <- function() {
 }
 
 parse_news_lines <- function(news) {
-  news <- protect_hashtag(news)
   versions <- versions_from_news(news)
   news_collection_treat_section(versions)
 }

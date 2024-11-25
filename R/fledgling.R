@@ -289,7 +289,7 @@ paste_news_lines <- function(lines, header_level) {
       if (!nzchar(x)) {
         ""
       } else {
-        paste(header_sign, x, "\n\n")
+        paste0(header_sign, " ", x, "\n\n")
       }
     }
     lines <- purrr::imap_chr(

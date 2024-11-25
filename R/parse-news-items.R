@@ -273,7 +273,7 @@ is_merge_commit <- function(message) {
 }
 
 harvest_pr_data <- function(message) {
-  pr_number <- regmatches(message, regexpr("(?<=#)[0-9]*", message, perl = TRUE))
+  pr_number <- regmatches(message, regexpr("(?<=#)[0-9]+", message, perl = TRUE))
 
   if (length(pr_number) == 0) {
     return(tibble::tibble(

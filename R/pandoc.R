@@ -1,4 +1,6 @@
 versions_from_news <- function(news) {
+  news <- protect_hashtag(news)
+
   temp_file <- withr::local_tempfile(fileext = ".md")
   brio::write_lines(news, temp_file)
 
@@ -76,7 +78,7 @@ news_get_section_name <- function(section) {
 
 protect_hashtag <- function(lines) {
   lines <- gsub(
-    "(?<!#)(?<!^)(?<!`)#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
+    "(?<!^|[#`\n])#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
     "`#\\1`{=html}\\2",
     lines,
     perl = TRUE
