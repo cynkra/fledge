@@ -2,7 +2,7 @@
 
     Code
       tag_version()
-      get_last_tag()[, c("name", "ref")]
+      get_last_version_tag()[, c("name", "ref")]
     Output
       # A tibble: 1 x 2
         name        ref                  
@@ -28,7 +28,7 @@
       > Deleting existing tag v0.0.0.9000.
       > Creating tag v0.0.0.9000 with tag message derived from 'NEWS.md'.
     Code
-      get_last_tag()[, c("name", "ref")]
+      get_last_version_tag()[, c("name", "ref")]
     Output
       # A tibble: 1 x 2
         name        ref                  
