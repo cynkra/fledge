@@ -39,6 +39,9 @@ plan_release <- function(
 ) {
   which <- arg_match(which)
 
+  # Check PAT early
+  check_gh_pat("repo")
+
   local_repo()
   check_main_branch("plan_release()")
   check_only_modified(character())
@@ -62,9 +65,6 @@ plan_release <- function(
 plan_release_impl <- function(which, force) {
   # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
   stopifnot(get_branch_name() != "HEAD")
-
-  # Check PAT early
-  check_gh_pat("repo")
 
   orig_fledgeling <- read_fledgling()
 
