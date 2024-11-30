@@ -46,6 +46,7 @@ update_news <- function(
   invisible(NULL)
 }
 
-default_commit_range <- function(ref = "HEAD") {
-  get_top_level_commits_impl(since = get_last_tag_impl(ref)$commit, ref)
+default_commit_range <- function(current_version = NULL, ref = "HEAD") {
+  since <- get_last_version_tag_impl(current_version)$commit
+  get_top_level_commits_impl(since = since, ref)
 }

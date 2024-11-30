@@ -69,7 +69,7 @@ plan_release_impl <- function(which, force) {
   orig_fledgeling <- read_fledgling()
 
   fledgeling <- update_news_impl(
-    default_commit_range(),
+    default_commit_range(current_version = orig_fledgeling$version),
     which = "dev",
     fledgeling = orig_fledgeling,
     no_change_message = NA_character_
@@ -661,7 +661,7 @@ check_post_release <- function() {
   # Need PAT for creating GitHub release
   check_gh_pat("repo")
 
-  if (!no_change(main_branch)) {
+  if (!no_change()) {
     cli_abort(c(
       "The main branch contains newsworthy commits.",
       i = "Run {.run fledge::bump_version()} on the main branch."
@@ -807,7 +807,7 @@ release_after_cran_built_binaries <- function() {
 }
 
 get_last_release_version <- function() {
-  tag_df <- get_last_tag_impl(
+  tag_df <- get_last_version_tag_impl(
     pattern = "^v[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$"
   )
   as.package_version(gsub("^v", "", tag_df$name))
@@ -826,8 +826,8 @@ extract_version_pr <- function(title) {
   regmatches(title, matches)
 }
 
-no_change <- function(ref = "HEAD") {
+no_change <- function(ref) {
   # Only review meaningful comments
-  news <- collect_news(default_commit_range(ref), no_change_message = NA_character_)
+  news <- collect_news(default_commit_range(ref = ref), no_change_message = NA_character_)
   NROW(news) == 0
 }
