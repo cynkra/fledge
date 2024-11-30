@@ -13,7 +13,9 @@ from the SHA of the commit that this tag points to.
 Use \code{\link[gert:git_commit]{gert::git_log()}} to find the actual commit.
 }
 \description{
-Returns the most recent Git tag.
+Returns the most recent Git tag that is reachable from the current branch.
+This will not be accurate if the version bump and tag has occurred on a branch
+which has been squashed into the main branch.
 }
 \examples{
 # Create mock package in a temporary directory.
