@@ -13,7 +13,7 @@ update_news(
 \arguments{
 \item{messages}{A character vector of commit messages,
 e.g. as in the \code{message} column in the return value of \code{\link[=get_top_level_commits]{get_top_level_commits()}}.
-The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_tag]{get_last_tag()}}.}
+The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_version_tag]{get_last_version_tag()}}.}
 
 \item{which}{Component of the version number to update. Supported
 values are
@@ -33,7 +33,8 @@ None
 }
 \description{
 Lists all commits from a range (default: top-level commits since the most
-recent tag) and adds bullets from their body to \code{NEWS.md}.
+recent tag as determined by \code{\link[=get_last_version_tag]{get_last_version_tag()}})
+and adds bullets from their body to \code{NEWS.md}.
 Creates \code{NEWS.md} if necessary.
 }
 \examples{
@@ -54,6 +55,6 @@ with_demo_project({
   gert::git_add("NEWS.md")
   gert::git_commit(message = "release notes tweaking")
   fledge::tag_version()
-  print(fledge::get_last_tag())
+  print(fledge::get_last_version_tag())
 })
 }

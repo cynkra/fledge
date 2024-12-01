@@ -9,11 +9,21 @@ with_demo_project({
   # Track the new R file with Git.
   gert::git_add("R/cool-function.R")
   gert::git_commit("- Add cool function.")
+  # Switch to branch for bumping version.
+  gert::git_branch_create("fledge")
   # Bump version with fledge.
-  fledge::bump_version()
-  fledge::update_news(c("- something I forgot", "- blabla"), which = "patch")
-  gert::git_add("NEWS.md")
-  gert::git_commit(message = "release notes tweaking")
-  fledge::tag_version()
+  fledge::bump_version(check_default_branch = FALSE)
+  fledge::finalize_version()
+
+  # Merge the version bump branch into main.
+  gert::git_branch_checkout("main")
+  gert::git_merge("fledge", squash = TRUE)
+
+  print(get_top_level_commits(since = NULL))
+
+  # get_last_tag() doesn't work in this scenario
+  print(fledge::get_last_tag())
+
+  # get_last_version_tag() is better
   print(fledge::get_last_version_tag())
 })

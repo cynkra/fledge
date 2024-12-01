@@ -14,7 +14,7 @@ bump_version_impl <- function(fledgeling,
   }
   #' 1. [update_news()], using the `which` argument.
   out <- update_news_impl(
-    default_commit_range(),
+    default_commit_range(current_version = fledgeling$version),
     which = which,
     fledgeling = fledgeling,
     no_change_message = if (no_change_behavior == "bump") no_change_message else NA_character_

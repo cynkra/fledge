@@ -8,7 +8,7 @@ test_that("tag_version() works", {
 
   expect_snapshot({
     tag_version()
-    get_last_tag()[, c("name", "ref")]
+    get_last_version_tag()[, c("name", "ref")]
   })
 
   ## Attempting tagging again without any new commit ----
@@ -27,6 +27,6 @@ test_that("tag_version() works", {
   ## Same, but forcing ----
   expect_fledge_snapshot({
     tag_version(force = TRUE)
-    get_last_tag()[, c("name", "ref")]
+    get_last_version_tag()[, c("name", "ref")]
   })
 })
