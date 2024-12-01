@@ -10,7 +10,9 @@ test_that("bump_version() works -- dev", {
 
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
 
-  expect_snapshot(bump_version())
+  expect_snapshot({
+    bump_version()
+  })
 
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
   expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9001")
@@ -38,6 +40,9 @@ test_that("bump_version() works -- dev", {
 test_that("bump_version() works -- dev squash", {
   local_demo_project(quiet = TRUE)
 
+  # Important for the squash to actually create a different commit
+  gert::git_config_set("merge.ff", "false")
+
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   create_remote(tempdir_remote)
 
@@ -49,7 +54,9 @@ test_that("bump_version() works -- dev squash", {
 
   gert::git_branch_create("fledge")
 
-  expect_snapshot(bump_version(check_default_branch = FALSE))
+  expect_snapshot({
+    bump_version(check_default_branch = FALSE)
+  })
 
   gert::git_branch_checkout("main")
   gert::git_merge("fledge", squash = TRUE)
