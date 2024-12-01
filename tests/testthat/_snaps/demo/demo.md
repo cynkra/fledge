@@ -465,7 +465,7 @@ Now that we have added bowl support to our package, it is time to bump the versi
 
 ``` r
 fledge::bump_version()
-## > Digesting messages from 2 commits.
+## > Digesting messages from 1 commits.
 ## v Found 1 NEWS-worthy entry.
 ## 
 ## -- Updating NEWS --
