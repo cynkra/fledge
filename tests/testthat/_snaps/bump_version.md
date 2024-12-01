@@ -26,7 +26,7 @@
     Code
       bump_version(no_change_behavior = "fail")
     Message
-      > Digesting messages from 2 commits.
+      > Digesting messages from 1 commits.
     Condition
       Error in `bump_version_impl()`:
       x No change since last version.
@@ -37,7 +37,7 @@
     Code
       bump_version(no_change_behavior = "noop")
     Message
-      > Digesting messages from 2 commits.
+      > Digesting messages from 1 commits.
       i No change since last version.
 
 ---
@@ -45,8 +45,8 @@
     Code
       bump_version(no_change_behavior = "bump")
     Message
-      > Digesting messages from 2 commits.
-      i Internal changes only.
+      > Digesting messages from 1 commits.
+      i Same as previous version.
       
       -- Updating NEWS --
       
@@ -91,7 +91,7 @@
     Code
       bump_version(no_change_behavior = "fail")
     Message
-      > Digesting messages from 1 commits.
+      > Digesting messages from 2 commits.
     Condition
       Error in `bump_version_impl()`:
       x No change since last version.
@@ -102,7 +102,7 @@
     Code
       bump_version(no_change_behavior = "noop")
     Message
-      > Digesting messages from 1 commits.
+      > Digesting messages from 2 commits.
       i No change since last version.
 
 ---
@@ -110,8 +110,8 @@
     Code
       bump_version(no_change_behavior = "bump")
     Message
-      > Digesting messages from 1 commits.
-      i Same as previous version.
+      > Digesting messages from 2 commits.
+      i Internal changes only.
       
       -- Updating NEWS --
       

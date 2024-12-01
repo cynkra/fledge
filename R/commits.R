@@ -23,25 +23,19 @@ get_first_parent <- function(commit, since) {
 
   repeat {
     all_parents <- gert::git_commit_info(commit)$parents
-    first_parent <- get_parent_since(all_parents, since)
-    if (is_null(first_parent)) {
+    if (is_empty(all_parents)) {
+      return(commits)
+    }
+
+    first_parent <- all_parents[[1]]
+
+    if (!is_null(since) && gert::git_ahead_behind(since, first_parent)$ahead == 0) {
       return(commits)
     }
 
     commits <- c(commits, first_parent)
     commit <- first_parent
   }
-}
-
-get_parent_since <- function(all_parents, since) {
-  if (is_empty(all_parents)) {
-    return(NULL)
-  }
-  if (is_null(since)) {
-    return(all_parents[[1]])
-  }
-
-  purrr::detect(all_parents, ~ gert::git_ahead_behind(since, .x)$behind == 0)
 }
 
 get_last_tag_impl <- function(ref = "HEAD", pattern = NULL) {
