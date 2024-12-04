@@ -551,12 +551,15 @@ post_release_impl <- function() {
   # End extension points
 }
 
-create_github_release <- function() {
-  # FIXME: Extract function, add test
-  version <- get_last_release_version()
+create_github_release <- function(version) {
+  fledgling <- read_fledgling()
+
+  version <- get_last_release_version(fledgling)
   tag <- paste0("v", version)
 
-  if (fledge_chatty()) cli_alert("Creating GitHub release {.val {tag}}.")
+  if (fledge_chatty()) {
+    cli_alert("Creating GitHub release {.val {tag}}.")
+  }
 
   if (nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
     cli_alert("Omitting in test.")
@@ -575,8 +578,6 @@ create_github_release <- function() {
     }
     return(invisible())
   }
-
-  fledgling <- read_fledgling()
 
   stopifnot(sum(fledgling[["news"]]$version == version) == 1)
   header <- paste0(fledgling$name, " ", version)
@@ -806,11 +807,18 @@ release_after_cran_built_binaries <- function() {
   }
 }
 
-get_last_release_version <- function() {
-  tag_df <- get_last_version_tag_impl(
-    pattern = "^v[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$"
-  )
-  as.package_version(gsub("^v", "", tag_df$name))
+get_last_release_version <- function(fledgling = NULL) {
+  if (is.null(fledgling)) {
+    fledgling <- read_fledgling()
+  }
+
+  is_release <- grep("^[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$", fledgling$version)
+
+  if (length(is_release) == 0) {
+    return(NULL)
+  }
+
+  fledgling$version[[is_release[[1]]]]
 }
 
 cran_release_pr_title <- function(version) {
