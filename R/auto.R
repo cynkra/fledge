@@ -818,7 +818,7 @@ get_last_release_version <- function(fledgling = NULL) {
     return(NULL)
   }
 
-  fledgling$version[[is_release[[1]]]]
+  fledgling$news$version[[is_release[[1]]]]
 }
 
 cran_release_pr_title <- function(version) {
