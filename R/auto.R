@@ -812,7 +812,7 @@ get_last_release_version <- function(fledgling = NULL) {
     fledgling <- read_fledgling()
   }
 
-  is_release <- grep("^[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$", fledgling$version)
+  is_release <- grep("^[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$", fledgling$news$version)
 
   if (length(is_release) == 0) {
     return(NULL)
