@@ -80,7 +80,7 @@ get_last_version_tag_impl <- function(current_version = NULL, pattern = NULL) {
     current_version <- read_fledgling()$version
   }
 
-  current_version <- base::as.package_version(current_version)
+  current_version <- as.package_version(current_version)
 
   version_tags <- all_tags[grep("^v[0-9]+(?:[.][0-9]+)+$", all_tags$name), ]
 
@@ -88,7 +88,7 @@ get_last_version_tag_impl <- function(current_version = NULL, pattern = NULL) {
     version_tags <- version_tags[grep(pattern, version_tags$name, perl = TRUE), ]
   }
 
-  versions <- base::as.package_version(sub("^v", "", version_tags$name))
+  versions <- as.package_version(sub("^v", "", version_tags$name))
 
   version_tags <- version_tags[versions <= current_version, ]
   versions <- versions[versions <= current_version]
@@ -96,5 +96,9 @@ get_last_version_tag_impl <- function(current_version = NULL, pattern = NULL) {
   if (length(versions) == 0) {
     return(NULL)
   }
-  version_tags[order(versions, decreasing = TRUE) == 1, ]
+
+  # Bug in order():
+  # versions <- c("1.0.11.9013", "1.0.6.9010", "1.0.6.9014")
+  # order(as.package_version(versions))
+  version_tags[versions == max(versions), ]
 }
