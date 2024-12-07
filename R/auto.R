@@ -491,13 +491,15 @@ auto_confirm <- function() {
       if (has_length(url, 1) && grepl("^https://xmpalantir\\.wu\\.ac\\.at/cransubmit/conf_mail\\.php[?]code=", url)) {
         break
       }
-      Sys.sleep(0.01)
+      Sys.sleep(0.1)
     },
     interrupt = function(e) {
       cli_ul("Restart with {.fun fledge:::auto_confirm} (or confirm manually), re-release with {.fun fledge:::release}.")
       rlang::cnd_signal(e)
     }
   )
+
+  clipr::write_clip("")
 
   code <- paste0('utils::browseURL("', get_confirm_url(url), '")')
   if (fledge_chatty()) cli_ul("Run {.run {code}}.")
