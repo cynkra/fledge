@@ -28,7 +28,8 @@ read_package <- function() {
 }
 
 read_version <- function() {
-  desc::desc_get_version()
+  # We want 1.1.3-1 instead of 1.1.3.1, desc_get_version() gives the latter
+  unname(desc::desc_get("Version"))
 }
 
 read_date <- function() {
