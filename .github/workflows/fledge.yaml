@@ -58,7 +58,6 @@ jobs:
       - uses: ./.github/workflows/install
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          install-r: false
           cache-version: fledge-1
           packages: local::.
 
