@@ -457,14 +457,11 @@ release_impl <- function() {
 }
 
 is_news_consistent <- function() {
-  headers <- with_repo(get_news_headers())
+  headers <- get_news_headers()
 
+  is_release <- version_is_release(utils::head(headers$version, 3))
   # One entry is fine, zero entries are an error
-  if (length(headers$version) <= 1) {
-    return(length(headers$version) == 1)
-  }
-
-  !any(is_dev_version(headers$version[1:2]))
+  length(is_release) > 0 && all(is_release)
 }
 
 get_cran_comments_text <- function() {
@@ -814,13 +811,17 @@ get_last_release_version <- function(fledgling = NULL) {
     fledgling <- read_fledgling()
   }
 
-  is_release <- grep("^[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$", fledgling$news$version)
+  is_release <- which(version_is_release(fledgling$news$version))
 
   if (length(is_release) == 0) {
     return(NULL)
   }
 
   fledgling$news$version[[is_release[[1]]]]
+}
+
+version_is_release <- function(x) {
+  grepl("^[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$", x)
 }
 
 cran_release_pr_title <- function(version) {
