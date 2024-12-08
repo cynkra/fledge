@@ -311,8 +311,12 @@ bind_rows <- function(df_list) {
   do.call(rbind, df_list)
 }
 
-get_news_headers <- function() {
-  read_fledgling()[["news"]][, c("start", "version", "date", "nickname")]
+get_news_headers <- function(fledgling = NULL) {
+  if (is.null(fledgling)) {
+    fledgling <- read_fledgling()
+  }
+
+  fledgling$news[c("start", "version", "date", "nickname")]
 }
 
 get_date <- function() {
