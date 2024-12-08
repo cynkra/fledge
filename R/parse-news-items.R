@@ -122,6 +122,7 @@ conventional_commit_types <- function() {
     "Build system, external dependencies" = "build",
     "Chore" = "chore",
     "Continuous integration" = "ci",
+    "Documentation" = "doc",
     "Documentation" = "docs",
     "Code style" = "style",
     "Refactoring" = "refactor",
