@@ -45,6 +45,11 @@ treat_commit_message <- function(commit_df) {
     purrr::map_chr(remove_housekeeping) %>%
     purrr::map(extract_newsworthy_items)
 
+  # For empty commit messages
+  if (length(default_newsworthy) == 0) {
+    return(NULL)
+  }
+
   if (nrow(default_newsworthy[[1]]) > 0) {
     return(default_newsworthy[[1]])
   }
