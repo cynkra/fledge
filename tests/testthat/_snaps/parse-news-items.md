@@ -76,7 +76,7 @@
       # A tibble: 1 x 4
         description                                               type  breaking scope
         <chr>                                                     <chr> <lgl>    <lgl>
-      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#~ Unca~ FALSE    NA   
+      1 Merge pull request #332 from cynkra/conventional-parsing~ Unca~ FALSE    NA   
 
 # Can parse PR merge commits - PAT absence
 
@@ -92,7 +92,7 @@
 
     [
       {
-        "title": "NA",
+        "title": "- Merge pull request #332 from cynkra/conventional-parsing",
         "pr_number": "332",
         "issue_numbers": "",
         "external_ctb": "NA"

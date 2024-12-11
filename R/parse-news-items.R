@@ -375,7 +375,9 @@ harvest_pr_data <- function(message) {
   )
 
   tibble::tibble(
-    title = pr_info$title %||% NA_character_,
+    # FIXME: Better default message without PR info
+    # if the message is already in Conventional Commit format
+    title = pr_info$title %||% paste0("- ", message),
     pr_number = pr_number,
     issue_numbers = list(issue_numbers),
     external_ctb = external_ctb,
