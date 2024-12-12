@@ -1,5 +1,76 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9036 (2024-12-12)
+
+## Bug fixes
+
+- Support empty commit messages.
+
+- `is_news_consistent()` detects releases of the kind x.y.z-w.
+
+- Work around bug in `order()` for package versions.
+
+- Use correct version for checking GH release.
+
+- Use correct version for checking GH release.
+
+- `release_after_cran_built_binaries()` works correctly again (#848).
+
+## Features
+
+- Better entry if PR info could not be extracted.
+
+- Support versions of the form x.y.z-w for tagging.
+
+- Newsworthy commits are searched along the first parents only, picking up all relevant commits (#847).
+
+- Determining the most recent tag now uses the new `get_last_version_tag()` and works when the version tag is on a diverged branch (e.g., after squash-merging) (#844).
+
+- Consistent protection of hash tag (#836).
+
+- Keep empty lines when merging (#834).
+
+- `plan_release()` pulls the current branch (#831).
+
+## Chore
+
+- Get tagging information from fledgling.
+
+- Clear clipboard after successful discovery of CRAN URL.
+
+- Check token early for automation (#841).
+
+- Refactor (#835).
+
+## Continuous integration
+
+- Install R.
+
+- Avoid failure in fledge workflow if no changes (#851).
+
+- Fetch tags for fledge workflow to avoid unnecessary NEWS entries (#850).
+
+- Use larger retry count for lock-threads workflow (#849).
+
+- Ignore errors when removing pkg-config on macOS (#840).
+
+- Explicit permissions (#839).
+
+- Use styler from main branch (#838).
+
+- Need to install R on Ubuntu 24.04 (#837).
+
+- Use Ubuntu 24.04 and styler PR (#829).
+
+## Testing
+
+- Fix test (#846).
+
+## Uncategorized
+
+- Ci: Fix macOS (#16) (#830).
+
+
 # fledge 0.1.99.9035 (2024-11-24)
 
 ## Features
