@@ -3,7 +3,8 @@
 
 Verify that the current branch is the main branch
 if check_default_branch = TRUE (the default).
-update_news(), using the which argument.
+update_news(), using the which argument, applying logic to determine
+if meaningful changes have been made since the last version.
 From the result, check if there were meaningful changes since the last version.
 Depending on the which argument:
 If "dev", finalize_version() with push = FALSE
@@ -14,7 +15,8 @@ Otherwise, commit_version().
 
 Verify that the current branch is the main branch
 if check_default_branch = TRUE (the default).
-update_news(), using the which argument.
+update_news(), using the which argument, applying logic to determine
+if meaningful changes have been made since the last version.
 From the result, check if there were meaningful changes since the last version.
 Depending on the which argument:
 If "dev", finalize_version() with push = FALSE
@@ -66,7 +68,8 @@ Otherwise, commit_version().
     <p>Calls the following functions:</p>
 <ol><li><p>Verify that the current branch is the main branch
 if <code>check_default_branch = TRUE</code> (the default).</p></li>
-<li><p><code><a href="update_news.html">update_news()</a></code>, using the <code>which</code> argument.</p></li>
+<li><p><code><a href="update_news.html">update_news()</a></code>, using the <code>which</code> argument, applying logic to determine
+if meaningful changes have been made since the last version.</p></li>
 <li><p>From the result, check if there were meaningful changes since the last version.</p></li>
 <li><p>Depending on the <code>which</code> argument:</p><ul><li><p>If <code>"dev"</code>, <code><a href="finalize_version.html">finalize_version()</a></code> with <code>push = FALSE</code></p></li>
 <li><p>Otherwise, <code><a href="commit_version.html">commit_version()</a></code>.</p></li>
@@ -152,7 +155,7 @@ Fear not, run <code><a href="unbump_version.html">unbump_version()</a></code>, m
 <span class="r-in"><span>  <span class="co"># Bump version with fledge.</span></span></span>
 <span class="r-in"><span>  <span class="fu">fledge</span><span class="fu">::</span><span class="fu">bump_version</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"/tmp/RtmpTP5Kru/fledge483b1b85bf38/tea"</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"/tmp/Rtmpkg8Mba/fledge484d47b97332/tea"</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">☐</span> Edit <span style="color: #0000BB;">R/cool-function.R</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Digesting messages from <span style="color: #00BB00;">3</span> commits.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> NEWS-worthy entry.</span>
