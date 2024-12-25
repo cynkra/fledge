@@ -7,7 +7,7 @@
     <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-nav" alt="cynkra"></a>
     <a class="navbar-brand me-2" href="../index.html">fledge</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.99.9035</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.99.9036</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,55 @@
       <small>Source: <a href="https://github.com/cynkra/fledge/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.99.9036" id="fledge-01999036-2024-12-12">fledge 0.1.99.9036 (2024-12-12)<a class="anchor" aria-label="anchor" href="#fledge-01999036-2024-12-12"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-99-9036">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-99-9036"></a></h3>
+<ul><li><p>Support empty commit messages.</p></li>
+<li><p><code>is_news_consistent()</code> detects releases of the kind x.y.z-w.</p></li>
+<li><p>Work around bug in <code><a href="https://rdrr.io/r/base/order.html" class="external-link">order()</a></code> for package versions.</p></li>
+<li><p>Use correct version for checking GH release.</p></li>
+<li><p>Use correct version for checking GH release.</p></li>
+<li><p><code>release_after_cran_built_binaries()</code> works correctly again (<a href="https://github.com/cynkra/fledge/issues/848" class="external-link">#848</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-1-99-9036">Features<a class="anchor" aria-label="anchor" href="#features-0-1-99-9036"></a></h3>
+<ul><li><p>Better entry if PR info could not be extracted.</p></li>
+<li><p>Support versions of the form x.y.z-w for tagging.</p></li>
+<li><p>Newsworthy commits are searched along the first parents only, picking up all relevant commits (<a href="https://github.com/cynkra/fledge/issues/847" class="external-link">#847</a>).</p></li>
+<li><p>Determining the most recent tag now uses the new <code><a href="../reference/get_last_version_tag.html">get_last_version_tag()</a></code> and works when the version tag is on a diverged branch (e.g., after squash-merging) (<a href="https://github.com/cynkra/fledge/issues/844" class="external-link">#844</a>).</p></li>
+<li><p>Consistent protection of hash tag (<a href="https://github.com/cynkra/fledge/issues/836" class="external-link">#836</a>).</p></li>
+<li><p>Keep empty lines when merging (<a href="https://github.com/cynkra/fledge/issues/834" class="external-link">#834</a>).</p></li>
+<li><p><code><a href="../reference/release.html">plan_release()</a></code> pulls the current branch (<a href="https://github.com/cynkra/fledge/issues/831" class="external-link">#831</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-1-99-9036">Chore<a class="anchor" aria-label="anchor" href="#chore-0-1-99-9036"></a></h3>
+<ul><li><p>Get tagging information from fledgling.</p></li>
+<li><p>Clear clipboard after successful discovery of CRAN URL.</p></li>
+<li><p>Check token early for automation (<a href="https://github.com/cynkra/fledge/issues/841" class="external-link">#841</a>).</p></li>
+<li><p>Refactor (<a href="https://github.com/cynkra/fledge/issues/835" class="external-link">#835</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-1-99-9036">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-1-99-9036"></a></h3>
+<ul><li><p>Install R.</p></li>
+<li><p>Avoid failure in fledge workflow if no changes (<a href="https://github.com/cynkra/fledge/issues/851" class="external-link">#851</a>).</p></li>
+<li><p>Fetch tags for fledge workflow to avoid unnecessary NEWS entries (<a href="https://github.com/cynkra/fledge/issues/850" class="external-link">#850</a>).</p></li>
+<li><p>Use larger retry count for lock-threads workflow (<a href="https://github.com/cynkra/fledge/issues/849" class="external-link">#849</a>).</p></li>
+<li><p>Ignore errors when removing pkg-config on macOS (<a href="https://github.com/cynkra/fledge/issues/840" class="external-link">#840</a>).</p></li>
+<li><p>Explicit permissions (<a href="https://github.com/cynkra/fledge/issues/839" class="external-link">#839</a>).</p></li>
+<li><p>Use styler from main branch (<a href="https://github.com/cynkra/fledge/issues/838" class="external-link">#838</a>).</p></li>
+<li><p>Need to install R on Ubuntu 24.04 (<a href="https://github.com/cynkra/fledge/issues/837" class="external-link">#837</a>).</p></li>
+<li><p>Use Ubuntu 24.04 and styler PR (<a href="https://github.com/cynkra/fledge/issues/829" class="external-link">#829</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-1-99-9036">Testing<a class="anchor" aria-label="anchor" href="#testing-0-1-99-9036"></a></h3>
+<ul><li>Fix test (<a href="https://github.com/cynkra/fledge/issues/846" class="external-link">#846</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="uncategorized-0-1-99-9036">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-1-99-9036"></a></h3>
+<ul><li>Ci: Fix macOS (<a href="https://github.com/cynkra/fledge/issues/16" class="external-link">#16</a>) (<a href="https://github.com/cynkra/fledge/issues/830" class="external-link">#830</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.99.9035" id="fledge-01999035-2024-11-24">fledge 0.1.99.9035 (2024-11-24)<a class="anchor" aria-label="anchor" href="#fledge-01999035-2024-11-24"></a></h2>
 <div class="section level3">
