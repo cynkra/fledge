@@ -140,5 +140,6 @@ get_version_components <- function(version) {
 
 is_dev_version <- function(version) {
   classed_version <- package_version(version, strict = TRUE)
-  lengths(unclass(classed_version)) >= 4
+  unclassed_version <- unclass(classed_version)[[1]]
+  length(unclassed_version) >= 4 && unclassed_version[[4]] >= 9000
 }

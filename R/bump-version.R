@@ -12,12 +12,19 @@ bump_version_impl <- function(fledgeling,
   if (check_default_branch) {
     check_main_branch("bump_version()", "bump_version(check_default_branch = FALSE)")
   }
-  #' 1. [update_news()], using the `which` argument.
+  #' 1. [update_news()], using the `which` argument, applying logic to determine
+  #'    if meaningful changes have been made since the last version.
+  if (!is_dev_version(fledgeling$version) && which == "dev") {
+    no_change_message <- "Switching to development version."
+  } else if (no_change_behavior != "bump") {
+    no_change_message <- NA_character_
+  }
+
   out <- update_news_impl(
     default_commit_range(current_version = fledgeling$version),
     which = which,
     fledgeling = fledgeling,
-    no_change_message = if (no_change_behavior == "bump") no_change_message else NA_character_
+    no_change_message = no_change_message
   )
 
   #' 1. From the result, check if there were meaningful changes since the last version.

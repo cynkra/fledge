@@ -628,7 +628,7 @@ The `fledge::bump_version()` takes care of it.
 ``` r
 fledge::bump_version()
 ## > Digesting messages from 1 commits.
-## i Same as previous version.
+## i Switching to development version.
 ## 
 ## -- Updating NEWS --
 ## 
