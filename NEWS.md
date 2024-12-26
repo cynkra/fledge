@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9037 (2024-12-26)
+
+## Features
+
+- `bump_version(which = "dev")` always bumps from non-dev.
+
+## Chore
+
+- IDE.
+
+
 # fledge 0.1.99.9036 (2024-12-12)
 
 ## Bug fixes
