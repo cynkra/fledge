@@ -53,20 +53,20 @@ plan_release <- function(
     "plan_release"
   )
 
-  if (which == "next") {
-    which <- guess_next()
-  }
-
   local_options(usethis.quiet = TRUE)
 
   plan_release_impl(which, force)
 }
 
 plan_release_impl <- function(which, force) {
+  orig_fledgeling <- read_fledgling()
+
+  if (which == "next") {
+    which <- guess_next(orig_fledgeling$version)
+  }
+
   # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
   stopifnot(get_branch_name() != "HEAD")
-
-  orig_fledgeling <- read_fledgling()
 
   fledgeling <- update_news_impl(
     default_commit_range(current_version = orig_fledgeling$version),
@@ -209,12 +209,7 @@ plan_release_impl <- function(which, force) {
   # End extension points
 }
 
-guess_next <- function() {
-  desc <- desc::desc(file = "DESCRIPTION")
-  guess_next_impl(desc$get_version())
-}
-
-guess_next_impl <- function(version) {
+guess_next <- function(version) {
   version_components <- get_version_components(version)
   if (version_components[["patch"]] == 99) {
     if (version_components[["minor"]] == 99) {

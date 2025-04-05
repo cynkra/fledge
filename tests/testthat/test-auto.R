@@ -2,10 +2,10 @@ test_that("extract_version_pr() works", {
   expect_equal(extract_version_pr("CRAN release v1.2.3"), "1.2.3")
 })
 
-test_that("guess_next_impl() works", {
-  expect_equal(guess_next_impl("1.2.3.9007"), "patch")
-  expect_equal(guess_next_impl("1.2.99.9008"), "minor")
-  expect_equal(guess_next_impl("1.99.99.9009"), "major")
+test_that("guess_next() works", {
+  expect_equal(guess_next("1.2.3.9007"), "patch")
+  expect_equal(guess_next("1.2.99.9008"), "minor")
+  expect_equal(guess_next("1.99.99.9009"), "major")
 })
 
 test_that("merge_dev_news() works", {
