@@ -26,6 +26,7 @@
 #'   * `"next"` (`"major"` if the current version is `x.99.99.9yyy`,
 #'     `"minor"` if the current version is `x.y.99.9zzz`,
 #'     `"patch"` otherwise),
+#'   * `"same"` (`x.y.z` if the current version is `x.y.z` or `x.y.z.9yyy`),
 #'   * `"patch"`
 #'   * `"minor"`,
 #'   * `"major"`.
@@ -34,7 +35,7 @@
 #' @rdname release
 #' @export
 plan_release <- function(
-  which = c("pre-patch", "pre-minor", "pre-major", "next", "patch", "minor", "major"),
+  which = c("pre-patch", "pre-minor", "pre-major", "next", "same", "patch", "minor", "major"),
   force = FALSE
 ) {
   which <- arg_match(which)
@@ -65,22 +66,26 @@ plan_release_impl <- function(which, force) {
     which <- guess_next(orig_fledgeling$version)
   }
 
-  # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
-  stopifnot(get_branch_name() != "HEAD")
-
-  fledgeling <- update_news_impl(
-    default_commit_range(current_version = orig_fledgeling$version),
-    which = "dev",
-    fledgeling = orig_fledgeling,
-    no_change_message = NA_character_
-  )
-
-  if (!identical(fledgeling, orig_fledgeling)) {
-    write_fledgling(fledgeling)
-    finalize_version_impl(push = TRUE)
-  }
-
   new_version <- fledge_guess_version(fledgeling[["version"]], which)
+  if (which == "same") {
+    branch_ref <- get_tag_from_version(new_version)
+  } else {
+    branch_ref <- "HEAD"
+    # Checking if it's an orphan branch: https://github.com/r-lib/gert/issues/139
+    stopifnot(get_branch_name() != "HEAD")
+
+    fledgeling <- update_news_impl(
+      default_commit_range(current_version = orig_fledgeling$version),
+      which = "dev",
+      fledgeling = orig_fledgeling,
+      no_change_message = NA_character_
+    )
+
+    if (!identical(fledgeling, orig_fledgeling)) {
+      write_fledgling(fledgeling)
+      finalize_version_impl(push = TRUE)
+    }
+  }
 
   if (!force) {
     check_release_branch(new_version)
@@ -99,12 +104,17 @@ plan_release_impl <- function(which, force) {
     cli_h1("1. Creating a release branch and getting ready")
   }
 
-  # regroup dev news
-  fledgeling <- merge_dev_news(fledgeling, new_version)
-
   # switch to release branch and update cran-comments
   release_branch <- create_release_branch(new_version, force)
   switch_branch(release_branch)
+
+  if (which == "same") {
+    # if we are on a tag, we need to update the version
+    fledgeling <- read_fledgling()
+  } else {
+    # regroup dev news
+    fledgeling <- merge_dev_news(fledgeling, new_version)
+  }
 
   update_cran_comments(new_version)
   gert::git_add(c("cran-comments.md", ".Rbuildignore"))
@@ -290,9 +300,7 @@ check_release_branch <- function(new_version) {
   }
 }
 
-create_release_branch <- function(version,
-                                  force,
-                                  ref = "HEAD") {
+create_release_branch <- function(version, force, ref = "HEAD") {
   branch_name <- get_release_branch_from_version(version)
 
   if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")

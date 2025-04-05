@@ -7,7 +7,8 @@
 \title{Automating CRAN release}
 \usage{
 plan_release(
-  which = c("pre-patch", "pre-minor", "pre-major", "next", "patch", "minor", "major"),
+  which = c("pre-patch", "pre-minor", "pre-major", "next", "same", "patch", "minor",
+    "major"),
   force = FALSE
 )
 
@@ -25,6 +26,7 @@ values are
 \item \code{"next"} (\code{"major"} if the current version is \code{x.99.99.9yyy},
 \code{"minor"} if the current version is \code{x.y.99.9zzz},
 \code{"patch"} otherwise),
+\item \code{"same"} (\code{x.y.z} if the current version is \code{x.y.z} or \code{x.y.z.9yyy}),
 \item \code{"patch"}
 \item \code{"minor"},
 \item \code{"major"}.
