@@ -114,6 +114,8 @@ fledge_guess_version <- function(version, which) {
       patch <- 99
       minor <- 99
     }
+  } else if (which == "same") {
+    dev <- NA
   } else {
     cli::cli_abort("Unknown version specifier {.val {which}}.")
   }

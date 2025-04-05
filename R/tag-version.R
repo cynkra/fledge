@@ -41,9 +41,13 @@ tag_version_impl <- function(force) {
   invisible(tag)
 }
 
+get_tag_from_version <- function(version) {
+  paste0("v", version)
+}
+
 get_tag_info <- function() {
   fledgling <- read_fledgling()
-  name <- paste0("v", fledgling$version)
+  name <- get_tag_from_version(fledgling$version)
 
   header <- paste0(fledgling$name, " ", fledgling$version)
   body <- sub("^[^\n]+\n\n", "", get_current_news(fledgling))
