@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9038 (2025-04-06)
+
+## Chore
+
+- Extract `get_release_branch_from_version()`.
+
+
 # fledge 0.1.99.9037 (2024-12-26)
 
 ## Features
