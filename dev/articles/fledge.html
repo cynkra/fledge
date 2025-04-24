@@ -25,7 +25,7 @@
 
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
-    <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-nav" alt="cynkra"></a>
+    <a href="https://cynkra.com" class="external-link logo-cynkra"><img src="https://cynkra.com/assets/img/logo-cynkra-square.svg" alt="cynkra" width="100" height="100"><div class="sr-only">cynkra</div></a>
     <a class="navbar-brand me-2" href="../index.html">fledge</a>
 
     <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.99.9038</small>
@@ -36,7 +36,9 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto">
+        <!-- empty ul needed otherwise everything on the left -->
+        <ul class="navbar-nav me-auto"></ul>
+<ul class="navbar-nav">
 <li class="active nav-item"><a class="nav-link" href="../articles/fledge.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
@@ -48,13 +50,11 @@
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-      </ul>
-<ul class="navbar-nav">
-<li class="nav-item"><form class="form-inline" role="search">
+            <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/cynkra/fledge/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-      </ul>
+        </ul>
 </div>
 
 
@@ -462,12 +462,12 @@ tagged manually with <code><a href="../reference/tag_version.html">tag_version()
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, <a href="https://cynkra.com/about/" class="external-link">Patrick Schratz</a>.</p>
+  <p>Developed by <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p>
-Sponsored by <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-footer" alt="cynkra"></a>
+Sponsored by <a href="https://cynkra.com" class="external-link">cynkra</a> <span class="cynkra-square"></span>
 </p>
 </div>
 

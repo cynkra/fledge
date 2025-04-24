@@ -10,7 +10,7 @@ Creates NEWS.md if necessary."><meta name="robots" content="noindex"><script def
 
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
-    <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-nav" alt="cynkra"></a>
+    <a href="https://cynkra.com" class="external-link logo-cynkra"><img src="https://cynkra.com/assets/img/logo-cynkra-square.svg" alt="cynkra" width="100" height="100"><div class="sr-only">cynkra</div></a>
     <a class="navbar-brand me-2" href="../index.html">fledge</a>
 
     <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.99.9038</small>
@@ -21,7 +21,8 @@ Creates NEWS.md if necessary."><meta name="robots" content="noindex"><script def
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/fledge.html">Get started</a></li>
+        <!-- empty ul needed otherwise everything on the left -->
+        <ul class="navbar-nav me-auto"></ul><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../articles/fledge.html">Get started</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -30,10 +31,10 @@ Creates NEWS.md if necessary."><meta name="robots" content="noindex"><script def
     <li><a class="dropdown-item" href="../articles/internals.html">Fledge internals</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+            <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/cynkra/fledge/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-      </ul></div>
+        </ul></div>
 
 
   </div>
@@ -111,7 +112,7 @@ values are</p><ul><li><p><code>"auto"</code> (default: <code>"samedev"</code> or
 <span class="r-in"><span>  <span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="tag_version.html">tag_version</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">fledge</span><span class="fu">::</span><span class="fu"><a href="get_last_version_tag.html">get_last_version_tag</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"/tmp/RtmpGBjJmT/fledge48663866029c/tea"</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"/tmp/RtmpQyvk41/fledge48a22668f366/tea"</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">☐</span> Edit <span style="color: #0000BB;">R/cool-function.R</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Digesting messages from <span style="color: #00BB00;">3</span> commits.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> NEWS-worthy entry.</span>
@@ -148,7 +149,7 @@ values are</p><ul><li><p><code>"auto"</code> (default: <code>"samedev"</code> or
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   name   ref              commit                                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> v0.0.1 refs/tags/v0.0.1 b4c5ac65da22708cfbb45b0bb66a2442ab7ccc6e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> v0.0.1 refs/tags/v0.0.1 a72df3f59ddd68443fe0b723666bbc313c72985b</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"&lt;no active project&gt;"</span>.</span>
 </code></pre></div>
     </div>
@@ -157,12 +158,12 @@ values are</p><ul><li><p><code>"auto"</code> (default: <code>"samedev"</code> or
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, <a href="https://cynkra.com/about/" class="external-link">Patrick Schratz</a>.</p>
+  <p>Developed by <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Patrick Schratz.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p>
-Sponsored by <a href="https://cynkra.com" class="external-link"><img src="https://cynkra.com/assets/img/logo_small.svg" id="cynkra-logo-footer" alt="cynkra"></a>
+Sponsored by <a href="https://cynkra.com" class="external-link">cynkra</a> <span class="cynkra-square"></span>
 </p>
 </div>
 
