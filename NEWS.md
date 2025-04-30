@@ -1,5 +1,24 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9039 (2025-04-30)
+
+## Continuous integration
+
+- Permissions, better tests for missing suggests, lints (#870).
+
+- Only fail covr builds if token is given (#867).
+
+- Always use `_R_CHECK_FORCE_SUGGESTS_=false` (#866).
+
+- Correct installation of xml2 (#863).
+
+- Explain (#861).
+
+- Add xml2 for covr, print testthat results (#860).
+
+- Sync (#859).
+
+
 # fledge 0.1.99.9038 (2025-04-06)
 
 ## Chore
