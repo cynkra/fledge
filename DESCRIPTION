@@ -31,6 +31,7 @@ Imports:
     curl,
     desc (>= 1.4.1),
     devtools,
+    gh (>= 1.4.1.9000),
     glue,
     httr2,
     lifecycle,
@@ -52,7 +53,6 @@ Suggests:
     foghorn,
     fs,
     gert (>= 1.4.0),
-    gh,
     httptest2,
     job,
     jsonlite,
@@ -79,3 +79,5 @@ Config/testthat/start-first: auto, demo, parse-news-items, bump_version
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: true
 Config/Needs/website: cynkra/cynkratemplate
+Remotes:  
+    r-lib/gh
