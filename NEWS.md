@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9040 (2025-05-04)
+
+## Continuous integration
+
+- Enhance permissions for workflow (#872).
+
+
 # fledge 0.1.99.9039 (2025-04-30)
 
 ## Continuous integration
