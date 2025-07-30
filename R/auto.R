@@ -447,6 +447,7 @@ release_impl <- function() {
 
   stopifnot(is_news_consistent())
   stopifnot(is_cran_comments_good())
+  stopifnot(getRversion() >= "4.5")
 
   # Begin extension points
   # End extension points
