@@ -66,7 +66,8 @@ plan_release_impl <- function(which, force) {
     which <- guess_next(orig_fledgeling$version)
   }
 
-  new_version <- fledge_guess_version(fledgeling[["version"]], which)
+  new_version <- fledge_guess_version(orig_fledgeling[["version"]], which)
+
   if (which == "same") {
     branch_ref <- get_tag_from_version(new_version)
   } else {
@@ -114,11 +115,11 @@ plan_release_impl <- function(which, force) {
   } else {
     # regroup dev news
     fledgeling <- merge_dev_news(fledgeling, new_version)
-  }
 
-  update_cran_comments(new_version)
-  gert::git_add(c("cran-comments.md", ".Rbuildignore"))
-  gert::git_commit("CRAN comments")
+    update_cran_comments(new_version)
+    gert::git_add(c("cran-comments.md", ".Rbuildignore"))
+    gert::git_commit("CRAN comments")
+  }
 
   write_fledgling(fledgeling)
   commit_version_impl()
