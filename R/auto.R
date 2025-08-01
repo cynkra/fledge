@@ -490,6 +490,13 @@ auto_confirm <- function() {
     cli::cli_inform("Not submitting for real o:-)")
     return(invisible(NULL))
   }
+  if (!clipr::clipr_available()) {
+    cli::cli_abort(c(
+      "Clipboard not available.",
+      i = "Please confirm manually."
+    ))
+    return(invisible(NULL))
+  }
   tryCatch(
     repeat {
       suppressWarnings(url <- clipr::read_clip())
