@@ -3,7 +3,7 @@
 #' Reads a file from disk, applies a function on the contents, and optionally
 #' writes the file back if different.
 #' The line ending separator of the input file is used if it can be read and
-#' contains at least one, otherwise [native_eol()] is used.
+#' contains at least one, otherwise the platform-native EOL is used.
 #'
 #' @family file functions
 #' @param path A vector of file paths.
