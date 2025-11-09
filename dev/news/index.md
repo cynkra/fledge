@@ -1,5 +1,17 @@
 # Changelog
 
+## fledge 0.1.99.9041 (2025-11-08)
+
+### Continuous integration
+
+- Format with air, check detritus, better handling of `extra-packages`
+  ([\#923](https://github.com/cynkra/fledge/issues/923)).
+
+### documentation
+
+- Update function reference links in README.md
+  ([\#880](https://github.com/cynkra/fledge/issues/880)).
+
 ## fledge 0.1.99.9040 (2025-05-04)
 
 ### Continuous integration
