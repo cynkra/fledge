@@ -836,7 +836,7 @@ get_last_release_version <- function(fledgling = NULL) {
 }
 
 version_is_release <- function(x) {
-  grepl("^[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$", x)
+  grepl("^[0-9]+[.][0-9]+(?:[.][0-9]+(?:[.-][0-9]{1,3})?)?$", x)
 }
 
 cran_release_pr_title <- function(version) {
