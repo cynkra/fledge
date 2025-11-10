@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9042 (2025-11-10)
+
+## Features
+
+- Treat versions with two components as release versions.
+
+## Continuous integration
+
+- Review env vers when installing, more careful foreign runs, format with `clang-format` (#1028).
+
+
 # fledge 0.1.99.9041 (2025-11-08)
 
 ## Continuous integration
