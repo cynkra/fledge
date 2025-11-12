@@ -73,7 +73,7 @@
        14.           \-gh:::gh_make_request(req)
        15.             \-httr2::req_perform(req, path = x$desttmp)
        16.               \-httptest2 (local) mock(req)
-       17.                 \-httptest2:::stop_request(req)
+       17.                 \-httptest2:::stop_request(req) at httptest2/R/mock-api.R:73:3
       # A tibble: 1 x 4
         description                                               type  breaking scope
         <chr>                                                     <chr> <lgl>    <lgl>
