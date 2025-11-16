@@ -1,5 +1,12 @@
 # Changelog
 
+## fledge 0.1.99.9043 (2025-11-12)
+
+### Continuous integration
+
+- Fix reviewdog and add commenting workflow
+  ([\#1030](https://github.com/cynkra/fledge/issues/1030)).
+
 ## fledge 0.1.99.9042 (2025-11-10)
 
 ### Features
