@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9044 (2025-11-17)
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#1032).
+
+
 # fledge 0.1.99.9043 (2025-11-12)
 
 ## Continuous integration
