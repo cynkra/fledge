@@ -70,10 +70,10 @@
        11.       | \-base::withCallingHandlers(...)
        12.       \-fledge:::gh(glue("GET /repos/{slug}/pulls/{pr_number}")) at fledge/R/parse-news-items.R:308:9
        13.         \-gh::gh(...) at fledge/R/utils-gh.R:2:3
-       14.           \-gh:::gh_make_request(req)
-       15.             \-httr2::req_perform(req, path = x$desttmp)
-       16.               \-httptest2 (local) mock(req)
-       17.                 \-httptest2:::stop_request(req)
+       14.           \-gh:::gh_make_request(req) at gh/R/gh.R:204:3
+       15.             \-httr2::req_perform(req, path = x$desttmp) at gh/R/gh.R:331:3
+       16.               \-httptest2 (local) mock(req) at httr2/R/req-perform.R:82:5
+       17.                 \-httptest2:::stop_request(req) at httptest2/R/mock-api.R:73:3
       # A tibble: 1 x 4
         description                                               type  breaking scope
         <chr>                                                     <chr> <lgl>    <lgl>
