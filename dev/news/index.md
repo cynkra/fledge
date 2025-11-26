@@ -1,5 +1,11 @@
 # Changelog
 
+## fledge 0.1.99.9045 (2025-11-26)
+
+### Continuous integration
+
+- Fix tests.
+
 ## fledge 0.1.99.9044 (2025-11-17)
 
 ### Continuous integration
