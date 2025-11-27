@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9046 (2025-11-27)
+
+## Continuous integration
+
+- Fix httptest2 test.
+
+
 # fledge 0.1.99.9045 (2025-11-26)
 
 ## Continuous integration

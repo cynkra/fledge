@@ -1,7 +1,7 @@
 Package: fledge
 Title: Smoother Change Tracking and Versioning for R Packages
-Version: 0.1.99.9045
-Date: 2025-11-26
+Version: 0.1.99.9046
+Date: 2025-11-27
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
