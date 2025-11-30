@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.3 (2025-11-30)
+
+Maintenance release.
+
+
 # fledge 0.1.3 (2025-10-16)
 
 Maintenance release.
