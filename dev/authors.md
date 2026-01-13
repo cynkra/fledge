@@ -15,14 +15,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/cynkra/fledge/blob/main/DESCRIPTION)
 
-Müller K, Schratz P (2025). *fledge: Smoother Change Tracking and
-Versioning for R Packages*. R package version 0.1.99.9046,
+Müller K, Schratz P (2026). *fledge: Smoother Change Tracking and
+Versioning for R Packages*. R package version 0.1.99.9047,
 <https://fledge.cynkra.com/>.
 
     @Manual{,
       title = {fledge: Smoother Change Tracking and Versioning for R Packages},
       author = {Kirill Müller and Patrick Schratz},
-      year = {2025},
-      note = {R package version 0.1.99.9046},
+      year = {2026},
+      note = {R package version 0.1.99.9047},
       url = {https://fledge.cynkra.com/},
     }

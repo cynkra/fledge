@@ -1,5 +1,11 @@
 # Changelog
 
+## fledge 0.1.99.9047 (2025-12-01)
+
+### Testing
+
+- Avoid setting global Git option.
+
 ## fledge 0.1.99.9046 (2025-11-27)
 
 ### Continuous integration
