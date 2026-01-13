@@ -33,7 +33,7 @@ with_demo_project({
   desc::desc_add_author(given = "Jane", family = "Doe", role = "ctb")
   fledge::commit_version()
 })
-#> ✔ Setting active project to "/tmp/Rtmp3sOkBQ/fledge42db4067d9fc/tea".
+#> ✔ Setting active project to "/tmp/RtmpU13yU2/fledge42cf4e669a13/tea".
 #> ☐ Edit R/cool-function.R.
 #> → Digesting messages from 3 commits.
 #> ✔ Found 1 NEWS-worthy entry.
