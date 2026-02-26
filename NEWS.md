@@ -1,5 +1,106 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9048 (2026-01-14)
+
+## Continuous integration
+
+- Fix comment (#1040).
+
+- Tweaks (#1039).
+
+- Test all R versions on branches that start with cran- (#1038).
+
+
+# fledge 0.1.99.9047 (2025-12-01)
+
+## Testing
+
+- Avoid setting global Git option.
+
+
+# fledge 0.1.99.9046 (2025-11-27)
+
+## Continuous integration
+
+- Fix httptest2 test.
+
+
+# fledge 0.1.99.9045 (2025-11-26)
+
+## Continuous integration
+
+- Fix tests.
+
+
+# fledge 0.1.99.9044 (2025-11-17)
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#1032).
+
+
+# fledge 0.1.99.9043 (2025-11-12)
+
+## Continuous integration
+
+- Fix reviewdog and add commenting workflow (#1030).
+
+
+# fledge 0.1.99.9042 (2025-11-10)
+
+## Features
+
+- Treat versions with two components as release versions.
+
+## Continuous integration
+
+- Review env vers when installing, more careful foreign runs, format with `clang-format` (#1028).
+
+
+# fledge 0.1.99.9041 (2025-11-08)
+
+## Continuous integration
+
+- Format with air, check detritus, better handling of `extra-packages` (#923).
+
+## documentation
+
+- Update function reference links in README.md (#880).
+
+
+# fledge 0.1.99.9040 (2025-05-04)
+
+## Continuous integration
+
+- Enhance permissions for workflow (#872).
+
+
+# fledge 0.1.99.9039 (2025-04-30)
+
+## Continuous integration
+
+- Permissions, better tests for missing suggests, lints (#870).
+
+- Only fail covr builds if token is given (#867).
+
+- Always use `_R_CHECK_FORCE_SUGGESTS_=false` (#866).
+
+- Correct installation of xml2 (#863).
+
+- Explain (#861).
+
+- Add xml2 for covr, print testthat results (#860).
+
+- Sync (#859).
+
+
+# fledge 0.1.99.9038 (2025-04-06)
+
+## Chore
+
+- Extract `get_release_branch_from_version()`.
+
+
 # fledge 0.1.99.9037 (2024-12-26)
 
 ## Features
