@@ -1,5 +1,16 @@
 # Changelog
 
+## fledge 0.1.99.9048 (2026-01-14)
+
+### Continuous integration
+
+- Fix comment ([\#1040](https://github.com/cynkra/fledge/issues/1040)).
+
+- Tweaks ([\#1039](https://github.com/cynkra/fledge/issues/1039)).
+
+- Test all R versions on branches that start with cran-
+  ([\#1038](https://github.com/cynkra/fledge/issues/1038)).
+
 ## fledge 0.1.99.9047 (2025-12-01)
 
 ### Testing
