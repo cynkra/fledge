@@ -19,7 +19,7 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version()`.
+      ! Run `fledge::finalize_version()`.
     Code
       unbump_version()
     Message
@@ -31,13 +31,7 @@
       v Resetting to parent commit 42.
     Code
       use_r("blop")
-      gert::git_add("R/blop.R")
-    Output
-      # A tibble: 1 x 3
-        file     status staged
-        <chr>    <chr>  <lgl> 
-      1 R/blop.R new    TRUE  
-    Code
+      fast_git_add("R/blop.R")
       c <- gert::git_commit("* Add cool blop.", author = default_gert_author(),
       committer = default_gert_committer())
       bump_version()
@@ -58,5 +52,5 @@
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version()`.
+      ! Run `fledge::finalize_version()`.
 

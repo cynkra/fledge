@@ -1,0 +1,89 @@
+---
+title: "Automate CRAN releases v2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cran-automation-2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Goals, and how achieved
+
+1. Avoid conflicts in `NEWS.md` and `DESCRIPTION`
+    - Bumping to CRAN version and back to dev version is atomic, no dangling release branch
+    - Support for subsequent release attempts off of a branch created from a tag
+
+2. Easy to undo a release attempt
+    - Pre-flight with `plan_release("pre-patch")`, including grooming of `NEWS.md`
+    - Caveat: once committed to a release, there is no way back, to avoid conflicts
+
+3. More rigorous checks before release
+    - On GitHub Actions for branches that start with `cran-`
+    - Locally through `urlchecker::url_update()`, `devtools::check_win_devel()`, and `rhub::check_for_cran()`
+    - TODO: Compatibility with `usethis::use_release_issue()`
+
+4. Minimize interactive wait time
+    - Checks run on GitHub Actions for branches that start with `cran-`
+    - TODO: Use background jobs via `job::empty()` where useful
+
+5. Compatibility with auto-merge and merge queues
+    - GHA workflow
+    - Commits/merges made by fledge are not newsworthy
+
+6. Support merge and squash commits
+    - We can always create a tag
+    - PR merge is triggered by user
+
+7. Support for dev version header
+    - TODO: Composable workflow, grooming can be separate from release
+
+8. Compatibility with manual release workflow
+    - `plan_release("pre-patch")`
+
+9. Consistency with `usethis::use_release_issue()`
+    - TODO: snapshot tests for `usethis:::release_checklist()`, maintain own list
+
+## Non-goals
+
+1. Always release from main branch
+    - Conflicts with important goal to avoid conflicts, and also with auto-merge and merge queues
+    - Release from main branch possible in some cases
+
+## Workflow
+
+1. Optional, recommended because grooming the NEWS often gives a hint about what's missing in a release:
+
+    - `fledge::plan_release("pre-patch")` (or `"pre-minor"` or `"pre-major"`)
+
+    - Edit `NEWS.md` as needed
+
+    - Perform any release-related tasks
+
+    - Merge PR
+
+2. Mandatory:
+
+    - `fledge::plan_release("next")` (or `"minor"` or `"major"`)
+
+    - Perform work from previous step if omitted
+
+    - `fledge::release()` (FIXME: also by merging PR)
+
+3. If submission rejected:
+
+    - `fledge::plan_release("last")` (FIXME)
+
+    - Apply hotfixes required to submit
+
+    - `fledge::release()` (FIXME: also by merging PR)
+
+4. If submission abandoned:
+
+    - No action required

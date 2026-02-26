@@ -32,7 +32,6 @@ Remove timeouts which were used to mitigate the racing issue but are
 obsolete now.
 
 Reviewed-by: Z
-Refs: #123
 ---
 
 Also tweak the CI workflow accordingly. :sweat_smile:",
@@ -41,31 +40,30 @@ Also tweak the CI workflow accordingly. :sweat_smile:",
     "upkeep: update rlang usage.",
 
     # NOT conventional commit
-    "upkeep:update",
+    "UPKEEP:update",
     "use cool::blop()"
   )
 }
 
-sort_of_commit <- function(commit_message, repo) {
+sort_of_commit <- function(commit_message) {
   file <- digest::sha1(commit_message)
-  file.create(file.path(repo, file))
-  gert::git_add(file, repo = repo)
-  gert::git_commit(commit_message, repo = repo)
+  file.create(file)
+  fast_git_add(file)
+  gert::git_commit(commit_message)
 }
 
-create_cc_repo <- function(repo, commit_messages = cc_examples()) {
+create_cc_repo <- function(commit_messages = cc_examples()) {
   tryCatch(
-    gert::git_init(repo),
+    gert::git_init(),
     error = function(e) {
       skip("Can't init repository")
     }
   )
-  gert::git_config_set("user.name", "Test", repo = repo)
-  gert::git_config_set("user.email", "my@test.user", repo = repo)
+  gert::git_config_set("user.name", "Test")
+  gert::git_config_set("user.email", "my@test.user")
 
   purrr::walk(
     commit_messages,
-    sort_of_commit,
-    repo
+    sort_of_commit
   )
 }

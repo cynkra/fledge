@@ -3,14 +3,13 @@
 finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   #' @description
   #' 1. [commit_version()]
-  force <- commit_version()
-  #' 1. [tag_version()], setting `force = TRUE` if and only if `commit_version()`
-  #'   amended a commit.
-  tag <- tag_version(force)
+  commit_version()
+  #' 1. [tag_version()] with `force = TRUE`
+  tag <- tag_version(TRUE)
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
-    push_tag(tag, force = TRUE)
     push_head()
+    push_tag(tag, force = TRUE)
   } else if (suggest_finalize) {
     edit_news()
 
@@ -20,7 +19,7 @@ finalize_version_impl <- function(push, suggest_finalize = TRUE) {
       command <- "fledge::finalize_version()"
     }
     if (fledge_chatty()) {
-      cli_alert_warning("Call {.code {command}}.")
+      cli_alert_warning("Run {.run {command}}.")
     }
     send_to_console(command)
   }
@@ -50,13 +49,22 @@ push_head <- function() {
     cli_alert("Pushing {.field {head}}.")
   }
 
+  # https://github.com/r-lib/gert/issues/236
   gert::git_push()
+
+  info <- gert::git_info()
+  if (info$commit != gert::git_commit_id(info$upstream)) {
+    cli::cli_abort("Push failed, perhaps due to branch protection?")
+  }
 }
 
 push_to_new <- function(remote_name, force) {
   branch_name <- get_branch_name()
 
-  cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
+  if (fledge_chatty()) {
+    cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
+  }
+
   gert::git_push(
     refspec = paste0("refs/heads/", branch_name),
     remote = remote_name,

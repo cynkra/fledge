@@ -35,7 +35,7 @@ library(fledge)
 ```
 
 
-## Usage
+## Full fledge usage
 
 ```{r child="../man/rmd-fragments/usage.Rmd"} 
 ```

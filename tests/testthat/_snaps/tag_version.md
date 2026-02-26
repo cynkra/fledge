@@ -2,13 +2,7 @@
 
     Code
       tag_version()
-    Message
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.0.9000 with tag message derived from 'NEWS.md'.
-    Code
-      get_last_tag()[, c("name", "ref")]
+      get_last_version_tag()[, c("name", "ref")]
     Output
       # A tibble: 1 x 2
         name        ref                  
@@ -17,7 +11,11 @@
 
 ---
 
-    Tag v0.0.0.9000 exists, use `force = TRUE` to overwrite.
+    Code
+      tag_version(force = FALSE)
+    Condition
+      Error in `tag_version_impl()`:
+      ! Tag "v0.0.0.9000" exists, use `force = TRUE` to overwrite.
 
 ---
 
@@ -30,7 +28,7 @@
       > Deleting existing tag v0.0.0.9000.
       > Creating tag v0.0.0.9000 with tag message derived from 'NEWS.md'.
     Code
-      get_last_tag()[, c("name", "ref")]
+      get_last_version_tag()[, c("name", "ref")]
     Output
       # A tibble: 1 x 2
         name        ref                  

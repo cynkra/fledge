@@ -24,10 +24,20 @@ you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.
 ### Once per package
 
 * Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) _or_ to be using the same default branch name as your global/project `init.defaultbranch`.
+   
+* Add a mention of fledge usage in your contributing guide, as contributors might not know about it. A comment is added to the top of `NEWS.md`, but it tends to be ignored occasionally.
+
+##### For full use
 
 * If your package...
 
    * is brand-new, remember to run `fledge::bump_version()` regularly.
    * has already undergone some development, it is not too late to jump on the train! Run `fledge::bump_version()` and then `fledge::finalize_version()`.
    
-* Add a mention of fledge usage in your contributing guide, as contributors might not know about it. A comment is added to the top of `NEWS.md`, but it tends to be ignored occasionally.
+##### For light use
+
+* Your package needs a development version header as produced by `usethis::use_development_version()`.
+
+```md
+# mypackage (development version)
+```

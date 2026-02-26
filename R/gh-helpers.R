@@ -22,13 +22,13 @@ extract_repo <- function(url) {
   match <- regmatches(url, m)[[1]]
 
   if (length(match) == 0) {
-    abort(paste0("Unrecognized repo format: ", url))
+    cli::cli_abort("Unrecognized repo format: {.val {url}}.")
   }
 
   paste0(match[2], "/", match[3])
 }
 
 get_repo_data <- function(repo) {
-  req <- gh::gh("/repos/:repo", repo = repo)
+  req <- gh("/repos/:repo", repo = repo)
   return(req)
 }

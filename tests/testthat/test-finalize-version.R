@@ -1,44 +1,52 @@
 test_that("finalize_version(push = FALSE)", {
-  skip_if_not_installed("rlang", "1.0.1")
-  skip_if_not_installed("testthat", "3.1.2")
-
   local_demo_project(quiet = TRUE)
 
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Ad cool bla.")
-  shut_up_fledge(bump_version())
 
-  news <- readLines("NEWS.md")
+  local_fledge_quiet()
+  bump_version()
+
+  news <- brio::read_lines("NEWS.md")
   news <- sub("Ad cool", "Add cool", news)
-  writeLines(news, "NEWS.md")
+  brio::write_lines(news, "NEWS.md")
 
-  expect_snapshot(finalize_version(push = FALSE), variant = snapshot_variant("testthat"))
+  expect_fledge_snapshot({
+    finalize_version(push = FALSE)
+  })
 
-  expect_snapshot_file("NEWS.md", "NEWS-push-false.md", compare = compare_file_text)
+  expect_snapshot_file(
+    "NEWS.md", "NEWS-push-false.md",
+    compare = compare_file_text
+  )
 })
 
 test_that("finalize_version(push = TRUE)", {
-  skip_if_not_installed("rlang", "1.0.1")
-  skip_if_not_installed("testthat", "3.1.2")
-
+  local_fledge_quiet()
   local_demo_project(quiet = TRUE)
 
-  remote_url <- create_remote()
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  remote_url <- create_remote(tempdir_remote)
+
   use_r("bla")
-  gert::git_add("R/bla.R")
+  fast_git_add("R/bla.R")
   gert::git_commit("* Ad cool bla.")
-  shut_up_fledge(bump_version())
 
-  news <- readLines("NEWS.md")
+  bump_version()
+
+  news <- brio::read_lines("NEWS.md")
   news <- sub("Ad cool", "Add cool", news)
-  writeLines(news, "NEWS.md")
+  brio::write_lines(news, "NEWS.md")
 
-  expect_snapshot(variant = snapshot_variant("testthat"), {
+  expect_fledge_snapshot({
     finalize_version(push = TRUE)
     show_tags(remote_url)
     show_files(remote_url)
   })
 
-  expect_snapshot_file("NEWS.md", "NEWS-push-true.md", compare = compare_file_text)
+  expect_snapshot_file(
+    "NEWS.md", "NEWS-push-true.md",
+    compare = compare_file_text
+  )
 })

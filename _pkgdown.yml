@@ -3,6 +3,7 @@ url: https://fledge.cynkra.com/
 template:
   params: {}
   package: cynkratemplate
+  bootstrap: 5
 development:
   mode: auto
 authors:
@@ -20,10 +21,11 @@ reference:
   - release
 - title: Lower-level functions
   contents:
-  - get_last_tag
+  - get_last_version_tag
   - get_top_level_commits
   - tag_version
   - update_news
+  - get_last_tag
 - title: Helper for fledge demonstration
   contents:
   - create_demo_project

@@ -1,7 +1,15 @@
 # File editing ------
 
-update_news_impl <- function(commits, which) {
-  news_items <- collect_news(commits)
+update_news_impl <- function(commits,
+                             which,
+                             fledgeling = NULL,
+                             no_change_message = NULL) {
+  news_items <- collect_news(commits, no_change_message)
+
+  if (is.null(news_items)) {
+    return(fledgeling)
+  }
+
   news_items <- normalize_news(news_items)
   news_lines <- organize_news(news_items)
 
@@ -10,13 +18,21 @@ update_news_impl <- function(commits, which) {
     cli_alert("Adding new entries to {.file {news_path()}}.")
   }
 
-  fledgeling <- read_fledgling()
+  fledgeling <- fledgeling %||% read_fledgling()
+  add_news_to_fledgeling(fledgeling, news_lines, which, news_items)
+}
 
+add_news_to_fledgeling <- function(
+  fledgeling,
+  news_lines,
+  which,
+  news_items
+) {
   # isTRUE() as NEWS.md can be empty
   dev_header_present <- isTRUE(
     grepl(
       "(development version)",
-      fledgeling[["news"]][["title"]][1]
+      fledgeling[["news"]]$title[[1]]
     )
   )
 
@@ -30,80 +46,103 @@ update_news_impl <- function(commits, which) {
 
   if (which == "samedev") {
     if (!dev_header_present) {
-      rlang::abort("Can't find a development version NEWS header")
+      cli::cli_abort("Can't find a development version header in {.file NEWS.md}.")
     }
 
-    # Append and regroup
-    if (is.null(fledgeling[["news"]])) {
-      fledgeling[["news"]] <- tibble::tibble(
-        start = 3,
-        h2 = FALSE,
-        version = fledgeling[["version"]],
-        date = "",
-        nickname = "",
-        original = "",
-        news = list(parse_news_md(news_lines)),
-        raw = "",
-        section_state = "new"
-      )
-    } else {
-      combined <- c(
-        parse_news_md(news_lines),
-        fledgeling[["news"]][1, ]$news[[1]]
-      )
-      combined <- purrr::discard(combined, purrr::is_empty)
-      fledgeling[["news"]][1, ]$news <- list(
-        regroup_news(combined)
-      )
-      fledgeling[["news"]][1, ]$section_state <- "new"
-    }
-    write_fledgling(fledgeling)
+    return(add_news_to_fledgeling_samedev(fledgeling, news_lines))
+  }
 
-    if (fledge_chatty()) {
-      cli_alert("Added items to {.file {news_path()}}.")
-    }
-  } else {
-    current_version <- desc::desc_get_version()
-    new_version <- fledge_guess_version(current_version, which)
-    fledgeling[["version"]] <- new_version
+  initializing <- is.null(fledgeling[["news"]])
 
-    # In the galley test for the demo vignette, for some reason, `is.na(get_date())`
-    if (!is.null(fledgeling[["date"]]) && !is.na(get_date())) {
-      fledgeling[["date"]] <- as.character(get_date())
-    }
+  current_version <- fledgeling[["version"]]
 
-    section_df <- tibble::tibble(
-      start = 3,
-      end = NA,
-      h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
-      version = new_version,
-      date = maybe_date(fledgeling[["news"]]),
-      nickname = NA,
-      news = list(parse_news_md(news_lines)),
-      raw = "",
-      title = "",
-      section_state = "new"
-    )
+  new_version <- fledge_guess_version(current_version, which)
+  fledgeling[["version"]] <- new_version
 
-    if (is.null(fledgeling[["news"]])) {
-      fledgeling[["news"]] <- section_df
-    } else {
-      fledgeling[["news"]] <- rbind(
-        section_df,
-        fledgeling[["news"]]
-      )
-    }
+  # In the galley test for the demo vignette, for some reason, `is.na(get_date())`
+  if (!is.null(fledgeling[["date"]]) && !is.na(get_date())) {
+    fledgeling[["date"]] <- as.character(get_date())
+  }
 
-    write_fledgling(fledgeling)
+  if (initializing) {
+    no_actual_commit <- (nrow(news_items) == 1) &&
+      (news_items[["description"]] == same_as_previous())
 
-    if (fledge_chatty()) {
-      cli_h2("Updating Version")
-
-      cli_alert_success("Package version bumped to {.field {new_version}}.")
-
-      cli_alert("Added header to {.file {news_path()}}.")
+    if (no_actual_commit) {
+      news_lines <- sprintf("## Uncategorized\n\n- %s", added_changelog())
     }
   }
+
+  if (dev_header_present) {
+    old_news <- news_from_versions(parse_news_md(fledgeling[["news"]]$raw[[1]]))[[1]]
+    combined <- c(parse_news_lines(news_lines), old_news)
+    combined <- purrr::discard(combined, purrr::is_empty)
+    news <- regroup_news(combined)
+    fledgeling[["news"]] <- fledgeling[["news"]][-1, ]
+  } else {
+    news <- parse_news_lines(news_lines)
+  }
+
+  raw <- format_news_subsections(news, header_level = 2)
+
+  section_df <- tibble::tibble(
+    start = 3,
+    end = NA,
+    h2 = fledgeling[["news"]][["h2"]][1] %||% FALSE,
+    version = new_version,
+    date = maybe_date(fledgeling[["news"]]),
+    nickname = NA,
+    raw = raw,
+    title = "",
+    section_state = "new"
+  )
+
+  fledgeling[["news"]] <- vctrs::vec_rbind(
+    section_df,
+    fledgeling[["news"]]
+  )
+
+  if (fledge_chatty()) {
+    cli_h2("Updating Version")
+
+    cli_alert_success("Package version bumped to {.field {new_version}}.")
+
+    cli_alert("Added header to {.file {news_path()}}.")
+  }
+
+  fledgeling
+}
+
+
+add_news_to_fledgeling_samedev <- function(fledgeling, news_lines) {
+  # Append and regroup
+  initializing <- is.null(fledgeling[["news"]])
+
+  if (initializing) {
+    fledgeling[["news"]] <- tibble::tibble(
+      start = 3,
+      h2 = FALSE,
+      version = fledgeling[["version"]],
+      date = "",
+      nickname = "",
+      original = "",
+      raw = news_lines,
+      section_state = "new"
+    )
+  } else {
+    old_news <- news_from_versions(parse_news_md(fledgeling[["news"]]$raw[[1]]))[[1]]
+    combined <- c(parse_news_lines(news_lines), old_news)
+    combined <- purrr::discard(combined, purrr::is_empty)
+    regrouped <- regroup_news(combined)
+    fledgeling[["news"]]$raw[[1]] <- format_news_subsections(regrouped, header_level = 2)
+    fledgeling[["news"]][1, ]$section_state <- "new"
+  }
+
+  if (fledge_chatty()) {
+    cli_alert("Added items to {.file {news_path()}}.")
+  }
+
+  fledgeling
 }
 
 news_path <- function() {
@@ -193,7 +232,7 @@ regroup_news <- function(list) {
   unique_names <- unique(names(list))
   # merge groups with the same name
   groups <- purrr::map(unique_names, merge_news_group, list)
-  groups <- stats::setNames(groups, unique_names)
+  groups <- set_names(groups, unique_names)
   # put custom first
   not_custom <- c(names(conventional_commit_types()), default_type())
   custom_names <- unique_names[!(unique_names %in% not_custom)]
@@ -202,12 +241,21 @@ regroup_news <- function(list) {
 }
 
 merge_news_group <- function(name, groups) {
-  this_group <- do.call(
-    c,
-    purrr::map(groups[names(groups) == name], unlist, recursive = FALSE)
-  )
-  this_group <- unique(this_group[this_group != ""])
-  unname(this_group)
+  out <- purrr::reduce(groups[names(groups) == name], ~ c(.x, "", .y))
+
+  # Remove duplicates and their associated empty lines
+  dupes <- duplicated(out) & (out != "")
+  after_dupes <- c(FALSE, dupes[-length(dupes)])
+  after_dupes_empty <- after_dupes & (out == "")
+  keep <- !(dupes | after_dupes_empty)
+  out <- out[keep]
+
+  # Edge case: Duplicate removal leads to empty last line
+  if (out[[length(out)]] == "") {
+    out <- out[-length(out)]
+  }
+
+  out
 }
 
 # Grouping -------
@@ -249,11 +297,13 @@ add_scope <- function(row) {
   if (is.na(row$scope)) {
     row$description
   } else {
-    sprintf("### %s \n\n%s", row$scope, row$description)
+    sprintf("### %s\n\n%s", row$scope, row$description)
   }
 }
 add_hyphen <- function(row) {
   row$description <- sprintf("- %s", row$description)
+  # FIXME: When using four spaces, why is it normalized to two spaces?
+  row$description <- gsub("\n", "\n  ", row$description)
   row
 }
 
@@ -261,116 +311,12 @@ bind_rows <- function(df_list) {
   do.call(rbind, df_list)
 }
 
-fledge_guess_version <- function(version, which) {
-  version_components <- get_version_components(version)
-  dev <- version_components[["dev"]]
-  patch <- version_components[["patch"]]
-  minor <- version_components[["minor"]]
-  major <- version_components[["major"]]
-
-  if (which %in% c("patch", "minor", "major", "dev")) {
-    dev <- switch(which,
-      dev = {
-        if (!is.na(dev) && dev >= 9999) {
-          rlang::abort(
-            sprintf(
-              "Can't increase version dev component (%s) that is >= 9999.",
-              dev
-            )
-          )
-        }
-        if (is.na(dev)) {
-          9000
-        } else {
-          dev + 1
-        }
-      },
-      NA
-    )
-
-    patch <- switch(which,
-      dev = patch,
-      patch = {
-        if (patch >= 99) {
-          rlang::abort(
-            sprintf(
-              "Can't increase version patch component (%s) that is >= 99.",
-              patch
-            )
-          )
-        }
-        patch + 1
-      },
-      0
-    )
-
-    minor <- switch(which,
-      dev = minor,
-      patch = minor,
-      minor = {
-        if (minor >= 99) {
-          rlang::abort(
-            sprintf(
-              "Can't increase version minor component (%s) that is >= 99.",
-              minor
-            )
-          )
-        }
-        minor + 1
-      },
-      major = 0
-    )
-
-    major <- switch(which,
-      major = major + 1,
-      major
-    )
-  } else {
-    # pre-minor and pre-major
-
-    if (is.na(dev)) {
-      rlang::abort(sprintf("Can't update version from not dev to %s.", which))
-    }
-
-    if (patch >= 99) {
-      rlang::abort(sprintf("Can't bump to %s from version %s (patch >= 99).", which, version))
-    }
-
-    if (minor >= 99) {
-      rlang::abort(sprintf("Can't bump to %s from version %s (minor >= 99).", which, version))
-    }
-
-    dev <- "9000"
-    patch <- "99"
-    # pre-minor: make patch 99
-    # pre-major: make both minor and patch 99
-    if (which == "pre-major") {
-      minor <- "99"
-    }
+get_news_headers <- function(fledgling = NULL) {
+  if (is.null(fledgling)) {
+    fledgling <- read_fledgling()
   }
 
-  version_components <- c(
-    major = major,
-    minor = minor,
-    patch = patch,
-    dev = dev
-  )
-  paste(version_components[!is.na(version_components)], collapse = ".")
-}
-
-get_version_components <- function(version) {
-  # from https://github.com/r-lib/desc/blob/daece0e5816e17a461969489bfdda2d50b4f5fe5/R/version.R#L53
-  components <- as.numeric(strsplit(format(version), "[-\\.]")[[1]])
-  c(
-    major = components[1],
-    minor = components[2],
-    patch = components[3],
-    dev = components[4] # can be NA
-  )
-}
-
-get_news_headers <- function() {
-  read_fledgling()[["news"]][, c("start", "version", "date", "nickname")]
+  fledgling$news[c("start", "version", "date", "nickname")]
 }
 
 get_date <- function() {
@@ -384,4 +330,9 @@ get_date <- function() {
   }
   author_time <- parsedate::parse_iso_8601(Sys.getenv("GIT_COMMITTER_DATE"))
   as.Date(author_time)
+}
+
+parse_news_lines <- function(news) {
+  versions <- versions_from_news(news)
+  news_collection_treat_section(versions)
 }

@@ -4,7 +4,7 @@
 #' @import cli
 #' @import usethis
 #' @importFrom tibble add_column
-#' @importFrom purrr `%>%`
+#' @importFrom purrr %>%
 NULL
 
 utils::globalVariables(".")

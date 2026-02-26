@@ -37,9 +37,9 @@ submit_cran <- function(pkg = ".", args = NULL) {
 build_cran <- function(pkg, args) {
   cli::cli_alert_info("Building")
   built_path <- pkgbuild::build(pkg, tempdir(), manual = TRUE, args = args)
-  cli::cli_alert_info("Submitting file: {built_path}")
+  cli::cli_alert_info("Submitting file: {.file {built_path}}")
   size <- format(as.object_size(fs::file_info(built_path)$size), units = "auto")
-  cli::cli_alert_info("File size: {size}")
+  cli::cli_alert_info("File size: {.val {size}}")
   built_path
 }
 
@@ -61,34 +61,60 @@ extract_cran_msg <- function(msg) {
 
 upload_cran <- function(pkg, built_path) {
   maint <- utils::as.person(desc::desc_get_maintainer(pkg))
-  maint_name <- paste(maint$given, maint$family)
+  maint_name <- paste0(maint$given, " ", maint$family)
   maint_email <- maint$email
   comments <- cran_comments(pkg)
 
   # Initial upload ---------
   cli::cli_alert_info("Uploading package & comments")
+
+  # impossible as fledge imports httr2 that imports curl :-)
+  if (!rlang::is_installed("curl")) {
+    cli::cli_abort("Must install the curl package")
+  }
   body <- list(
     pkg_id = "",
     name = maint_name,
     email = maint_email,
-    uploaded_file = httr::upload_file(built_path, "application/x-gzip"),
+    uploaded_file = curl::form_file(built_path, type = "application/x-gzip"),
     comment = comments,
-    upload = "Upload package"
+    upload = "Upload the package"
   )
-  r <- httr::POST(cran_submission_url, body = body)
+  request <- httr2::request(cran_submission_url) %>%
+    httr2::req_body_multipart(!!!body)
 
-  # If a 404 likely CRAN is closed for maintenance, try to get the message
-  if (httr::status_code(r) == 404) {
-    msg <- ""
-    try({
-      r2 <- httr::GET(sub("index2", "index", cran_submission_url))
-      msg <- extract_cran_msg(httr::content(r2, "text"))
-    })
-    stop("Submission failed:", msg, call. = FALSE)
+  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
+    cli::cli_inform("Not submitting for real o:-)")
+    return(invisible(NULL))
   }
 
-  httr::stop_for_status(r)
-  new_url <- httr::parse_url(r$url)
+  r <- httr2::req_perform(request)
+
+  # If a 404 likely CRAN is closed for maintenance, try to get the message
+  if (httr2::resp_status(r) == 404) {
+    msg <- "<Can't extract error message>"
+    try({
+      r2 <- httr2::request(sub("index2", "index", cran_submission_url)) %>%
+        httr2::req_perform()
+      msg <- extract_cran_msg(httr2::resp_body_string(r2))
+    })
+    stop("Submission failed: ", msg, call. = FALSE)
+  }
+
+  httr2::resp_check_status(r)
+  new_url <- httr2::url_parse(r$url)
+
+  if (!is.null(new_url$query$strErr) && new_url$query$strErr != "99") {
+    msg <- "<Can't extract error message>"
+    try({
+      msg <- httr2::request(r[["url"]]) %>%
+        httr2::req_perform() %>%
+        httr2::resp_body_html() %>%
+        xml2::xml_find_all('./body//font[@color="red"]') %>%
+        xml2::xml_text()
+    })
+    stop("Submission failed: ", msg, call. = FALSE)
+  }
 
   # Confirmation -----------
   cli::cli_alert_info("Confirming submission")
@@ -99,9 +125,13 @@ upload_cran <- function(pkg, built_path) {
     policy_check = "1/",
     submit = "Submit package"
   )
-  r <- httr::POST(cran_submission_url, body = body)
-  httr::stop_for_status(r)
-  new_url <- httr::parse_url(r$url)
+  request <- httr2::request(cran_submission_url) %>%
+    httr2::req_body_multipart(!!!body)
+
+  r <- httr2::req_perform(request)
+
+  httr2::resp_check_status(r)
+  new_url <- httr2::url_parse(r$url)
   if (new_url$query$submit == "1") {
     cli::cli_alert_success("Package submission successful")
     cli::cli_alert_info("Check your email for confirmation link.")

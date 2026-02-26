@@ -1,7 +1,7 @@
 touch <- function(file, bullet = TRUE) {
   writeLines(character(), file)
 
-  gert::git_add(file)
+  fast_git_add(file)
   gert::git_commit(message = paste0(if (bullet) "- ", file))
   invisible(gert::git_log(max = 1)$commit)
 }
@@ -17,6 +17,7 @@ create_repo <- function(repo) {
   )
 
   withr::local_dir(repo)
+  system("git branch -m main") # No equivalent gert command
 
   gert::git_config_set("user.name", "Test")
   gert::git_config_set("user.email", "my@test.user")

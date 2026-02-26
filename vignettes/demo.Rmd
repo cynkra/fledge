@@ -28,6 +28,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   error = !in_pkgdown
 )
+withr::local_envvar("FLEDGE_INTERACTIVE" = "yes")
 ```
 
 ## Set up the development environment
