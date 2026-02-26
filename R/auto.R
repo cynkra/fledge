@@ -280,9 +280,12 @@ merge_dev_news <- function(fledgeling, new_version) {
   fledgeling
 }
 
+get_release_branch_from_version <- function(version) {
+  paste0("cran-", version)
+}
+
 check_release_branch <- function(new_version) {
-  # FIXME: extract functions to go from version to branch name and vice versa
-  branch_name <- paste0("cran-", new_version)
+  branch_name <- get_release_branch_from_version(new_version)
 
   if (gert::git_branch_exists(branch_name)) {
     cli_abort(c(
@@ -295,7 +298,7 @@ check_release_branch <- function(new_version) {
 create_release_branch <- function(version,
                                   force,
                                   ref = "HEAD") {
-  branch_name <- paste0("cran-", version)
+  branch_name <- get_release_branch_from_version(version)
 
   if (fledge_chatty()) cli_alert("Creating branch {.field {branch_name}}.")
 
@@ -821,7 +824,7 @@ get_last_release_version <- function(fledgling = NULL) {
 }
 
 version_is_release <- function(x) {
-  grepl("^[0-9]+[.][0-9]+[.][0-9]+(?:[.-][0-9]{1,3})?$", x)
+  grepl("^[0-9]+[.][0-9]+(?:[.][0-9]+(?:[.-][0-9]{1,3})?)?$", x)
 }
 
 cran_release_pr_title <- function(version) {
