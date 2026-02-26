@@ -1,7 +1,7 @@
 Package: fledge
 Title: Smoother Change Tracking and Versioning for R Packages
-Version: 0.1.99.9032
-Date: 2024-11-11
+Version: 0.1.99.9048
+Date: 2026-01-14
 Authors@R: 
     c(person(given = "Kirill",
              family = "M\u00fcller",
@@ -54,22 +54,25 @@ Suggests:
     gert (>= 1.4.0),
     gh,
     httptest2,
+    job,
     jsonlite,
     knitr,
     pkgbuild,
     pkgload,
+    rhub,
     rmarkdown,
     rstudioapi,
-    rversions,
     testthat (>= 3.1.10),
+    urlchecker,
     vctrs,
+    whisker,
     withr
 Config/Needs/readme: r-lib/downlit@f-readme-document
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2.9000
+RoxygenNote: 7.3.3.9000
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: auto, demo, parse-news-items, bump_version

@@ -126,3 +126,20 @@ fledge_guess_version <- function(version, which) {
   )
   paste(version_components[!is.na(version_components)], collapse = ".")
 }
+
+get_version_components <- function(version) {
+  # from https://github.com/r-lib/desc/blob/daece0e5816e17a461969489bfdda2d50b4f5fe5/R/version.R#L53
+  components <- as.numeric(strsplit(format(version), "[-\\.]")[[1]])
+  c(
+    major = components[1],
+    minor = components[2],
+    patch = components[3],
+    dev = components[4] # can be NA
+  )
+}
+
+is_dev_version <- function(version) {
+  classed_version <- package_version(version, strict = TRUE)
+  unclassed_version <- unclass(classed_version)[[1]]
+  length(unclassed_version) >= 4 && unclassed_version[[4]] >= 9000
+}

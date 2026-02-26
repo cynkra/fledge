@@ -10,23 +10,78 @@ test_that("bump_version() works -- dev", {
 
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
 
-  expect_snapshot(bump_version())
+  expect_snapshot({
+    bump_version()
+  })
 
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
-  expect_equal(get_last_tag()[["name"]], "v0.0.0.9001")
+  expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9001")
   expect_snapshot_file("NEWS.md", compare = compare_file_text)
 
+  cat("\n", file = "NEWS.md", append = TRUE)
+  fast_git_add("NEWS.md")
+  gert::git_commit("fledge: Edit NEWS.")
+
   ## no changes ----
-  expect_snapshot(error = TRUE, bump_version(no_change_behavior = "fail"))
+  expect_snapshot(error = TRUE, {
+    bump_version(no_change_behavior = "fail")
+  })
 
   expect_snapshot(bump_version(no_change_behavior = "noop"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
-  expect_equal(get_last_tag()[["name"]], "v0.0.0.9001")
+  expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9001")
 
   expect_snapshot(bump_version(no_change_behavior = "bump"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9002")
-  expect_equal(get_last_tag()[["name"]], "v0.0.0.9002")
+  expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9002")
   expect_snapshot_file("NEWS.md", "NEWS2.md", compare = compare_file_text)
+})
+
+test_that("bump_version() works -- dev squash", {
+  local_demo_project(quiet = TRUE)
+
+  # Important for the squash to actually create a different commit
+  gert::git_config_set("merge.ff", "false")
+
+  tempdir_remote <- withr::local_tempdir(pattern = "remote")
+  create_remote(tempdir_remote)
+
+  use_r("bla")
+  fast_git_add("R/bla.R")
+  gert::git_commit("* Add cool bla.")
+
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9000")
+
+  gert::git_branch_create("fledge")
+
+  expect_snapshot({
+    bump_version(check_default_branch = FALSE)
+  })
+
+  gert::git_branch_checkout("main")
+  gert::git_merge("fledge", squash = TRUE)
+
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+  expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9001")
+  expect_snapshot_file("NEWS.md", "NEWS3.md", compare = compare_file_text)
+
+  cat("\n", file = "NEWS.md", append = TRUE)
+  fast_git_add("NEWS.md")
+  gert::git_commit("fledge: Edit NEWS.")
+
+  ## no changes ----
+  expect_snapshot(error = TRUE, {
+    bump_version(no_change_behavior = "fail")
+  })
+
+  expect_snapshot(bump_version(no_change_behavior = "noop"))
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
+  expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9001")
+
+  expect_snapshot(bump_version(no_change_behavior = "bump"))
+  expect_equal(as.character(desc::desc_get_version()), "0.0.0.9002")
+  expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9002")
+  expect_snapshot_file("NEWS.md", "NEWS4.md", compare = compare_file_text)
 })
 
 test_that("bump_version() works -- not dev", {

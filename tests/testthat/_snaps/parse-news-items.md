@@ -14,30 +14,30 @@
 
     Code
       extract_newsworthy_items(
-        "- blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)")
+        "- blop\n\nCo-authored-by: Person (<person@users.noreply.github.com>)\nCo-authored-by: Someone Else (<else@users.noreply.github.com>)")
     Output
       # A tibble: 1 x 4
-        description                 type          breaking scope
-        <chr>                       <chr>         <lgl>    <lgl>
-      1 blop (@person, @else, #42). Uncategorized FALSE    NA   
+        description            type          breaking scope
+        <chr>                  <chr>         <lgl>    <lgl>
+      1 blop (@person, @else). Uncategorized FALSE    NA   
 
 ---
 
     Code
       extract_newsworthy_items(
-        "feat: blop (#42)\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
+        "feat: blop\n\nCo-authored-by: Person (<person@users.noreply.github.com>)")
     Output
       # A tibble: 1 x 4
-        description         type     breaking scope
-        <chr>               <chr>    <lgl>    <lgl>
-      1 blop (@person, #42) Features FALSE    NA   
+        description    type     breaking scope
+        <chr>          <chr>    <lgl>    <lgl>
+      1 blop (@person) Features FALSE    NA   
 
 # Can parse PR merge commits
 
     [
       {
-        "description": "Improve parsing of conventional commit messages (#332).",
-        "type": "Features",
+        "description": "Merge pull request #332 from cynkra/conventional-parsing (#332).",
+        "type": "Uncategorized",
         "breaking": false,
         "scope": "NA"
       }
@@ -58,8 +58,8 @@
 
     [
       {
-        "description": "improve bump_version() (error) messages  (#153, cynkra/dm#325, #328).",
-        "type": "Features",
+        "description": "Merge pull request #328 from cynkra/blop (#153, cynkra/dm#325, #328).",
+        "type": "Uncategorized",
         "breaking": false,
         "scope": "NA"
       }
@@ -76,7 +76,7 @@
       # A tibble: 1 x 4
         description                                               type  breaking scope
         <chr>                                                     <chr> <lgl>    <lgl>
-      1 PLACEHOLDER https://github.com/cynkra/fledge/pull/332 (#~ Unca~ FALSE    NA   
+      1 Merge pull request #332 from cynkra/conventional-parsing~ Unca~ FALSE    NA   
 
 # Can parse PR merge commits - PAT absence
 
@@ -92,10 +92,21 @@
 
     [
       {
-        "title": "NA",
+        "title": "- Merge pull request #332 from cynkra/conventional-parsing",
         "pr_number": "332",
-        "issue_numbers": [],
+        "issue_numbers": "",
         "external_ctb": "NA"
+      }
+    ] 
+
+# Can parse PR squash commits - linked issues
+
+    [
+      {
+        "description": "feat: blop (#328)",
+        "type": "Uncategorized",
+        "breaking": false,
+        "scope": "NA"
       }
     ] 
 

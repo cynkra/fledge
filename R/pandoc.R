@@ -1,4 +1,4 @@
-parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) {
+versions_from_news <- function(news) {
   news <- protect_hashtag(news)
 
   temp_file <- withr::local_tempfile(fileext = ".md")
@@ -31,55 +31,54 @@ parse_news_md <- function(news = brio::read_lines(news_path()), strict = FALSE) 
   }
   if (length(versions) == 0) {
     cli::cli_abort("Empty {.file NEWS.md}")
-
-    contents <- markdownify(html)
-    return(list(contents))
   }
 
-  if (strict) {
-    check_top_level_headers(versions)
-  }
+  versions
+}
 
-  treat_section <- function(section) {
-    children <- xml2::xml_children(section)
-
-    header <- children[grepl("^h[1-9]", xml2::xml_name(children))][1]
-    title <- xml2::xml_text(header)
-    xml2::xml_remove(header)
-
-    children <- xml2::xml_children(section)
-
-    no_section <- all(xml2::xml_name(children) != "section")
-    if (no_section) {
-      contents <- markdownify(section)
-      return(
-        structure(
-          list(contents),
-          names = title
-        )
-      )
-    } else {
-      treat_children <- function(child) {
-        if (xml2::xml_name(child) == "section") {
-          treat_section(child)
-        } else {
-          list(markdownify(child))
-        }
-      }
-      structure(
-        list(purrr::map(children, treat_children)),
-        names = title
-      )
-    }
-  }
-
-  info <- purrr::map(versions, treat_section)
+news_collection_treat_section <- function(news_collection) {
+  info <- purrr::map(news_collection, news_treat_section)
   unlist(info, recursive = FALSE)
+}
+
+news_treat_section <- function(section) {
+  title <- news_get_section_name(section)
+
+  children <- xml2::xml_children(section)[-1]
+
+  no_section <- all(xml2::xml_name(children) != "section")
+  if (no_section) {
+    section_copy <- xml2::xml_new_root(section, .copy = TRUE)
+    xml2::xml_remove(xml2::xml_child(section_copy))
+    contents <- markdownify(section_copy)
+  } else {
+    treat_children <- function(child) {
+      if (xml2::xml_name(child) == "section") {
+        news_treat_section(child)
+      } else {
+        list(markdownify(child))
+      }
+    }
+    contents <- purrr::map(children, treat_children)
+  }
+
+  structure(
+    list(contents),
+    names = title
+  )
+}
+
+news_collection_get_section_name <- function(news_collection) {
+  purrr::map_chr(news_collection, news_get_section_name)
+}
+
+news_get_section_name <- function(section) {
+  xml2::xml_text(xml2::xml_child(section))
 }
 
 protect_hashtag <- function(lines) {
   lines <- gsub(
-    "(?<!#)(?<!^)(?<!`)#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
+    "(?<!^|[#`\n])#([[:alnum:]]*)([[:space:]]|[[:punct:]])",
     "`#\\1`{=html}\\2",
     lines,
     perl = TRUE

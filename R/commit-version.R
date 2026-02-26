@@ -43,7 +43,7 @@ get_commit_message <- function(version) {
   version <- desc$get_version()
 
   # gert always appends a newline to the commit messages
-  paste0("Bump version to ", version, "\n")
+  paste0("fledge: Bump version to ", version, "\n")
 }
 
 check_clean <- function(forbidden_modifications) {

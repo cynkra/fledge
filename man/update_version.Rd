@@ -49,7 +49,7 @@ with_demo_project({
   gert::git_add("NEWS.md")
   gert::git_commit(message = "release notes tweaking")
   fledge::tag_version()
-  print(fledge::get_last_tag())
+  print(fledge::get_last_version_tag())
 })
 }
 \keyword{internal}

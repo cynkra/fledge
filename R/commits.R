@@ -9,13 +9,6 @@ local_repo <- function(.local_envir = caller_env()) {
 get_top_level_commits_impl <- function(since, ref = "HEAD") {
   commit <- gert::git_log(ref, max = 1)$commit
 
-  if (!is.null(since)) {
-    ab <- gert::git_ahead_behind(since, commit)
-    if (ab$behind > 0) {
-      cli::cli_abort("{.val {since}} not reachable from current HEAD.")
-    }
-  }
-
   commit <- get_first_parent(commit, since)
   message <- map_chr(commit, ~ gert::git_commit_info(.x)$message)
   merge <- map_lgl(commit, ~ (length(gert::git_commit_info(.x)$parents) > 1))
@@ -30,25 +23,19 @@ get_first_parent <- function(commit, since) {
 
   repeat {
     all_parents <- gert::git_commit_info(commit)$parents
-    first_parent <- get_parent_since(all_parents, since)
-    if (is_null(first_parent)) {
+    if (is_empty(all_parents)) {
+      return(commits)
+    }
+
+    first_parent <- all_parents[[1]]
+
+    if (!is_null(since) && gert::git_ahead_behind(since, first_parent)$ahead == 0) {
       return(commits)
     }
 
     commits <- c(commits, first_parent)
     commit <- first_parent
   }
-}
-
-get_parent_since <- function(all_parents, since) {
-  if (is_empty(all_parents)) {
-    return(NULL)
-  }
-  if (is_null(since)) {
-    return(all_parents[[1]])
-  }
-
-  purrr::detect(all_parents, ~ gert::git_ahead_behind(since, .x)$behind == 0)
 }
 
 get_last_tag_impl <- function(ref = "HEAD", pattern = NULL) {
@@ -80,4 +67,38 @@ get_last_tag_impl <- function(ref = "HEAD", pattern = NULL) {
 
   min_tag <- which.min(tags_b)
   gert::git_tag_list(match = names(min_tag))
+}
+
+get_last_version_tag_impl <- function(current_version = NULL, pattern = NULL) {
+  all_tags <- gert::git_tag_list()
+
+  if (nrow(all_tags) == 0) {
+    return(NULL)
+  }
+
+  if (is.null(current_version)) {
+    current_version <- read_fledgling()$version
+  }
+
+  current_version <- as.package_version(current_version)
+
+  version_tags <- all_tags[grep("^v[0-9]+(?:[.][0-9]+)+$", all_tags$name), ]
+
+  if (!is.null(pattern)) {
+    version_tags <- version_tags[grep(pattern, version_tags$name, perl = TRUE), ]
+  }
+
+  versions <- as.package_version(sub("^v", "", version_tags$name))
+
+  version_tags <- version_tags[versions <= current_version, ]
+  versions <- versions[versions <= current_version]
+
+  if (length(versions) == 0) {
+    return(NULL)
+  }
+
+  # Bug in order():
+  # versions <- c("1.0.11.9013", "1.0.6.9010", "1.0.6.9014")
+  # order(as.package_version(versions))
+  version_tags[versions == max(versions), ]
 }

@@ -10,10 +10,25 @@ bump_version_impl <- function(fledgeling,
   #' 1. Verify that the current branch is the main branch
   #'    if `check_default_branch = TRUE` (the default).
   if (check_default_branch) {
-    check_main_branch("bump_version()")
+    check_main_branch("bump_version()", "bump_version(check_default_branch = FALSE)")
   }
-  #' 1. Check if there were changes since the last version.
-  if (no_change()) {
+  #' 1. [update_news()], using the `which` argument, applying logic to determine
+  #'    if meaningful changes have been made since the last version.
+  if (!is_dev_version(fledgeling$version) && which == "dev") {
+    no_change_message <- "Switching to development version."
+  } else if (no_change_behavior != "bump") {
+    no_change_message <- NA_character_
+  }
+
+  out <- update_news_impl(
+    default_commit_range(current_version = fledgeling$version),
+    which = which,
+    fledgeling = fledgeling,
+    no_change_message = no_change_message
+  )
+
+  #' 1. From the result, check if there were meaningful changes since the last version.
+  if (identical(fledgeling, out)) {
     if (no_change_behavior == "fail") {
       cli::cli_abort(
         message = c(
@@ -28,13 +43,7 @@ bump_version_impl <- function(fledgeling,
       return(invisible(fledgeling))
     }
   }
-  #' 1. [update_news()], using the `which` argument
-  out <- update_news_impl(
-    default_commit_range(),
-    which = which,
-    fledgeling = fledgeling,
-    no_change_message = no_change_message
-  )
+
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
     write_fledgling(out)
@@ -115,10 +124,4 @@ get_main_branch_config <- function(repo) {
   } else {
     return(init[init$level == "global", ]$value)
   }
-}
-
-no_change <- function(ref = "HEAD") {
-  # At most, one commit from the latest bump_version() run
-  # FIXME: Should be <= 0?
-  nrow(default_commit_range(ref)) <= 1
 }

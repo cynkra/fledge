@@ -1,13 +1,34 @@
 # full cycle
 
     Code
-      init_release()
+      plan_release("next")
+    Message
+      > Pulling main.
+      Resetting main to sha
+      > Digesting messages from 3 commits.
+      v Found 1 NEWS-worthy entry.
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.0.9001.
+      > Added header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
+      > Pushing main.
+      > Force-pushing tag v0.0.0.9001.
     Output
-      +-----------------+
-      |                 |
-      |   pre-release   |
-      |                 |
-      +-----------------+
+      +------------------+
+      |                  |
+      |   plan_release   |
+      |                  |
+      +------------------+
     Message
       
       -- 1. Creating a release branch and getting ready ------------------------------
@@ -15,27 +36,15 @@
       > Switching to branch cran-0.0.1.
       > Committing changes.
       
-      -- 2. User Action Items --------------------------------------------------------
+      -- 2. Opening Pull Request for release branch ----------------------------------
+      > Pushing cran-0.0.1 to remote origin.
+      > Opening pull request with instructions.
+      
+      -- 3. User Action Items --------------------------------------------------------
       * Run `devtools::check_win_devel()`.
-      * Run `rhub::check_for_cran()`.
       * Run `urlchecker::url_update()`.
       * Check all items in 'cran-comments.md'.
       * Review 'NEWS.md'.
-      * Run `fledge::pre_release()`.
-    Output
-      NULL
-
----
-
-    Code
-      pre_release()
-    Message
-      
-      -- 1. Opening Pull Request for release branch ----------------------------------
-      > Pushing cran-0.0.1 to remote origin.
-      > Opening draft pull request with contents from 'cran-comments.md'.
-      
-      -- 2. User Action Items --------------------------------------------------------
       * Run `fledge::release()`.
 
 ---
@@ -43,12 +52,6 @@
     Code
       release()
     Message
-      > Pushing cran-0.0.1.
-      
-      -- Tagging Version --
-      
-      > Creating tag v0.0.1 with tag message derived from 'NEWS.md'.
-      > Force-pushing tag v0.0.1.
       i Building
     Output
       -- R CMD build -----------------------------------------------------------------
@@ -64,8 +67,6 @@
       i File size: "some hundreds of bytes"
       i Uploading package & comments
       Not submitting for real o:-)
-      i Check your inbox for a confirmation e-mail from CRAN.
-      > Copy the URL to the clipboard.
       Not submitting for real o:-)
 
 ---
@@ -73,6 +74,5 @@
     Code
       post_release()
     Message
-      > Creating GitHub release "v".
       > Omitting in test.
 

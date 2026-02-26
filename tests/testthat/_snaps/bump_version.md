@@ -25,6 +25,8 @@
 
     Code
       bump_version(no_change_behavior = "fail")
+    Message
+      > Digesting messages from 1 commits.
     Condition
       Error in `bump_version_impl()`:
       x No change since last version.
@@ -35,6 +37,7 @@
     Code
       bump_version(no_change_behavior = "noop")
     Message
+      > Digesting messages from 1 commits.
       i No change since last version.
 
 ---
@@ -44,6 +47,71 @@
     Message
       > Digesting messages from 1 commits.
       i Same as previous version.
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.0.9002.
+      > Added header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.0.9002 with tag message derived from 'NEWS.md'.
+      ! Run `fledge::finalize_version(push = TRUE)`.
+
+# bump_version() works -- dev squash
+
+    Code
+      bump_version(check_default_branch = FALSE)
+    Message
+      > Digesting messages from 3 commits.
+      v Found 1 NEWS-worthy entry.
+      
+      -- Updating NEWS --
+      
+      > Adding new entries to 'NEWS.md'.
+      
+      -- Updating Version --
+      
+      v Package version bumped to 0.0.0.9001.
+      > Added header to 'NEWS.md'.
+      > Committing changes.
+      
+      -- Tagging Version --
+      
+      > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
+      ! Run `fledge::finalize_version()`.
+
+---
+
+    Code
+      bump_version(no_change_behavior = "fail")
+    Message
+      > Digesting messages from 2 commits.
+    Condition
+      Error in `bump_version_impl()`:
+      x No change since last version.
+      i Use `no_change_behavior = "bump"` to force a version bump, or `no_change_behavior = "noop"` to do nothing.
+
+---
+
+    Code
+      bump_version(no_change_behavior = "noop")
+    Message
+      > Digesting messages from 2 commits.
+      i No change since last version.
+
+---
+
+    Code
+      bump_version(no_change_behavior = "bump")
+    Message
+      > Digesting messages from 2 commits.
+      i Internal changes only.
       
       -- Updating NEWS --
       
@@ -99,6 +167,7 @@
       Error in `check_main_branch()`:
       x Must be on the main branch ("main") for running `bump_version()`.
       i Currently on branch "bla".
+      i Consider running `bump_version(check_default_branch = FALSE)`.
 
 # bump_version() errors well for wrong arguments
 
@@ -114,7 +183,7 @@
       bump_version(which = "blabla")
     Condition
       Error in `bump_version()`:
-      ! `which` must be one of "dev", "patch", "pre-minor", "minor", "pre-major", or "major", not "blabla".
+      ! `which` must be one of "dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", or "major", not "blabla".
 
 # bump_version() does nothing if no preamble and not interactive
 

@@ -28,7 +28,8 @@ read_package <- function() {
 }
 
 read_version <- function() {
-  desc::desc_get_version()
+  # We want 1.1.3-1 instead of 1.1.3.1, desc_get_version() gives the latter
+  unname(desc::desc_get("Version"))
 }
 
 read_date <- function() {
@@ -44,9 +45,9 @@ read_news <- function(news_lines = NULL) {
     }
   }
 
-  news <- parse_news_md(news_lines, strict = TRUE)
+  versions <- parse_news_md(news_lines)
 
-  if (is.null(news)) {
+  if (is.null(versions)) {
     return(
       list(
         section_df = NULL,
@@ -57,7 +58,7 @@ read_news <- function(news_lines = NULL) {
   }
 
   # NEWS content under no version
-  if (length(news) == 1 && !nzchar(names(news))) {
+  if (length(versions) == 1 && !nzchar(names(versions))) {
     cli::cli_abort("All {.file NEWS.md} content must be under version headers.")
   }
 
@@ -77,9 +78,9 @@ read_news <- function(news_lines = NULL) {
     section_start
   }
 
-  duplicate_version_names_present <- anyDuplicated(names(news))
+  duplicate_version_names_present <- anyDuplicated(names(versions))
   if (duplicate_version_names_present) {
-    duplicated_version_names <- toString(names(news)[duplicated(names(news))])
+    duplicated_version_names <- toString(names(versions)[duplicated(names(versions))])
     cli::cli_abort(
       c(
         "Can't deal with duplicate version names: {duplicated_version_names}.",
@@ -88,7 +89,7 @@ read_news <- function(news_lines = NULL) {
     )
   }
 
-  starts <- purrr::map_int(names(news), get_section_start, news_lines)
+  starts <- purrr::map_int(names(versions), get_section_start, news_lines)
   ends <- c(starts[seq_along(starts[-1]) + 1] - 1L, length(news_lines))
 
   section_df <- tibble::tibble(
@@ -96,33 +97,10 @@ read_news <- function(news_lines = NULL) {
     end = ends,
     h2 = grepl("##", news_lines[starts]), # TODO does not account for all syntaxes,
     raw = map2_chr(starts, ends, ~ paste(news_lines[seq2(.x, .y)], collapse = "\n")),
-    news = unname(split(news, seq_len(length(news))))
+    section_state = "keep",
+    title = names(versions),
+    parse_versions(names(versions))[, c("version", "date", "nickname")],
   )
-
-  section_df$section_state <- "keep"
-
-  section_df$title <- names(news)
-
-  parsed_titles <- parse_versions(names(news))[, c("version", "date", "nickname")]
-
-  section_df <- tibble::as_tibble(cbind(section_df, parsed_titles))
-
-  fix_name_and_level <- function(news_list) {
-    if (is.null(news_list)) {
-      return(news_list)
-    }
-
-    if (!is.list(news_list[[1]])) {
-      if (length(news_list[[1]]) == 1 && !nzchar(news_list[[1]])) {
-        return(NULL)
-      }
-      names(news_list) <- default_type()
-      return(news_list)
-    }
-
-    unlist(news_list[[1]], recursive = FALSE)
-  }
-  section_df$news <- map(section_df$news, fix_name_and_level)
 
   # create, update or re-use preamble
   is_preamble_absent <- (section_df[["start"]][[1]] == 1)
@@ -143,6 +121,40 @@ read_news <- function(news_lines = NULL) {
     preamble = if (!is.null(preamble)) paste(preamble, collapse = "\n"),
     preamble_in_file = preamble_in_file
   )
+}
+
+parse_news_md <- function(news) {
+  versions <- versions_from_news(news)
+  if (is.null(versions)) {
+    return(NULL)
+  }
+
+  check_top_level_headers(versions)
+  rlang::set_names(unclass(versions), news_collection_get_section_name(versions))
+}
+
+news_from_versions <- function(news_collection) {
+  news_treated <- news_collection_treat_section(news_collection)
+
+  news_wrapped <- unname(split(news_treated, seq_len(length(news_treated))))
+
+  map(news_wrapped, news_fix_name_and_level)
+}
+
+news_fix_name_and_level <- function(news_list) {
+  if (is.null(news_list)) {
+    return(news_list)
+  }
+
+  if (!is.list(news_list[[1]])) {
+    if (length(news_list[[1]]) == 1 && !nzchar(news_list[[1]])) {
+      return(NULL)
+    }
+    names(news_list) <- default_type()
+    return(news_list)
+  }
+
+  unlist(news_list[[1]], recursive = FALSE)
 }
 
 read_fledgling <- function() {
@@ -193,18 +205,21 @@ write_fledgling <- function(fledgeling) {
 
   # store news
 
-  news_df <- fledgeling$news
-  news_lines <- purrr::map_chr(
-    split(news_df, seq_len(nrow(news_df))),
-    write_news_section
-  )
-  news_lines <- unprotect_hashtag(news_lines)
+  news_lines <- write_news_sections(fledgeling[["news"]])
 
   lines <- c(
     fledgeling[["preamble"]], "",
     paste0(news_lines, collapse = "\n\n")
   )
   brio::write_lines(lines, news_path())
+}
+
+write_news_sections <- function(news_df) {
+  news_lines <- purrr::map_chr(
+    vctrs::vec_split(news_df, seq_len(nrow(news_df)))$val,
+    write_news_section
+  )
+  unprotect_hashtag(news_lines)
 }
 
 write_news_section <- function(df) {
@@ -233,24 +248,21 @@ write_news_section <- function(df) {
     )
   )
 
-  # If only uncategorized items for the version, no subheaders
-  if (length(df$news[[1]]) == 1 && names(df$news[[1]]) == default_type()) {
-    section_lines <- c(
-      version_header, "",
-      paste(df$news[[1]][[1]], collapse = "\n"), ""
-    )
+  if (isTRUE(df$h2)) {
+    header_level <- 3
   } else {
-    if (isTRUE(df$h2)) {
-      header_level <- 3
-    } else {
-      header_level <- 2
-    }
-
-    section_lines <- c(
-      version_header, "",
-      format_news_subsections(df$news[[1]], header_level), ""
-    )
+    header_level <- 2
   }
+
+  raw <- df$raw
+
+  # If only uncategorized items for the version, no subheaders
+  if (grepl(paste0("^#+ ", default_type()), raw)) {
+    raw <- gsub("^#+ [^\n]*\n\n", "", raw)
+  }
+
+  section_lines <- c(version_header, "", raw, "")
+
   paste0(section_lines, collapse = "\n")
 }
 
@@ -278,7 +290,7 @@ paste_news_lines <- function(lines, header_level) {
       if (!nzchar(x)) {
         ""
       } else {
-        paste(header_sign, x, "\n\n")
+        paste0(header_sign, " ", x, "\n\n")
       }
     }
     lines <- purrr::imap_chr(

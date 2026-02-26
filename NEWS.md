@@ -1,5 +1,271 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9048 (2026-01-14)
+
+## Continuous integration
+
+- Fix comment (#1040).
+
+- Tweaks (#1039).
+
+- Test all R versions on branches that start with cran- (#1038).
+
+
+# fledge 0.1.99.9047 (2025-12-01)
+
+## Testing
+
+- Avoid setting global Git option.
+
+
+# fledge 0.1.99.9046 (2025-11-27)
+
+## Continuous integration
+
+- Fix httptest2 test.
+
+
+# fledge 0.1.99.9045 (2025-11-26)
+
+## Continuous integration
+
+- Fix tests.
+
+
+# fledge 0.1.99.9044 (2025-11-17)
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#1032).
+
+
+# fledge 0.1.99.9043 (2025-11-12)
+
+## Continuous integration
+
+- Fix reviewdog and add commenting workflow (#1030).
+
+
+# fledge 0.1.99.9042 (2025-11-10)
+
+## Features
+
+- Treat versions with two components as release versions.
+
+## Continuous integration
+
+- Review env vers when installing, more careful foreign runs, format with `clang-format` (#1028).
+
+
+# fledge 0.1.99.9041 (2025-11-08)
+
+## Continuous integration
+
+- Format with air, check detritus, better handling of `extra-packages` (#923).
+
+## documentation
+
+- Update function reference links in README.md (#880).
+
+
+# fledge 0.1.99.9040 (2025-05-04)
+
+## Continuous integration
+
+- Enhance permissions for workflow (#872).
+
+
+# fledge 0.1.99.9039 (2025-04-30)
+
+## Continuous integration
+
+- Permissions, better tests for missing suggests, lints (#870).
+
+- Only fail covr builds if token is given (#867).
+
+- Always use `_R_CHECK_FORCE_SUGGESTS_=false` (#866).
+
+- Correct installation of xml2 (#863).
+
+- Explain (#861).
+
+- Add xml2 for covr, print testthat results (#860).
+
+- Sync (#859).
+
+
+# fledge 0.1.99.9038 (2025-04-06)
+
+## Chore
+
+- Extract `get_release_branch_from_version()`.
+
+
+# fledge 0.1.99.9037 (2024-12-26)
+
+## Features
+
+- `bump_version(which = "dev")` always bumps from non-dev.
+
+## Chore
+
+- IDE.
+
+
+# fledge 0.1.99.9036 (2024-12-12)
+
+## Bug fixes
+
+- Support empty commit messages.
+
+- `is_news_consistent()` detects releases of the kind x.y.z-w.
+
+- Work around bug in `order()` for package versions.
+
+- Use correct version for checking GH release.
+
+- Use correct version for checking GH release.
+
+- `release_after_cran_built_binaries()` works correctly again (#848).
+
+## Features
+
+- Better entry if PR info could not be extracted.
+
+- Support versions of the form x.y.z-w for tagging.
+
+- Newsworthy commits are searched along the first parents only, picking up all relevant commits (#847).
+
+- Determining the most recent tag now uses the new `get_last_version_tag()` and works when the version tag is on a diverged branch (e.g., after squash-merging) (#844).
+
+- Consistent protection of hash tag (#836).
+
+- Keep empty lines when merging (#834).
+
+- `plan_release()` pulls the current branch (#831).
+
+## Chore
+
+- Get tagging information from fledgling.
+
+- Clear clipboard after successful discovery of CRAN URL.
+
+- Check token early for automation (#841).
+
+- Refactor (#835).
+
+## Continuous integration
+
+- Install R.
+
+- Avoid failure in fledge workflow if no changes (#851).
+
+- Fetch tags for fledge workflow to avoid unnecessary NEWS entries (#850).
+
+- Use larger retry count for lock-threads workflow (#849).
+
+- Ignore errors when removing pkg-config on macOS (#840).
+
+- Explicit permissions (#839).
+
+- Use styler from main branch (#838).
+
+- Need to install R on Ubuntu 24.04 (#837).
+
+- Use Ubuntu 24.04 and styler PR (#829).
+
+## Testing
+
+- Fix test (#846).
+
+## Uncategorized
+
+- Ci: Fix macOS (#16) (#830).
+
+
+# fledge 0.1.99.9035 (2024-11-24)
+
+## Features
+
+- Keep only `raw` NEWS (#827).
+
+## Chore
+
+- Refactorings and a new test (#825).
+
+- Better JSON snapshot (#824).
+
+- Keep `raw` component up to date, use it for assembling the NEWS (#823).
+
+
+# fledge 0.1.99.9034 (2024-11-23)
+
+## Chore
+
+- Distinguish `news` component from `news` column in data frame (#820).
+
+
+# fledge 0.1.99.9033 (2024-11-22)
+
+## Bug fixes
+
+- CRAN PRs are no longer created as draft (#810).
+
+- `fledge:::release_after_cran_built_binaries()` no longer throws an error if no release exists.
+
+## Features
+
+- `finalize_version()` unconditionally overwrites existing tags (#819).
+
+- Pre-releases get a different PR title (#818).
+
+- PR must open from the main window (#816).
+
+- `plan_release()` calls `bump_version()` (#814).
+
+- Detect contributors for squashed commits (#813).
+
+- Mention `bump_version(check_default_branch = FALSE)` in error message (#812).
+
+- New `plan_release()`, replaces `init_release()` and `pre_release()` (#803).
+
+- Support `which = "pre-patch"` for `bump_version()` and `update_version()` (#802).
+
+- `bump_version()` does not bump if no newsworthy messages are found (#801).
+
+- Messages that start with `"fledge: "` are no longer considered newsworthy (#800).
+
+- Include only relevant info in `cran-comments.md` (#799).
+
+- Support pre-patch version, new versioning scheme starting at 9900 (#794).
+
+## Chore
+
+- Bump commit messages get a fledge prefix.
+
+- Add fledge prefix to CRAN PR (#809).
+
+## Continuous integration
+
+- Remove Aviator (#815).
+
+- Correctly detect branch protection (#811).
+
+- Sync fledge workflow.
+
+## Refactoring
+
+- `is_dev_version()` and related (#805).
+
+## Testing
+
+- Reduce use of `shut_up_fledge()` (#796).
+
+- Speed up tests by replacing `gert::git_add()` with a system call (#793).
+
+- Split slow test.
+
+
 # fledge 0.1.99.9032 (2024-11-11)
 
 ## Continuous integration

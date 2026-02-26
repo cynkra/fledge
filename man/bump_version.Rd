@@ -6,7 +6,7 @@
 \title{Bump package version}
 \usage{
 bump_version(
-  which = c("dev", "patch", "pre-minor", "minor", "pre-major", "major"),
+  which = c("dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major"),
   ...,
   no_change_behavior = c("bump", "noop", "fail"),
   check_default_branch = TRUE
@@ -47,8 +47,9 @@ Calls the following functions:
 \enumerate{
 \item Verify that the current branch is the main branch
 if \code{check_default_branch = TRUE} (the default).
-\item Check if there were changes since the last version.
-\item \code{\link[=update_news]{update_news()}}, using the \code{which} argument
+\item \code{\link[=update_news]{update_news()}}, using the \code{which} argument, applying logic to determine
+if meaningful changes have been made since the last version.
+\item From the result, check if there were meaningful changes since the last version.
 \item Depending on the \code{which} argument:
 \itemize{
 \item If \code{"dev"}, \code{\link[=finalize_version]{finalize_version()}} with \code{push = FALSE}

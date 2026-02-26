@@ -18,8 +18,7 @@ Calls the following functions:
 
 \enumerate{
 \item \code{\link[=commit_version]{commit_version()}}
-\item \code{\link[=tag_version]{tag_version()}}, setting \code{force = TRUE} if and only if \code{commit_version()}
-amended a commit.
+\item \code{\link[=tag_version]{tag_version()}} with \code{force = TRUE}
 \item Force-pushes the created tag to the \code{"origin"} remote, if \code{push = TRUE}.
 }
 }

@@ -12,8 +12,10 @@ collect_news <- function(commits, no_change_message = NULL) {
       }
     }
 
-    newsworthy_items <- parse_bullet_commit(sprintf("- %s", no_change_message))
-    if (fledge_chatty()) cli_alert_info(no_change_message)
+    if (!is.na(no_change_message)) {
+      newsworthy_items <- parse_bullet_commit(sprintf("- %s", no_change_message))
+      if (fledge_chatty()) cli_alert_info(no_change_message)
+    }
   } else {
     if (fledge_chatty()) {
       no <- nrow(newsworthy_items)
@@ -43,11 +45,16 @@ treat_commit_message <- function(commit_df) {
     purrr::map_chr(remove_housekeeping) %>%
     purrr::map(extract_newsworthy_items)
 
+  # For empty commit messages
+  if (length(default_newsworthy) == 0) {
+    return(NULL)
+  }
+
   if (nrow(default_newsworthy[[1]]) > 0) {
     return(default_newsworthy[[1]])
   }
 
-  if (commit_df$merge) {
+  if (commit_df$merge && !is_fledge_message(commit_df$message)) {
     tibble::tibble(
       description = commit_df$message,
       type = default_type(),
@@ -64,20 +71,18 @@ remove_housekeeping <- function(message) {
   strsplit(message, "\n---", fixed = TRUE)[[1]][1]
 }
 
+is_fledge_message <- function(message) {
+  grepl("^fledge: ", message)
+}
+
 extract_newsworthy_items <- function(message) {
-  # Merge messages
-  if (is_merge_commit(message)) {
-    return(parse_merge_commit(message))
+  # Skip our commits
+  if (is_fledge_message(message)) {
+    return(tibble::tibble())
   }
 
-  # Conventional commits messages
-  if (is_conventional_commit(message)) {
-    return(parse_conventional_commit(message))
-  }
-
-  # Bullets messages
-  # There can be several bullets per message!
-  parse_bullet_commit(message)
+  # Calls parse_conventional_commit() or parse_bullet_commit()
+  parse_merge_commit(message)
 }
 
 # Bullet commits ------
@@ -239,20 +244,26 @@ add_squash_info <- function(description) {
 parse_merge_commit <- function(message) {
   pr_data <- harvest_pr_data(message)
   pr_number <- pr_data$pr_number
-  pr_numbers <- toString(c(unlist(pr_data$issue_numbers), paste0("#", pr_number)))
 
-  title <- if (is.na(pr_data$title)) {
-    sprintf("- PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
+  if (is.na(pr_number)) {
+    title <- pr_data$title
+    description <- message
   } else {
-    pr_data$title
-  }
-  ctb <- if (is.na(pr_data$external_ctb)) {
-    ""
-  } else {
-    sprintf("@%s, ", pr_data$external_ctb)
-  }
+    pr_numbers <- toString(c(unlist(pr_data$issue_numbers), if (!is.na(pr_number)) paste0("#", pr_number)))
 
-  description <- sprintf("%s (%s%s).", title, ctb, pr_numbers)
+    title <- if (is.na(pr_data$title)) {
+      sprintf("- PLACEHOLDER https://github.com/%s/pull/%s", github_slug(), pr_number)
+    } else {
+      pr_data$title
+    }
+    ctb <- if (is.na(pr_data$external_ctb)) {
+      ""
+    } else {
+      sprintf("@%s, ", pr_data$external_ctb)
+    }
+
+    description <- sprintf("%s (%s%s).", title, ctb, pr_numbers)
+  }
 
   if (is_conventional_commit(title)) {
     return(parse_conventional_commit(description))
@@ -263,14 +274,22 @@ parse_merge_commit <- function(message) {
 
 
 is_merge_commit <- function(message) {
-  grepl("^Merge pull request #([0-9]*) from", message)
+  grepl("(^Merge pull request #([0-9]+) from)|( [(]#[0-9]+[)]\n)", message)
 }
 
 harvest_pr_data <- function(message) {
-  check_gh_pat(NULL)
+  pr_number <- regmatches(message, regexpr("(?<=#)[0-9]+", message, perl = TRUE))
 
-  pr_number <- regmatches(message, regexpr("#[0-9]*", message))
-  pr_number <- sub("#", "", pr_number)
+  if (length(pr_number) == 0) {
+    return(tibble::tibble(
+      title = strsplit(message, "\n")[[1]][[1]],
+      pr_number = NA_integer_,
+      issue_numbers = list(numeric()),
+      external_ctb = NA_character_,
+    ))
+  }
+
+  check_gh_pat(NULL)
 
   slug <- github_slug()
   org <- sub("/.*", "", slug)
@@ -356,7 +375,9 @@ harvest_pr_data <- function(message) {
   )
 
   tibble::tibble(
-    title = pr_info$title %||% NA_character_,
+    # FIXME: Better default message without PR info
+    # if the message is already in Conventional Commit format
+    title = pr_info$title %||% paste0("- ", message),
     pr_number = pr_number,
     issue_numbers = list(issue_numbers),
     external_ctb = external_ctb,

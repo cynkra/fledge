@@ -1,31 +1,41 @@
-# pre_release() pre-flight checks
+# plan_release() pre-flight checks
 
     Code
-      pre_release()
-    Condition
-      Error in `check_cran_branch()`:
-      x Must be on the a release branch that starts with "cran-" for running `pre_release()`.
-      i Currently on branch "main".
-
----
-
-    Code
-      pre_release()
+      plan_release()
     Condition
       Error in `check_only_modified()`:
       x Found untracked/unstaged/staged file in the git index: 'R/'.
       i Please commit or discard it and try again.
 
-# pre_release() works
+# plan_release() works
 
     Code
-      pre_release()
+      plan_release("next")
+    Message
+      > Pulling main.
+      Resetting main to origin/main
+      > Digesting messages from 2 commits.
+    Output
+      +------------------+
+      |                  |
+      |   plan_release   |
+      |                  |
+      +------------------+
     Message
       
-      -- 1. Opening Pull Request for release branch ----------------------------------
-      > Pushing cran-0.0.1 to remote origin.
-      > Opening draft pull request with contents from 'cran-comments.md'.
+      -- 1. Creating a release branch and getting ready ------------------------------
+      > Creating branch cran-0.0.1.
+      > Switching to branch cran-0.0.1.
+      > Committing changes.
       
-      -- 2. User Action Items --------------------------------------------------------
+      -- 2. Opening Pull Request for release branch ----------------------------------
+      > Pushing cran-0.0.1 to remote origin.
+      > Opening pull request with instructions.
+      
+      -- 3. User Action Items --------------------------------------------------------
+      * Run `devtools::check_win_devel()`.
+      * Run `urlchecker::url_update()`.
+      * Check all items in 'cran-comments.md'.
+      * Review 'NEWS.md'.
       * Run `fledge::release()`.
 

@@ -3,10 +3,9 @@
 finalize_version_impl <- function(push, suggest_finalize = TRUE) {
   #' @description
   #' 1. [commit_version()]
-  force <- commit_version()
-  #' 1. [tag_version()], setting `force = TRUE` if and only if `commit_version()`
-  #'   amended a commit.
-  tag <- tag_version(force)
+  commit_version()
+  #' 1. [tag_version()] with `force = TRUE`
+  tag <- tag_version(TRUE)
   #' 1. Force-pushes the created tag to the `"origin"` remote, if `push = TRUE`.
   if (push) {
     push_head()
@@ -62,7 +61,9 @@ push_head <- function() {
 push_to_new <- function(remote_name, force) {
   branch_name <- get_branch_name()
 
-  cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
+  if (fledge_chatty()) {
+    cli_alert("Pushing {.field {branch_name}} to remote {.field {remote_name}}.")
+  }
 
   gert::git_push(
     refspec = paste0("refs/heads/", branch_name),
