@@ -151,7 +151,7 @@ plan_release_impl <- function(which, force) {
 
   has_src <- pkgbuild::pkg_has_src()
 
-  if (is_installed("job") && rstudioapi::isAvailable() && !nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
+  if (Sys.getenv("POSITRON") == "" && is_installed("job") && rstudioapi::isAvailable() && !nzchar(Sys.getenv("FLEDGE_TEST_NOGH"))) {
     inject(job::empty(title = "check_win_devel", {
       devtools::check_win_devel()
     }))
