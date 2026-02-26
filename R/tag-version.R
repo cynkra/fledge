@@ -20,7 +20,7 @@ tag_version_impl <- function(force) {
 
     # Tagging would fail
     if (!force) {
-      abort(paste0("Tag ", tag, " exists, use `force = TRUE` to overwrite."))
+      cli::cli_abort("Tag {.val {tag}} exists, use {.code force = TRUE} to overwrite.")
     }
 
     if (fledge_chatty()) {
@@ -42,11 +42,11 @@ tag_version_impl <- function(force) {
 }
 
 get_tag_info <- function() {
-  desc <- desc::desc(file = "DESCRIPTION")
-  version <- desc$get_version()
-  name <- paste0("v", version)
-  header <- paste0(desc$get("Package"), " ", version)
-  body <- sub("^[^\n]+\n\n", "", get_current_news())
+  fledgling <- read_fledgling()
+  name <- paste0("v", fledgling$version)
+
+  header <- paste0(fledgling$name, " ", fledgling$version)
+  body <- sub("^[^\n]+\n\n", "", get_current_news(fledgling))
 
   list(
     name = name,
@@ -55,23 +55,12 @@ get_tag_info <- function() {
   )
 }
 
-get_current_news <- function() {
-  headers <- get_news_headers()
-  if (nrow(headers) == 0) {
-    return(character())
-  }
-  # FIXME: Add body column to get_news_headers()?
-  stopifnot(headers$line[[1]] %in% 1:3)
-
-  if (nrow(headers) == 1) {
-    n <- -1L
-  } else {
-    n <- headers$line[[2]] - 1L
+get_current_news <- function(fledgling = NULL) {
+  if (is.null(fledgling)) {
+    fledgling <- read_fledgling()
   }
 
-  current_news <- readLines(news_path(), n)[-1]
-  current_news <- paste(current_news, collapse = "\n")
-  gsub("^\n*(.*[^\n])\n*$", "\\1", current_news)
+  fledgling$news$raw[[1]]
 }
 
 tag_already_exist <- function(tag) {

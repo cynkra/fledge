@@ -6,30 +6,50 @@
 \title{Bump package version}
 \usage{
 bump_version(
-  which = c("dev", "patch", "minor", "major"),
-  no_change_behavior = c("bump", "noop", "fail")
+  which = c("dev", "pre-patch", "patch", "pre-minor", "minor", "pre-major", "major"),
+  ...,
+  no_change_behavior = c("bump", "noop", "fail"),
+  check_default_branch = TRUE
 )
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported
-values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+values are
+\itemize{
+\item \code{"auto"} (default: \code{"samedev"} or \code{"dev"}, depending on contents of \code{NEWS.md}),
+\item \code{"samedev"} (a.b.c.900x with stable version),
+\item \code{"dev"} (a.b.c.9xxx),
+\item \code{"patch"} (a.b.x),
+\item \code{"pre-minor"} (a.b.99.9000),
+\item \code{"minor"} (a.x.0),
+\item \code{"pre-major"} (a.99.99.9000),
+\item \code{"major"} (x.0.0).
+}}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{no_change_behavior}{What to do if there was no change since the last
 version: \code{"bump"} for bump the version;
 \code{"noop"} for do nothing;
 \code{"fail"} for erroring.}
+
+\item{check_default_branch}{Whether to check that the current branch is the
+default branch.}
 }
 \value{
-None
+\code{TRUE} if \code{NEWS.md} and \code{DESCRIPTION} have been updated,
+\code{FALSE} otherwise.
+Do not rely on this behavior.
 }
 \description{
 Calls the following functions:
 
 \enumerate{
-\item Verify that the current branch is the main branch.
-\item Check if there were changes since the last version.
-\item \code{\link[=update_news]{update_news()}}
-\item \code{\link[=update_version]{update_version()}}, using the \code{which} argument
+\item Verify that the current branch is the main branch
+if \code{check_default_branch = TRUE} (the default).
+\item \code{\link[=update_news]{update_news()}}, using the \code{which} argument, applying logic to determine
+if meaningful changes have been made since the last version.
+\item From the result, check if there were meaningful changes since the last version.
 \item Depending on the \code{which} argument:
 \itemize{
 \item If \code{"dev"}, \code{\link[=finalize_version]{finalize_version()}} with \code{push = FALSE}

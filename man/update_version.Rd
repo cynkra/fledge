@@ -4,17 +4,32 @@
 \alias{update_version}
 \title{Update NEWS.md and DESCRIPTION with a new version}
 \usage{
-update_version(which = c("dev", "patch", "minor", "major"))
+update_version(
+  which = c("auto", "samedev", "dev", "patch", "pre-minor", "minor", "pre-major",
+    "major")
+)
 }
 \arguments{
 \item{which}{Component of the version number to update. Supported
-values are \code{"dev"} (default), \code{"patch"}, \code{"minor"} and \code{"major"}.}
+values are
+\itemize{
+\item \code{"auto"} (default: \code{"samedev"} or \code{"dev"}, depending on contents of \code{NEWS.md}),
+\item \code{"samedev"} (a.b.c.900x with stable version),
+\item \code{"dev"} (a.b.c.9xxx),
+\item \code{"patch"} (a.b.x),
+\item \code{"pre-minor"} (a.b.99.9000),
+\item \code{"minor"} (a.x.0),
+\item \code{"pre-major"} (a.99.99.9000),
+\item \code{"major"} (x.0.0).
+}}
 }
 \value{
 None
 }
 \description{
-Bumps a version component and adds to \code{NEWS.md} and \code{DESCRIPTION}.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Deprecated, use \code{\link[=update_news]{update_news()}}.
 }
 \examples{
 # Create mock package in a temporary directory.
@@ -30,11 +45,11 @@ with_demo_project({
   gert::git_commit("- Add cool function.")
   # Bump version with fledge.
   fledge::bump_version()
-  fledge::update_news(c("- something I forgot", "- blabla"))
-  fledge::update_version()
+  fledge::update_news(c("- something I forgot", "- blabla"), which = "patch")
   gert::git_add("NEWS.md")
   gert::git_commit(message = "release notes tweaking")
   fledge::tag_version()
-  print(fledge::get_last_tag())
+  print(fledge::get_last_version_tag())
 })
 }
+\keyword{internal}

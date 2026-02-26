@@ -1,34 +1,56 @@
 #' @rdname bump_version
 #' @usage NULL
-bump_version_impl <- function(which, no_change_behavior) {
+bump_version_impl <- function(fledgeling,
+                              which,
+                              no_change_behavior,
+                              check_default_branch = TRUE,
+                              edit = TRUE,
+                              no_change_message = NULL) {
   #' @description
-  #' 1. Verify that the current branch is the main branch.
-  check_main_branch()
-  #' 1. Check if there were changes since the last version.
-  if (no_change()) {
+  #' 1. Verify that the current branch is the main branch
+  #'    if `check_default_branch = TRUE` (the default).
+  if (check_default_branch) {
+    check_main_branch("bump_version()", "bump_version(check_default_branch = FALSE)")
+  }
+  #' 1. [update_news()], using the `which` argument, applying logic to determine
+  #'    if meaningful changes have been made since the last version.
+  if (!is_dev_version(fledgeling$version) && which == "dev") {
+    no_change_message <- "Switching to development version."
+  } else if (no_change_behavior != "bump") {
+    no_change_message <- NA_character_
+  }
+
+  out <- update_news_impl(
+    default_commit_range(current_version = fledgeling$version),
+    which = which,
+    fledgeling = fledgeling,
+    no_change_message = no_change_message
+  )
+
+  #' 1. From the result, check if there were meaningful changes since the last version.
+  if (identical(fledgeling, out)) {
     if (no_change_behavior == "fail") {
-      rlang::abort(
+      cli::cli_abort(
         message = c(
           x = "No change since last version.",
-          i = 'Use `no_change_behavior = "bump"` to force a version bump, or
-          `no_change_behavior = "noop"` to do nothing.'
+          i = 'Use {.code no_change_behavior = "bump"} to force a version bump, or
+          {.code no_change_behavior = "noop"} to do nothing.'
         )
       )
     }
     if (no_change_behavior == "noop") {
-      cli::cli_alert_info("No change since last version.")
-      return()
+      if (fledge_chatty()) cli::cli_alert_info("No change since last version.")
+      return(invisible(fledgeling))
     }
   }
-  #' 1. [update_news()]
-  update_news()
-  #' 1. [update_version()], using the `which` argument
-  update_version(which = which)
+
   #' 1. Depending on the `which` argument:
   if (which == "dev") {
+    write_fledgling(out)
     #'     - If `"dev"`, [finalize_version()] with `push = FALSE`
-    finalize_version_impl(push = FALSE)
+    finalize_version_impl(push = FALSE, suggest_finalize = edit)
   } else {
+    write_fledgling(out)
     #'     - Otherwise, [commit_version()].
     commit_version()
 
@@ -36,66 +58,63 @@ bump_version_impl <- function(which, no_change_behavior) {
       cli_h2("Preparing package for CRAN release")
     }
 
-    edit_news()
+    if (edit) {
+      edit_news()
 
-    if (fledge_chatty()) {
-      cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+      if (fledge_chatty()) {
+        cli_ul("Convert the change log in {.file {news_path()}} to release notes.")
+      }
     }
   }
+
+  invisible(out)
 }
 
-bump_version_to_dev_with_force <- function(force) {
-  update_news()
-  update_version()
+bump_version_to_dev_with_force <- function(force, which) {
+  update_news(which = which)
 
   force <- commit_version() || force
   tag <- tag_version(force)
-  push_tag(tag)
   push_head()
+  push_tag(tag)
 }
 
-check_main_branch <- function() {
-  if (gert::git_branch() != get_main_branch()) {
-    rlang::abort(
+check_cran_branch <- function(reason) {
+  if (!grepl("^cran-", get_branch_name())) {
+    cli::cli_abort(
       c(
-        x = sprintf("Must be on the main branch (%s) for running fledge functions.", get_main_branch()),
-        i = sprintf("Currently on branch %s.", gert::git_branch())
+        x = "Must be on the a release branch that starts with {.val cran-} for running {.code {reason}}.",
+        i = "Currently on branch {.val {get_branch_name()}}."
       )
     )
   }
 }
 
-get_main_branch <- function() {
+get_main_branch <- function(repo = getwd()) {
   remote <- "origin"
-  if (remote %in% gert::git_remote_list()$name) {
-    remote_main <- get_main_branch_remote(remote)
+  remote_list <- gert::git_remote_list(repo)
+  if (remote %in% remote_list$name) {
+    remote_main <- get_main_branch_remote(remote, repo)
     if (length(remote_main)) {
       return(remote_main)
     }
   }
 
-  get_main_branch_config()
+  get_main_branch_config(repo)
 }
 
-get_main_branch_remote <- function(remote) {
-  remotes <- gert::git_remote_ls(verbose = FALSE, remote = remote)
+get_main_branch_remote <- function(remote, repo) {
+  remotes <- gert::git_remote_ls(repo = repo, verbose = FALSE, remote = remote)
   basename(as.character(remotes$symref[remotes$ref == "HEAD"]))
 }
 
-get_main_branch_config <- function() {
-  config <- gert::git_config()
+get_main_branch_config <- function(repo) {
+  config <- gert::git_config(repo)
   init <- config[config$name == "init.defaultbranch", ]
-  local <- init[init$level == "local", ]
 
-  if (length(local)) {
-    return(local$value)
+  if ("local" %in% init$level) {
+    return(init[init$level == "local", ]$value)
+  } else {
+    return(init[init$level == "global", ]$value)
   }
-
-  global <- init[init$level == "global"]
-  return(global$value)
-}
-
-no_change <- function() {
-  # At most, one commit from the latest bump_version() run
-  nrow(default_commit_range()) <= 1
 }

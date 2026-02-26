@@ -1,6 +1,7 @@
 #' @rdname unbump_version
 #' @usage NULL
 unbump_version_impl <- function() {
+  # We are not assuming diverged branches here, get_last_tag() is fine
   tag <- get_last_tag()
   tag_last_commit <- gert::git_log(tag$commit, max = 1)
   last_commit <- gert::git_log(max = 1)
@@ -27,7 +28,7 @@ unbump_version_impl <- function() {
   }
   gert::git_tag_delete(tag$name)
 
-  parent_commit_id <- gert::git_commit_info(last_commit$commit)$parent
+  parent_commit_id <- gert::git_commit_info(last_commit$commit)$parents
 
   message_id <- if (in_example()) {
     42

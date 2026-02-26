@@ -7,7 +7,8 @@
 #' - `commit`: the commit SHA
 #' - `message`: the commit message
 #'
-#' @param since A commit SHA, e.g. as returned from [get_last_tag()].
+#' @param since A commit SHA, e.g. as returned in the `commit` component of
+#'   [get_last_version_tag()].
 #'   If `NULL`, the entire log is retrieved.
 #'
 #' @example man/examples/get-last-tag.R

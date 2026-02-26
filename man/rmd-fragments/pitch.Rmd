@@ -1,4 +1,4 @@
-Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd)) more informative than ["bug fixes and performance improvements"](https://twitter.com/EmilyKager/status/1413628436984188933) to the users of your package?
+Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd)) more informative than "bug fixes and performance improvements" (`https://twitter.com/EmilyKager/status/1413628436984188933`) to the users of your package?
 
 Ways to achieve that are:
 
@@ -8,7 +8,7 @@ Ways to achieve that are:
 
 - Use fledge to
     * fill the `NEWS.md` for you based on informative commit messages,
-    * increase the version number in `DESCRIPTION` (e.g. useful in bug reports with session information!),
-    * create git tags (more coarse-grained history compared to top-level merges see [fledge tag list on GitHub](https://github.com/cynkra/fledge/tags)).
+    * (optionally) increase the version number in `DESCRIPTION` (e.g. useful in bug reports with session information!),
+    * (optionally) create git tags (more coarse-grained history compared to top-level merges see [fledge tag list on GitHub](https://github.com/cynkra/fledge/tags)).
 
-Using fledge is a discipline / a few habits that is worth learning!
+Using fledge is a discipline, a few habits, that are worth learning!

@@ -3,7 +3,7 @@
     Code
       bump_version()
     Message
-      > Scraping 3 commit messages.
+      > Digesting messages from 3 commits.
       v Found 1 NEWS-worthy entry.
       
       -- Updating NEWS --
@@ -13,15 +13,13 @@
       -- Updating Version --
       
       v Package version bumped to 0.0.0.9001.
-      > Adding header to 'NEWS.md'.
+      > Added header to 'NEWS.md'.
       > Committing changes.
       
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version()`.
-    Output
-      NULL
+      ! Run `fledge::finalize_version()`.
     Code
       unbump_version()
     Message
@@ -33,18 +31,12 @@
       v Resetting to parent commit 42.
     Code
       use_r("blop")
-      gert::git_add("R/blop.R")
-    Output
-      # A tibble: 1 x 3
-        file     status staged
-        <chr>    <chr>  <lgl> 
-      1 R/blop.R new    TRUE  
-    Code
+      fast_git_add("R/blop.R")
       c <- gert::git_commit("* Add cool blop.", author = default_gert_author(),
       committer = default_gert_committer())
       bump_version()
     Message
-      > Scraping 4 commit messages.
+      > Digesting messages from 4 commits.
       v Found 2 NEWS-worthy entries.
       
       -- Updating NEWS --
@@ -54,13 +46,11 @@
       -- Updating Version --
       
       v Package version bumped to 0.0.0.9001.
-      > Adding header to 'NEWS.md'.
+      > Added header to 'NEWS.md'.
       > Committing changes.
       
       -- Tagging Version --
       
       > Creating tag v0.0.0.9001 with tag message derived from 'NEWS.md'.
-      ! Call `fledge::finalize_version()`.
-    Output
-      NULL
+      ! Run `fledge::finalize_version()`.
 

@@ -11,10 +11,9 @@ with_demo_project({
   gert::git_commit("- Add cool function.")
   # Bump version with fledge.
   fledge::bump_version()
-  fledge::update_news(c("- something I forgot", "- blabla"))
-  fledge::update_version()
+  fledge::update_news(c("- something I forgot", "- blabla"), which = "patch")
   gert::git_add("NEWS.md")
   gert::git_commit(message = "release notes tweaking")
   fledge::tag_version()
-  print(fledge::get_last_tag())
+  print(fledge::get_last_version_tag())
 })

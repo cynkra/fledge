@@ -43,7 +43,7 @@ get_commit_message <- function(version) {
   version <- desc$get_version()
 
   # gert always appends a newline to the commit messages
-  paste0("Bump version to ", version, "\n")
+  paste0("fledge: Bump version to ", version, "\n")
 }
 
 check_clean <- function(forbidden_modifications) {
@@ -54,13 +54,11 @@ check_clean <- function(forbidden_modifications) {
     return()
   }
 
-  error_message <- sprintf(
-    "Unindexed change(s) in %s.",
-    toString(sprintf("`%s`", unexpected))
-  )
-  rlang::abort(
+  unexpected_string <- toString(sprintf("`%s`", unexpected))
+
+  cli::cli_abort(
     message = c(
-      x = error_message,
+      x = "Unindexed change(s) in {unexpected_string}.",
       i = "Commit the change(s) before running any fledge function again."
     )
   )
@@ -68,12 +66,14 @@ check_clean <- function(forbidden_modifications) {
 
 check_only_modified <- function(allowed_modifications) {
   status <- gert::git_status()
-  if (nrow(status) > 0) {
-    cli::cli_alert_danger("Found untracked/unstaged/staged files in the git index:
-    {.file {unlist(status$file)}}. Please commit or discard them and
-    try again.", wrap = TRUE)
+  if (!all(status$file %in% allowed_modifications)) {
+    problematic_files <- setdiff(status$file, allowed_modifications)
+    nfiles <- length(problematic_files)
+    cli_abort(c(
+      x = "Found untracked/unstaged/staged {qty(nfiles)} file{?s} in the git index: {.file {problematic_files}}.",
+      i = "Please commit or discard {qty(nfiles)} {?it/them} and try again."
+    ))
   }
-  stopifnot(all(unlist(status) %in% allowed_modifications))
 }
 
 check_only_staged <- function(allowed_modifications) {

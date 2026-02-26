@@ -2,19 +2,17 @@ with_repo <- function(code) {
   withr::with_dir(usethis::proj_get(), code)
 }
 
-get_top_level_commits_impl <- function(since) {
-  commit <- gert::git_log(max = 1)$commit
+local_repo <- function(.local_envir = caller_env()) {
+  withr::local_dir(usethis::proj_get(), .local_envir = .local_envir)
+}
 
-  if (!is.null(since)) {
-    ab <- gert::git_ahead_behind(since, commit)
-    if (ab$behind > 0) {
-      abort(paste0(since, " not reachable from current HEAD."))
-    }
-  }
+get_top_level_commits_impl <- function(since, ref = "HEAD") {
+  commit <- gert::git_log(ref, max = 1)$commit
 
   commit <- get_first_parent(commit, since)
   message <- map_chr(commit, ~ gert::git_commit_info(.x)$message)
-  tibble::tibble(commit, message)
+  merge <- map_lgl(commit, ~ (length(gert::git_commit_info(.x)$parents) > 1))
+  tibble::tibble(commit, message, merge)
 }
 
 get_first_parent <- function(commit, since) {
@@ -25,8 +23,13 @@ get_first_parent <- function(commit, since) {
 
   repeat {
     all_parents <- gert::git_commit_info(commit)$parents
-    first_parent <- get_parent_since(all_parents, since)
-    if (is_null(first_parent)) {
+    if (is_empty(all_parents)) {
+      return(commits)
+    }
+
+    first_parent <- all_parents[[1]]
+
+    if (!is_null(since) && gert::git_ahead_behind(since, first_parent)$ahead == 0) {
       return(commits)
     }
 
@@ -35,19 +38,8 @@ get_first_parent <- function(commit, since) {
   }
 }
 
-get_parent_since <- function(all_parents, since) {
-  if (is_empty(all_parents)) {
-    return(NULL)
-  }
-  if (is_null(since)) {
-    return(all_parents[[1]])
-  }
-
-  purrr::detect(all_parents, ~ gert::git_ahead_behind(since, .x)$behind == 0)
-}
-
-get_last_tag_impl <- function() {
-  repo_head <- gert::git_log(max = 1)
+get_last_tag_impl <- function(ref = "HEAD", pattern = NULL) {
+  repo_head <- gert::git_log(ref, max = 1)
 
   all_tags <- gert::git_tag_list()
 
@@ -55,8 +47,15 @@ get_last_tag_impl <- function() {
     return(NULL)
   }
 
-  tags_ab <- map(all_tags$name, ~ gert::git_ahead_behind(upstream = repo_head$commit, ref = .x))
-  names(tags_ab) <- all_tags$name
+  tag_names <- all_tags$name
+  if (!is.null(pattern)) {
+    tag_names <- grep(pattern, tag_names, value = TRUE, perl = TRUE)
+  }
+
+  tags_ab <- map(
+    set_names(tag_names),
+    ~ gert::git_ahead_behind(upstream = repo_head$commit, ref = .x)
+  )
   tags_only_b <- discard(tags_ab, ~ .[[1]] > 0)
   tags_b <- map_int(tags_only_b, 2)
   names(tags_b) <- names(tags_only_b)
@@ -68,4 +67,38 @@ get_last_tag_impl <- function() {
 
   min_tag <- which.min(tags_b)
   gert::git_tag_list(match = names(min_tag))
+}
+
+get_last_version_tag_impl <- function(current_version = NULL, pattern = NULL) {
+  all_tags <- gert::git_tag_list()
+
+  if (nrow(all_tags) == 0) {
+    return(NULL)
+  }
+
+  if (is.null(current_version)) {
+    current_version <- read_fledgling()$version
+  }
+
+  current_version <- as.package_version(current_version)
+
+  version_tags <- all_tags[grep("^v[0-9]+(?:[.][0-9]+)+$", all_tags$name), ]
+
+  if (!is.null(pattern)) {
+    version_tags <- version_tags[grep(pattern, version_tags$name, perl = TRUE), ]
+  }
+
+  versions <- as.package_version(sub("^v", "", version_tags$name))
+
+  version_tags <- version_tags[versions <= current_version, ]
+  versions <- versions[versions <= current_version]
+
+  if (length(versions) == 0) {
+    return(NULL)
+  }
+
+  # Bug in order():
+  # versions <- c("1.0.11.9013", "1.0.6.9010", "1.0.6.9014")
+  # order(as.package_version(versions))
+  version_tags[versions == max(versions), ]
 }

@@ -45,9 +45,10 @@ create_demo_project <- function(open = rlang::is_interactive(),
   withr::local_dir(new = pkg)
   desc::desc_del("LazyData")
   gert::git_init()
+  system("git branch -m main") # No equivalent gert command
   gert::git_config_set("user.name", maintainer)
   gert::git_config_set("user.email", email)
-  gert::git_add(".")
+  fast_git_add(".")
   gert::git_commit(
     "First commit",
     author = default_gert_author(),
@@ -62,22 +63,17 @@ create_demo_project <- function(open = rlang::is_interactive(),
   gert::git_config_set(name = "init.defaultbranch", value = "main")
 
   if (news) {
-    usethis::with_project(
-      path = pkg,
-      {
-        rlang::with_interactive(
-          {
-            usethis::use_news_md()
-          },
-          value = FALSE
-        )
-        gert::git_add("NEWS.md")
-        gert::git_commit(
-          "Add NEWS.md to track changes.",
-          author = default_gert_author(),
-          committer = default_gert_committer()
-        )
-      }
+    news_lines <- c(
+      news_preamble(), "",
+      sprintf("# %s %s", name, as.character(desc::desc_get_version())), "",
+      "* Added a `NEWS.md` file to track changes to the package."
+    )
+    brio::write_lines(news_lines, news_path())
+    fast_git_add(news_path())
+    gert::git_commit(
+      "Add NEWS.md to track changes.",
+      author = default_gert_author(),
+      committer = default_gert_committer()
     )
   }
 
@@ -126,16 +122,19 @@ with_demo_project <- function(code, dir = NULL, news = TRUE, quiet = FALSE) {
 #' @return `local_demo_project()` is called for its side effect and returns `NULL`, invisibly.
 #' @rdname with_demo_project
 #' @export
-local_demo_project <- function(dir = NULL, news = TRUE, quiet = FALSE, .local_envir = parent.frame()) {
-  if (is.null(dir)) {
-    dir <- withr::local_tempdir(pattern = "fledge", .local_envir = .local_envir)
-  }
+local_demo_project <- function(dir = NULL,
+                               news = TRUE,
+                               quiet = FALSE,
+                               .local_envir = parent.frame()) {
+  dir <- dir %||%
+    withr::local_tempdir(pattern = "fledge", .local_envir = .local_envir)
 
   if (!dir.exists(dir)) {
-    rlang::abort(message = c(x = sprintf("Can't find the directory `%s`.", dir)))
+    cli::cli_abort(c(x = "Can't find the directory {.file {dir}}."))
   }
 
-  repo <- create_demo_project(dir = dir, news = TRUE)
+  repo <- create_demo_project(dir = dir, news = news, open = FALSE)
+
   usethis::local_project(
     path = repo,
     quiet = quiet,
