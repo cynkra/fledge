@@ -8,9 +8,8 @@ use_github_action_pkgcheck(save_as = NULL)
 }
 \arguments{
 \item{save_as}{Name of the local workflow file. Defaults to \code{name} or
-\code{fs::path_file(url)} for \code{use_github_action()}. Do not specify any other
-part of the path; the parent directory will always be \code{.github/workflows},
-within the active project.}
+\code{fs::path_file(url)}. Do not specify any other part of the path; the parent
+directory will always be \code{.github/workflows}, within the active project.}
 }
 \value{
 Nothing, called for its side-effect.
