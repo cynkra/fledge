@@ -36,8 +36,8 @@
 
     [
       {
-        "description": "Merge pull request #332 from cynkra/conventional-parsing (#332).",
-        "type": "Uncategorized",
+        "description": "Improve parsing of conventional commit messages (#332).",
+        "type": "Features",
         "breaking": false,
         "scope": "NA"
       }
@@ -58,8 +58,8 @@
 
     [
       {
-        "description": "Merge pull request #328 from cynkra/blop (#153, cynkra/dm#325, #328).",
-        "type": "Uncategorized",
+        "description": "improve bump_version() (error) messages  (#153, cynkra/dm#325, #328).",
+        "type": "Features",
         "breaking": false,
         "scope": "NA"
       }
@@ -103,8 +103,8 @@
 
     [
       {
-        "description": "feat: blop (#328)",
-        "type": "Uncategorized",
+        "description": "improve bump_version() (error) messages  (#153, cynkra/dm#325, #328).",
+        "type": "Features",
         "breaking": false,
         "scope": "NA"
       }
