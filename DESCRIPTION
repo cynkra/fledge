@@ -8,13 +8,14 @@ Authors@R: c(
     person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0003-0748-6624")),
     person("Maëlle", "Salmon", , "msmaellesalmon@gmail.com", role = "ctb",
-           comment = c(ORCID = "0000-0002-2815-0399"))
+           comment = c(ORCID = "0000-0002-2815-0399")),
+    person("cynkra GmbH", , , "mail@cynkra.com", role = c("fnd"),
+           comment = c(ROR = "0335t7e62"))
   )
-Description: Streamlines the process of updating changelogs (NEWS.md)
-    and versioning R packages developed in git repositories.
+Description: Streamlines the process of updating changelogs (NEWS.md) and
+    versioning R packages developed in git repositories.
 License: GPL-3
-URL: https://fledge.cynkra.com/,
-    https://github.com/cynkra/fledge
+URL: https://fledge.cynkra.com/, https://github.com/cynkra/fledge
 BugReports: https://github.com/cynkra/fledge/issues
 Imports: 
     brio,
@@ -59,15 +60,15 @@ Suggests:
     vctrs,
     whisker,
     withr
-Config/Needs/readme: r-lib/downlit@f-readme-document
 VignetteBuilder: 
     knitr
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3.9000
+Config/autostyle/scope: line_breaks
+Config/autostyle/strict: true
+Config/Needs/readme: r-lib/downlit@f-readme-document
+Config/Needs/website: cynkra/cynkratemplate
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: auto, demo, parse-news-items, bump_version
-Config/autostyle/scope: line_breaks
-Config/autostyle/strict: true
-Config/Needs/website: cynkra/cynkratemplate
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3.9000
