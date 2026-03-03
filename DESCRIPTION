@@ -23,6 +23,7 @@ Imports:
     curl,
     desc (>= 1.4.1),
     devtools,
+    gh (>= 1.5.0),
     glue,
     httr2,
     lifecycle,
@@ -44,7 +45,6 @@ Suggests:
     foghorn,
     fs,
     gert (>= 1.4.0),
-    gh,
     httptest2,
     job,
     jsonlite,
@@ -64,7 +64,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2.9000
+RoxygenNote: 7.3.3.9000
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: auto, demo, parse-news-items, bump_version

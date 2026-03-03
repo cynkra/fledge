@@ -45,6 +45,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
   withr::local_dir(new = pkg)
   desc::desc_del("LazyData")
   gert::git_init()
+  system("git branch -m main") # No equivalent gert command
   gert::git_config_set("user.name", maintainer)
   gert::git_config_set("user.email", email)
   fast_git_add(".")

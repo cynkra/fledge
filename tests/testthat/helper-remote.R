@@ -33,11 +33,6 @@ show_files <- function(remote_url) {
     )
   }
 
-  git_config <- gert::git_config_global()
-  if (!"init.defaultbranch" %in% git_config$name) {
-    gert::git_config_global_set("init.defaultbranch", "main")
-  }
-
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
     gert::git_clone(remote_url, path = "remote")

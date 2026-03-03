@@ -63,7 +63,7 @@ test_that("bump_version() works -- dev squash", {
 
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9001")
   expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9001")
-  expect_snapshot_file("NEWS.md", compare = compare_file_text)
+  expect_snapshot_file("NEWS.md", "NEWS3.md", compare = compare_file_text)
 
   cat("\n", file = "NEWS.md", append = TRUE)
   fast_git_add("NEWS.md")
@@ -81,7 +81,7 @@ test_that("bump_version() works -- dev squash", {
   expect_snapshot(bump_version(no_change_behavior = "bump"))
   expect_equal(as.character(desc::desc_get_version()), "0.0.0.9002")
   expect_equal(get_last_version_tag()[["name"]], "v0.0.0.9002")
-  expect_snapshot_file("NEWS.md", "NEWS3.md", compare = compare_file_text)
+  expect_snapshot_file("NEWS.md", "NEWS4.md", compare = compare_file_text)
 })
 
 test_that("bump_version() works -- not dev", {
