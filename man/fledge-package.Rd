@@ -28,6 +28,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Maëlle Salmon \email{msmaellesalmon@gmail.com} (\href{https://orcid.org/0000-0002-2815-0399}{ORCID}) [contributor]
+  \item cynkra GmbH \email{mail@cynkra.com} (\href{https://ror.org/0335t7e62}{ROR}) [funder]
 }
 
 }
