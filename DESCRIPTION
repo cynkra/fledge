@@ -39,7 +39,6 @@ Imports:
     whoami,
     xml2
 Suggests: 
-    clipr,
     covr,
     digest,
     fansi,

@@ -458,7 +458,6 @@ release_impl <- function() {
   push_tag(tag)
 
   submit_cran()
-  auto_confirm()
 
   # Begin extension points
   # End extension points
@@ -479,45 +478,6 @@ get_cran_comments_text <- function() {
 is_cran_comments_good <- function() {
   text <- get_cran_comments_text()
   !any(grepl("- [ ]", text, fixed = TRUE))
-}
-
-auto_confirm <- function() {
-  if (fledge_chatty()) {
-    cli_alert_info("Check your inbox for a confirmation e-mail from CRAN.")
-  }
-  if (fledge_chatty()) cli_alert("Copy the URL to the clipboard.")
-  if (nzchar(Sys.getenv("FLEDGE_DONT_BOTHER_CRAN_THIS_IS_A_TEST"))) {
-    cli::cli_inform("Not submitting for real o:-)")
-    return(invisible(NULL))
-  }
-  if (!clipr::clipr_available()) {
-    cli::cli_abort(c(
-      "Clipboard not available.",
-      i = "Please confirm manually."
-    ))
-    return(invisible(NULL))
-  }
-  tryCatch(
-    repeat {
-      suppressWarnings(url <- clipr::read_clip())
-      if (has_length(url, 1) && grepl("^https://xmpalantir\\.wu\\.ac\\.at/cransubmit/conf_mail\\.php[?]code=", url)) {
-        break
-      }
-      Sys.sleep(0.1)
-    },
-    interrupt = function(e) {
-      cli_ul("Restart with {.fun fledge:::auto_confirm} (or confirm manually), re-release with {.fun fledge:::release}.")
-      rlang::cnd_signal(e)
-    }
-  )
-
-  clipr::write_clip("")
-
-  code <- paste0('utils::browseURL("', get_confirm_url(url), '")')
-  if (fledge_chatty()) cli_ul("Run {.run {code}}.")
-  send_to_console(code)
-
-  invisible()
 }
 
 confirm_submission <- function(url) {
