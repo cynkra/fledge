@@ -8,7 +8,9 @@ Authors@R: c(
     person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0003-0748-6624")),
     person("Maëlle", "Salmon", , "msmaellesalmon@gmail.com", role = "ctb",
-           comment = c(ORCID = "0000-0002-2815-0399"))
+           comment = c(ORCID = "0000-0002-2815-0399")),
+    person("cynkra GmbH", , , "mail@cynkra.com", role = c("fnd"),
+           comment = c(ROR = "0335t7e62"))
   )
 Description: Streamlines the process of updating changelogs (NEWS.md) and
     versioning R packages developed in git repositories.
