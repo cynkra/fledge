@@ -10,6 +10,10 @@
 - **[Maëlle Salmon](https://cynkra.com/about/#maelle)**. Contributor.
   [](https://orcid.org/0000-0002-2815-0399)
 
+- **[![cynkra](https://cynkra.com/assets/images/apple-touch-icon-76x76.png)](https://cynkra.com/)**.
+  Funder.
+  [![ROR](https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg)](https://ror.org/0335t7e62)
+
 ## Citation
 
 Source:
