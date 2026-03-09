@@ -19,8 +19,8 @@ get_top_level_commits(since = NULL)
 
 ## Value
 
-A [tibble::tibble](https://tibble.tidyverse.org/reference/tibble.html)
-with at least two columns:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with at
+least two columns:
 
 - `commit`: the commit SHA
 
@@ -46,7 +46,7 @@ with_demo_project({
   print(get_top_level_commits(since = NULL))
   print(fledge::get_last_tag())
 })
-#> ✔ Setting active project to "/tmp/RtmpPfU9Mo/fledge418361872d89/tea".
+#> ✔ Setting active project to "/tmp/RtmpCoiyfo/fledge410016cec6e0/tea".
 #> ☐ Edit R/cool-function.R.
 #> → Digesting messages from 3 commits.
 #> ✔ Found 1 NEWS-worthy entry.
@@ -74,13 +74,13 @@ with_demo_project({
 #> # A tibble: 4 × 3
 #>   commit                                   message                         merge
 #>   <chr>                                    <chr>                           <lgl>
-#> 1 f11451fda4726645178d83fee55a861a6e556197 "fledge: Bump version to 0.0.0… FALSE
-#> 2 7a0bf9983a0a28aa053ab9dc89b5d308efaf7ed0 "- Add cool function.\n"        FALSE
+#> 1 c0fe63aa1fb41c453d5e2e0ead89c475b0239f38 "fledge: Bump version to 0.0.0… FALSE
+#> 2 0121f7f9e9f2a7b8e5465cd20fefd600a85ce64b "- Add cool function.\n"        FALSE
 #> 3 b473d8ea7fe4af7189a3f673e6a9efe36cee5395 "Add NEWS.md to track changes.… FALSE
 #> 4 70e0d17ddfcfe6434e67c983b2c12586816baddc "First commit\n"                FALSE
 #> # A tibble: 1 × 3
 #>   name        ref                   commit                                  
 #> * <chr>       <chr>                 <chr>                                   
-#> 1 v0.0.0.9001 refs/tags/v0.0.0.9001 f673fbb53408673b88e122395a1cc6ad9678ffd2
+#> 1 v0.0.0.9001 refs/tags/v0.0.0.9001 491b1265408367fbc2da5951fbac8305d92b8609
 #> ✔ Setting active project to "<no active project>".
 ```

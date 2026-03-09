@@ -1,5 +1,19 @@
 # Changelog
 
+## fledge 0.1.99.9050 (2026-03-08)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#1047](https://github.com/cynkra/fledge/issues/1047)).
+
+## fledge 0.1.99.9049 (2026-02-27)
+
+### Testing
+
+- Update demo snapshot
+  ([\#854](https://github.com/cynkra/fledge/issues/854)).
+
 ## fledge 0.1.99.9048 (2026-01-14)
 
 ### Continuous integration
