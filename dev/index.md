@@ -46,12 +46,14 @@ level**:
     line `---`.
 
   ``` text
+
   - Add support for bla databases.
   ```
 
   or
 
   ``` text
+
   - Add support for bla databases.
 
   ---
@@ -100,6 +102,7 @@ OR, for **light fledge use = filling of NEWS.md between releases**:
   `usethis::use_development_version()`.
 
 ``` chroma
+
 # mypackage (development version)
 ```
 
@@ -123,18 +126,21 @@ Click on the image above to show in a separate tab.
 Install from CRAN using:
 
 ``` chroma
+
 install.packages("fledge")
 ```
 
 Install from cynkra’s R-universe (development version) using:
 
 ``` chroma
+
 install.packages("fledge", repos = c("https://cynkra.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 Or install from GitHub (development version as well) using:
 
 ``` chroma
+
 remotes::install_github("cynkra/fledge")
 ```
 
@@ -172,6 +178,7 @@ in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
   `usethis::use_development_version()`.
 
 ``` chroma
+
 # mypackage (development version)
 ```
 

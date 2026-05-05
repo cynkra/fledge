@@ -1,6 +1,7 @@
 # Get started with fledge
 
 ``` r
+
 library(fledge)
 ```
 
@@ -48,12 +49,14 @@ level**:
     line `---`.
 
   ``` text
+
   - Add support for bla databases.
   ```
 
   or
 
   ``` text
+
   - Add support for bla databases.
 
   ---
@@ -118,18 +121,21 @@ These habits are worth learning!
 Install from CRAN using:
 
 ``` r
+
 install.packages("fledge")
 ```
 
 Install from cynkra’s R-universe (development version) using:
 
 ``` r
+
 install.packages("fledge", repos = c("https://cynkra.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 Or install from GitHub (development version as well) using:
 
 ``` r
+
 remotes::install_github("cynkra/fledge")
 ```
 
@@ -175,13 +181,13 @@ in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
 {fledge} consists of the following functions that enable versioning at
 different stages through the package development lifecycle.
 
-| Function Name                                                                       | Description                                                                                                  | Stage Applicable                                                                    |
-|-------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
-| `bump_version(which)`                                                               | Increments the package version based on argument. (Version format supported *major.minor.dev.patch*)         | Configuration, Development, Release                                                 |
-| [`finalize_version()`](https://fledge.cynkra.com/dev/reference/finalize_version.md) | Finalize the package version                                                                                 | Configuration, Development                                                          |
-| [`commit_version()`](https://fledge.cynkra.com/dev/reference/commit_version.md)     | Commits `NEWS.md` and `DESCRIPTION` to Git.                                                                  | Release                                                                             |
-| [`tag_version()`](https://fledge.cynkra.com/dev/reference/tag_version.md)           | Parses `NEWS.md` and creates/updates the tag for the most recent version.                                    | Release                                                                             |
-| [`update_news()`](https://fledge.cynkra.com/dev/reference/update_news.md)           | Update `NEWS.md` with messages from top level commits; Update `NEWS.md` and `DESCRIPTION` with a new version | Used by [`bump_version()`](https://fledge.cynkra.com/dev/reference/bump_version.md) |
+| Function Name | Description | Stage Applicable |
+|----|----|----|
+| `bump_version(which)` | Increments the package version based on argument. (Version format supported *major.minor.dev.patch*) | Configuration, Development, Release |
+| [`finalize_version()`](https://fledge.cynkra.com/dev/reference/finalize_version.md) | Finalize the package version | Configuration, Development |
+| [`commit_version()`](https://fledge.cynkra.com/dev/reference/commit_version.md) | Commits `NEWS.md` and `DESCRIPTION` to Git. | Release |
+| [`tag_version()`](https://fledge.cynkra.com/dev/reference/tag_version.md) | Parses `NEWS.md` and creates/updates the tag for the most recent version. | Release |
+| [`update_news()`](https://fledge.cynkra.com/dev/reference/update_news.md) | Update `NEWS.md` with messages from top level commits; Update `NEWS.md` and `DESCRIPTION` with a new version | Used by [`bump_version()`](https://fledge.cynkra.com/dev/reference/bump_version.md) |
 
 ## Full fledge usage
 
@@ -231,6 +237,7 @@ to be included throughout the development workflow.
     your R package e.g. at the end of the day or before a break, call
 
     ``` r
+
     fledge::bump_version()
     ```
 
@@ -262,6 +269,7 @@ When you want to release your package to CRAN, follow the steps below:
     `"major"`, `"minor"`). e.g.,
 
     ``` r
+
     fledge::bump_version("patch")
     ```
 
@@ -274,6 +282,7 @@ When you want to release your package to CRAN, follow the steps below:
     as below
 
     ``` r
+
     fledge::commit_version()
     ```
 

@@ -30,6 +30,7 @@ The
 function sets up a package project ready for development.
 
 ``` r
+
 pkg <- usethis::create_package("tea")
 ```
 
@@ -38,6 +39,7 @@ there. Users of other environments would change the working directory
 manually. For this demo, we manually set the active project.
 
 ``` r
+
 usethis::proj_set()
 ```
 
@@ -45,6 +47,7 @@ The infrastructure files and directories that comprise a minimal R
 package are created:
 
 ``` r
+
 fs::dir_ls()
 ## DESCRIPTION NAMESPACE   R           tea.Rproj
 ```
@@ -60,6 +63,7 @@ function that creates an initial commit, and the repository is in a
 clean state.
 
 ``` r
+
 # Number of commits until now
 nrow(gert::git_log())
 ## [1] 1
@@ -73,6 +77,7 @@ For working in branches, it is recommended to turn off fast-forward
 merging:
 
 ``` r
+
 gert::git_config_set("merge.ff", "false")
 # gert::git_config_global_set("merge.ff", "false") # to set globally
 ```
@@ -89,6 +94,7 @@ real life, you’d probably simply browse the GitHub interface for
 instance!
 
 ``` r
+
 show_files <- function(remote_url) {
   tempdir_remote <- withr::local_tempdir(pattern = "remote")
   withr::with_dir(tempdir_remote, {
@@ -116,6 +122,7 @@ An initial NEWS file can be created with
 [`usethis::use_news_md()`](https://usethis.r-lib.org/reference/use_news_md.html).
 
 ``` r
+
 usethis::use_news_md()
 ## ✔ Writing 'NEWS.md'.
 ```
@@ -123,6 +130,7 @@ usethis::use_news_md()
 Let’s take a look at the contents:
 
 ``` r
+
 news <- readLines(usethis::proj_path("NEWS.md"))
 cat(news, sep = "\n")
 ## # tea (development version)
@@ -133,12 +141,14 @@ cat(news, sep = "\n")
 This file needs to be tracked by Git:
 
 ``` r
+
 gert::git_add("NEWS.md")
 gert::git_commit("Initial NEWS.md .")
 gert::git_push(remote = "origin")
 ```
 
 ``` r
+
 show_files(remote_url)
 ## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/tea.Rproj
 ```
@@ -154,6 +164,7 @@ creating the new R file called `cup.R` and adding code (well only a
 comment).
 
 ``` r
+
 usethis::use_r("cup")
 ## ☐ Edit 'R/cup.R'.
 writeLines("# cup", "R/cup.R")
@@ -170,12 +181,14 @@ RStudio Git window, command line, VSCode, etc.). What’s important is the
 content of the commit message.
 
 ``` r
+
 gert::git_add("R/cup.R")
 gert::git_commit("- New cup_of_tea() function makes it easy to drink a cup of tee.")
 gert::git_push()
 ```
 
 ``` r
+
 show_files(remote_url)
 ## remote/DESCRIPTION remote/NAMESPACE   remote/NEWS.md     remote/R           
 ## remote/R/cup.R     remote/tea.Rproj
@@ -187,6 +200,7 @@ The code in `cup.R` warrants a test (at least it would if it were actual
 code!):
 
 ``` r
+
 usethis::use_test("cup")
 ## ✔ Adding testthat to 'Suggests' field in DESCRIPTION.
 ## ✔ Adding "3" to 'Config/testthat/edition'.
@@ -205,6 +219,7 @@ by real tests. In this demo we commit straight away, **again with a
 bulleted message**.
 
 ``` r
+
 gert::git_add("DESCRIPTION")
 gert::git_add("tests/testthat.R")
 gert::git_add("tests/testthat/test-cup.R")
@@ -213,6 +228,7 @@ gert::git_push()
 ```
 
 ``` r
+
 show_files(remote_url)
 ## remote/DESCRIPTION               remote/NAMESPACE                 
 ## remote/NEWS.md                   remote/R                         
@@ -227,16 +243,17 @@ Let us look at the commit history until now. You might use any Git tool
 you want to consult it, we use gert.
 
 ``` r
+
 # Only show number of files, messages
 knitr::kable(gert::git_log()[-(1:3)])
 ```
 
-| files | merge | message                                                           |
-|------:|:------|:------------------------------------------------------------------|
-|     3 | FALSE | \- Add tests for cup of tea.                                      |
-|     1 | FALSE | \- New cup_of_tea() function makes it easy to drink a cup of tee. |
-|     1 | FALSE | Initial NEWS.md .                                                 |
-|     5 | FALSE | First commit                                                      |
+| files | merge | message |
+|---:|:---|:---|
+| 3 | FALSE | \- Add tests for cup of tea. |
+| 1 | FALSE | \- New cup_of_tea() function makes it easy to drink a cup of tee. |
+| 1 | FALSE | Initial NEWS.md . |
+| 5 | FALSE | First commit |
 
 We have two “bulletted” messages which for fledge means two NEWS-worthy
 messages.
@@ -251,6 +268,7 @@ to assign a new dev version number to the package and also update
 The current version number of our package is 0.0.0.9000.
 
 ``` r
+
 fledge::bump_version()
 ## → Digesting messages from 4 commits.
 ## ✔ Found 2 NEWS-worthy entries.
@@ -287,6 +305,7 @@ new version when you are done with the edits.
 Let us see what `NEWS.md` looks like after that bump.
 
 ``` r
+
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ## <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
@@ -310,6 +329,7 @@ The fledge package adds a comment about not editing `NEWS.md` by hand to
 Let’s fix the typo, which you’d do by hand.
 
 ``` r
+
 news <- gsub("tee", "tea", news)
 cat(news, sep = "\n")
 ## <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
@@ -344,6 +364,7 @@ when `NEWS.md` is manually updated. Note that it should be called after
 an error is raised if another commit has been added after that.
 
 ``` r
+
 show_tags(remote_url)
 ## # A tibble: 0 × 2
 ## # ℹ 2 variables: name <chr>, ref <chr>
@@ -367,6 +388,7 @@ show_tags(remote_url)
 Let’s look at NEWS.md now:
 
 ``` r
+
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ## <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
@@ -394,6 +416,7 @@ requires changes to the code, and perhaps a new test. We create a branch
 to implement this.
 
 ``` r
+
 gert::git_branch_create("f-bowl", checkout = TRUE)
 ```
 
@@ -404,34 +427,39 @@ specially, because {fledge} will ignore them anyway.
 This time we write the tests first, test-driven development.
 
 ``` r
+
 usethis::use_test("bowl")
 ## ✔ Writing 'tests/testthat/test-bowl.R'.
 ## ☐ Edit 'tests/testthat/test-bowl.R'.
 ```
 
 ``` r
+
 gert::git_add("tests/testthat/test-bowl.R")
 gert::git_commit("Add bowl tests.")
 ```
 
 ``` r
+
 usethis::use_r("bowl")
 ## ☐ Edit 'R/bowl.R'.
 writeLines("# bowl of tea", "R/bowl.R")
 ```
 
 ``` r
+
 gert::git_add("R/bowl.R")
 gert::git_commit("Add bowl implementation.")
 ```
 
 This branch can be pushed to the remote as usual. Only when merging we
 specify the message to be included in the changelog, again with a
-bullet.[¹](#fn1) You might be used to doing the merges on a remote
+bullet.[^1] You might be used to doing the merges on a remote
 (e.g. GitHub pull requests) but here we demonstrate a local merge
 commit.
 
 ``` r
+
 gert::git_branch_checkout("main")
 gert::git_merge("f-bowl", commit = FALSE)
 ## Merge was not committed due to merge conflict(s). Please fix and run git_commit() or git_merge_abort()
@@ -446,6 +474,7 @@ Now that we have added bowl support to our package, it is time to bump
 the version again.
 
 ``` r
+
 fledge::bump_version()
 ## → Digesting messages from 1 commits.
 ## ✔ Found 1 NEWS-worthy entry.
@@ -514,6 +543,7 @@ with the “patch” argument. Other values for the arguments are “dev”
 (default), “minor” and “major”.
 
 ``` r
+
 fledge::bump_version("patch")
 ## → Digesting messages from 1 commits.
 ## ℹ Same as previous version.
@@ -540,6 +570,7 @@ This updates the version of our package to 0.0.1.
 We review the `NEWS.md` that were generated by {fledge}:
 
 ``` r
+
 news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ## <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
@@ -593,6 +624,7 @@ It is now the time to tag the released version using the
 function.
 
 ``` r
+
 fledge::tag_version()
 ## 
 ## ── Tagging Version ──
@@ -623,6 +655,7 @@ We will now make the package ready for future development. The
 takes care of it.
 
 ``` r
+
 fledge::bump_version()
 ## → Digesting messages from 1 commits.
 ## ℹ Switching to development version.
@@ -650,12 +683,11 @@ branch or not),
 etc. Happy development, and happy smooth filling of the changelog!
 
 ``` r
+
 unlink(parent_dir, recursive = TRUE)
 ```
 
-------------------------------------------------------------------------
-
-1.  Note that we really need a merge commit here; the default is to
+[^1]: Note that we really need a merge commit here; the default is to
     fast-forward which doesn’t give us the opportunity to insert the
     message intended for the changelog. Earlier, we set the `merge.ff`
     config option to `"false"` to achieve this.

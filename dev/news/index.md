@@ -1,5 +1,30 @@
 # Changelog
 
+## fledge 0.1.99.9053 (2026-05-04)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#1054](https://github.com/cynkra/fledge/issues/1054)).
+
+## fledge 0.1.99.9052 (2026-03-12)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#1050](https://github.com/cynkra/fledge/issues/1050)).
+
+## fledge 0.1.99.9051 (2026-03-10)
+
+### Chore
+
+- `use_tidy_description()`.
+
+### Documentation
+
+- Add cynkra’s ROR ID
+  ([\#857](https://github.com/cynkra/fledge/issues/857)).
+
 ## fledge 0.1.99.9050 (2026-03-08)
 
 ### Chore
