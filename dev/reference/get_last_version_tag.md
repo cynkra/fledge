@@ -52,7 +52,7 @@ with_demo_project({
   # get_last_version_tag() is better
   print(fledge::get_last_version_tag())
 })
-#> ✔ Setting active project to "/tmp/RtmprMJZE9/fledge42016892ac05/tea".
+#> ✔ Setting active project to "/tmp/RtmpPDMPgB/fledge424045e963c0/tea".
 #> ☐ Edit R/cool-function.R.
 #> → Digesting messages from 3 commits.
 #> ✔ Found 1 NEWS-worthy entry.
@@ -81,17 +81,17 @@ with_demo_project({
 #> # A tibble: 4 × 3
 #>   commit                                   message                         merge
 #>   <chr>                                    <chr>                           <lgl>
-#> 1 7d4d5d11f6e9f37e90e16b1a44e7c85781576fd2 "fledge: Bump version to 0.0.0… FALSE
-#> 2 023d792390f2deca59f21931a15ac60c9a08bb34 "- Add cool function.\n"        FALSE
+#> 1 c86e907e2e1b18fe886ed66bf36a73701042c5c3 "fledge: Bump version to 0.0.0… FALSE
+#> 2 a0d1b069ef8c28cf1bbef94bf73488d082e707b1 "- Add cool function.\n"        FALSE
 #> 3 b473d8ea7fe4af7189a3f673e6a9efe36cee5395 "Add NEWS.md to track changes.… FALSE
 #> 4 70e0d17ddfcfe6434e67c983b2c12586816baddc "First commit\n"                FALSE
 #> # A tibble: 1 × 3
 #>   name        ref                   commit                                  
 #> * <chr>       <chr>                 <chr>                                   
-#> 1 v0.0.0.9001 refs/tags/v0.0.0.9001 df86cec98c8d492334406dddc88b4483f02cfada
+#> 1 v0.0.0.9001 refs/tags/v0.0.0.9001 710216d8eee966027704745818a4b487c25a0e6e
 #> # A tibble: 1 × 3
 #>   name        ref                   commit                                  
 #>   <chr>       <chr>                 <chr>                                   
-#> 1 v0.0.0.9001 refs/tags/v0.0.0.9001 df86cec98c8d492334406dddc88b4483f02cfada
+#> 1 v0.0.0.9001 refs/tags/v0.0.0.9001 710216d8eee966027704745818a4b487c25a0e6e
 #> ✔ Setting active project to "<no active project>".
 ```
