@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9055 (2026-05-10)
+
+## Continuous integration
+
+- Tweak fledge workflow and ccache action.
+
+
 # fledge 0.1.99.9054 (2026-05-06)
 
 ## Continuous integration
