@@ -27,6 +27,10 @@ inputs:
     description: Passed on to r-lib/actions/setup-r-dependencies@v2
     required: false
     default: 1
+  pak-version:
+    description: Passed on to r-lib/actions/setup-r-dependencies@v2
+    required: false
+    default: stable
 
 runs:
   using: "composite"
@@ -114,7 +118,7 @@ runs:
       env:
         GITHUB_PAT: ${{ inputs.token }}
       with:
-        pak-version: stable
+        pak-version: ${{ inputs.pak-version }}
         needs: ${{ inputs.needs }}
         packages: ${{ inputs.packages }}
         extra-packages: ${{ inputs.extra-packages }} ${{ ( matrix.covr && 'r-lib/covr xml2' ) || '' }} ${{ steps.get-extra.outputs.packages }}
