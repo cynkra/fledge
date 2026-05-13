@@ -104,3 +104,4 @@ $RECYCLE.BIN/
 
 *.log
 CRAN-SUBMISSION
+.ccache/
