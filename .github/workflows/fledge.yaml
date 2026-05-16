@@ -99,8 +99,8 @@ jobs:
       - uses: ./.github/workflows/install
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          packages: ${{ github.repository == 'cynkra/fledge' && 'local::.' || 'cynkra/fledge' }}
           cache-version: fledge-1
-          packages: local::.
 
       - name: Count rulesets
         # Assume that branch is protected if ruleset exists
