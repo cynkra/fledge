@@ -1,5 +1,12 @@
 # Changelog
 
+## fledge 0.1.99.9058 (2026-05-16)
+
+### Continuous integration
+
+- Conditionally install fledge package based on repository
+  ([\#1060](https://github.com/cynkra/fledge/issues/1060)).
+
 ## fledge 0.1.99.9057 (2026-05-14)
 
 ### Chore
