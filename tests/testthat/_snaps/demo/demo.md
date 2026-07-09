@@ -127,6 +127,8 @@ An initial NEWS file can be created with `usethis::use_news_md()`.
 
 ``` r
 usethis::use_news_md()
+## Warning: unable to access index for repository https://packagemanager.posit.co/cran/__linux__/noble/latest/src/contrib:
+##   cannot open URL 'https://packagemanager.posit.co/cran/__linux__/noble/latest/src/contrib/PACKAGES'
 ## v Writing 'NEWS.md'.
 ```
 
