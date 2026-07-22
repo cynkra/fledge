@@ -66,7 +66,7 @@ post_release()
   current release process.
 
 - Runs
-  [`urlchecker::url_update()`](https://rdrr.io/pkg/urlchecker/man/url_update.html),
+  [`urlchecker::url_update()`](https://urlchecker.r-lib.org/reference/url_update.html),
   [`devtools::check_win_devel()`](https://devtools.r-lib.org/reference/check_win.html),
   and `rhub::rhub_check(platforms = rhub::rhub_platforms()$name)` in the
   background of the RStudio IDE, or prompts the user to do so.

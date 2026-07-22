@@ -1,5 +1,20 @@
 # Changelog
 
+## fledge 0.1.99.9060 (2026-07-02)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#1068](https://github.com/cynkra/fledge/issues/1068)).
+
+## fledge 0.1.99.9059 (2026-05-24)
+
+### Continuous integration
+
+- Update ccache-action reference.
+
+- Bump action version.
+
 ## fledge 0.1.99.9058 (2026-05-16)
 
 ### Continuous integration

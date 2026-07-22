@@ -15,7 +15,7 @@
 3.  More rigorous checks before release
     - On GitHub Actions for branches that start with `cran-`
     - Locally through
-      [`urlchecker::url_update()`](https://rdrr.io/pkg/urlchecker/man/url_update.html),
+      [`urlchecker::url_update()`](https://urlchecker.r-lib.org/reference/url_update.html),
       [`devtools::check_win_devel()`](https://devtools.r-lib.org/reference/check_win.html),
       and
       [`rhub::check_for_cran()`](https://r-hub.github.io/rhub/reference/check_for_cran.html)
