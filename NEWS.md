@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9061 (2026-07-22)
+
+## Continuous integration
+
+- Run on Ubuntu 26.04.
+
+- Align workflows with template.
+
+
 # fledge 0.1.99.9060 (2026-07-02)
 
 ## Chore
