@@ -1,5 +1,13 @@
 # Changelog
 
+## fledge 0.1.99.9062 (2026-07-24)
+
+### Bug fixes
+
+#### ci
+
+- Emit empty package matrix when there are no (rev)deps.
+
 ## fledge 0.1.99.9061 (2026-07-22)
 
 ### Continuous integration
