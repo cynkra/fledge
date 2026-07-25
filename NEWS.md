@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9063 (2026-07-25)
+
+## Continuous integration
+
+- Lock down `format-suggest` egress (audit → block).
+
+
 # fledge 0.1.99.9062 (2026-07-24)
 
 ## Bug fixes
