@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9064 (2026-07-28)
+
+- Ci: Run all smoke-test checks even when one fails (#97).
+
+- Ci: Link the responsible workflow run in snapshot update PRs (#96).
+
+
 # fledge 0.1.99.9063 (2026-07-25)
 
 ## Continuous integration
