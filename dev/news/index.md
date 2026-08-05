@@ -1,5 +1,13 @@
 # Changelog
 
+## fledge 0.1.99.9064 (2026-07-28)
+
+- Ci: Run all smoke-test checks even when one fails
+  ([\#97](https://github.com/cynkra/fledge/issues/97)).
+
+- Ci: Link the responsible workflow run in snapshot update PRs
+  ([\#96](https://github.com/cynkra/fledge/issues/96)).
+
 ## fledge 0.1.99.9063 (2026-07-25)
 
 ### Continuous integration
