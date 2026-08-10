@@ -138,7 +138,7 @@ news <- readLines(usethis::proj_path("NEWS.md"))
 cat(news, sep = "\n")
 ## # tea (development version)
 ## 
-## * Added a `NEWS.md` file to track changes to the package.
+## * Initial CRAN submission.
 ```
 
 This file needs to be tracked by Git:
@@ -316,7 +316,7 @@ cat(news, sep = "\n")
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tee.
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## - Initial CRAN submission.
 ```
 
 While reviewing we notice that there was a typo in one of the comments (congrats if you noticed right away that we typed "tee" instead of "tea"!).
@@ -339,7 +339,7 @@ cat(news, sep = "\n")
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## - Initial CRAN submission.
 writeLines(news, "NEWS.md")
 ```
 
@@ -393,7 +393,7 @@ cat(news, sep = "\n")
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## - Initial CRAN submission.
 ```
 
 The version of the package is 0.0.0.9001.
@@ -497,7 +497,7 @@ writeLines(news)
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## - Initial CRAN submission.
 fledge::finalize_version(push = TRUE)
 ## > Resetting to previous commit.
 ## > Committing changes.
@@ -573,7 +573,7 @@ cat(news, sep = "\n")
 ## 
 ## - New cup_of_tea() function makes it easy to drink a cup of tea.
 ## 
-## - Added a `NEWS.md` file to track changes to the package.
+## - Initial CRAN submission.
 ```
 
 Some of the intermediate commit messages are not relevant in the release notes for this release.
