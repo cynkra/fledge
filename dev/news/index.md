@@ -1,5 +1,13 @@
 # Changelog
 
+## fledge 0.1.99.9068 (2026-09-05)
+
+### Bug fixes
+
+#### ci
+
+- Backport kit fixes from `rigraph`, `duckdb-r` and `dm`.
+
 ## fledge 0.1.99.9067 (2026-08-08)
 
 ### Continuous integration
