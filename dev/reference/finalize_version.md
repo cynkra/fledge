@@ -47,7 +47,7 @@ with_demo_project({
   # Once done
   fledge::finalize_version()
 })
-#> ✔ Setting active project to "/tmp/Rtmp1A5MNX/fledge3f854cc55f18/tea".
+#> ✔ Setting active project to "/tmp/RtmpKGEXPY/fledge3f5f52514959/tea".
 #> ☐ Edit R/cool-function.R.
 #> → Digesting messages from 3 commits.
 #> ✔ Found 1 NEWS-worthy entry.

@@ -74,7 +74,7 @@ with_demo_project({
   fledge::tag_version()
   print(fledge::get_last_version_tag())
 })
-#> ✔ Setting active project to "/tmp/Rtmp1A5MNX/fledge3f8529570efc/tea".
+#> ✔ Setting active project to "/tmp/RtmpKGEXPY/fledge3f5f5610c222/tea".
 #> ☐ Edit R/cool-function.R.
 #> → Digesting messages from 3 commits.
 #> ✔ Found 1 NEWS-worthy entry.
@@ -111,6 +111,6 @@ with_demo_project({
 #> # A tibble: 1 × 3
 #>   name   ref              commit                                  
 #>   <chr>  <chr>            <chr>                                   
-#> 1 v0.0.1 refs/tags/v0.0.1 4076183c019dc4602a4d9d8884d38228b3589c85
+#> 1 v0.0.1 refs/tags/v0.0.1 9fc7f1e77dd3b352ac4a1bf826e49ad356ad9d54
 #> ✔ Setting active project to "<no active project>".
 ```
