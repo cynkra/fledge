@@ -1,5 +1,22 @@
 # Changelog
 
+## fledge 0.1.99.9069 (2026-09-13)
+
+### Features
+
+#### ci
+
+- Align the `revdep2`, `revdep4` and `revdepx` subsystems with
+  `rigraph`.
+
+### Uncategorized
+
+- Fix(ci): Survive an archived CRAN package, and install it from where
+  it still lives.
+
+- Ci: Fail the roxygenize step on roxygen2 warnings
+  ([\#111](https://github.com/cynkra/fledge/issues/111)).
+
 ## fledge 0.1.99.9068 (2026-09-05)
 
 ### Bug fixes
