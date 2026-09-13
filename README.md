@@ -13,7 +13,7 @@
 [![rcc](https://github.com/cynkra/fledge/workflows/rcc/badge.svg)](https://github.com/cynkra/fledge/actions)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/fledge)](https://cran.r-project.org/package=fledge)
-[![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/branch/main/graph/badge.svg)](https://app.codecov.io/gh/cynkra/fledge?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/cynkra/fledge/graph/badge.svg)](https://app.codecov.io/gh/cynkra/fledge/tree/main)
 <!-- badges: end -->
 
 Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/pkg-news/#why-write-the-changelog-as-newsmd)) more informative than "bug fixes and performance improvements" (`https://twitter.com/EmilyKager/status/1413628436984188933`) to the users of your package?
