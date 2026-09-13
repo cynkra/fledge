@@ -1,7 +1,7 @@
 #' fledgling object
 #'
 #' Contains the information that fledge manages about a repository.
-#' The internal structure of this object is subject to change.
+#'  The internal structure of this object is subject to change.
 #'
 #' @param name The name of the package
 #' @param version A [package_version] that describes the current version

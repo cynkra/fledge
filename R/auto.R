@@ -1,10 +1,10 @@
 #' Automating CRAN release
 #'
 #' `plan_release()` is run
-#' when a milestone in the development of a package is reached
-#' and it is ready to be sent to CRAN.
-#' By default, this function will initiate a pre-release, indicated by `9900` in the fourth component of the version number.
-#' Pass `which = "patch"`, `which = "minor"`, or `which = "major"` to initiate a release with the corresponding version number.
+#'  when a milestone in the development of a package is reached
+#'  and it is ready to be sent to CRAN.
+#'  By default, this function will initiate a pre-release, indicated by `9900` in the fourth component of the version number.
+#'  Pass `which = "patch"`, `which = "minor"`, or `which = "major"` to initiate a release with the corresponding version number.
 #'
 #' `plan_release()`:
 #' - Ensures that no modified files are in the Git index.
@@ -429,7 +429,7 @@ get_cransplainer_update <- function(package) {
 
 #' @description
 #' `release()` sends to CRAN after performing several checks,
-#' and offers help with accepting the submission.
+#'  and offers help with accepting the submission.
 #'
 #' @export
 release <- function() {
