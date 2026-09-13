@@ -2,9 +2,12 @@ Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/p
 
 Ways to achieve that are:
 
-- Update NEWS.md right before release by reading through commit messages. Not necessarily fun!
+- Update NEWS.md right before release by reading through commit messages.
+  Not necessarily fun!
 
-- Update the changelog in every commit e.g. in every PR. Now, if there are several feature PRs around that update the changelog, you'll have a few clicks to make to tackle conflicts. Easy enough, but potentially annoying.
+- Update the changelog in every commit e.g. in every PR.
+  Now, if there are several feature PRs around that update the changelog, you'll have a few clicks to make to tackle conflicts.
+  Easy enough, but potentially annoying.
 
 - Use fledge to
     * fill the `NEWS.md` for you based on informative commit messages,

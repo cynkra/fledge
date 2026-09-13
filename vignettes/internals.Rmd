@@ -55,14 +55,17 @@ New entries are added to `NEWS.md` from commit messages to commits in `master`.
     - Fixed bug as a side effect (#9012).
     ```
 
-When retrieving the current NEWS for defining the tag message, the entries between the first two first-level headers (starting with `#`) are returned.
+When retrieving the current NEWS for defining the tag message,
+the entries between the first two first-level headers (starting with `#`) are returned.
 You can use second and third level headers and add as many empty lines as you want.
 
 ### Collecting NEWS
 
-The first function to call at any stage is always `bump_version()`. This does the following
+The first function to call at any stage is always `bump_version()`.
+This does the following
 
-1. Calls `update_news()` to collect NEWS entries from top-level commits and to increment the version in `DESCRIPTION` and add a header to `NEWS.md`.
+1. Calls `update_news()` to collect NEWS entries from top-level commits
+    and to increment the version in `DESCRIPTION` and add a header to `NEWS.md`.
 
 ### Tagging for "dev" vs. other releases
 
@@ -70,7 +73,8 @@ The first function to call at any stage is always `bump_version()`. This does th
 
 *  `"dev"` releases: Calls `finalize_version()` to commit `DESCRIPTION` and `NEWS.md`.
     Also creates a tag with a message.
-    You can always edit `NEWS.md` and call `finalize_version()` again. Both the commit and the tag will be updated.
+    You can always edit `NEWS.md` and call `finalize_version()` again.
+    Both the commit and the tag will be updated.
 *  Other releases: Calls `commit_version()` to commit `DESCRIPTION` and `NEWS.md` without tagging.
     In this stage, you can edit `NEWS.md` and commit as much as you like.
     The tag is created only after you use `tag_version()` manually.

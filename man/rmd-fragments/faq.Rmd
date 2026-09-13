@@ -1,4 +1,5 @@
-At least we think these questions could be asked. Feel free to also [ask us questions](https://github.com/cynkra/fledge/discussions)!
+At least we think these questions could be asked.
+Feel free to also [ask us questions](https://github.com/cynkra/fledge/discussions)!
 
 ### But what if I want to edit NEWS.md manually?
 
@@ -6,7 +7,8 @@ You still can!
 
 * The best moment is between `bump_version()` and `finalize_version(push = TRUE)`.
 
-* You can actually edit at any time, but only between those two calls the text in the changelog will be captured in the tag message, which is better for the tag history.
+* You can actually edit at any time, but only between those two calls the text in the changelog will be captured in the tag message,
+  which is better for the tag history.
 
 ### What if a contributor wants to contribute a NEWS item?
 
@@ -27,4 +29,6 @@ If you want to fix an issue with a commit message you can
 Fix #42
 ```
 
-* In a PR on e.g. GitHub you can link an issue to a PR by starting the first comment with "Fix 42" so the issue will be closed. The merge or squash commit will be hyperlinked to the PR, but the commit message won't have that phrase. You should still add an acknowledgement in the actual commit message e.g. "- Adds support for coolness (#42, @contributor)".
+* In a PR on e.g. GitHub you can link an issue to a PR by starting the first comment with "Fix 42" so the issue will be closed.
+  The merge or squash commit will be hyperlinked to the PR, but the commit message won't have that phrase.
+  You should still add an acknowledgement in the actual commit message e.g. "- Adds support for coolness (#42, @contributor)".

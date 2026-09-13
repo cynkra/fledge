@@ -9,7 +9,7 @@
 commit_version <- function() {
   amending <- commit_version_impl()
 
-  #' @return Invisibly: `TRUE` if a previous commit for that version has been
-  #'   amended, `FALSE` if not.
+  #' @return Invisibly: `TRUE` if a previous commit for that version has been amended,
+  #'   `FALSE` if not.
   invisible(amending)
 }
