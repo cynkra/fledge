@@ -1,5 +1,30 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9070 (2026-09-13)
+
+## Chore
+
+- Remove Copilot setup steps.
+
+## Uncategorized
+
+- Refactor(ci): Move every script out of the workflows and into a named action (cynkra/cynkratemplate#120).
+
+- Refactor(ci): Make an action of what the workflows say more than once.
+
+- Refactor(ci): Move every script that could change out of the workflows.
+
+- Refactor(ci): Extract the last three scripts, which only a named action can hold.
+
+- Fix(ci): Keep the raw name expression out of the running job's step list (cynkra/cynkratemplate#119).
+
+- Fix(fledge): Push the bump to the default branch wherever that is allowed (cynkra/cynkratemplate#117).
+
+- Fix(ci): Make a failing `rcc` run say what failed, and link to it (cynkra/cynkratemplate#115).
+
+- Fix(ci): Exempt deprecation warnings from the roxygenize warning gate (cynkra/cynkratemplate#114).
+
+
 # fledge 0.1.99.9069 (2026-09-13)
 
 ## Features
