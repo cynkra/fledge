@@ -21,8 +21,8 @@
 #' @section Bumped too soon?:
 #'
 #' Have you just run `bump_version()`, then realized
-#'  "oh shoot, I forgot to merge that PR"?
-#'  Fear not, run [unbump_version()], merge that PR, run `bump_version()`.
+#' "oh shoot, I forgot to merge that PR"?
+#' Fear not, run [unbump_version()], merge that PR, run `bump_version()`.
 #'
 #' @example man/examples/bump-version.R
 bump_version <- function(

@@ -1,7 +1,7 @@
 #' Commits NEWS.md and DESCRIPTION to Git
 #'
 #' Commits changes to `NEWS.md` and `DESCRIPTION`, amending a previous commit
-#'  created by \pkg{fledge} if necessary.
+#' created by \pkg{fledge} if necessary.
 #'
 #' @example man/examples/commit-version.R
 #'
