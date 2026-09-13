@@ -5,12 +5,11 @@
 #'
 #' @inheritParams update_version
 #' @inheritParams rlang::args_dots_empty
-#' @param no_change_behavior What to do if there was no change since the last
-#'   version: `"bump"` for bump the version;
+#' @param no_change_behavior What to do if there was no change since the last version:
+#'   `"bump"` for bump the version;
 #'   `"noop"` for do nothing;
 #'   `"fail"` for erroring.
-#' @param check_default_branch Whether to check that the current branch is the
-#'   default branch.
+#' @param check_default_branch Whether to check that the current branch is the default branch.
 #' @return
 #'   `TRUE` if `NEWS.md` and `DESCRIPTION` have been updated,
 #'   `FALSE` otherwise.

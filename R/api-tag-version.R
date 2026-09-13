@@ -2,8 +2,7 @@
 #'
 #' Parses `NEWS.md` and creates/updates the tag for the most recent version.
 #'
-#' @param force Re-tag even if the last commit wasn't created by
-#'   [bump_version()].  Useful when defining a CRAN release.
+#' @param force Re-tag even if the last commit wasn't created by [bump_version()].  Useful when defining a CRAN release.
 #'
 #' @return The created tag, invisibly.
 #'

@@ -20,9 +20,12 @@ Do you want to provide a changelog ([NEWS.md](https://blog.r-hub.io/2020/05/08/p
 
 Ways to achieve that are:
 
-- Update NEWS.md right before release by reading through commit messages. Not necessarily fun!
+- Update NEWS.md right before release by reading through commit messages.
+  Not necessarily fun!
 
-- Update the changelog in every commit e.g. in every PR. Now, if there are several feature PRs around that update the changelog, you'll have a few clicks to make to tackle conflicts. Easy enough, but potentially annoying.
+- Update the changelog in every commit e.g. in every PR.
+  Now, if there are several feature PRs around that update the changelog, you'll have a few clicks to make to tackle conflicts.
+  Easy enough, but potentially annoying.
 
 - Use fledge to
 
@@ -36,9 +39,13 @@ What you need to do in practice is, **no matter your fledge commitment level**:
 
 - For important commit messages you want recorded in the changelog, you can
 
-  - Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax. For instance `feat: Enhanced support for time series`. Only using conventional commits syntax will provide automatic *grouping* of changelog items into groups (Documentation, Bug Fixes, etc.).
+  - Use the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax.
+    For instance `feat: Enhanced support for time series`.
+    Only using conventional commits syntax will provide automatic *grouping* of changelog items into groups
+    (Documentation, Bug Fixes, etc.).
 
-  - Add a hyphen `-` or `*` at the beginning of the commit message. Exclude housekeeping parts of the message by typing them after a line `---`.
+  - Add a hyphen `-` or `*` at the beginning of the commit message.
+    Exclude housekeeping parts of the message by typing them after a line `---`.
 
   ``` text
 
@@ -56,17 +63,23 @@ What you need to do in practice is, **no matter your fledge commitment level**:
   Also tweak the CI workflow accordingly. :sweat_smile:
   ```
 
-  - Use informative merge commit messages as those will also be included by default in the changelog. On GitHub you can [control the default commit message when merging a pull request](https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/).
+  - Use informative merge commit messages as those will also be included by default in the changelog.
+    On GitHub you can [control the default commit message when merging a pull request](https://github.blog/changelog/2022-08-23-new-options-for-controlling-the-default-commit-message-when-merging-a-pull-request/).
 
-  - (GitHub repositories only) For merge commits with the default not self-contained message ("Merge pull request..."), rely on fledge's querying GitHub API to get the PR title and include it in the changelog.
+  - (GitHub repositories only) For merge commits with the default not self-contained message ("Merge pull request..."),
+    rely on fledge's querying GitHub API to get the PR title and include it in the changelog.
 
 For informative commit messages refer to the [Tidyverse style guide](https://style.tidyverse.org/news.html).
 
 Then, for **full fledge use = fledge-assisted management of NEWS.md, DESCRIPTION version numbers, and git tags**:
 
-- Run `fledge::bump_version()` regularly e.g. before every coffee break or at the end of the day or of the week. If you forgot to merge one PR run `fledge::unbump_version()`, merge the PR with an informative squash commit message, then run `fledge::bump_version()` and go drink that coffee!
+- Run `fledge::bump_version()` regularly e.g. before every coffee break or at the end of the day or of the week.
+  If you forgot to merge one PR run `fledge::unbump_version()`, merge the PR with an informative squash commit message,
+  then run `fledge::bump_version()` and go drink that coffee!
 
-- Run `fledge::finalize_version()` if you need to edit `NEWS.md` manually e.g. if you made a typo or are not happy with a phrasing in retrospect. Even if you edit a lot, what's been written in by fledge is still a good place-holder.
+- Run `fledge::finalize_version()` if you need to edit `NEWS.md` manually
+  e.g. if you made a typo or are not happy with a phrasing in retrospect.
+  Even if you edit a lot, what's been written in by fledge is still a good place-holder.
 
 - Follow the recommended steps at release (see `vignette("fledge")` usage section).
 
@@ -116,16 +129,19 @@ you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.
 
 ### Once per package
 
-- Your package needs to have a remote that indicates the default branch (e.g. GitHub remote) *or* to be using the same default branch name as your global/project `init.defaultbranch`.
+- Your package needs to have a remote that indicates the default branch (e.g. GitHub remote)
+  *or* to be using the same default branch name as your global/project `init.defaultbranch`.
 
-- Add a mention of fledge usage in your contributing guide, as contributors might not know about it. A comment is added to the top of `NEWS.md`, but it tends to be ignored occasionally.
+- Add a mention of fledge usage in your contributing guide, as contributors might not know about it.
+  A comment is added to the top of `NEWS.md`, but it tends to be ignored occasionally.
 
 ##### For full use
 
 - If your package...
 
   - is brand-new, remember to run `fledge::bump_version()` regularly.
-  - has already undergone some development, it is not too late to jump on the train! Run `fledge::bump_version()` and then `fledge::finalize_version()`.
+  - has already undergone some development, it is not too late to jump on the train!
+    Run `fledge::bump_version()` and then `fledge::finalize_version()`.
 
 ##### For light use
 

@@ -1,7 +1,6 @@
 #' All top-level commits
 #'
-#' Return all top-level commits since a particular version
-#' as commit objects.
+#' Return all top-level commits since a particular version as commit objects.
 #'
 #' @return A [tibble] with at least two columns:
 #' - `commit`: the commit SHA
