@@ -19,8 +19,7 @@ A \link[tibble:tibble]{tibble} with at least two columns:
 }
 }
 \description{
-Return all top-level commits since a particular version
-as commit objects.
+Return all top-level commits since a particular version as commit objects.
 }
 \examples{
 # Create mock package in a temporary directory.

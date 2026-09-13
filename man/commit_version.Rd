@@ -7,8 +7,8 @@
 commit_version()
 }
 \value{
-Invisibly: \code{TRUE} if a previous commit for that version has been
-amended, \code{FALSE} if not.
+Invisibly: \code{TRUE} if a previous commit for that version has been amended,
+\code{FALSE} if not.
 }
 \description{
 Commits changes to \code{NEWS.md} and \code{DESCRIPTION}, amending a previous commit
