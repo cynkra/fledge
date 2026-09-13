@@ -7,8 +7,7 @@
 tag_version(force = FALSE)
 }
 \arguments{
-\item{force}{Re-tag even if the last commit wasn't created by
-\code{\link[=bump_version]{bump_version()}}.  Useful when defining a CRAN release.}
+\item{force}{Re-tag even if the last commit wasn't created by \code{\link[=bump_version]{bump_version()}}.  Useful when defining a CRAN release.}
 }
 \value{
 The created tag, invisibly.
