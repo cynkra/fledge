@@ -3,23 +3,21 @@
 #' `plan_release()` is run
 #' when a milestone in the development of a package is reached
 #' and it is ready to be sent to CRAN.
-#' By default, this function will initiate a pre-release, indicated by `9900`
-#' in the fourth component of the version number.
-#' Pass `which = "patch"`, `which = "minor"`, or `which = "major"` to
-#' initiate a release with the corresponding version number.
+#' By default, this function will initiate a pre-release, indicated by `9900` in the fourth component of the version number.
+#' Pass `which = "patch"`, `which = "minor"`, or `which = "major"` to initiate a release with the corresponding version number.
 #'
 #' `plan_release()`:
 #' - Ensures that no modified files are in the Git index.
 #' - Creates a pre-release or release branch and bumps the version accordingly.
-#' - Writes/updates `cran-comments.md` with useful information about the current
-#'   release process.
+#' - Writes/updates `cran-comments.md` with useful information about the current release process.
 #' - Runs `urlchecker::url_update()`, `devtools::check_win_devel()`,
 #'   and `rhub::rhub_check(platforms = rhub::rhub_platforms()$name)`
-#'   in the background of the RStudio IDE, or prompts the user to do so.
+#'   in the background of the RStudio IDE,
+#'   or prompts the user to do so.
 #' - Opens a pull request for the release branch for final checks.
 #'
-#' @param which Component of the version number to update. Supported
-#'   values are
+#' @param which Component of the version number to update.
+#'   Supported values are
 #'   * `"pre-patch"` (default, `x.y.z.9900`)
 #'   * `"pre-minor"` (`x.y.99.9900`),
 #'   * `"pre-major"` (`x.99.99.9900`),
