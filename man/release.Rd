@@ -17,7 +17,7 @@ post_release()
 }
 \arguments{
 \item{which}{Component of the version number to update.
-Supported values are
+ Supported values are
 \itemize{
 \item \code{"pre-patch"} (default, \code{x.y.z.9900})
 \item \code{"pre-minor"} (\code{x.y.99.9900}),
@@ -31,14 +31,14 @@ Supported values are
 }}
 
 \item{force}{Create branches and tags even if they exist.
-Useful to recover from a previously failed attempt.}
+ Useful to recover from a previously failed attempt.}
 }
 \description{
 \code{plan_release()} is run
 when a milestone in the development of a package is reached
 and it is ready to be sent to CRAN.
-By default, this function will initiate a pre-release, indicated by \code{9900} in the fourth component of the version number.
-Pass \code{which = "patch"}, \code{which = "minor"}, or \code{which = "major"} to initiate a release with the corresponding version number.
+ By default, this function will initiate a pre-release, indicated by \code{9900} in the fourth component of the version number.
+ Pass \code{which = "patch"}, \code{which = "minor"}, or \code{which = "major"} to initiate a release with the corresponding version number.
 
 \code{release()} sends to CRAN after performing several checks,
 and offers help with accepting the submission.

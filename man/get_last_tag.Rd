@@ -8,14 +8,14 @@ get_last_tag()
 }
 \value{
 A one-row tibble with columns \code{name}, \code{ref} and \code{commit}.
-For annotated tags (as created by fledge), \code{commit} may be different from the SHA of the commit that this tag points to.
-Use \code{\link[gert:git_log]{gert::git_log()}} to find the actual commit.
+ For annotated tags (as created by fledge), \code{commit} may be different from the SHA of the commit that this tag points to.
+ Use \code{\link[gert:git_log]{gert::git_log()}} to find the actual commit.
 }
 \description{
 Returns the most recent Git tag that is reachable from the current branch.
-This will not be accurate if the version bump and tag has occurred on a branch
+ This will not be accurate if the version bump and tag has occurred on a branch
 which has been squashed into the main branch.
-See \code{\link[=get_last_version_tag]{get_last_version_tag()}} for a version that works in this scenario.
+ See \code{\link[=get_last_version_tag]{get_last_version_tag()}} for a version that works in this scenario.
 }
 \examples{
 # Create mock package in a temporary directory.
