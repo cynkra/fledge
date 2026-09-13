@@ -9,7 +9,7 @@ unbump_version()
 }
 \value{
 \code{NULL}, invisibly.
-This function is called for its side effects.
+ This function is called for its side effects.
 
 None
 }

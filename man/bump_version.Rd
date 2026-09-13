@@ -14,7 +14,7 @@ bump_version(
 }
 \arguments{
 \item{which}{Component of the version number to update.
-Supported values are
+ Supported values are
 \itemize{
 \item \code{"auto"} (default: \code{"samedev"} or \code{"dev"}, depending on contents of \code{NEWS.md}),
 \item \code{"samedev"} (a.b.c.900x with stable version),
@@ -38,7 +38,7 @@ Supported values are
 \value{
 \code{TRUE} if \code{NEWS.md} and \code{DESCRIPTION} have been updated,
 \code{FALSE} otherwise.
-Do not rely on this behavior.
+ Do not rely on this behavior.
 }
 \description{
 Calls the following functions:
@@ -61,7 +61,7 @@ if meaningful changes have been made since the last version.
 
 Have you just run \code{bump_version()}, then realized
 "oh shoot, I forgot to merge that PR"?
-Fear not, run \code{\link[=unbump_version]{unbump_version()}}, merge that PR, run \code{bump_version()}.
+ Fear not, run \code{\link[=unbump_version]{unbump_version()}}, merge that PR, run \code{bump_version()}.
 }
 
 \examples{

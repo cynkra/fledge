@@ -9,7 +9,7 @@ get_top_level_commits(since = NULL)
 \arguments{
 \item{since}{A commit SHA, e.g. as returned in the \code{commit} component of
 \code{\link[=get_last_version_tag]{get_last_version_tag()}}.
-If \code{NULL}, the entire log is retrieved.}
+ If \code{NULL}, the entire log is retrieved.}
 }
 \value{
 A \link[tibble:tibble]{tibble} with at least two columns:

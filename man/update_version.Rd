@@ -11,7 +11,7 @@ update_version(
 }
 \arguments{
 \item{which}{Component of the version number to update.
-Supported values are
+ Supported values are
 \itemize{
 \item \code{"auto"} (default: \code{"samedev"} or \code{"dev"}, depending on contents of \code{NEWS.md}),
 \item \code{"samedev"} (a.b.c.900x with stable version),

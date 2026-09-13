@@ -8,12 +8,12 @@ get_last_version_tag()
 }
 \value{
 A one-row tibble with columns \code{name}, \code{ref} and \code{commit}.
-For annotated tags (as created by fledge), \code{commit} may be different from the SHA of the commit that this tag points to.
-Use \code{\link[gert:git_log]{gert::git_log()}} to find the actual commit.
+ For annotated tags (as created by fledge), \code{commit} may be different from the SHA of the commit that this tag points to.
+ Use \code{\link[gert:git_log]{gert::git_log()}} to find the actual commit.
 }
 \description{
 Returns the Git tag of the form vx.y, vx.y.z or vx.y.z.w with the latest version.
-An older version of this logic is used in \code{\link[=get_last_tag]{get_last_tag()}},
+ An older version of this logic is used in \code{\link[=get_last_tag]{get_last_tag()}},
 which traverses the Git history but does not work with squash-merging of version bumps.
 }
 \examples{
