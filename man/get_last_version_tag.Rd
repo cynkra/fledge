@@ -8,8 +8,7 @@ get_last_version_tag()
 }
 \value{
 A one-row tibble with columns \code{name}, \code{ref} and \code{commit}.
-For annotated tags (as created by fledge), \code{commit} may be different
-from the SHA of the commit that this tag points to.
+For annotated tags (as created by fledge), \code{commit} may be different from the SHA of the commit that this tag points to.
 Use \code{\link[gert:git_log]{gert::git_log()}} to find the actual commit.
 }
 \description{
