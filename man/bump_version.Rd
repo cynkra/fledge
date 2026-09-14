@@ -53,6 +53,7 @@ if meaningful changes have been made since the last version.
 \item Depending on the \code{which} argument:
 \itemize{
 \item If \code{"dev"}, \code{\link[=finalize_version]{finalize_version()}} with \code{push = FALSE}
+\item If \code{"pre-minor"} or \code{"pre-major"}, merging NEWS from second-level headers and \code{\link[=finalize_version]{finalize_version()}} with \code{push = FALSE}
 \item Otherwise, \code{\link[=commit_version]{commit_version()}}.
 }
 }
