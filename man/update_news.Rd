@@ -13,10 +13,10 @@ update_news(
 \arguments{
 \item{messages}{A character vector of commit messages,
 e.g. as in the \code{message} column in the return value of \code{\link[=get_top_level_commits]{get_top_level_commits()}}.
-The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_version_tag]{get_last_version_tag()}}.}
+ The default uses the top level commits since the last tag as retrieved by \code{\link[=get_last_version_tag]{get_last_version_tag()}}.}
 
 \item{which}{Component of the version number to update.
-Supported values are
+ Supported values are
 \itemize{
 \item \code{"auto"} (default: \code{"samedev"} or \code{"dev"}, depending on contents of \code{NEWS.md}),
 \item \code{"samedev"} (a.b.c.900x with stable version),
@@ -34,7 +34,7 @@ None
 \description{
 Lists all commits from a range (default: top-level commits since the most recent tag as determined by \code{\link[=get_last_version_tag]{get_last_version_tag()}})
 and adds bullets from their body to \code{NEWS.md}.
-Creates \code{NEWS.md} if necessary.
+ Creates \code{NEWS.md} if necessary.
 }
 \examples{
 # Create mock package in a temporary directory.
