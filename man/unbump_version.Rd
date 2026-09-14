@@ -8,7 +8,8 @@
 unbump_version()
 }
 \value{
-\code{NULL}, invisibly. This function is called for its side effects.
+\code{NULL}, invisibly.
+This function is called for its side effects.
 
 None
 }

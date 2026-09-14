@@ -13,8 +13,8 @@ bump_version(
 )
 }
 \arguments{
-\item{which}{Component of the version number to update. Supported
-values are
+\item{which}{Component of the version number to update.
+Supported values are
 \itemize{
 \item \code{"auto"} (default: \code{"samedev"} or \code{"dev"}, depending on contents of \code{NEWS.md}),
 \item \code{"samedev"} (a.b.c.900x with stable version),
@@ -28,13 +28,12 @@ values are
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{no_change_behavior}{What to do if there was no change since the last
-version: \code{"bump"} for bump the version;
+\item{no_change_behavior}{What to do if there was no change since the last version:
+\code{"bump"} for bump the version;
 \code{"noop"} for do nothing;
 \code{"fail"} for erroring.}
 
-\item{check_default_branch}{Whether to check that the current branch is the
-default branch.}
+\item{check_default_branch}{Whether to check that the current branch is the default branch.}
 }
 \value{
 \code{TRUE} if \code{NEWS.md} and \code{DESCRIPTION} have been updated,
