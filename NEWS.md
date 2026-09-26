@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9071 (2026-09-26)
+
+## Documentation
+
+- Harmonize README and pkgdown front page rendering (#1083).
+
+- Use `pak::pak()` for the development install (#1080).
+
+
 # fledge 0.1.99.9070 (2026-09-13)
 
 ## Chore
