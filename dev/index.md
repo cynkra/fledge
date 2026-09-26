@@ -78,16 +78,16 @@ Then, for **full fledge use = fledge-assisted management of NEWS.md,
 DESCRIPTION version numbers, and git tags**:
 
 - Run
-  [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html)
+  [`fledge::bump_version()`](https://fledge.cynkra.com/dev/reference/bump_version.md)
   regularly e.g. before every coffee break or at the end of the day or
   of the week. If you forgot to merge one PR run
-  [`fledge::unbump_version()`](https://fledge.cynkra.com/reference/unbump_version.html),
+  [`fledge::unbump_version()`](https://fledge.cynkra.com/dev/reference/unbump_version.md),
   merge the PR with an informative squash commit message, then run
-  [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html)
+  [`fledge::bump_version()`](https://fledge.cynkra.com/dev/reference/bump_version.md)
   and go drink that coffee!
 
 - Run
-  [`fledge::finalize_version()`](https://fledge.cynkra.com/reference/finalize_version.html)
+  [`fledge::finalize_version()`](https://fledge.cynkra.com/dev/reference/finalize_version.md)
   if you need to edit `NEWS.md` manually e.g. if you made a typo or are
   not happy with a phrasing in retrospect. Even if you edit a lot,
   what’s been written in by fledge is still a good place-holder.
@@ -101,13 +101,12 @@ OR, for **light fledge use = filling of NEWS.md between releases**:
 - Have a development version header as produced by
   `usethis::use_development_version()`.
 
-``` chroma
-
+``` md
 # mypackage (development version)
 ```
 
 - Regularly run
-  [`fledge::update_news()`](https://fledge.cynkra.com/reference/update_news.html),
+  [`fledge::update_news()`](https://fledge.cynkra.com/dev/reference/update_news.md),
   preferentially on the main branch to avoid merge conflicts.
 
 These habits are worth learning!
@@ -125,23 +124,24 @@ Click on the image above to show in a separate tab.
 
 Install from CRAN using:
 
-``` chroma
+``` r
 
 install.packages("fledge")
 ```
 
 Install from cynkra’s R-universe (development version) using:
 
-``` chroma
+``` r
 
 install.packages("fledge", repos = c("https://cynkra.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 Or install from GitHub (development version as well) using:
 
-``` chroma
+``` r
 
-remotes::install_github("cynkra/fledge")
+# install.packages("pak")
+pak::pak("cynkra/fledge")
 ```
 
 If you are used to making workflow packages
@@ -164,21 +164,20 @@ in your [.Rprofile](https://rstats.wtf/r-startup.html#rprofile).
 - If your package…
 
   - is brand-new, remember to run
-    [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html)
+    [`fledge::bump_version()`](https://fledge.cynkra.com/dev/reference/bump_version.md)
     regularly.
   - has already undergone some development, it is not too late to jump
     on the train! Run
-    [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html)
+    [`fledge::bump_version()`](https://fledge.cynkra.com/dev/reference/bump_version.md)
     and then
-    [`fledge::finalize_version()`](https://fledge.cynkra.com/reference/finalize_version.html).
+    [`fledge::finalize_version()`](https://fledge.cynkra.com/dev/reference/finalize_version.md).
 
 ##### For light use
 
 - Your package needs a development version header as produced by
   `usethis::use_development_version()`.
 
-``` chroma
-
+``` md
 # mypackage (development version)
 ```
 

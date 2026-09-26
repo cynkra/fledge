@@ -136,7 +136,8 @@ Or install from GitHub (development version as well) using:
 
 ``` r
 
-remotes::install_github("cynkra/fledge")
+# install.packages("pak")
+pak::pak("cynkra/fledge")
 ```
 
 If you are used to making workflow packages
