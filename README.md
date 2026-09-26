@@ -94,6 +94,29 @@ OR, for **light fledge use = filling of NEWS.md between releases**:
 
 These habits are worth learning!
 
+## Goals and non-goals
+
+fledge aims to:
+
+- Fill `NEWS.md` for you from the messages of your top-level commits,
+  grouping the items by type when the messages follow the conventional commits syntax.
+- Increase the version number in `DESCRIPTION`,
+  and create a git tag that carries the new changelog entries in its message.
+- Work at either commitment level:
+  light use is `update_news()` between releases, full use adds version numbers and tags via `bump_version()` and `finalize_version()`.
+- Carry a package through a CRAN release,
+  with `plan_release()`, `release()` and `post_release()` handling the release branch, `cran-comments.md` and the preparatory checks.
+
+It is explicitly not trying to:
+
+- Compose changelog entries by itself:
+  you mark what belongs in `NEWS.md` when you write the commit message, and using fledge is a discipline, a few habits.
+- Take `NEWS.md` away from you:
+  you can still edit it by hand, best between `bump_version()` and `finalize_version(push = TRUE)`.
+- Tag anything beyond `"dev"` releases automatically:
+  other releases always must be tagged manually with `tag_version()`.
+- Version projects other than an R package that is version-controlled with git in a dedicated repository.
+
 ## Demo
 
 [![asciinema demo](https://github.com/cynkra/fledge/raw/main/readme/demo.gif)](https://asciinema.org/a/173876)
