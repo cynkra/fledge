@@ -1,5 +1,16 @@
 # Changelog
 
+## fledge 0.1.99.9071 (2026-09-26)
+
+### Documentation
+
+- Harmonize README and pkgdown front page rendering
+  ([\#1083](https://github.com/cynkra/fledge/issues/1083)).
+
+- Use [`pak::pak()`](https://pak.r-lib.org/reference/pak.html) for the
+  development install
+  ([\#1080](https://github.com/cynkra/fledge/issues/1080)).
+
 ## fledge 0.1.99.9070 (2026-09-13)
 
 ### Chore
