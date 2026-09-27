@@ -16,8 +16,8 @@ release()
 post_release()
 }
 \arguments{
-\item{which}{Component of the version number to update. Supported
-values are
+\item{which}{Component of the version number to update.
+Supported values are
 \itemize{
 \item \code{"pre-patch"} (default, \code{x.y.z.9900})
 \item \code{"pre-minor"} (\code{x.y.99.9900}),
@@ -37,10 +37,8 @@ Useful to recover from a previously failed attempt.}
 \code{plan_release()} is run
 when a milestone in the development of a package is reached
 and it is ready to be sent to CRAN.
-By default, this function will initiate a pre-release, indicated by \code{9900}
-in the fourth component of the version number.
-Pass \code{which = "patch"}, \code{which = "minor"}, or \code{which = "major"} to
-initiate a release with the corresponding version number.
+By default, this function will initiate a pre-release, indicated by \code{9900} in the fourth component of the version number.
+Pass \code{which = "patch"}, \code{which = "minor"}, or \code{which = "major"} to initiate a release with the corresponding version number.
 
 \code{release()} sends to CRAN after performing several checks,
 and offers help with accepting the submission.
@@ -52,11 +50,11 @@ and offers help with accepting the submission.
 \itemize{
 \item Ensures that no modified files are in the Git index.
 \item Creates a pre-release or release branch and bumps the version accordingly.
-\item Writes/updates \code{cran-comments.md} with useful information about the current
-release process.
+\item Writes/updates \code{cran-comments.md} with useful information about the current release process.
 \item Runs \code{urlchecker::url_update()}, \code{devtools::check_win_devel()},
 and \code{rhub::rhub_check(platforms = rhub::rhub_platforms()$name)}
-in the background of the RStudio IDE, or prompts the user to do so.
+in the background of the RStudio IDE,
+or prompts the user to do so.
 \item Opens a pull request for the release branch for final checks.
 }
 }

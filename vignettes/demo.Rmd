@@ -15,7 +15,10 @@ We will develop it from scratch and also maintain a changelog as the development
 Finally, we will demonstrate how this changelog can eventually be converted to release notes when the package is submitted to CRAN.
 
 :::{.alert .alert-info}
-We are typing this demo as an R Markdown vignette therefore we will be using R tools for creating files, editing them, and interacting with git: in real life you can be using e.g. an IDE or the command line. The fledge package won't care!
+We are typing this demo as an R Markdown vignette
+therefore we will be using R tools for creating files, editing them, and interacting with git:
+in real life you can be using e.g. an IDE or the command line.
+The fledge package won't care!
 :::
 
 ```{r setup, include = FALSE}
@@ -265,10 +268,12 @@ news <- readLines("NEWS.md")
 cat(news, sep = "\n")
 ```
 
-While reviewing we notice that there was a typo in one of the comments (congrats if you noticed right away that we typed "tee" instead of "tea"!).
+While reviewing we notice that there was a typo in one of the comments
+(congrats if you noticed right away that we typed "tee" instead of "tea"!).
 
 :::{.alert .alert-warning}
-The fledge package adds a comment about not editing `NEWS.md` by hand to `NEWS.md` but actually you can... if you do it right! Read on.
+The fledge package adds a comment about not editing `NEWS.md` by hand to `NEWS.md` but actually you can... if you do it right!
+Read on.
 :::
 
 Let's fix the typo, which you'd do by hand.
@@ -289,7 +294,8 @@ This does not affect the original commit message, only `NEWS.md`.
 After tweaking `NEWS.md`, it is important to use `fledge::finalize_version()` and not to commit manually.
 :::
 
-Using `fledge::finalize_version()` instead of committing manually ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
+Using `fledge::finalize_version()` instead of committing manually
+ensures that the tag is set to the correct version in spite of the `NEWS.md` update.
 It should be called when `NEWS.md` is manually updated.
 Note that it should be called after `fledge::bump_version()`, an error is raised if another commit has been added after that.
 
@@ -308,7 +314,8 @@ cat(news, sep = "\n")
 
 The version of the package is `r desc::desc_get_version()`.
 
-A tag has been created for the version which is good practice, and crucial when using fledge: for updating the changelog, fledge looks through all commit messages **since the latest tag**.
+A tag has been created for the version which is good practice, and crucial when using fledge:
+for updating the changelog, fledge looks through all commit messages **since the latest tag**.
 
 ### Change code and commit
 
@@ -349,7 +356,8 @@ This branch can be pushed to the remote as usual.
 Only when merging we specify the message to be included in the changelog, again with a bullet.[^merge-ff]
 You might be used to doing the merges on a remote (e.g. GitHub pull requests) but here we demonstrate a local merge commit.
 
-[^merge-ff]: Note that we really need a merge commit here; the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
+[^merge-ff]: Note that we really need a merge commit here;
+the default is to fast-forward which doesn't give us the opportunity to insert the message intended for the changelog.
 Earlier, we set the `merge.ff` config option to `"false"` to achieve this.
 
 ```{r bowl-merge, results='hide'}
@@ -358,7 +366,8 @@ gert::git_merge("f-bowl", commit = FALSE)
 gert::git_commit("- New bowl_of_tea() function makes it easy to drink a bowl of tea.")
 ```
 
-The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...: use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
+The same strategy can be used when merging a pull/merge/... request on GitHub, GitLab, ...:
+use bullet points in the merge commit message to indicate the items to include in `NEWS.md`.
 
 Now that we have added bowl support to our package, it is time to bump the version again.
 
@@ -377,7 +386,8 @@ After multiple cycles of development, review and testing, we decide that our pac
 This is where {fledge} simplifies the release process by making use of the all the commit messages that we provided earlier.
 
 
-A difference between publishing on CRAN and publishing on GitHub is that there's an external system controlling your publication on CRAN so your package might need some tweaks between the first release candidate and what version you end up publishing on CRAN.
+A difference between publishing on CRAN and publishing on GitHub is that there's an external system controlling your publication on CRAN
+so your package might need some tweaks between the first release candidate and what version you end up publishing on CRAN.
 
 ### Bump version for release
 

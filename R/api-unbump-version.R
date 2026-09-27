@@ -2,7 +2,8 @@
 #'
 #' This undoes the effect of a [bump_version()] call, with a safety check.
 #'
-#' @return `NULL`, invisibly. This function is called for its side effects.
+#' @return `NULL`, invisibly.
+#'   This function is called for its side effects.
 #'
 #' @seealso bump_version
 #'
