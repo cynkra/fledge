@@ -1,5 +1,22 @@
 # Changelog
 
+## fledge 0.1.99.9072 (2026-09-26)
+
+- Refactor(ci): Serve the revdep scripts with the actions instead of
+  copying them (cynkra/cynkratemplate#149).
+
+- Feat(ci): Run R-hub checks on every `cran-*` push, through
+  `rhub-setup` and `rhub-check` actions (cynkra/cynkratemplate#145).
+
+- Feat(ci): Report coverage on pull requests from this repository
+  (cynkra/cynkratemplate#146).
+
+- Ci: Bound every job with `timeout-minutes`
+  (cynkra/cynkratemplate#144).
+
+- Fix(revdep2): Let a slice with no packages check nothing instead of
+  failing (cynkra/cynkratemplate#150).
+
 ## fledge 0.1.99.9071 (2026-09-26)
 
 ### Documentation
