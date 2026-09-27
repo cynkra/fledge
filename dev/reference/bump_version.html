@@ -92,8 +92,8 @@ if meaningful changes have been made since the last version.</p></li>
 
 
 <dl><dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
-<dd><p>Component of the version number to update. Supported
-values are</p><ul><li><p><code>"auto"</code> (default: <code>"samedev"</code> or <code>"dev"</code>, depending on contents of <code>NEWS.md</code>),</p></li>
+<dd><p>Component of the version number to update.
+Supported values are</p><ul><li><p><code>"auto"</code> (default: <code>"samedev"</code> or <code>"dev"</code>, depending on contents of <code>NEWS.md</code>),</p></li>
 <li><p><code>"samedev"</code> (a.b.c.900x with stable version),</p></li>
 <li><p><code>"dev"</code> (a.b.c.9xxx),</p></li>
 <li><p><code>"patch"</code> (a.b.x),</p></li>
@@ -109,15 +109,14 @@ values are</p><ul><li><p><code>"auto"</code> (default: <code>"samedev"</code> or
 
 
 <dt id="arg-no-change-behavior">no_change_behavior<a class="anchor" aria-label="anchor" href="#arg-no-change-behavior"></a></dt>
-<dd><p>What to do if there was no change since the last
-version: <code>"bump"</code> for bump the version;
+<dd><p>What to do if there was no change since the last version:
+<code>"bump"</code> for bump the version;
 <code>"noop"</code> for do nothing;
 <code>"fail"</code> for erroring.</p></dd>
 
 
 <dt id="arg-check-default-branch">check_default_branch<a class="anchor" aria-label="anchor" href="#arg-check-default-branch"></a></dt>
-<dd><p>Whether to check that the current branch is the
-default branch.</p></dd>
+<dd><p>Whether to check that the current branch is the default branch.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -156,7 +155,7 @@ Fear not, run <code><a href="unbump_version.html">unbump_version()</a></code>, m
 <span class="r-in"><span>  <span class="co"># Bump version with fledge.</span></span></span>
 <span class="r-in"><span>  <span class="fu">fledge</span><span class="fu">::</span><span class="fu">bump_version</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"/tmp/Rtmp9hi58u/fledge3f553de4f457/tea"</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"/tmp/RtmpVwBLme/fledge409c2d35e57f/tea"</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">☐</span> Edit <span style="color: #0000BB;">R/cool-function.R</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Digesting messages from <span style="color: #00BB00;">3</span> commits.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> NEWS-worthy entry.</span>
