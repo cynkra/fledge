@@ -72,11 +72,11 @@ For informative commit messages refer to the [Tidyverse style guide](https://sty
 
 Then, for **full fledge use = fledge-assisted management of NEWS.md, DESCRIPTION version numbers, and git tags**:
 
-- Run `fledge::bump_version()` regularly e.g. before every coffee break or at the end of the day or of the week.
-  If you forgot to merge one PR run `fledge::unbump_version()`, merge the PR with an informative squash commit message,
-  then run `fledge::bump_version()` and go drink that coffee!
+- Run [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html) regularly e.g. before every coffee break or at the end of the day or of the week.
+  If you forgot to merge one PR run [`fledge::unbump_version()`](https://fledge.cynkra.com/reference/unbump_version.html), merge the PR with an informative squash commit message,
+  then run [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html) and go drink that coffee!
 
-- Run `fledge::finalize_version()` if you need to edit `NEWS.md` manually
+- Run [`fledge::finalize_version()`](https://fledge.cynkra.com/reference/finalize_version.html) if you need to edit `NEWS.md` manually
   e.g. if you made a typo or are not happy with a phrasing in retrospect.
   Even if you edit a lot, what's been written in by fledge is still a good place-holder.
 
@@ -90,7 +90,7 @@ OR, for **light fledge use = filling of NEWS.md between releases**:
 # mypackage (development version)
 ```
 
-- Regularly run `fledge::update_news()`, preferentially on the main branch to avoid merge conflicts.
+- Regularly run [`fledge::update_news()`](https://fledge.cynkra.com/reference/update_news.html), preferentially on the main branch to avoid merge conflicts.
 
 These habits are worth learning!
 
@@ -103,18 +103,18 @@ fledge aims to:
 - Increase the version number in `DESCRIPTION`,
   and create a git tag that carries the new changelog entries in its message.
 - Work at either commitment level:
-  light use is `update_news()` between releases, full use adds version numbers and tags via `bump_version()` and `finalize_version()`.
+  light use is [`update_news()`](https://fledge.cynkra.com/reference/update_news.html) between releases, full use adds version numbers and tags via [`bump_version()`](https://fledge.cynkra.com/reference/bump_version.html) and [`finalize_version()`](https://fledge.cynkra.com/reference/finalize_version.html).
 - Carry a package through a CRAN release,
-  with `plan_release()`, `release()` and `post_release()` handling the release branch, `cran-comments.md` and the preparatory checks.
+  with [`plan_release()`](https://fledge.cynkra.com/reference/release.html), [`release()`](https://fledge.cynkra.com/reference/release.html) and [`post_release()`](https://fledge.cynkra.com/reference/release.html) handling the release branch, `cran-comments.md` and the preparatory checks.
 
 It is explicitly not trying to:
 
 - Compose changelog entries by itself:
   you mark what belongs in `NEWS.md` when you write the commit message, and using fledge is a discipline, a few habits.
 - Take `NEWS.md` away from you:
-  you can still edit it by hand, best between `bump_version()` and `finalize_version(push = TRUE)`.
+  you can still edit it by hand, best between [`bump_version()`](https://fledge.cynkra.com/reference/bump_version.html) and `finalize_version(push = TRUE)`.
 - Tag anything beyond `"dev"` releases automatically:
-  other releases always must be tagged manually with `tag_version()`.
+  other releases always must be tagged manually with [`tag_version()`](https://fledge.cynkra.com/reference/tag_version.html).
 - Version projects other than an R package that is version-controlled with git in a dedicated repository.
 
 ## Demo
@@ -161,9 +161,9 @@ you might enjoy loading fledge in your [.Rprofile](https://rstats.wtf/r-startup.
 
 - If your package...
 
-  - is brand-new, remember to run `fledge::bump_version()` regularly.
+  - is brand-new, remember to run [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html) regularly.
   - has already undergone some development, it is not too late to jump on the train!
-    Run `fledge::bump_version()` and then `fledge::finalize_version()`.
+    Run [`fledge::bump_version()`](https://fledge.cynkra.com/reference/bump_version.html) and then [`fledge::finalize_version()`](https://fledge.cynkra.com/reference/finalize_version.html).
 
 ##### For light use
 
