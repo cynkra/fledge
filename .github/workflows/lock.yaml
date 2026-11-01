@@ -1,19 +1,27 @@
-name: 'Lock threads'
-
+name: "Lock threads"
+permissions:
+  issues: write
+  pull-requests: write
+  discussions: write
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "37 2 * * *"
 
 jobs:
   lock:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15 # longest run seen: 2 min
     steps:
-      - uses: dessant/lock-threads@v2
+      # Pinned to a commit, not to `@patch-1`: a branch ref is mutable, so
+      # anything landing on that branch would run here with write access to
+      # issues, pull requests and discussions.
+      - uses: krlmlr/lock-threads@cf0b2ef2052cc3189765bb2e9c24033039bbfab8 # patch-1
         with:
           github-token: ${{ github.token }}
-          issue-lock-inactive-days: '365'
-          issue-lock-reason: ''
-          issue-lock-comment: >
+          issue-inactive-days: "365"
+          issue-lock-reason: ""
+          issue-comment: >
             This old thread has been automatically locked. If you think you have
             found something related to this, please open a new issue and link to this
             old issue if necessary.
