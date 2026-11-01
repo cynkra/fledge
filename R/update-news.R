@@ -49,7 +49,7 @@ add_to_news <- function(news) {
     file.create(news_path())
   }
 
-  enc::transform_lines_enc(news_path(), make_prepend(news))
+  transform_lines(news_path(), make_prepend(news))
   invisible(news_path())
 }
 

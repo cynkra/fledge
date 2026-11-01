@@ -45,6 +45,7 @@ create_demo_project <- function(open = rlang::is_interactive(),
   withr::local_dir(new = pkg)
   desc::desc_del("LazyData")
   gert::git_init()
+  system("git branch -m main") # No equivalent gert command
   gert::git_config_set("user.name", maintainer)
   gert::git_config_set("user.email", email)
   gert::git_add(".")
@@ -71,7 +72,14 @@ create_demo_project <- function(open = rlang::is_interactive(),
             withr::with_options(
               list(repos = c("CRAN" = "https://cloud.r-project.org")),
               {
-                usethis::use_news_md()
+                writeLines(
+                  c(
+                    paste0("# ", name, " 0.0.0.9000"),
+                    "",
+                    "* Added a `NEWS.md` file to track changes to the package."
+                  ),
+                  "NEWS.md"
+                )
               }
             )
           },

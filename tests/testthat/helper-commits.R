@@ -17,6 +17,7 @@ create_repo <- function(repo) {
   )
 
   withr::local_dir(repo)
+  system("git branch -m main") # No equivalent gert command
 
   gert::git_config_set("user.name", "Test")
   gert::git_config_set("user.email", "my@test.user")

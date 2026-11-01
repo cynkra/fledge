@@ -1,4 +1,21 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# fledge 0.1.3 (2025-11-30)
+
+Maintenance release.
+
+
+# fledge 0.1.3 (2025-10-16)
+
+Maintenance release.
+
+
+# fledge 0.1.2 (2024-02-18)
+
+## Features
+
+- Remove enc dependency.
+
 
 # fledge 0.1.1 (2023-06-16)
 
