@@ -1,5 +1,31 @@
 # Changelog
 
+## fledge 0.1.99.9074 (2026-10-10)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#1095](https://github.com/cynkra/fledge/issues/1095)).
+
+## fledge 0.1.99.9073 (2026-09-27)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#1093](https://github.com/cynkra/fledge/issues/1093)).
+
+### Continuous integration
+
+- Run coverage checks after pkgdown push.
+
+### Documentation
+
+- Break lines at meaning boundaries
+  ([\#1084](https://github.com/cynkra/fledge/issues/1084)).
+
+- Drop the branch from the coverage badge
+  ([\#1082](https://github.com/cynkra/fledge/issues/1082)).
+
 ## fledge 0.1.99.9072 (2026-09-26)
 
 - Refactor(ci): Serve the revdep scripts with the actions instead of
