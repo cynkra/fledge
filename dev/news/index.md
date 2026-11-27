@@ -1,5 +1,17 @@
 # Changelog
 
+## fledge 0.1.99.9076 (2026-11-27)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#1099](https://github.com/cynkra/fledge/issues/1099)).
+
+### Continuous integration
+
+- Sync the workflows with cynkra/cynkratemplate
+  ([\#1100](https://github.com/cynkra/fledge/issues/1100)).
+
 ## fledge 0.1.99.9075 (2026-11-01)
 
 ### Chore
