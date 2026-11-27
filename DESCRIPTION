@@ -9,7 +9,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-0748-6624")),
     person("Maëlle", "Salmon", , "msmaellesalmon@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0002-2815-0399")),
-    person("cynkra GmbH", , , "mail@cynkra.com", role = c("fnd"),
+    person("cynkra GmbH", , , "mail@cynkra.com", role = "fnd",
            comment = c(ROR = "0335t7e62"))
   )
 Description: Streamlines the process of updating changelogs (NEWS.md) and
@@ -66,9 +66,9 @@ Config/autostyle/scope: line_breaks
 Config/autostyle/strict: true
 Config/Needs/readme: r-lib/downlit@f-readme-document
 Config/Needs/website: cynkra/cynkratemplate
+Config/roxygen2/version: 8.1.1.9000
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: auto, demo, parse-news-items, bump_version
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.1.1.9000
