@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# fledge 0.1.99.9077 (2026-11-27)
+
+## Chore
+
+- Declare every vignette builder in DESCRIPTION (#1104).
+
+- Tidy DESCRIPTION with usethis::use_tidy_description() (#1103).
+
+## Continuous integration
+
+- Sync the workflows with cynkra/cynkratemplate (#1102).
+
+
 # fledge 0.1.99.9076 (2026-11-27)
 
 ## Chore
