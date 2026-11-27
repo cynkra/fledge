@@ -61,7 +61,8 @@ Suggests:
     whisker,
     withr
 VignetteBuilder: 
-    knitr
+    knitr,
+    rmarkdown
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: true
 Config/Needs/readme: r-lib/downlit@f-readme-document
