@@ -1,5 +1,12 @@
 # Changelog
 
+## fledge 0.1.99.9075 (2026-11-01)
+
+### Chore
+
+- Drop the local favicon copy, the template ships it
+  ([\#1097](https://github.com/cynkra/fledge/issues/1097)).
+
 ## fledge 0.1.99.9074 (2026-10-10)
 
 ### Chore

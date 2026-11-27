@@ -31,5 +31,5 @@ Other contributors:
 - Maëlle Salmon <msmaellesalmon@gmail.com>
   ([ORCID](https://orcid.org/0000-0002-2815-0399)) \[contributor\]
 
-- cynkra GmbH <mail@cynkra.com> ([ROR](https://ror.org/0335t7e62))
-  \[funder\]
+- cynkra GmbH <mail@cynkra.com> (ROR: 0335t7e62,
+  `https://ror.org/0335t7e62`) \[funder\]
